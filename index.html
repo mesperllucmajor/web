@@ -1,304 +1,297 @@
-import React, { useState, useEffect } from 'react';
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, addDoc, onSnapshot, query, doc, deleteDoc } from 'firebase/firestore';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
-
-ChartJS.register(ArcElement, Tooltip, Legend);
-
-// Configuració de Firebase des de l'entorn
-const firebaseConfig = JSON.parse(__firebase_config);
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'mes-llucmajor-default';
-
-export default function App() {
-  const [user, setUser] = useState(null);
-  const [news, setNews] = useState([]);
-  const [filter, setFilter] = useState('all');
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [selectedNews, setSelectedNews] = useState(null);
-  
-  // Form State
-  const [form, setForm] = useState({ title: '', category: 'noticia', summary: '', content: '' });
-
-  // 1. Auth Initializer (Rule 3)
-  useEffect(() => {
-    const initAuth = async () => {
-      try {
-        await signInAnonymously(auth);
-      } catch (err) {
-        console.error("Auth error", err);
-      }
-    };
-    initAuth();
-    const unsubscribe = onAuthStateChanged(auth, setUser);
-    return () => unsubscribe();
-  }, []);
-
-  // 2. Data Fetching (Rule 1 & 2)
-  useEffect(() => {
-    if (!user) return;
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MÉS per Llucmajor - Web Oficial Dinàmica</title>
     
-    const q = collection(db, 'artifacts', appId, 'public', 'data', 'news');
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const docs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-      // Ordenem per data manualment (Rule 2: No complex queries)
-      const sorted = docs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setNews(sorted);
-    }, (err) => console.error("Firestore error", err));
+    <!-- Scripts: React i Llibreries auxiliars via CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    return () => unsubscribe();
-  }, [user]);
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  const handleAddNews = async (e) => {
-    e.preventDefault();
-    if (!user || !form.title) return;
-    try {
-      await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'news'), {
-        ...form,
-        date: new Date().toLocaleDateString('ca-ES', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase(),
-        createdAt: new Date().toISOString()
-      });
-      setForm({ title: '', category: 'noticia', summary: '', content: '' });
-      setIsAdmin(false);
-    } catch (err) {
-      console.error("Error publicant", err);
-    }
-  };
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Barlow', 'sans-serif'] },
+                    colors: {
+                        mes: { lime: '#c6d100', dark: '#1a1a1a', gray: '#f4f4f4' }
+                    }
+                }
+            }
+        }
+    </script>
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Segur que vols esborrar aquesta notícia?")) return;
-    try {
-      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'news', id));
-    } catch (err) {
-      console.error("Error esborrant", err);
-    }
-  };
-
-  const filteredNews = filter === 'all' ? news : news.filter(n => n.category === filter);
-
-  const chartData = {
-    labels: ['SOCIAL', 'ECOLOGIA', 'CULTURA', 'GOVERN'],
-    datasets: [{
-      data: [35, 30, 20, 15],
-      backgroundColor: ['#c6d100', '#1a1a1a', '#575757', '#a3a3a3'],
-      borderWidth: 0
-    }]
-  };
-
-  return (
-    <div className="min-h-screen bg-white font-sans text-mes-dark">
-      {/* Navbar */}
-      <nav className="fixed w-full z-50 bg-white border-b-4 border-mes-lime shadow-md px-4 sm:px-8 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <div className="bg-mes-lime text-black font-black px-3 py-1 text-2xl">M</div>
-          <div className="leading-none uppercase font-bold tracking-tighter">
-            <div className="text-xl">MÉS</div>
-            <div className="text-[10px] text-gray-500 tracking-widest">per Llucmajor</div>
-          </div>
-        </div>
-        <div className="hidden md:flex gap-6 items-center font-bold text-xs tracking-widest uppercase">
-          <a href="#actualitat" className="hover:text-mes-lime">Actualitat</a>
-          <a href="#visio" className="hover:text-mes-lime">Visió</a>
-          <a href="#programa" className="hover:text-mes-lime">Programa</a>
-          <button onClick={() => setIsAdmin(!isAdmin)} className="bg-mes-dark text-mes-lime px-4 py-2 hover:bg-black">
-            {isAdmin ? 'Tancar Gestor' : 'Gestió ✨'}
-          </button>
-        </div>
-      </nav>
-
-      {/* Hero */}
-      <header className="pt-40 pb-20 bg-gray-100 px-6 sm:px-12">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-black text-white px-3 py-1 inline-block font-bold uppercase text-xs mb-4 tracking-widest">Projecte Municipal</div>
-          <h1 className="text-5xl md:text-7xl font-black uppercase leading-none mb-6">
-            EL FUTUR DE <br/><span className="bg-black text-mes-lime px-2">LLUCMAJOR</span> ÉS AQUÍ.
-          </h1>
-          <p className="text-lg font-medium text-gray-600 max-w-xl mb-8">
-            Fem política des de la proximitat per transformar s'Arenal, Llucmajor i totes les nostres urbanitzacions.
-          </p>
-          <div className="flex gap-4">
-            <a href="#actualitat" className="bg-mes-lime text-black px-8 py-4 font-black uppercase text-sm hover:bg-black hover:text-mes-lime transition-all">Darreres Notícies</a>
-          </div>
-        </div>
-      </header>
-
-      {/* Admin Panel (Visible només quan isAdmin és cert) */}
-      {isAdmin && (
-        <section className="py-12 bg-mes-lime px-6">
-          <div className="max-w-4xl mx-auto bg-black p-8 text-white shadow-2xl">
-            <h2 className="text-2xl font-black uppercase mb-6 flex items-center gap-2">
-              <span>✍️</span> Publicar Nova Notícia
-            </h2>
-            <form onSubmit={handleAddNews} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input 
-                  type="text" 
-                  placeholder="TÍTOL DE LA NOTÍCIA" 
-                  className="bg-white/10 p-4 font-bold border-b border-white outline-none focus:bg-white focus:text-black w-full"
-                  value={form.title}
-                  onChange={e => setForm({...form, title: e.target.value})}
-                  required
-                />
-                <select 
-                  className="bg-white/10 p-4 font-bold border-b border-white outline-none focus:bg-white focus:text-black w-full"
-                  value={form.category}
-                  onChange={e => setForm({...form, category: e.target.value})}
-                >
-                  <option value="noticia">NOTÍCIA</option>
-                  <option value="opinio">OPINIÓ</option>
-                  <option value="agenda">AGENDA</option>
-                </select>
-              </div>
-              <textarea 
-                placeholder="RESUM BREU (per a la graella)" 
-                className="bg-white/10 p-4 font-bold border-b border-white outline-none focus:bg-white focus:text-black w-full"
-                value={form.summary}
-                onChange={e => setForm({...form, summary: e.target.value})}
-                required
-              />
-              <textarea 
-                placeholder="CONTINGUT COMPLET DE LA NOTÍCIA" 
-                rows="6"
-                className="bg-white/10 p-4 font-bold border-b border-white outline-none focus:bg-white focus:text-black w-full"
-                value={form.content}
-                onChange={e => setForm({...form, content: e.target.value})}
-                required
-              />
-              <button type="submit" className="bg-mes-lime text-black w-full py-4 font-black uppercase text-lg hover:bg-white">
-                Publicar Ara Mateix
-              </button>
-            </form>
-          </div>
-        </section>
-      )}
-
-      {/* Actualitat Grid */}
-      <section id="actualitat" className="py-20 px-6 sm:px-12 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div>
-            <div className="bg-black text-white px-3 py-1 inline-block font-bold uppercase text-xs mb-4 tracking-widest">Informació Directa</div>
-            <h2 className="text-4xl font-black uppercase leading-none">Actualitat i Opinió</h2>
-          </div>
-          <div className="flex gap-2 font-bold text-[10px] tracking-widest uppercase">
-            {['all', 'noticia', 'opinio'].map(f => (
-              <button 
-                key={f}
-                onClick={() => setFilter(f)}
-                className={`px-4 py-2 border-2 ${filter === f ? 'bg-black text-white border-black' : 'bg-white border-gray-200 hover:border-mes-lime'}`}
-              >
-                {f === 'all' ? 'TOT' : f}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredNews.map((n) => (
-            <div key={n.id} className="group border-b-4 border-transparent hover:border-mes-lime transition-all bg-gray-50 p-6 flex flex-col">
-              <div className="flex justify-between items-center mb-4">
-                <span className="bg-black text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">{n.category}</span>
-                <span className="text-[10px] font-bold text-gray-400">{n.date}</span>
-              </div>
-              <h3 className="text-xl font-black uppercase leading-tight mb-4 flex-grow">{n.title}</h3>
-              <p className="text-sm text-gray-600 mb-6 line-clamp-3">{n.summary}</p>
-              <div className="flex justify-between items-center">
-                <button 
-                  onClick={() => setSelectedNews(n)}
-                  className="text-xs font-black uppercase border-b-2 border-mes-lime hover:bg-mes-lime transition-colors px-1"
-                >
-                  Llegir Notícia
-                </button>
-                {isAdmin && (
-                  <button onClick={() => handleDelete(n.id)} className="text-red-500 text-xs font-bold hover:underline">Esborrar</button>
-                )}
-              </div>
-            </div>
-          ))}
-          {news.length === 0 && (
-            <div className="col-span-full py-20 text-center text-gray-400 font-bold uppercase italic">
-              No hi ha notícies publicades encara. Prem "Gestió" per afegir-ne una.
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Programa Section with Chart */}
-      <section id="programa" className="py-20 bg-gray-50 px-6 sm:px-12">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="bg-white p-10 shadow-xl text-center">
-            <h3 className="font-black uppercase tracking-widest text-sm mb-6">Prioritats del nostre model</h3>
-            <div className="h-64 flex justify-center">
-              <Doughnut data={chartData} options={{ maintainAspectRatio: false }} />
-            </div>
-          </div>
-          <div>
-            <div className="bg-black text-white px-3 py-1 inline-block font-bold uppercase text-xs mb-4 tracking-widest">Full de Ruta</div>
-            <h2 className="text-4xl font-black uppercase leading-tight mb-8">Un programa per a <br/>transformar el municipi</h2>
-            <div className="space-y-4">
-              {[
-                { t: 'HABITATGE', d: 'Creació de borsa d’habitatge jove i assequible.' },
-                { t: 'SOSTENIBILITAT', d: 'Protecció del rústic i sobirania energètica local.' },
-                { t: 'CULTURA', d: 'Foment de la llengua i suport al teixit associatiu.' }
-              ].map((item, i) => (
-                <div key={i} className="flex items-start gap-4 border-l-4 border-mes-lime pl-4 py-2">
-                  <div>
-                    <div className="font-black text-xs uppercase tracking-widest mb-1">{item.t}</div>
-                    <div className="text-sm text-gray-600">{item.d}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Modal Lector de Notícies */}
-      {selectedNews && (
-        <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl p-8">
-            <div className="flex justify-between items-start mb-6">
-              <span className="bg-black text-white px-2 py-1 text-[10px] font-black uppercase tracking-widest">{selectedNews.category}</span>
-              <button onClick={() => setSelectedNews(null)} className="text-3xl font-bold leading-none hover:text-mes-lime transition-colors">&times;</button>
-            </div>
-            <h2 className="text-3xl font-black uppercase leading-tight mb-4">{selectedNews.title}</h2>
-            <div className="text-xs font-bold text-gray-400 mb-8 tracking-widest">{selectedNews.date}</div>
-            <div className="prose prose-stone max-w-none text-gray-700 font-medium leading-relaxed whitespace-pre-wrap">
-              {selectedNews.content}
-            </div>
-            <div className="mt-10 pt-6 border-t border-gray-100">
-              <button onClick={() => setSelectedNews(null)} className="bg-black text-white px-8 py-3 font-black uppercase text-xs hover:bg-mes-lime hover:text-black transition-all">
-                Tancar Lector
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Footer */}
-      <footer className="bg-black text-white/50 py-16 text-center text-[10px] font-black uppercase tracking-widest">
-        <div className="mb-6 flex justify-center gap-4 text-white font-black text-sm">
-          <span className="hover:text-mes-lime cursor-pointer">Twitter</span>
-          <span className="hover:text-mes-lime cursor-pointer">Facebook</span>
-          <span className="hover:text-mes-lime cursor-pointer">Instagram</span>
-        </div>
-        © 2025 MÉS per Llucmajor · Compromís i Proximitat
-      </footer>
-
-      {/* Estils Inline per a la identitat visual */}
-      <style>{`
+    <style>
+        body { font-family: 'Barlow', sans-serif; overflow-x: hidden; }
         .bg-mes-lime { background-color: #c6d100; }
         .text-mes-lime { color: #c6d100; }
-        .border-mes-lime { border-color: #c6d100; }
-        .text-mes-dark { color: #1a1a1a; }
-        @font-face {
-          font-family: 'Geogrotesque';
-          src: local('Geogrotesque'), local('Barlow-Bold');
+        .btn-primary { 
+            background-color: #c6d100; 
+            color: #1a1a1a; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            padding: 0.75rem 1.5rem; 
+            transition: all 0.2s; 
+            display: inline-flex;
+            align-items: center;
         }
-      `}</style>
+        .btn-primary:hover { background-color: #1a1a1a; color: #c6d100; }
+        
+        /* Animacions xat */
+        .loading-dots:after { content: '.'; animation: dots 1.5s steps(5, end) infinite; }
+        @keyframes dots { 0%, 20% { content: '.'; } 40% { content: '..'; } 60% { content: '...'; } }
+        
+        .section-title-box {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+
+    <!-- 
+    <!-- Chosen Palette: MÉS per Llucmajor Oficial (#c6d100 / #1a1a1a). -->
+    <!-- Application Structure Plan: Versió robusta per a entorns locals i GitHub. Detecta automàticament si hi ha Firebase o utilitza dades locals. -->
+    <!-- Visualization & Content Choices: Inclou les mocions de motos d'aigua i reprovació com a dades base. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    -->
+</head>
+<body class="bg-white text-mes-dark">
+    <div id="root">
+        <!-- Estat de càrrega inicial mentre Babel processa -->
+        <div class="flex items-center justify-center min-h-screen font-bold uppercase tracking-widest">
+            Carregant entorn interactiu...
+        </div>
     </div>
-  );
-}
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- DADES DE DEMO (Per si no hi ha Firebase configurat) ---
+        const initialNews = [
+            { 
+                id: '1',
+                category: 'noticia', 
+                title: "MÉS s'oposa al circuit de motos d'aigua a s'Arenal", 
+                date: '23 DES 2024', 
+                summary: 'Hem presentat una proposta per rebutjar un projecte que amenaça la posidònia i el descans dels veïns.',
+                content: "El grup municipal de MÉS per Llucmajor ha presentat una proposta de resolució per al plenari de desembre per manifestar l'oposició ferma al projecte d'instal·lació d'un circuit de motos nàutiques a la costa de s'Arenal.\n\nL'activitat generaria un impacte acústic intrusiu que afectaria el benestar dels residents i la qualitat de l'experiència turística. A més, el projecte pretén ocupar 22.500 m² de fons marins adjacents a praderies de posidònia oceànica.\n\nJosep Oriol Gómez Díaz denuncia la saturació nàutica de la Badia de Palma i demana informes tècnics sobre l'impacte acústic i social."
+            },
+            { 
+                id: '2',
+                category: 'noticia', 
+                title: "Reprovació de la regidora d'Urbanisme per insults", 
+                date: '04 DES 2024', 
+                summary: 'Maria Barceló demana responsabilitats després que els micròfons captassin faltes de respecte greus.',
+                content: "MÉS per Llucmajor ha registrat una moció per a la reprovació de la regidora d'Urbanisme, Inmaculada Pérez, per les expressions ofensives contra la ciutadania durant el plenari de novembre.\n\nEl sistema de gravació va captar com la regidora es referia als ciutadans assistents amb expressions grolleres. Demanem que la batlia emeti una disculpa pública institucional dirigida a tots els veïnats."
+            }
+        ];
+
+        // --- CONFIGURACIÓ GEMINI ---
+        const geminiKey = ""; 
+        const geminiModel = "gemini-2.5-flash-preview-09-2025";
+
+        function App() {
+            const [news, setNews] = useState(initialNews);
+            const [filter, setFilter] = useState('all');
+            const [isAdmin, setIsAdmin] = useState(false);
+            const [selectedArticle, setSelectedArticle] = useState(null);
+            const [isChatOpen, setIsChatOpen] = useState(false);
+            const [chatMessages, setChatMessages] = useState([{ role: 'ai', text: "Bon dia! Soc l'assistent de MÉS per Llucmajor. Com et puc ajudar avui?" }]);
+            
+            const [formData, setFormData] = useState({ title: '', category: 'noticia', summary: '', content: '' });
+
+            // Funció per cridar a Gemini
+            async function askGemini(prompt, system = "") {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${geminiKey}`;
+                try {
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }],
+                            systemInstruction: { parts: [{ text: system }] }
+                        })
+                    });
+                    const data = await res.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Ho sento, no he pogut processar la teva petició.";
+                } catch (e) { return "Error de connexió amb l'IA."; }
+            }
+
+            const handleAdminToggle = () => {
+                if(isAdmin) { setIsAdmin(false); return; }
+                const pass = prompt("Contrasenya de gestió:");
+                if(pass === "mes2025") setIsAdmin(true);
+                else alert("Accés denegat.");
+            };
+
+            const publishNews = (e) => {
+                e.preventDefault();
+                const newArticle = {
+                    ...formData,
+                    id: Date.now().toString(),
+                    date: new Date().toLocaleDateString('ca-ES', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()
+                };
+                setNews([newArticle, ...news]);
+                setFormData({ title: '', category: 'noticia', summary: '', content: '' });
+                setIsAdmin(false);
+            };
+
+            const sendChat = async (e) => {
+                e.preventDefault();
+                const input = e.target.chatInput;
+                const text = input.value;
+                if(!text) return;
+
+                setChatMessages(prev => [...prev, { role: 'user', text }]);
+                input.value = '';
+
+                const sys = "Ets l'assistent de MÉS per Llucmajor. Coneixes les mocions de motos d'aigua i la reprovació de la regidora Pérez. Respon en català de Mallorca.";
+                const resp = await askGemini(text, sys);
+                setChatMessages(prev => [...prev, { role: 'ai', text: resp }]);
+            };
+
+            const chartRef = useRef(null);
+            useEffect(() => {
+                if (chartRef.current) {
+                    new Chart(chartRef.current, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['SOCIAL', 'ECOLOGIA', 'CULTURA', 'GOVERN'],
+                            datasets: [{ data: [40, 30, 20, 10], backgroundColor: ['#c6d100', '#1a1a1a', '#666', '#ccc'], borderWidth: 0 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false }
+                    });
+                }
+            }, []);
+
+            return (
+                <div className="min-h-screen flex flex-col">
+                    {/* NAV */}
+                    <nav className="fixed w-full z-50 bg-white border-b-4 border-mes-lime px-6 py-4 flex justify-between items-center shadow-sm">
+                        <div className="flex items-center gap-3">
+                            <img src="image_5e196d.png" alt="MÉS" className="h-10 sm:h-12" onError={(e) => e.target.style.display='none'} />
+                            <div className="flex flex-col leading-none">
+                                <span className="font-black text-xl tracking-tighter uppercase">MÉS</span>
+                                <span className="text-[10px] font-bold text-gray-400 tracking-widest">PER LLUCMAJOR</span>
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            <button onClick={handleAdminToggle} className="bg-mes-dark text-mes-lime px-3 py-1 text-[10px] font-black uppercase tracking-widest hover:bg-black">
+                                {isAdmin ? 'Sortir' : 'Gestió ✨'}
+                            </button>
+                        </div>
+                    </nav>
+
+                    {/* HERO */}
+                    <header className="pt-32 pb-20 bg-mes-gray px-6">
+                        <div className="max-w-4xl mx-auto">
+                            <div className="section-title-box">Som el futur</div>
+                            <h1 className="text-4xl md:text-7xl font-black uppercase leading-none mb-6">CONSTRUÏM EL <br/><span className="bg-black text-mes-lime px-2">LLUCMAJOR</span> QUE VOLEM.</h1>
+                            <p className="text-lg font-medium text-gray-600 max-w-2xl">L'eina participativa de MÉS per estar al dia del que passa al nostre municipi i enviar les teves propostes.</p>
+                        </div>
+                    </header>
+
+                    {/* FORMULARI GESTIÓ */}
+                    {isAdmin && (
+                        <div className="bg-mes-lime py-10 px-6">
+                            <form onSubmit={publishNews} className="max-w-4xl mx-auto bg-black p-8 text-white space-y-4">
+                                <h2 className="text-2xl font-black uppercase mb-4">Nova Notícia</h2>
+                                <input placeholder="TÍTOL" className="w-full bg-white/10 p-4 font-bold border-b border-white outline-none focus:bg-white focus:text-black" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} required />
+                                <textarea placeholder="RESUM" className="w-full bg-white/10 p-4 font-bold border-b border-white outline-none focus:bg-white focus:text-black" value={formData.summary} onChange={e => setFormData({...formData, summary: e.target.value})} required />
+                                <textarea placeholder="CONTINGUT" rows="4" className="w-full bg-white/10 p-4 font-bold border-b border-white outline-none focus:bg-white focus:text-black" value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})} required />
+                                <button type="submit" className="w-full bg-mes-lime text-black py-4 font-black uppercase hover:bg-white">Publicar</button>
+                            </form>
+                        </div>
+                    )}
+
+                    {/* NOTÍCIES */}
+                    <section id="actualitat" className="py-20 px-6 max-w-7xl mx-auto w-full">
+                        <div className="section-title-box">Actualitat</div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+                            {news.map(n => (
+                                <div key={n.id} className="bg-mes-gray p-6 flex flex-col border-b-4 border-transparent hover:border-mes-lime transition-all h-full">
+                                    <div className="flex justify-between text-[10px] font-bold text-gray-400 mb-4">
+                                        <span className="bg-black text-white px-2 py-0.5 uppercase tracking-widest">{n.category}</span>
+                                        <span>{n.date}</span>
+                                    </div>
+                                    <h3 className="text-xl font-black uppercase leading-tight mb-4 flex-grow">{n.title}</h3>
+                                    <p className="text-sm text-gray-600 mb-6 line-clamp-3">{n.summary}</p>
+                                    <button onClick={() => setSelectedArticle(n)} className="text-xs font-black uppercase border-b-2 border-mes-lime self-start">Llegir notícia</button>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* PROGRAMA */}
+                    <section className="py-20 bg-gray-50 px-6">
+                        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                            <div className="bg-white p-8 h-80 flex items-center justify-center">
+                                <canvas ref={chartRef}></canvas>
+                            </div>
+                            <div>
+                                <h2 className="text-4xl font-black uppercase leading-tight mb-6">Un programa centrat en Llucmajor</h2>
+                                <div className="space-y-4">
+                                    {["HABITATGE JOVE", "SOSTENIBILITAT REAL", "CULTURA MALLORQUINA"].map(t => (
+                                        <div key={t} className="border-l-4 border-mes-lime pl-4 font-black text-sm uppercase tracking-widest">{t}</div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* MODAL LECTOR */}
+                    {selectedArticle && (
+                        <div className="fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4" onClick={() => setSelectedArticle(null)}>
+                            <div className="bg-white max-w-2xl w-full p-8 rounded shadow-2xl overflow-y-auto max-h-[85vh]" onClick={e => e.stopPropagation()}>
+                                <button onClick={() => setSelectedArticle(null)} className="float-right text-3xl font-bold">&times;</button>
+                                <span className="bg-black text-white px-2 py-1 text-[10px] font-black uppercase tracking-widest">{selectedArticle.category}</span>
+                                <h2 className="text-3xl font-black uppercase my-4 leading-tight">{selectedArticle.title}</h2>
+                                <p className="text-gray-700 whitespace-pre-wrap font-medium leading-relaxed">{selectedArticle.content}</p>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* AI CHAT */}
+                    {isChatOpen && (
+                        <div className="fixed bottom-24 right-6 w-80 h-96 bg-white border-4 border-black z-[1000] flex flex-col shadow-2xl">
+                            <div className="bg-black p-3 text-white font-black text-xs flex justify-between uppercase"><span>Assistent IA ✨</span><button onClick={() => setIsChatOpen(false)}>✕</button></div>
+                            <div className="flex-grow p-4 overflow-y-auto text-xs space-y-3 bg-gray-100">
+                                {chatMessages.map((m, i) => (
+                                    <div key={i} className={`p-2 rounded-lg ${m.role === 'ai' ? 'bg-mes-lime text-black self-start' : 'bg-gray-300 self-end ml-4'}`}>
+                                        {m.text}
+                                    </div>
+                                ))}
+                            </div>
+                            <form onSubmit={sendChat} className="p-2 border-t flex gap-1 bg-white">
+                                <input name="chatInput" placeholder="Pregunta..." className="flex-grow p-2 text-xs border outline-none" />
+                                <button className="bg-black text-mes-lime px-3 py-1 text-[10px] font-black uppercase">Envia</button>
+                            </form>
+                        </div>
+                    )}
+
+                    <button onClick={() => setIsChatOpen(!isChatOpen)} className="fixed bottom-6 right-6 w-14 h-14 bg-black border-4 border-mes-lime text-2xl rounded-full shadow-2xl hover:scale-110 transition-all z-[1000]">✨</button>
+
+                    <footer className="py-10 bg-black text-white/30 text-[10px] font-black uppercase tracking-widest text-center">
+                        MÉS PER LLUCMAJOR · 2025
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
