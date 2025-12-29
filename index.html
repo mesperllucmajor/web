@@ -1,644 +1,304 @@
-<!DOCTYPE html>
-<html lang="ca">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MÉS per Llucmajor - El futur que volem</title>
+import React, { useState, useEffect } from 'react';
+import { initializeApp } from 'firebase/app';
+import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
+import { getFirestore, collection, addDoc, onSnapshot, query, doc, deleteDoc } from 'firebase/firestore';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+ChartJS.register(ArcElement, Tooltip, Legend);
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+// Configuració de Firebase des de l'entorn
+const firebaseConfig = JSON.parse(__firebase_config);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const appId = typeof __app_id !== 'undefined' ? __app_id : 'mes-llucmajor-default';
 
-    <!-- Fonts: Barlow s'assembla molt a Geogrotesque per a l'entorn web -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap"
-      rel="stylesheet"
-    />
+export default function App() {
+  const [user, setUser] = useState(null);
+  const [news, setNews] = useState([]);
+  const [filter, setFilter] = useState('all');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [selectedNews, setSelectedNews] = useState(null);
+  
+  // Form State
+  const [form, setForm] = useState({ title: '', category: 'noticia', summary: '', content: '' });
 
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ["Geogrotesque", "Barlow", "sans-serif"],
-            },
-            colors: {
-              mes: {
-                lime: "#c6d100", // Color oficial
-                dark: "#1a1a1a", // Negre institucional
-                gray: "#f4f4f4", // Gris clar
-                text: "#333333",
-              },
-            },
-          },
-        },
-      };
-    </script>
-
-    <style>
-      body {
-        font-family: "Barlow", sans-serif;
-        color: #1a1a1a;
-        scroll-behavior: smooth;
+  // 1. Auth Initializer (Rule 3)
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        await signInAnonymously(auth);
+      } catch (err) {
+        console.error("Auth error", err);
       }
+    };
+    initAuth();
+    const unsubscribe = onAuthStateChanged(auth, setUser);
+    return () => unsubscribe();
+  }, []);
 
-      .bg-mes-lime {
-        background-color: #c6d100;
-      }
-      .text-mes-lime {
-        color: #c6d100;
-      }
-      .border-mes-lime {
-        border-color: #c6d100;
-      }
+  // 2. Data Fetching (Rule 1 & 2)
+  useEffect(() => {
+    if (!user) return;
+    
+    const q = collection(db, 'artifacts', appId, 'public', 'data', 'news');
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const docs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+      // Ordenem per data manualment (Rule 2: No complex queries)
+      const sorted = docs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      setNews(sorted);
+    }, (err) => console.error("Firestore error", err));
 
-      .btn-primary {
-        background-color: #c6d100;
-        color: #1a1a1a;
-        font-weight: 800;
-        text-transform: uppercase;
-        padding: 0.75rem 1.5rem;
-        transition: all 0.2s ease;
-        display: inline-flex;
-        align-items: center;
-        letter-spacing: 0.05em;
-      }
-      .btn-primary:hover {
-        background-color: #1a1a1a;
-        color: #c6d100;
-      }
+    return () => unsubscribe();
+  }, [user]);
 
-      .section-title-box {
-        background-color: #1a1a1a;
-        color: white;
-        padding: 0.5rem 1rem;
-        display: inline-block;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 1.5rem;
-      }
+  const handleAddNews = async (e) => {
+    e.preventDefault();
+    if (!user || !form.title) return;
+    try {
+      await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'news'), {
+        ...form,
+        date: new Date().toLocaleDateString('ca-ES', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase(),
+        createdAt: new Date().toISOString()
+      });
+      setForm({ title: '', category: 'noticia', summary: '', content: '' });
+      setIsAdmin(false);
+    } catch (err) {
+      console.error("Error publicant", err);
+    }
+  };
 
-      .chart-container {
-        position: relative;
-        width: 100%;
-        max-width: 500px;
-        margin: auto;
-        height: 300px;
-      }
+  const handleDelete = async (id) => {
+    if (!window.confirm("Segur que vols esborrar aquesta notícia?")) return;
+    try {
+      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'news', id));
+    } catch (err) {
+      console.error("Error esborrant", err);
+    }
+  };
 
-      /* AI Chat UI */
-      #ai-chat-window {
-        display: none;
-        position: fixed;
-        bottom: 90px;
-        right: 20px;
-        width: 350px;
-        height: 450px;
-        z-index: 1000;
-        flex-direction: column;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        border-radius: 12px;
-        overflow: hidden;
-        background: white;
-        border: 2px solid #1a1a1a;
-      }
+  const filteredNews = filter === 'all' ? news : news.filter(n => n.category === filter);
 
-      .chat-bubble-ai {
-        background: #c6d100;
-        color: #1a1a1a;
-        align-self: flex-start;
-        border-radius: 0 12px 12px 12px;
-      }
+  const chartData = {
+    labels: ['SOCIAL', 'ECOLOGIA', 'CULTURA', 'GOVERN'],
+    datasets: [{
+      data: [35, 30, 20, 15],
+      backgroundColor: ['#c6d100', '#1a1a1a', '#575757', '#a3a3a3'],
+      borderWidth: 0
+    }]
+  };
 
-      .chat-bubble-user {
-        background: #f4f4f4;
-        color: #1a1a1a;
-        align-self: flex-end;
-        border-radius: 12px 12px 0 12px;
-      }
-
-      .loading-dots:after {
-        content: ".";
-        animation: dots 1.5s steps(5, end) infinite;
-      }
-      @keyframes dots {
-        0%,
-        20% {
-          content: ".";
-        }
-        40% {
-          content: "..";
-        }
-        60% {
-          content: "...";
-        }
-      }
-    </style>
-
-    <!-- 
-    <!-- Chosen Palette: MÉS Corporativa (#c6d100 / #1a1a1a) -->
-    <!-- Application Structure Plan: Pàgina única (SPA) amb seccions de notícies, programa interactiu, visió política i bústia de suggeriments. Incorpora assistent Gemini per a consultes i refinament de text. -->
-    <!-- Visualization & Content Choices: Gràfics Chart.js per a prioritats, filtratge de notícies dinàmic i xat flotant d'IA. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    -->
-  </head>
-  <body class="bg-white">
-    <!-- Navegació -->
-    <nav
-      class="fixed w-full z-50 bg-white border-b-4 border-mes-lime shadow-md"
-    >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-20">
-          <div
-            class="flex items-center cursor-pointer py-2"
-            onclick="window.scrollTo(0,0)"
-          >
-            <!-- Ús del logo adjuntat -->
-            <img
-              src="Logo.png"
-              alt="MÉS per Llucmajor"
-              class="h-14 w-auto"
-            />
+  return (
+    <div className="min-h-screen bg-white font-sans text-mes-dark">
+      {/* Navbar */}
+      <nav className="fixed w-full z-50 bg-white border-b-4 border-mes-lime shadow-md px-4 sm:px-8 py-4 flex justify-between items-center">
+        <div className="flex items-center gap-4">
+          <div className="bg-mes-lime text-black font-black px-3 py-1 text-2xl">M</div>
+          <div className="leading-none uppercase font-bold tracking-tighter">
+            <div className="text-xl">MÉS</div>
+            <div className="text-[10px] text-gray-500 tracking-widest">per Llucmajor</div>
           </div>
-          <div class="hidden md:flex space-x-8 items-center">
-            <a
-              href="#actualitat"
-              class="font-bold text-sm uppercase tracking-widest hover:text-mes-lime transition-colors"
-              >Actualitat</a
-            >
-            <a
-              href="#visio"
-              class="font-bold text-sm uppercase tracking-widest hover:text-mes-lime transition-colors"
-              >Visió</a
-            >
-            <a
-              href="#programa"
-              class="font-bold text-sm uppercase tracking-widest hover:text-mes-lime transition-colors"
-              >Programa</a
-            >
-            <a href="#bustia" class="btn-primary text-xs">Bústia 📩</a>
-          </div>
-          <button id="mobile-btn" class="md:hidden text-2xl">☰</button>
         </div>
-      </div>
-      <div
-        id="mobile-menu"
-        class="hidden md:hidden bg-mes-dark text-white p-6 space-y-4"
-      >
-        <a href="#actualitat" class="block font-bold uppercase tracking-widest"
-          >Actualitat</a
-        >
-        <a href="#visio" class="block font-bold uppercase tracking-widest"
-          >Visió</a
-        >
-        <a href="#programa" class="block font-bold uppercase tracking-widest"
-          >Programa</a
-        >
-        <a
-          href="#bustia"
-          class="block font-bold uppercase tracking-widest text-mes-lime"
-          >Bústia</a
-        >
-      </div>
-    </nav>
+        <div className="hidden md:flex gap-6 items-center font-bold text-xs tracking-widest uppercase">
+          <a href="#actualitat" className="hover:text-mes-lime">Actualitat</a>
+          <a href="#visio" className="hover:text-mes-lime">Visió</a>
+          <a href="#programa" className="hover:text-mes-lime">Programa</a>
+          <button onClick={() => setIsAdmin(!isAdmin)} className="bg-mes-dark text-mes-lime px-4 py-2 hover:bg-black">
+            {isAdmin ? 'Tancar Gestor' : 'Gestió ✨'}
+          </button>
+        </div>
+      </nav>
 
-    <!-- Hero -->
-    <header class="pt-36 pb-20 bg-mes-gray">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="max-w-4xl">
-          <div class="section-title-box">Projecte de futur</div>
-          <h1
-            class="text-5xl md:text-7xl font-extrabold leading-none mb-6 uppercase"
-          >
-            EL LLUCMAJOR <br /><span class="text-mes-lime bg-mes-dark px-2"
-              >QUE TU VOLEMS</span
-            >.
+      {/* Hero */}
+      <header className="pt-40 pb-20 bg-gray-100 px-6 sm:px-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-black text-white px-3 py-1 inline-block font-bold uppercase text-xs mb-4 tracking-widest">Projecte Municipal</div>
+          <h1 className="text-5xl md:text-7xl font-black uppercase leading-none mb-6">
+            EL FUTUR DE <br/><span className="bg-black text-mes-lime px-2">LLUCMAJOR</span> ÉS AQUÍ.
           </h1>
-          <p class="text-xl text-stone-700 mb-8 font-medium max-w-2xl">
-            Treballem per un municipi arrelat, sostenible i amb serveis dignes
-            per a tots els nuclis, des de s'Arenal fins al centre.
+          <p className="text-lg font-medium text-gray-600 max-w-xl mb-8">
+            Fem política des de la proximitat per transformar s'Arenal, Llucmajor i totes les nostres urbanitzacions.
           </p>
-          <div class="flex flex-wrap gap-4">
-            <a href="#programa" class="btn-primary text-lg px-8 py-4"
-              >Consulta el Programa</a
-            >
-            <button
-              onclick="toggleChat()"
-              class="border-4 border-mes-dark px-8 py-4 font-extrabold uppercase text-lg tracking-widest hover:bg-mes-dark hover:text-white transition-all"
-            >
-              Assistent IA ✨
-            </button>
+          <div className="flex gap-4">
+            <a href="#actualitat" className="bg-mes-lime text-black px-8 py-4 font-black uppercase text-sm hover:bg-black hover:text-mes-lime transition-all">Darreres Notícies</a>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <!-- Secció Actualitat -->
-    <section id="actualitat" class="py-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div
-          class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6"
-        >
+      {/* Admin Panel (Visible només quan isAdmin és cert) */}
+      {isAdmin && (
+        <section className="py-12 bg-mes-lime px-6">
+          <div className="max-w-4xl mx-auto bg-black p-8 text-white shadow-2xl">
+            <h2 className="text-2xl font-black uppercase mb-6 flex items-center gap-2">
+              <span>✍️</span> Publicar Nova Notícia
+            </h2>
+            <form onSubmit={handleAddNews} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input 
+                  type="text" 
+                  placeholder="TÍTOL DE LA NOTÍCIA" 
+                  className="bg-white/10 p-4 font-bold border-b border-white outline-none focus:bg-white focus:text-black w-full"
+                  value={form.title}
+                  onChange={e => setForm({...form, title: e.target.value})}
+                  required
+                />
+                <select 
+                  className="bg-white/10 p-4 font-bold border-b border-white outline-none focus:bg-white focus:text-black w-full"
+                  value={form.category}
+                  onChange={e => setForm({...form, category: e.target.value})}
+                >
+                  <option value="noticia">NOTÍCIA</option>
+                  <option value="opinio">OPINIÓ</option>
+                  <option value="agenda">AGENDA</option>
+                </select>
+              </div>
+              <textarea 
+                placeholder="RESUM BREU (per a la graella)" 
+                className="bg-white/10 p-4 font-bold border-b border-white outline-none focus:bg-white focus:text-black w-full"
+                value={form.summary}
+                onChange={e => setForm({...form, summary: e.target.value})}
+                required
+              />
+              <textarea 
+                placeholder="CONTINGUT COMPLET DE LA NOTÍCIA" 
+                rows="6"
+                className="bg-white/10 p-4 font-bold border-b border-white outline-none focus:bg-white focus:text-black w-full"
+                value={form.content}
+                onChange={e => setForm({...form, content: e.target.value})}
+                required
+              />
+              <button type="submit" className="bg-mes-lime text-black w-full py-4 font-black uppercase text-lg hover:bg-white">
+                Publicar Ara Mateix
+              </button>
+            </form>
+          </div>
+        </section>
+      )}
+
+      {/* Actualitat Grid */}
+      <section id="actualitat" className="py-20 px-6 sm:px-12 max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div>
-            <div class="section-title-box">Actualitat</div>
-            <h2 class="text-4xl font-extrabold uppercase">Notícies i Opinió</h2>
+            <div className="bg-black text-white px-3 py-1 inline-block font-bold uppercase text-xs mb-4 tracking-widest">Informació Directa</div>
+            <h2 className="text-4xl font-black uppercase leading-none">Actualitat i Opinió</h2>
           </div>
-          <div class="flex gap-2">
-            <button
-              onclick="filterNews('all')"
-              class="news-filter active font-bold text-xs uppercase px-4 py-2 bg-mes-dark text-white"
-              data-f="all"
-            >
-              Tot
-            </button>
-            <button
-              onclick="filterNews('noticia')"
-              class="news-filter font-bold text-xs uppercase px-4 py-2 bg-mes-gray hover:bg-mes-lime"
-              data-f="noticia"
-            >
-              Notícies
-            </button>
-            <button
-              onclick="filterNews('opinio')"
-              class="news-filter font-bold text-xs uppercase px-4 py-2 bg-mes-gray hover:bg-mes-lime"
-              data-f="opinio"
-            >
-              Opinió
-            </button>
-          </div>
-        </div>
-        <div id="news-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <!-- Injected via JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- El Llucmajor que volem -->
-    <section id="visio" class="py-20 bg-mes-dark text-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <div
-            class="bg-mes-lime text-mes-dark px-4 py-1 inline-block font-extrabold uppercase mb-4"
-          >
-            La nostra visió
-          </div>
-          <h2 class="text-4xl md:text-5xl font-extrabold uppercase">
-            Un municipi per a viure-hi
-          </h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div class="border-l-4 border-mes-lime pl-6">
-            <span class="text-4xl mb-4 block">🏠</span>
-            <h3 class="text-2xl font-extrabold uppercase mb-4">
-              Habitatge Digne
-            </h3>
-            <p class="text-stone-400 font-medium">
-              Prioritzem l'accés a l'habitatge per als joves i frenem
-              l'especulació als nostres barris.
-            </p>
-          </div>
-          <div class="border-l-4 border-mes-lime pl-6">
-            <span class="text-4xl mb-4 block">🌳</span>
-            <h3 class="text-2xl font-extrabold uppercase mb-4">
-              Sostenibilitat
-            </h3>
-            <p class="text-stone-400 font-medium">
-              Protegim el nostre entorn natural i apostam per una energia neta i
-              de quilòmetre zero.
-            </p>
-          </div>
-          <div class="border-l-4 border-mes-lime pl-6">
-            <span class="text-4xl mb-4 block">🗣️</span>
-            <h3 class="text-2xl font-extrabold uppercase mb-4">
-              Cultura i Llengua
-            </h3>
-            <p class="text-stone-400 font-medium">
-              Defensam la nostra identitat i feim costat al teixit associatiu i
-              cultural del poble.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Programa -->
-    <section id="programa" class="py-20 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-          <div class="section-title-box">Programa Electoral</div>
-          <h2 class="text-4xl font-extrabold uppercase">Prioritats d'acció</h2>
-        </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div class="bg-mes-gray p-8 text-center">
-            <h3 class="text-lg font-bold uppercase mb-4 tracking-widest">
-              Eixos de Pressupost
-            </h3>
-            <div class="chart-container">
-              <canvas id="programChart"></canvas>
-            </div>
-          </div>
-          <div class="space-y-4" id="axis-content">
-            <!-- Injected via JS -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Bústia -->
-    <section id="bustia" class="py-20 bg-mes-lime">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-mes-dark text-white p-8 md:p-12 shadow-2xl">
-          <h2 class="text-3xl font-extrabold uppercase mb-4">
-            Bústia de Suggeriments
-          </h2>
-          <p class="mb-8 text-mes-lime font-bold">
-            Ajuda'ns a millorar el municipi amb les teves propostes.
-          </p>
-          <form id="contactForm" class="space-y-6 text-mes-dark">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="NOM"
-                class="w-full p-4 font-bold outline-none"
-                required
-              />
-              <input
-                type="email"
-                placeholder="CORREU"
-                class="w-full p-4 font-bold outline-none"
-                required
-              />
-            </div>
-            <div class="relative">
-              <textarea
-                id="suggestion-text"
-                placeholder="EL TEU SUGGERIMENT..."
-                rows="4"
-                class="w-full p-4 font-medium outline-none"
-                required
-              ></textarea>
-              <button
-                type="button"
-                onclick="refineText()"
-                class="absolute bottom-2 right-2 bg-mes-dark text-mes-lime px-3 py-1 text-xs font-bold uppercase hover:bg-black transition-colors"
+          <div className="flex gap-2 font-bold text-[10px] tracking-widest uppercase">
+            {['all', 'noticia', 'opinio'].map(f => (
+              <button 
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`px-4 py-2 border-2 ${filter === f ? 'bg-black text-white border-black' : 'bg-white border-gray-200 hover:border-mes-lime'}`}
               >
-                Millorar amb IA ✨
+                {f === 'all' ? 'TOT' : f}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredNews.map((n) => (
+            <div key={n.id} className="group border-b-4 border-transparent hover:border-mes-lime transition-all bg-gray-50 p-6 flex flex-col">
+              <div className="flex justify-between items-center mb-4">
+                <span className="bg-black text-white px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">{n.category}</span>
+                <span className="text-[10px] font-bold text-gray-400">{n.date}</span>
+              </div>
+              <h3 className="text-xl font-black uppercase leading-tight mb-4 flex-grow">{n.title}</h3>
+              <p className="text-sm text-gray-600 mb-6 line-clamp-3">{n.summary}</p>
+              <div className="flex justify-between items-center">
+                <button 
+                  onClick={() => setSelectedNews(n)}
+                  className="text-xs font-black uppercase border-b-2 border-mes-lime hover:bg-mes-lime transition-colors px-1"
+                >
+                  Llegir Notícia
+                </button>
+                {isAdmin && (
+                  <button onClick={() => handleDelete(n.id)} className="text-red-500 text-xs font-bold hover:underline">Esborrar</button>
+                )}
+              </div>
+            </div>
+          ))}
+          {news.length === 0 && (
+            <div className="col-span-full py-20 text-center text-gray-400 font-bold uppercase italic">
+              No hi ha notícies publicades encara. Prem "Gestió" per afegir-ne una.
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Programa Section with Chart */}
+      <section id="programa" className="py-20 bg-gray-50 px-6 sm:px-12">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="bg-white p-10 shadow-xl text-center">
+            <h3 className="font-black uppercase tracking-widest text-sm mb-6">Prioritats del nostre model</h3>
+            <div className="h-64 flex justify-center">
+              <Doughnut data={chartData} options={{ maintainAspectRatio: false }} />
+            </div>
+          </div>
+          <div>
+            <div className="bg-black text-white px-3 py-1 inline-block font-bold uppercase text-xs mb-4 tracking-widest">Full de Ruta</div>
+            <h2 className="text-4xl font-black uppercase leading-tight mb-8">Un programa per a <br/>transformar el municipi</h2>
+            <div className="space-y-4">
+              {[
+                { t: 'HABITATGE', d: 'Creació de borsa d’habitatge jove i assequible.' },
+                { t: 'SOSTENIBILITAT', d: 'Protecció del rústic i sobirania energètica local.' },
+                { t: 'CULTURA', d: 'Foment de la llengua i suport al teixit associatiu.' }
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-4 border-l-4 border-mes-lime pl-4 py-2">
+                  <div>
+                    <div className="font-black text-xs uppercase tracking-widest mb-1">{item.t}</div>
+                    <div className="text-sm text-gray-600">{item.d}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Modal Lector de Notícies */}
+      {selectedNews && (
+        <div className="fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4">
+          <div className="bg-white w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-lg shadow-2xl p-8">
+            <div className="flex justify-between items-start mb-6">
+              <span className="bg-black text-white px-2 py-1 text-[10px] font-black uppercase tracking-widest">{selectedNews.category}</span>
+              <button onClick={() => setSelectedNews(null)} className="text-3xl font-bold leading-none hover:text-mes-lime transition-colors">&times;</button>
+            </div>
+            <h2 className="text-3xl font-black uppercase leading-tight mb-4">{selectedNews.title}</h2>
+            <div className="text-xs font-bold text-gray-400 mb-8 tracking-widest">{selectedNews.date}</div>
+            <div className="prose prose-stone max-w-none text-gray-700 font-medium leading-relaxed whitespace-pre-wrap">
+              {selectedNews.content}
+            </div>
+            <div className="mt-10 pt-6 border-t border-gray-100">
+              <button onClick={() => setSelectedNews(null)} className="bg-black text-white px-8 py-3 font-black uppercase text-xs hover:bg-mes-lime hover:text-black transition-all">
+                Tancar Lector
               </button>
             </div>
-            <button
-              type="submit"
-              class="btn-primary w-full py-4 text-xl justify-center"
-            >
-              Enviar Proposta
-            </button>
-          </form>
-          <div
-            id="form-ok"
-            class="hidden mt-6 text-center text-mes-lime font-bold text-xl uppercase animate-pulse"
-          >
-            Enviat correctament! Gràcies.
           </div>
         </div>
-      </div>
-    </section>
+      )}
 
-    <!-- AI Chat Window -->
-    <div id="ai-chat-window" class="flex flex-col">
-      <div class="bg-mes-dark p-4 text-white flex justify-between items-center">
-        <span class="font-bold uppercase text-xs tracking-widest"
-          >✨ Assistent MÉS</span
-        >
-        <button onclick="toggleChat()" class="text-mes-lime">✕</button>
-      </div>
-      <div
-        id="chat-messages"
-        class="flex-grow p-4 overflow-y-auto space-y-3 bg-stone-50 text-sm"
-      >
-        <div class="chat-bubble-ai p-3">
-          Hola! Soc l'IA de MÉS per Llucmajor. En què et puc ajudar sobre el
-          nostre programa?
+      {/* Footer */}
+      <footer className="bg-black text-white/50 py-16 text-center text-[10px] font-black uppercase tracking-widest">
+        <div className="mb-6 flex justify-center gap-4 text-white font-black text-sm">
+          <span className="hover:text-mes-lime cursor-pointer">Twitter</span>
+          <span className="hover:text-mes-lime cursor-pointer">Facebook</span>
+          <span className="hover:text-mes-lime cursor-pointer">Instagram</span>
         </div>
-      </div>
-      <div class="p-3 border-t flex gap-2">
-        <input
-          type="text"
-          id="chat-input"
-          placeholder="Pregunta..."
-          class="flex-grow border p-2 text-sm outline-none"
-        />
-        <button
-          onclick="sendChatMessage()"
-          class="bg-mes-dark text-mes-lime px-4 py-2 font-bold text-xs uppercase"
-        >
-          Envia
-        </button>
-      </div>
-    </div>
+        © 2025 MÉS per Llucmajor · Compromís i Proximitat
+      </footer>
 
-    <!-- Floating Bubble -->
-    <button
-      onclick="toggleChat()"
-      class="fixed bottom-6 right-6 w-14 h-14 bg-mes-dark border-4 border-mes-lime text-2xl rounded-full shadow-xl hover:scale-110 transition-transform z-50"
-    >
-      ✨
-    </button>
-
-    <footer
-      class="bg-mes-dark text-white/50 py-10 text-center text-[10px] uppercase font-bold tracking-widest"
-    >
-      © 2025 MÉS per Llucmajor · El futur és a les nostres mans
-    </footer>
-
-    <script>
-      const apiKey = ""; // API Key automatitzada
-      const model = "gemini-2.5-flash-preview-09-2025";
-
-      // Dades
-      const news = [
-        {
-          type: "noticia",
-          title: "Exigim una millora de les freqüències de bus a s'Arenal",
-          date: "28 DES 2024",
-          summary:
-            "La connectivitat del municipi és una prioritat absoluta per a nosaltres.",
-        },
-        {
-          type: "opinio",
-          title: "Llucmajor no pot ser el pati del darrere de Palma",
-          date: "15 DES 2024",
-          summary: "Article d'opinió sobre el model urbanístic i turístic.",
-        },
-        {
-          type: "noticia",
-          title: "Assemblea oberta: Presentació del programa 2025",
-          date: "10 DES 2024",
-          summary:
-            "Volem un programa participatiu i obert a tota la ciutadania.",
-        },
-      ];
-
-      const axis = {
-        social: [
-          "Habitatge jove assequible.",
-          "Gratuïtat de l'etapa 0-3 anys.",
-          "Reforç de Serveis Socials.",
-        ],
-        eco: [
-          "Protecció del sòl rústic.",
-          "Autoconsum energètic municipal.",
-          "Millora del reciclatge.",
-        ],
-        governança: [
-          "Pressupostos participatius reals.",
-          "Transparència en la gestió.",
-          "Consell de Barri a s'Arenal.",
-        ],
-      };
-
-      // API Call Helper
-      async function askGemini(prompt, system = "") {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-        const body = {
-          contents: [{ parts: [{ text: prompt }] }],
-          systemInstruction: { parts: [{ text: system }] },
-        };
-
-        for (let i = 0; i < 5; i++) {
-          try {
-            const response = await fetch(url, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(body),
-            });
-            const data = await response.json();
-            return (
-              data.candidates?.[0]?.content?.parts?.[0]?.text ||
-              "Ho sento, ha hagut un problema."
-            );
-          } catch (e) {
-            await new Promise((r) => setTimeout(r, Math.pow(2, i) * 1000));
-          }
+      {/* Estils Inline per a la identitat visual */}
+      <style>{`
+        .bg-mes-lime { background-color: #c6d100; }
+        .text-mes-lime { color: #c6d100; }
+        .border-mes-lime { border-color: #c6d100; }
+        .text-mes-dark { color: #1a1a1a; }
+        @font-face {
+          font-family: 'Geogrotesque';
+          src: local('Geogrotesque'), local('Barlow-Bold');
         }
-        return "Error de connexió.";
-      }
-
-      // Lògica Notícies
-      function renderNews(filter = "all") {
-        const container = document.getElementById("news-container");
-        container.innerHTML = "";
-        const filtered =
-          filter === "all" ? news : news.filter((n) => n.type === filter);
-        filtered.forEach((n) => {
-          container.innerHTML += `
-                <div class="bg-mes-gray p-6 border-b-4 border-transparent hover:border-mes-lime transition-all h-full flex flex-col">
-                    <div class="flex justify-between text-[10px] font-bold mb-4 uppercase text-stone-400">
-                        <span class="bg-mes-dark text-white px-2 py-0.5">${n.type}</span>
-                        <span>${n.date}</span>
-                    </div>
-                    <h3 class="text-xl font-extrabold uppercase mb-4 flex-grow">${n.title}</h3>
-                    <p class="text-sm text-stone-600 mb-6">${n.summary}</p>
-                    <a href="#" class="text-xs font-bold uppercase border-b-2 border-mes-lime self-start">Llegir més</a>
-                </div>`;
-        });
-      }
-
-      function filterNews(f) {
-        document.querySelectorAll(".news-filter").forEach((b) => {
-          b.classList.toggle("bg-mes-dark", b.dataset.f === f);
-          b.classList.toggle("text-white", b.dataset.f === f);
-        });
-        renderNews(f);
-      }
-
-      // IA Chat
-      function toggleChat() {
-        const chat = document.getElementById("ai-chat-window");
-        chat.style.display = chat.style.display === "flex" ? "none" : "flex";
-      }
-
-      async function sendChatMessage() {
-        const input = document.getElementById("chat-input");
-        const box = document.getElementById("chat-messages");
-        if (!input.value) return;
-
-        const text = input.value;
-        box.innerHTML += `<div class="chat-bubble-user p-3">${text}</div>`;
-        input.value = "";
-        box.scrollTop = box.scrollHeight;
-
-        const loading = document.createElement("div");
-        loading.className = "chat-bubble-ai p-3 loading-dots";
-        loading.innerText = "Pensant";
-        box.appendChild(loading);
-
-        const sys =
-          "Ets l'assistent de MÉS per Llucmajor. Respon en català, de forma propera i progressista. Coneixes el nostre programa: habitatge, sostenibilitat, cultura mallorquina i descentralització de serveis.";
-        const resp = await askGemini(text, sys);
-
-        loading.classList.remove("loading-dots");
-        loading.innerText = resp;
-        box.scrollTop = box.scrollHeight;
-      }
-
-      // Millorar Suggeriment
-      async function refineText() {
-        const area = document.getElementById("suggestion-text");
-        if (!area.value) return;
-        const original = area.value;
-        area.value = "Refinant proposta amb IA...";
-        const resp = await askGemini(
-          `Reescriu el següent suggeriment d'un ciutadà perquè sigui més formal i constructiu, mantenint la idea: "${original}"`,
-          "Ets un redactor de propostes polítiques municipals. Respon només amb el text reescrit."
-        );
-        area.value = resp;
-      }
-
-      // Init
-      window.onload = () => {
-        renderNews();
-        // Gràfic
-        const ctx = document.getElementById("programChart").getContext("2d");
-        new Chart(ctx, {
-          type: "doughnut",
-          data: {
-            labels: ["SOCIAL", "ECOLOGIA", "CULTURA", "GOVERN"],
-            datasets: [
-              {
-                data: [40, 30, 20, 10],
-                backgroundColor: ["#c6d100", "#1a1a1a", "#888888", "#dddddd"],
-                borderWidth: 0,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { position: "bottom" } },
-          },
-        });
-        // Programa eixos
-        const axisBox = document.getElementById("axis-content");
-        Object.keys(axis).forEach((k) => {
-          axisBox.innerHTML += `
-                <div class="bg-mes-gray p-4 border-l-4 border-mes-lime">
-                    <h4 class="font-bold uppercase text-xs mb-2 text-mes-lime">${k}</h4>
-                    <ul class="text-sm font-bold space-y-1">
-                        ${axis[k].map((i) => `<li>› ${i}</li>`).join("")}
-                    </ul>
-                </div>`;
-        });
-
-        document.getElementById("mobile-btn").onclick = () =>
-          document.getElementById("mobile-menu").classList.toggle("hidden");
-        document.getElementById("contactForm").onsubmit = (e) => {
-          e.preventDefault();
-          document.getElementById("contactForm").classList.add("hidden");
-          document.getElementById("form-ok").classList.remove("hidden");
-        };
-      };
-    </script>
-  </body>
-</html>
+      `}</style>
+    </div>
+  );
+}
