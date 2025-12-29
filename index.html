@@ -12,7 +12,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Fonts -->
+    <!-- Fonts: Barlow és l'alternativa web a Geogrotesque -->
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
 
     <script>
@@ -55,81 +55,123 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Estils per al contingut de l'article */
-        .article-body p { margin-bottom: 1.25rem; line-height: 1.8; }
-        .article-body { font-size: 1.125rem; }
+        .article-body { font-size: 1.15rem; line-height: 1.8; }
+        .article-body p { margin-bottom: 1.5rem; }
         
-        /* Animacions */
+        /* Animació d'entrada */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade { animation: fadeIn 0.4s ease-out forwards; }
+
+        /* Estils per al modal de lectura 100% */
+        .modal-overlay { background: rgba(0, 0, 0, 0.95); }
     </style>
 
     <!-- 
     <!-- Chosen Palette: MÉS Corporativa (#c6d100 / #1a1a1a). -->
-    <!-- Application Structure Plan: Portal dinàmic amb React. Gestió de categories (Notícia/Opinió) i botons personalitzats. Lector modal de pantalla completa per a una lectura 100% fidedigna. -->
-    <!-- Visualization & Content Choices: Injecció de dades dels 9 PDFs d'opinió. Gràfic de donuts per a pressupostos. -->
+    <!-- Application Structure Plan: Portal dinàmic amb React i Tailwind. Seccions diferenciades per a notícies i la revista "De pinte en ample". Lector modal de pantalla completa per a lectura 100% fidedigna. Backoffice per a gestió de continguts segons categoria. -->
+    <!-- Visualization & Content Choices: Incorporació de 9 PDFs d'opinió i 2 notícies de plenari. Ús del logotip Logo.png. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     -->
 </head>
 <body class="bg-white text-mes-dark">
     <div id="root">
         <div class="flex items-center justify-center min-h-screen font-bold uppercase tracking-widest animate-pulse">
-            Preparant continguts de MÉS per Llucmajor...
+            Carregant portal MÉS per Llucmajor...
         </div>
     </div>
 
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- DADES INICIALS (Notícies i Revista De Pinte en Ample) ---
+        // --- BASE DE DADES D'ARTICLES (Injecció de contingut complet de 11 documents) ---
         const initialArticles = [
             {
                 id: 'op-9',
                 category: 'opinio',
                 title: "La legislatura del menyspreu",
                 date: "DESEMBRE 2025",
-                summary: "L'equip de govern de Llucmajor ha tocat fons. El que vàrem viure al plenari del mes passat no va ser política, va ser degradació institucional.",
-                content: `L'equip de govern de Llucmajor ha tocat fons. La política és gestió, és debat, però, sobretot, és vocació de servei públic. El que vàrem viure al plenari del mes passat a la nostra casa consistorial no va ser política. L'equip de govern va degradar d'una forma mai vista, la institució que representen.\n\nLa cosa va anar així: la batlessa, aprofitant un recés per facilitar la sortida dels veïnats i veïnades que havien assistit al ple, va deixar el micròfon obert, cosa que va destapar la veritable cara d'aquest equip de govern. Mentre els ciutadans -que aquell dia havien estat exquisits en les formes i respectuosos com feia mesos que no es veia- abandonaven la sala, la regidora d'Urbanisme deixava anar una frase que la inhabilita moralment per a aquest càrrec: "Tenías que haber seguido con el pleno. Que les den por el culo a todos".\n\nDavant d'aquest menyspreu majúscul, quina va ser la reacció de la batlessa? Cridar-li l'atenció? Doncs no. La resposta va ser confirmar que la prioritat no són els problemes dels llucmajorers, sinó la seva pròpia pressa: «Yo lo que quiero es que se vayan» i «a veure si fan via i a les deu som a casa».\n\nSempre hem dit que el problema de fons a Llucmajor no és un micròfon traïdor. El problema és la manca de respecte estructural. Aquesta grolleria verbal és la mateixa que veim plasmada als nostres carrers: en la brutor, en la falta de manteniment i en l'absència de criteri i gestió.`
+                summary: "L'equip de govern ha tocat fons. El que vàrem viure al plenari de novembre no va ser política, va ser degradació institucional.",
+                content: `L'equip de govern de Llucmajor ha tocat fons. La política és gestió, és debat, però, sobretot, és vocació de servei públic. El que vàrem viure al plenari del mes passat a la nostra casa consistorial no va ser política. L'equip de govern va degradar d'una forma mai vista, la institució que representen.\n\nLa cosa va anar així: la batlessa, aprofitant un recés per facilitar la sortida dels veïnats i veïnades que havien assistit al ple per demanar millores a l'escola de música, va deixar el micròfon obert, cosa que va destapar la veritable cara d'aquest equip de govern. Mentre els ciutadans -que aquell dia havien estat exquisits en les formes- abandonaven la sala, la regidora d'Urbanisme deixava anar una frase que la inhabilita moralment per a aquest càrrec: "Tenías que haber seguido con el pleno. Que les den por el culo a todos".\n\nDavant d'aquest menyspreu majúscul, quina va ser la reacció de la batlessa? Cridar-li l'atenció? Doncs no. La resposta va ser confirmar que la prioritat no són els problemes dels llucmajorers: «Yo lo que quiero es que se vayan» i «a veure si fan via i a les deu som a casa».\n\nNo podem permetre que això quedi en una anècdota. Aquest incident és el símptoma final d'una patologia política greu. Si no respecten els ciutadans amb les paraules, com podem esperar que els respectin amb els fets?`
             },
             {
                 id: 'op-8',
                 category: 'opinio',
-                title: "Llucmajor desperta",
-                date: "OCTUBRE 2025",
-                summary: "Darrerament, la sala de plens s'ha convertit en lloc de trobada ciutadana davant la manca d'acció real del govern.",
-                content: `Darrerament, la sala de plens de l'Ajuntament de Llucmajor s'ha convertit en el lloc on el ciutadà es reuneix el darrer dimecres de cada mes. Els ciutadans no hi van a veure una obra de ficció. Van a demanar respostes davant els problemes que tenen en el seu dia a dia, provocats per la manca d'acció real al carrer de qui governa Llucmajor.\n\nEn els darrers mesos, hem vist passar pel micro de la participació ciutadana, des de famílies afectades per la manca de places 0-3 fins als veïnats desesperats per les pudors de la macrogranja de Son Perot o per l'acumulació de fems a s'Arenal. La gent ha hagut d'aixecar-se del sofà i anar a la Casa de la Vila a recordar als nostres governants que Llucmajor necessita acció per millorar la qualitat de vida de tothom.\n\nUn ajuntament que escolta no necessita que els seus ciutadans cridin als plens. Un ajuntament que planifica no deixa caducar contractes essencials ni permet que els seus edificis es degradin. Llucmajor ha despertat i demana un canvi.`
-            },
-            {
-                id: 'n-2',
-                category: 'noticia',
-                title: "MÉS demana la reprovació de la regidora d'Urbanisme",
-                date: "04 DES 2024",
-                summary: "Presentam una moció pel menyspreu cap a la ciutadania mostrat durant el passat plenari ordinari.",
-                content: `Moció del Grup MES per a la reprovació de la regidora d'Urbanisme, Inmaculda Pérez per les faltes de respecte i menyspreu cap a la ciutadania.\n\nEls representants públics tenen l'obligació de mantenir un comportament exemplar. Durant el passat plenari de novembre, el sistema de gravació va captar expressions ofensives literalment: «Que les den por el culo a todos» referint-se als veïnats que demanaven millores per l'escola de música.\n\nEn conseqüència es proposa al Ple l'adopció del següent acord:\nPRIMER. Reprovar públicament la regidora la senyora Inmaculada Pérez.\nSEGON. Instar l'Equip de Govern i batlia a emetre una disculpa pública institucional dirigida a tots els veïnats de Llucmajor.`
+                title: "Les Fires que volem",
+                date: "NOVEMBRE 2025",
+                summary: "Cinc segles d'història no amaguen el desencant general. Les fires ja no són el que eren i necessitam un canvi de model.",
+                content: `S'ha celebrat la 479a edició de les fires de Llucmajor. És una fita de la qual hauríem d'estar orgullosos, però ressona un murmuri col·lectiu: aquestes fires ja no són el que eren. Aquesta sensació de desencant no és només nostàlgia.\n\nEl problema de les Fires és símptoma d'una qüestió que va molt més enllà: Llucmajor necessita creure en el seu propi potencial. No podem viure de rendes històriques. Hem de començar a actuar com el que som: la ciutat de Llucmajor.\n\nCom ho fem? El canvi neix de la suma de tothom. Primer, comptant amb el teixit associatiu. Segon, comptant amb el comerç local com a aparador de dinamització econòmica. I tercer, involucreu la resta de nuclis: les fires no seran un èxit fins que a s'Arenal i les urbanitzacions no se les sentin seves. L'Ajuntament ha de ser el motor, i ara mateix és el fre de mà.`
             },
             {
                 id: 'op-7',
                 category: 'opinio',
-                title: "Les Fires que volem",
-                date: "NOVEMBRE 2025",
-                summary: "Les fires de Llucmajor són història, però el desencant general mostra que necessitam un canvi de model.",
-                content: `S'ha celebrat la 479a edició de les fires de Llucmajor. Gairebé cinc segles d'història les situen com una de les cites més antigues de l'Illa. Però, als carrers, ressona una percepció generalitzada: aquestes fires ja no són el que eren.\n\nEl problema de les Fires no és només un problema d'organització puntual, és símptoma d'una qüestió que va molt més enllà: Llucmajor necessita creure en el seu propi potencial. No podem viure de rendes històriques. Primer, hem de comptar amb el teixit associatiu. Segon, hem de comptar amb el comerç local. I tercer, hem d'involucrar la resta de nuclis del municipi com s'Arenal i les urbanitzacions.`
-            },
-            {
-                id: 'n-1',
-                category: 'noticia',
-                title: "Rebuig al circuit de motos nàutiques a s'Arenal",
-                date: "11 DES 2024",
-                summary: "Proposta de resolució contra la instal·lació d'un circuit que amenaça la posidònia i el litoral.",
-                content: `Proposta de resolució relativa al rebuig del projecte d'instal·lació d'un circuit de motos nàutiques a la costa de s'Arenal.\n\nAquesta instal·lació comportaria l'operació contínua de múltiples motos d'aigua, generant un impacte acústic impulsiu i altament intrusiu. A més, el projecte pretén ocupar 22.500 m² de fons marins adjacents a praderies de posidònia oceànica.\n\nEs demana al ple:\nPRIMER.- Manifestar l'oposició ferma de l'Ajuntament al projecte.\nSEGON.- Encarregar informes tècnics sobre l'impacte acústic.\nTERCER.- Presentar al·legacions davant Costes.`
+                title: "Llucmajor desperta",
+                date: "OCTUBRE 2025",
+                summary: "La sala de plens s'ha convertit en l'escenari on la gent demana respostes davant la manca d'acció real del govern.",
+                content: `Darrerament, la sala de plens de l'Ajuntament de Llucmajor s'ha convertit en el lloc on el ciutadà es reuneix el darrer dimecres de cada mes. Els ciutadans van a demanar respostes davant els problemes que tenen en el seu dia a dia, provocats per la manca d'acció real al carrer de qui governa Llucmajor.\n\nFamílies afectades per la manca de places 0-3, veïnats desesperats per les pudors de la macrogranja de Son Perot o l'acumulació de fems a s'Arenal. La gent ha hagut d'aixecar-se del sofà i anar a la Casa de la Vila a recordar als governants que Llucmajor necessita acció.\n\nLlucmajor és la gent. La mobilització ciutadana mou el món. Un ajuntament que escolta no necessita que els seus ciutadans cridin als plens. Llucmajor ha despertat i demana un canvi.`
             },
             {
                 id: 'op-6',
                 category: 'opinio',
-                title: "MÉS per Llucmajor marca el camí del tren de Migjorn",
+                title: "La incertesa marca el nou curs polític",
+                date: "SETEMBRE 2025",
+                summary: "Deixam enrere un estiu de festes sense resoldre els problemes reals. Llucmajor no té rumb ni projecte de govern.",
+                content: `L'estiu arriba a la seva fi i tornam a la rutina. Deixam enrere un estiu on els grans problemes del municipi no s'han resolt. Les xarxes corporatives del consistori ens han informat de festa en festa, però els somriures només amaguen la realitat: Llucmajor no té rumb.\n\nEncetam un curs polític marcat per la incertesa d'un govern en minoria. Molta gent es demana per què no es força un canvi immediat. Els de MÉS ho tenim clar: la política es construeix amb pactes, diàleg i projecte comú. No necessitam més invents.\n\nLa nostra responsabilitat és continuar fent una oposició ferma i constructiva. Cal licitar urgentment el nou contracte de fems i que les inversions aprovades, com Cas Coix o l'adequació del carrer Pere Maimó, acabin en projectes reals.`
+            },
+            {
+                id: 'op-5',
+                category: 'opinio',
+                title: "MÉS marca el camí del tren de Migjorn",
                 date: "JULIOL 2025",
-                summary: "Hem presentat al·legacions per garantir un traçat que respecti els veïnats i el nostre territori.",
-                content: `Des de MÉS per Llucmajor tornam a demostrar que tenim una visió clara. Creim que el tren ha d'arribar a Llucmajor, però hauria d'implementar-se respectant la realitat del nostre poble.\n\nSabem quina mobilitat volem. Hem demanat que el traçat es mantengui paral·lel als vials actuals per minimitzar l'impacte ambiental. Un dels punts crítics és l'entrada per la ronda de Migjorn, on la solució de via única posa en joc la mobilitat del poble. Defensam desplaçar la infraestructura cap al sud per prioritzar els vianants a la ronda.`
+                summary: "Tenim una visió clara: volem el tren, però respectant la nostra terra, els veïnats i el model urbanístic del poble.",
+                content: `Des de MÉS per Llucmajor demostram que tenim una visió clara. El tren ha d'arribar a Llucmajor perquè és una infraestructura socialment útil, però ha d'implementar-se per respectar la realitat del nostre poble.\n\nHem demanat que es revisin aspectes clau del traçat. Demanam que es mantengui paral·lel als traçats viaris actuals per minimitzar l'impacte ambiental i evitar el fraccionament de finques. Cercam protegir espais naturals com els ANEI.\n\nUn dels punts crítics és l'entrada per la ronda de Migjorn. La solució de via única posa en joc la mobilitat. Defensam desplaçar la infraestructura cap al sud per convertir la ronda en un espai per als vianants.`
+            },
+            {
+                id: 'op-4',
+                category: 'opinio',
+                title: "Que estigui dins pressupost no vol dir que se gasti",
+                date: "JUNY 2025",
+                summary: "L'afirmació de la batlessa durant el debat pressupostari és la radiografia fidel de la paràlisi i la manca de projecte.",
+                content: `«Que estigui dins pressupost no vol dir que se gasti». Aquesta va ser l'afirmació de la batlessa Xisca Lascolas durant el debat dels pressuposts 2025. És la radiografia més fidel de la paràlisi que patim.\n\nSorprèn la sinceritat amb què assumeix la incapacitat de gestió de l'ajuntament. Uns pressupostos que arriben tard (dia 26 de maig) fruit de les tensions internes. Ingressos inflats i poc realistes, execucions per sota del 25% i partides de serveis socials que es redueixen mentre la gent necessitada queda desatesa.\n\nInversions com Cas Coix o el clavegueram de Cala Pi continuen al calaix. Perpetuen la inacció i no reforcen els serveis públics. Llucmajor necessita un canvi real.`
+            },
+            {
+                id: 'op-3',
+                category: 'opinio',
+                title: "L'EMAE que necessitam",
+                date: "MAIG 2025",
+                summary: "L'Escola de Música no pot malviure en mòduls prefabricats. És hora de pensar en una escola municipal digna.",
+                content: `L'Escola de Música i Arts Escèniques (EMAE) malviu en uns mòduls prefabricats que havien de ser temporals però s'han convertit en norma. Espais poc adequats on la manca de manteniment afecta la qualitat i la seguretat.\n\nDes de l'Ajuntament no s'ha dit tota la veritat sobre la proposta guanyadora dels pressupostos participatius ("Escola de Música en condicions"). Està aturada amb excuses administratives. Un municipi amb la nostra població necessita serveis que ens facin sentir orgullosos. Cal municipalitzar l'escola perquè sigui accessible a tot el terme, incloses les urbanitzacions i s'Arenal.`
+            },
+            {
+                id: 'op-2',
+                category: 'opinio',
+                title: "La mobilitat, molta feina a fer",
+                date: "ABRIL 2025",
+                summary: "Entorns escolars segurs i la millora del carrer Pere Maimó a s'Arenal són pilars per a un municipi modern.",
+                content: `La mobilitat sostenible i la seguretat viària són pilars d'un municipi habitable. Llucmajor té realitats diferents a cada nucli i cal pensar-les amb mirada de futur.\n\nUn repte és garantir entorns escolars segurs. El projecte NEUS demana mesures concretes com zones pacificades i camins escolars. L'equip de govern s'hi posa de costat. A s'Arenal, el carrer Pere Maimó és un col·lapse constant per als usuaris del poliesportiu i l'IES. L'adequació del carrer depèn de l'Ajuntament i hi ha un projecte desat al calaix que ningú del govern coneixia. Cal voluntat política per resoldre problemes, no per perpetuar-los.`
+            },
+            {
+                id: 'op-1',
+                category: 'opinio',
+                title: "Llucmajor a la deriva",
+                date: "MARÇ 2025",
+                summary: "Gestió negligent: només un 28% dels fons de serveis socials arriben a qui ho necessita. El desgovern és total.",
+                content: `Com a regidor de MÉS, express la meva profunda preocupació per la desastrosa gestió municipal. Les dades d'execució del 2024 són alarmants. Només un 28,5% dels 250.000 € per a serveis socials han arribat a les persones, la resta es tornarà al Consell.\n\nA Urbanisme la recaptació per llicències ha quedat en un escàs 17%. Projectes anunciats com la climatització d'oficines o els vehicles de la brigada estan paralitzats. Les instal·lacions esportives cauen a trossos. Exigim un canvi de rumb urgent i una priorització de les necessitats reals de la ciutadania. Llucmajor no es mereix aquest desgovern.`
+            },
+            {
+                id: 'n-2',
+                category: 'noticia',
+                title: "Moció de reprovació contra la regidora Pérez",
+                date: "11 DES 2024",
+                summary: "Demanem la reprovació pública per les faltes de respecte greus cap a la ciutadania durant el plenari.",
+                content: `Moció del Grup MÉS per a la reprovació de la regidora d'Urbanisme, Inmaculada Pérez per les faltes de respecte i menyspreu cap a la ciutadania.\n\nDurant el plenari de novembre, en un context de recés, el sistema de gravació va captar expressions literalment ofensives: «Tenías que haber seguido con el pleno. Que les den por el culo a todos», referint-se als veïnats assistents.\n\nEn conseqüència es proposa al Ple:\nPRIMER. Reprovar públicament la regidora Inmaculada Pérez per les expressions ofensives.\nSEGON. Instar l'Equip de Govern i batlia a emetre una disculpa pública institucional dirigida a tots els veïnats i veïnades de Llucmajor.`
+            },
+            {
+                id: 'n-1',
+                category: 'noticia',
+                title: "Oposició al circuit de motos nàutiques a s'Arenal",
+                date: "29 NOV 2024",
+                summary: "Alertem de l'impacte acústic i ambiental d'un projecte privat sobre el domini públic marítim.",
+                content: `Proposta de resolució relativa al rebuig del projecte d'instal·lació d'un circuit de motos nàutiques a la costa de s'Arenal.\n\nAquesta instal·lació comportaria l'operació contínua de múltiples motos d'aigua, generant un impacte acústic impulsiu que afectaria el benestar dels residents i la qualitat turística. A més, el projecte pretén ocupar 22.500 m² de fons marins adjacents a praderies de posidònia oceànica i la ZEPA de Cap Enderrocat.\n\nL'ús privatiu i lucratiu del domini públic no pot prevaldre sobre l'interès general. Demanam el rebuig ferm del consistori al projecte.`
             }
         ];
 
@@ -140,9 +182,9 @@
             const [isAdmin, setIsAdmin] = useState(false);
             const [formData, setFormData] = useState({ title: '', category: 'noticia', summary: '', content: '' });
 
-            const handleAdminAccess = () => {
+            const toggleAdmin = () => {
                 if(isAdmin) { setIsAdmin(false); return; }
-                const pass = prompt("Contrasenya:");
+                const pass = prompt("Contrasenya de gestió:");
                 if(pass === "mes2025") setIsAdmin(true);
             };
 
@@ -151,7 +193,7 @@
                 const newArt = {
                     ...formData,
                     id: Date.now().toString(),
-                    date: new Date().toLocaleDateString('ca-ES', { month: 'long', year: 'numeric' }).toUpperCase()
+                    date: new Date().toLocaleDateString('ca-ES', { month: 'short', year: 'numeric' }).toUpperCase()
                 };
                 setArticles([newArt, ...articles]);
                 setFormData({ title: '', category: 'noticia', summary: '', content: '' });
@@ -177,10 +219,10 @@
 
             return (
                 <div className="min-h-screen bg-white">
-                    {/* NAV */}
+                    {/* NAVEGACIÓ */}
                     <nav className="fixed w-full z-50 bg-white border-b-4 border-mes-lime px-6 py-4 flex justify-between items-center shadow-sm">
                         <div className="flex items-center gap-3 cursor-pointer" onClick={() => window.scrollTo(0,0)}>
-                            <div className="bg-mes-lime text-black font-black px-2 py-1 text-xl">M</div>
+                            <img src="Logo.png" alt="MÉS per Llucmajor" className="h-12 w-auto" />
                             <div className="flex flex-col leading-none">
                                 <span className="font-black text-lg tracking-tighter uppercase">MÉS</span>
                                 <span className="text-[9px] font-bold text-gray-400 tracking-widest uppercase">per Llucmajor</span>
@@ -188,7 +230,7 @@
                         </div>
                         <div className="flex gap-4 items-center">
                             <a href="#actualitat" className="font-bold text-[11px] uppercase tracking-widest hover:text-mes-lime transition-colors">Actualitat</a>
-                            <button onClick={handleAdminAccess} className="bg-mes-dark text-mes-lime px-3 py-1 text-[9px] font-black uppercase tracking-widest hover:bg-black transition-all">
+                            <button onClick={toggleAdmin} className="bg-mes-dark text-mes-lime px-3 py-1 text-[9px] font-black uppercase tracking-widest hover:bg-black transition-all">
                                 {isAdmin ? 'Tancar' : 'Gestió ✨'}
                             </button>
                         </div>
@@ -197,19 +239,19 @@
                     {/* HERO */}
                     <header className="pt-40 pb-20 bg-mes-gray px-6 border-b border-stone-200">
                         <div className="max-w-4xl mx-auto">
-                            <div className="section-title-box">De pinte en ample</div>
+                            <div className="section-title-box italic">De pinte en ample</div>
                             <h1 className="text-4xl md:text-7xl font-black uppercase leading-none mb-6">UN PROJECTE <br/><span className="bg-black text-mes-lime px-2 tracking-tighter">PER A TOTHOM</span>.</h1>
-                            <p className="text-xl font-medium text-gray-600 max-w-2xl leading-relaxed">
+                            <p className="text-xl font-medium text-gray-600 max-w-2xl leading-relaxed italic border-l-4 border-mes-lime pl-4">
                                 "La força del poble, ara més organitzat que mai, és la nostra gran esperança per transformar el municipi en el Llucmajor que volem."
                             </p>
                         </div>
                     </header>
 
-                    {/* GESTOR */}
+                    {/* BACKOFFICE (GestiÓ) */}
                     {isAdmin && (
                         <section className="bg-mes-lime py-10 px-6 animate-fade">
                             <form onSubmit={publish} className="max-w-4xl mx-auto bg-black p-8 text-white space-y-4 shadow-2xl">
-                                <h2 className="text-xl font-black uppercase mb-4 text-white">Publicar Contingut</h2>
+                                <h2 className="text-xl font-black uppercase mb-4 text-mes-lime">Publicar Contingut</h2>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <input placeholder="TÍTOL" className="w-full bg-white/10 p-4 border-b border-white outline-none focus:bg-white focus:text-black font-bold" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} required />
                                     <select className="w-full bg-white/10 p-4 border-b border-white outline-none focus:bg-white focus:text-black font-bold" value={formData.category} onChange={e => setFormData({...formData, category: e.target.value})}>
@@ -219,16 +261,16 @@
                                 </div>
                                 <textarea placeholder="RESUM CURT" className="w-full bg-white/10 p-4 border-b border-white outline-none focus:bg-white focus:text-black font-medium" value={formData.summary} onChange={e => setFormData({...formData, summary: e.target.value})} required />
                                 <textarea placeholder="ARTÍCLE COMPLET (100%)" rows="6" className="w-full bg-white/10 p-4 border-b border-white outline-none focus:bg-white focus:text-black font-medium" value={formData.content} onChange={e => setFormData({...formData, content: e.target.value})} required />
-                                <button type="submit" className="w-full bg-mes-lime text-black py-4 font-black uppercase hover:bg-white transition-all">Publicar a la Web</button>
+                                <button type="submit" className="w-full bg-mes-lime text-black py-4 font-black uppercase hover:bg-white transition-all">Publicar Ara</button>
                             </form>
                         </section>
                     )}
 
-                    {/* SECCIÓ ACTUALITAT */}
+                    {/* SECCIÓ ACTUALITAT I OPINIÓ */}
                     <section id="actualitat" className="py-20 px-6 max-w-7xl mx-auto w-full">
                         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                             <div>
-                                <div className="section-title-box">Articles i Mocions</div>
+                                <div className="section-title-box">Publicacions</div>
                                 <h2 className="text-4xl font-black uppercase leading-tight tracking-tighter">Actualitat de MÉS</h2>
                             </div>
                             <div className="flex gap-2 font-bold text-[10px] tracking-widest uppercase">
@@ -251,7 +293,7 @@
                                     <p className="text-sm text-gray-600 mb-8 line-clamp-3 leading-relaxed font-medium">{a.summary}</p>
                                     <button 
                                         onClick={() => setSelectedArticle(a)} 
-                                        className="text-xs font-black uppercase border-b-2 border-mes-lime self-start hover:bg-mes-lime transition-all px-1"
+                                        className="text-[11px] font-black uppercase border-b-2 border-mes-lime self-start hover:bg-mes-lime transition-all px-1 py-0.5"
                                     >
                                         {a.category === 'noticia' ? 'Llegir notícia completa' : 'Llegir article complet'}
                                     </button>
@@ -265,11 +307,13 @@
                         <div className="fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4 animate-fade" onClick={() => setSelectedArticle(null)}>
                             <div className="bg-white max-w-3xl w-full p-8 md:p-12 rounded-sm shadow-2xl overflow-y-auto max-h-[90vh]" onClick={e => e.stopPropagation()}>
                                 <div className="flex justify-between items-center mb-8">
-                                    <span className="bg-black text-white px-3 py-1 text-[10px] font-black uppercase tracking-widest">{selectedArticle.category === 'noticia' ? 'NOTÍCIA PLENARI' : 'OPINIÓ REVISTA'}</span>
-                                    <button onClick={() => setSelectedArticle(null)} className="text-4xl font-light hover:text-mes-lime transition-colors">&times;</button>
+                                    <span className="bg-black text-white px-3 py-1 text-[10px] font-black uppercase tracking-widest">
+                                        {selectedArticle.category === 'noticia' ? 'NOTÍCIA PLENARI' : 'OPINIÓ REVISTA'}
+                                    </span>
+                                    <button onClick={() => setSelectedArticle(null)} className="text-4xl font-light hover:text-mes-lime transition-colors leading-none">&times;</button>
                                 </div>
                                 <h2 className="text-3xl md:text-4xl font-black uppercase mb-4 leading-none tracking-tighter">{selectedArticle.title}</h2>
-                                <p className="text-xs font-bold text-gray-400 mb-10 tracking-widest border-b pb-4 border-gray-100">{selectedArticle.date}</p>
+                                <p className="text-xs font-bold text-gray-400 mb-10 tracking-widest border-b pb-4 border-gray-100 uppercase">{selectedArticle.date}</p>
                                 <div className="article-body text-gray-800 whitespace-pre-wrap font-medium">
                                     {selectedArticle.content}
                                 </div>
@@ -281,31 +325,4 @@
                     )}
 
                     {/* PROGRAMA */}
-                    <section id="programa" className="py-24 bg-mes-dark text-white px-6">
-                        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                            <div className="bg-white/5 p-8 h-80 flex items-center justify-center border border-white/10">
-                                <canvas ref={chartRef}></canvas>
-                            </div>
-                            <div>
-                                <h2 className="text-4xl font-black uppercase leading-tight mb-8">Prioritats d'Acció Municipal</h2>
-                                <div className="space-y-4">
-                                    {["TREN DE MIGJORN PER LA GENT", "ENTORNS ESCOLARS SEGURS", "RESIDÈNCIA PÚBLICA I DIGNA"].map(t => (
-                                        <div key={t} className="border-l-4 border-mes-lime pl-4 font-black text-sm uppercase tracking-widest flex items-center h-10">{t}</div>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <footer className="py-16 bg-black text-white/10 text-[10px] font-black uppercase tracking-widest text-center border-t border-white/5">
-                        MÉS PER LLUCMAJOR · EL FUTUR QUE VOLEM
-                    </footer>
-                </div>
-            );
-        }
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-</body>
-</html>
+                    <section id="programa" className="py-24 bg-mes-dark text-white px-6
