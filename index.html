@@ -311,12 +311,9 @@ Oriol Gómez
                     <nav className="fixed w-full z-[100] bg-white border-b-2 border-stone-200 px-6 py-4 flex justify-between items-center shadow-sm">
                         <div className="flex items-center gap-3 cursor-pointer" onClick={() => setPage('home')}>
                             <img src="Logo.png" alt="MÉS" className="h-10 w-auto" />
-                            <div className="flex flex-col leading-none text-left">
-                                <span className="font-black text-xl tracking-tighter uppercase text-mes-dark">MÉS</span>
-                                <span className="text-[9px] font-bold text-gray-400 tracking-widest uppercase leading-none">per Llucmajor</span>
-                            </div>
+                            
                         </div>
-                        <div className="flex gap-8 items-center font-bold text-[10px] uppercase tracking-widest">
+                        <div className="flex gap-8 items-center font-bold text-[14px] uppercase tracking-widest">
                             <button onClick={() => setPage('home')} className={page === 'home' ? 'text-mes-lime' : 'hover:text-mes-lime transition-colors'}>Inici</button>
                             <button onClick={() => setPage('arxiu')} className={page === 'arxiu' ? 'text-mes-lime' : 'hover:text-mes-lime transition-colors'}>Arxiu</button>
                             <button onClick={() => handleScrollTo('visio')} className="hover:text-mes-lime transition-colors">Projecte</button>
