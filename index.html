@@ -300,27 +300,21 @@ Oriol Gómez`
 
         // --- PROPOSTES VISUALS ---
         const initialProposals = [
-            {
-                id: 'p-1',
-                category: 'proposta',
-                title: "Nou accés al poliesportiu",
-                date: "DESEMBRE 2025",
-                image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1200",
-                summary: "Urbanització i millora d'accessos per garantir la seguretat de vianants i esportistes.",
-                content: `Volem urbanitzar i millorar els accessos al poliesportiu de Llucmajor per fer-los més segurs per a vianants i esportistes. Actualment, la zona presenta deficiències importants.`
-            },
-            { 
-                id: 'p-2', 
-                category: 'proposta', 
-                title: "Reforma de Cas Coix", 
-                date: "GENER 2026", 
-                images: [
-                    "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200",
-                    "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=1200"
-                ],
-                summary: "Convertir un edifici històric en el nou centre cultural i associatiu de Llucmajor.", 
-                content: `Cas Coix ha de ser el cor de la cultura local. Proposem una reforma integral que respecti el patrimoni però el doti de funcionalitats modernes per a les entitats del poble.`
-            }
+            { id: 'p-1', zone: 'poble', title: "Nou accés al Poliesportiu", images: ["https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1200"], summary: "Millora de la seguretat per a vianants.", content: "Projecte de reforma dels accessos..." },
+            { id: 'p-2', zone: 'arenal', title: "Reforma del Passeig Marítim", images: ["https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1200"], summary: "Un espai per als residents.", content: "Volem un Arenal que miri al mar..." },
+            { id: 'p-3', zone: 'urb', title: "Connexió carril bici Urbanitzacions", images: ["https://images.unsplash.com/photo-1541427468627-a89a96e5ca1d?auto=format&fit=crop&q=80&w=1200"], summary: "Mobilitat sostenible entre nuclis.", content: "Connectar les nostres urbanitzacions..." },
+            { id: 'p-4', zone: 'mariners', title: "Protecció del port de S'Estanyol", images: ["https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&q=80&w=1200"], summary: "Patrimoni marítim i ambiental.", content: "Defensam l'essència marinera..." },
+            { id: 'p-5', zone: 'foravila', title: "Xarxa de camins rurals", images: ["https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1200"], summary: "Millora del manteniment a fora vila.", content: "Serveis dignes per al camp..." },
+            { id: 'p-6', zone: 'poble', title: "Centre Cultural Cas Coix", images: ["https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200"], summary: "El cor cultural de Llucmajor.", content: "Rehabilitació integral de l'edifici..." }
+        ];
+
+        // --- ZONES CONFIG ---
+        const zones = [
+            { id: 'poble', name: 'Llucmajor Poble', img: "https://images.unsplash.com/photo-1548685913-fe6678babe8d?auto=format&fit=crop&q=80&w=800" },
+            { id: 'arenal', name: "S'Arenal", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&q=80&w=800" },
+            { id: 'urb', name: 'Urbanitzacions', img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800" },
+            { id: 'mariners', name: 'S\'Estanyol i Son Bieló', img: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&q=80&w=800" },
+            { id: 'foravila', name: 'Foravila', img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800" }
         ];
 
         // --- TAULA OBSERVATORI ---
@@ -526,26 +520,32 @@ Oriol Gómez`
                             </section>
 
                             {/* PROJECTE: EL LLUCMAJOR QUE VOLEM */}
-                            <section id="visio" className="py-32 bg-mes-dark text-white px-8">
-                                <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-20 items-center text-left">
-                                    <div className="md:w-1/2 text-left">
-                                        <div className="bg-mes-lime text-black px-4 py-1 inline-block font-black uppercase text-xs mb-8 tracking-widest font-black">El nostre horitzó</div>
-                                        <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] mb-10 text-left">EL <br/>LLUCMAJOR <br/><span className="text-mes-lime text-4xl md:text-7xl">QUE VOLEM</span></h2>
-                                        <p className="text-lg text-stone-400 leading-relaxed italic border-l-4 border-mes-lime pl-8 mb-12 font-medium">"Propostes visuals barri a barri per transformar el nostre municipi."</p>
-                                        <button onClick={() => handleScrollTo('actualitat')} className="btn-primary !py-5">Suma-t'hi ara</button>
+                             <section id="visio" className="py-24 bg-white px-8">
+                                <div className="max-w-7xl mx-auto">
+                                    <div className="mb-16 text-left">
+                                        <div className="section-title-box">El Llucmajor que volem</div>
+                                        <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-mes-dark">Propostes per zona</h2>
+                                        <p className="text-stone-400 font-bold uppercase text-[10px] tracking-widest mt-2">Fes clic sobre la teva zona per veure els nostres projectes</p>
                                     </div>
-                                    <div className="md:w-1/2 grid grid-cols-1 gap-8 w-full">
-                                        {initialProposals.map(p => (
-                                            <div key={p.id} className="bg-stone-800 p-1 group cursor-pointer border border-white/5 hover:border-mes-lime transition-all shadow-2xl" onClick={() => setSelectedItem(p)}>
-                                                <div className="relative h-72 md:h-96 overflow-hidden">
-                                                    <img src={p.images ? p.images[0] : (p.image.includes('Poliesportiu') ? "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1200" : p.image)} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt={p.title} />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-8 text-left">
-                                                        <h3 className="text-2xl font-black uppercase mb-2 text-mes-lime">{p.title}</h3>
-                                                        <p className="text-xs font-bold text-white uppercase tracking-widest underline">Prem per veure els detalls</p>
-                                                    </div>
+                                    
+                                    <div className="flex flex-col md:flex-row w-full bg-mes-dark">
+                                        {zones.map(z => (
+                                            <div 
+                                                key={z.id} 
+                                                className="zone-col group flex-1"
+                                                onClick={() => { setFilterZone(z.id); navigateTo('projectes'); }}
+                                            >
+                                                <img src={z.img} alt={z.name} />
+                                                <div className="zone-overlay">
+                                                    <h3 className="text-2xl font-black uppercase text-white leading-none mb-4 group-hover:text-mes-lime transition-colors">{z.name}</h3>
+                                                    <span className="text-[9px] font-black text-white/50 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Veure propostes →</span>
                                                 </div>
                                             </div>
                                         ))}
+                                    </div>
+                                    
+                                    <div className="mt-12 text-center">
+                                        <button onClick={() => navigateTo('projectes')} className="btn-primary">Veure totes les propostes</button>
                                     </div>
                                 </div>
                             </section>
