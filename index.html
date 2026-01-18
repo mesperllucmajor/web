@@ -11,7 +11,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Firebase SDKs (Compat v9) -->
+    <!-- Firebase SDKs (Compat v9 per a funcionament directe en navegador) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -29,7 +29,7 @@
                             lime: '#c6d100', 
                             dark: '#1a1a1a', 
                             soft: '#f4f4f4', 
-                            stone: '#e5e2d9', 
+                            stone: '#f9f8f4', 
                             text: '#1a1a1a' 
                         }
                     }
@@ -85,7 +85,7 @@
         .hero-zoom { animation: zoomEffect 25s infinite alternate linear; }
         @keyframes zoomEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
 
-        .archive-item { border-left: 4px solid transparent; transition: all 0.2s; border-bottom: 1px solid #f0f0f0; }
+        .archive-item { border-left: 4px solid transparent; transition: all 0.2s; border-bottom: 1px solid #e5e2d9; }
         .archive-item:hover { border-left-color: #c6d100; background-color: #f9f8f4; }
         
         .modal-scroll { max-height: 75vh; overflow-y: auto; }
@@ -103,6 +103,9 @@
         @media (min-width: 768px) {
             .zone-col:hover { flex-grow: 2; }
         }
+        
+        .section-separator { border-top: 1px solid #e5e2d9; }
+        .section-accent-top { border-top: 8px solid #c6d100; }
     </style>
 </head>
 <body>
@@ -111,9 +114,9 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // --- FIREBASE SETUP AMB SEGURETAT PER EVITAR PÀGINA EN BLANC ---
+        // --- CONFIGURACIÓ FIREBASE ---
         let db, auth;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'mes-llucmajor-default';
         
         try {
             const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
@@ -125,76 +128,43 @@
                 db = firebase.firestore();
             }
         } catch (e) {
-            console.warn("Firebase no s'ha pogut inicialitzar. La web funcionarà en mode estàtic.");
+            console.warn("Firebase no inicialitzat.");
         }
 
-        // --- CONSTANTS DE DADES ---
+        // --- ICONES (SVG) ---
+        const IconInstagram = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        );
+        const IconFacebook = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        );
+        const IconMail = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        );
+        const IconWhatsapp = () => (
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>
+        );
+
+        // --- DADES ESTÀTIQUES ---
         const bannerSlides = [
             { title: "POLÍTICA PER A LA GENT", sub: "Treballem cada dia per un municipi més just, sostenible i participatiu des de la proximitat.", img: "imatges/imatge1.jpeg" },
             { title: "CONSTRUÏM JUNTS EL LLUCMAJOR QUE VOLEM", sub: "Un projecte compartit on la veu dels ciutadans és el motor del canvi real.", img: "imatges/Llucmajor1.png" },
             { title: "FEM UN S'ARENAL MILLOR", sub: "Volem un nucli costaner cuidat, segur i amb els serveis que els seus veïnats mereixen.", img: "imatges/sarenal.png" },
             { title: "LES URBANITZACIONS QUE MEREIXEM", sub: "Reivindiquem millores estructurals i una gestió eficient per a tots els nuclis del terme.", img: "imatges/badies2.jpeg" },
-            { title: "S'ESTANYOL I SON BIELÓ TAMBÉ SÓN LLUCMAJOR", sub: "Protegim l'essència dels nostres pobles mariners i el nostre medi ambient.", img: "imatges/estanyol.png" },
+            { title: "S'ESTANYOL i SON BIELÓ TAMBÉ SÓN LLUCMAJOR", sub: "Protegim l'essència dels nostres pobles mariners i el nostre medi ambient.", img: "imatges/estanyol.png" },
             { title: "SERVEIS PER FORA VILA", sub: "Garantim la igualtat de drets i serveis per a tota la ciutadania, visqui on visqui.", img: "imatges/Foravila.png" }
         ];
 
         const initialArticles = [
-            {
-                id: 'n-2',
-                category: 'noticia',
-                title: "Rebuig al circuit de motos nàutiques",
-                date: "DESEMBRE 2025",
-                image: "imatges/MotosAigua.png?auto=format&fit=crop&q=80&w=1200",
-                summary: "Defensem s’Arenal. Aconseguim el rebuig unànime del Ple al circuit de motos nàutiques de s’Arena",
-                content: `Gràcies a la iniciativa i la pressió política de MÉS per Llucmajor, el Ple de l’Ajuntament ha rebutjat per unanimitat la instal·lació d’un circuit tancat de motos d'aigua a la costa de s’Arenal. La proposta, defensada pel nostre regidor Josep Oriol Gómez, ha obligat l’equip de govern a posicionar-se clarament en contra d’un projecte que amenaçava el descans dels veïnats i la integritat del nostre medi marí.
-
-Davant la contundència dels arguments presentats per MÉS, l’equip de govern va haver de rectificar i admetre que aquest tipus d’instal·lacions no tenen lloc al municipi. Hem aconseguit que el consistori assumeixi el compromís de protegir s’Arenal d’un model d’oci invasiu i nociu.
-Una amenaça aturada a temps
-El projecte, que va sortir a exposició pública el 29 de novembre, pretenia ocupar 22.500 m² de fons marí per a un ús privat i lucratiu. Des de MÉS vàrem denunciar que aquesta activitat és del tot incompatible amb el benestar de Llucmajor per diversos motius:
-Contaminació acústica: Les motos generen un soroll impulsiu i intrusiu que, per la propagació sobre la mar, afectaria directament els residents de primera línia.
-
-Desastre mediambiental: La instal·lació de cadenes i blocs de formigó suposava una amenaça mecànica per a les praderies de posidònia oceànica i per a la Pinna nobilis, una espècie en perill crític d'extinció.
-
-Saturació i perill: La Badia de Palma ja pateix una saturació nàutica evident, i aquest circuit només hagués augmentat el risc d’accidents i dificultat les tasques de salvament.
-
-El govern diu "no", però MÉS estarà vigilant
-Tot i que celebram que l’equip de govern hagi votat a favor de la nostra proposta i hagi manifestat que no vol aquest tipus d’instal·lacions, des de MÉS per Llucmajor no abaixarem la guàrdia. No ens conformam amb paraules; volem fets.
-
-La proposta aprovada inclou punts clau que fiscalitzarem de prop: l'elaboració d'informes tècnics sobre l'impacte acústic i la presentació formal d'al·legacions davant la Demarcació de Costes per denegar l'ocupació de l'espai públic. També exigirem que s'insti el Govern Balear a protegir la Xarxa Natura 2000 en aquesta zona.
-
-Hem demostrat que, quan MÉS per Llucmajor actua amb decisió, l’Ajuntament es veu obligat a defensar l’interès general per sobre dels negocis privats. Seguirem vigilants per garantir que s'Arenal sigui, d’una vegada per totes, un espai per viure-hi amb dignitat.`
-            },
             {
                 id: 'n-3',
                 category: 'noticia',
                 title: "L’equip de govern de Llucmajor protegeix l’insult: el PP, Vox i ASI rebutgen reprovar la regidora Pérez",
                 date: "DESEMBRE 2025",
                 image: "imatges/Govern.png",
-                summary: "Tot i argumentar a favor de la reprovació, voten que no i tomben la proposta.",
-                content: `L'ètica i el respecte a la ciutadania han tornat a brillar per la seva absència al darrer Ple ordinari de Llucmajor. Des de MÉS per Llucmajor vàrem presentar una proposta per reprovar públicament la regidora d'Urbanisme, Inmaculada Pérez , després que el passat mes de novembre el sistema de gravació captàs un comentari seu intolerable cap als veïnats assistents: «Que les den por el culo a todos». Malgrat la gravetat dels fets, la dreta i l'extrema dreta (PP, Vox i ASI) han fet servir la seva majoria per blanquejar aquest insult i evitar qualsevol assumpció de responsabilitats.
-
-La nostra portaveu, Maria Barceló, va ser molt clara durant el debat: un representant públic té l'obligació moral de mantenir un comportament exemplar. El que vàrem viure a la sessió de novembre no va ser una anècdota, sinó una mostra de la supèrbia i la manca d'empatia d'un equip de govern que se sent impune davant el poble.
-
-Una batlessa més preocupada per anar a casa que pels veïnats
-Des de MÉS no només hem denunciat les paraules grolleres de la regidora Pérez, sinó també l'actitud de la batlessa de Llucmajor. Lluny de recriminar l'insult de la seva companya de files, les gravacions demostren que la seva única preocupació era acabar aviat el debat públic: «Yo lo que quiero es que se vayan» o «a veure si fan via i a les 10 som a casa».
-
-Aquesta actitud contrasta dolorosament amb el comportament dels veïnats que aquell dia havien assistit al Ple per reclamar millores a l'Escola de Música, els quals varen ser respectuosos i educats en tot moment. És inacceptable que mentre el poble manté les formes, els governants responguin amb menyspreu i ganes de tancar la persiana per anar-se'n a dormir.
-
-El govern de la por: ningú demana perdó
-Amb la nostra moció, demanàvem dues coses molt senzilles de cara a la higiene democràtica:
-
-Reprovar públicament la regidora Pérez per unes expressions dignes de qualsevol lloc manco d'una sala de plens.
-
-Emetre una disculpa institucional dirigida a tots els veïnats de Llucmajor.
-
-No obstant això, el PP, Vox i ASI han decidit que és més important protegir la cadira dels seus socis que demanar perdó a la ciutadania que els paga el sou. En votar en contra d’aquesta proposta, han demostrat que l'insult ja forma part de la seva manera de governar.
-
-MÉS per Llucmajor no normalitzarà l’insult.
-
-Des del nostre grup municipal seguirem denunciant cada falta de respecte. No permetrem que es normalitzi que un regidor pugui enviar «a la porra» (per dir-ho suaument) els ciutadans sense cap conseqüència.
-
-Tot i que l'equip de govern hagi volgut girar full, des de MÉS per Llucmajor estarem molt pendents de l'actitud d'aquests regidors en cada plenari. L’Ajuntament és la casa de tots i totes, no el saló privat on el PP i els seus socis poden riure’s dels problemes dels veïnats. Seguirem exigint la dignitat que Llucmajor es mereix.
-`
+                summary: "L'equip de govern de Llucmajor ha tocat fons. El menyspreu cap al ciutadà és inacceptable.",
+                content: `L'ètica i el respecte a la ciutadania han tornat a brillar per la seva absència al darrer Ple ordinari de Llucmajor. Des de MÉS per Llucmajor vàrem presentar una proposta per reprovar públicament la regidora d'Urbanisme, Inmaculada Pérez, després que el passat mes de novembre el sistema de gravació captàs un comentari seu intolerable cap als veïnats assistents: «Que les den por el culo a todos». Malgrat la gravetat dels fets, la dreta i l'extrema dreta han fet servir la seva majoria per blanquejar aquest insult.`,
+                createdAt: 1735689600000
             },
             {
                 id: 'op-11',
@@ -203,47 +173,8 @@ Tot i que l'equip de govern hagi volgut girar full, des de MÉS per Llucmajor es
                 date: "DESEMBRE 2025",
                 image: "imatges/atpc.png",
                 summary: "L'equip de govern de Llucmajor ha tocat fons. El menyspreu cap al ciutadà és inacceptable.",
-                content: `L’equip de govern de Llucmajor ha tocat fons. La política és gestió, és debat, però, sobretot, és vocació de servei públic. El que vàrem viure al plenari del mes passat a la nostra casa consistorial no va ser política. L’equip de govern va degradar d’una forma mai vista, la institució que representen. 
-                La cosa va anar així: la batlessa, aprofitant un recés per facilitar la sortida dels veïnats i veïnades que havien assistit al ple, va deixar el micròfon obert, cosa que va destapar la veritable cara d'aquest equip de govern. Mentre els ciutadans —que aquell dia havien estat exquisits en les formes i respectuosos com feia mesos que no es veia— abandonaven la sala, la regidora d’Urbanisme deixava anar una frase que la inhabilita moralment per a aquest càrrec: «Tenías que haber seguido con el pleno. Que les den por el culo a todos».
-Davant d’aquest menyspreu majúscul, quina va ser la reacció de la batlessa? Cridar-li l’atenció? Doncs no. La resposta va ser confirmar que la prioritat no són els problemes dels llucmajorers, sinó la seva pròpia pressa: «Yo lo que quiero es que se vayan» i «a veure si fan via i a les deu som a casa». Fins i tot se la va sentir murmurar amb por: «Em poden denunciar per haver dit...», conscient que alguna cosa que havia dit podria ser susceptible de revisió judicial.
-No podem permetre que això quedi en una anècdota. Per això, si no hi ha dimissions abans, des de MÉS per Llucmajor, anunciam que al pròxim plenari presentarem una moció per exigir la reprovació de la regidora d'Urbanisme. Aquesta acció permetrà censurar pública i formalment aquesta actitud i farà que tots els partits polítics donin la seva opinió públicament i es posicionin respecte a aquest fet, inclosos els socis de govern del Partit Popular.
-Ho feim perquè aquest incident no és un fet aïllat, sinó el símptoma final d'una patologia política greu. Patim la pitjor legislatura que es recorda. Un govern que té més doblers que mai al banc, però que és incapaç de treure projectes endavant. La legislatura de la inestabilitat, dels canvis constants de cadira i de les baralles internes airejades en públic sense vergonya.
-
-Durant els darrers mesos, la seva gestió ha derivat en la política del «NO», del «rodillo», del «mando y ordeno». Una legislatura marcada per no escoltar, per la manca de previsió i per la desídia absoluta. Esperen que els problemes s'arreglin sols mentre miren el rellotge desitjant ser a casa.
-Sempre hem dit que el problema de fons a Llucmajor no és un micròfon traïdor. A micro obert, la batlessa permet que els seus socis de govern de la ultradreta siguin xenòfobs i racistes. El problema és la manca de respecte estructural. Aquesta grolleria verbal és la mateixa que veim plasmada als nostres carrers: en la brutor, en la falta de manteniment i en l’absència de criteri i gestió. Si no respecten els ciutadans amb les paraules, com podem esperar que els respectin amb els fets?
-Els representants públics han d'estar a l'altura del càrrec. Si la regidora pensa que als veïns «que les den por el culo» i la batlessa només vol que «se vayan» per plegar prest, aleshores no haurien d'ocupar les cadires on seuen.
-Per respecte a tots els ciutadans de Llucmajor —els hagin votat o no—, no ens quedarem de braços plegats. Si elles han perdut la vergonya, nosaltres no hem perdut la dignitat de defensar el nostre poble.
-
-`
-            },
-            {
-                id: 'op-9',
-                category: 'opinio',
-                title: "Les Fires que volem",
-                date: "NOVEMBRE 2025",
-                image: "imatges/Fires.jpg?auto=format&fit=crop&q=80&w=1200",
-                summary: "Llucmajor ha d'actuar com la ciutat que és oficialment i no viure de rendes històriques.",
-                content: `S’ha celebrat la 479a edició de les fires de Llucmajor. Gairebé cinc segles d’història les situen com una de les cites més antigues de l’Illa. Al seu moment, fins i tot, les més rellevants. És una fita de la qual hauríem d’estar orgullosos, però, als carrers, entre les paradetes, ressona una percepció generalitzada, un murmuri col·lectiu que acaba sent una conversa evident: aquestes fires ja no són el que eren.
-
-Aquesta sensació de desencant no és només nostàlgia. Com bé apuntava Sebastià Alzamora en aquesta mateixa revista el mes passat, les Fires eren el moment en què Llucmajor treia pit i mostrava el millor que tenia. La pregunta, doncs, és inevitable: això que hem vist és realment el millor que tenim? Tot i els canvis inevitables en el concepte de les fires, em nego a pensar que Llucmajor no pot oferir res més.
-
-El problema de les Fires no és només un problema d’organització puntual, és símptoma d’una qüestió que va molt més enllà: Llucmajor necessita creure en el seu propi potencial. Fa massa temps que arrossegam una deriva que no ens fa justícia. Necessitam sentir-nos orgullosos del nostre municipi i, per fer-ho, hem de començar a actuar com el que som oficialment: la ciutat de Llucmajor. No podem viure de rendes històriques. Tenim el potencial i l’hem de treure anant molt més enllà del “perquè sempre s’ha fet així”.
-
-Aquesta mentalitat ens ofega, ens fa petits. És hora de prendre acció, acció valenta per fer créixer Llucmajor, per sacsejar el conformisme. Les fires poden ser el tret de partida, el gran esdeveniment que ens faci créixer i mirar cap amunt.
-
-I com ho fem? El que està clar és que el canvi no vindrà fotocopiant el programa de l’any passat. El canvi neix de la suma de tothom. 
-
-Primer, hem de comptar activament amb el nostre potent teixit associatiu. Les entitats socials, esportives i culturals són el cor que dona vida als nuclis del municipi. Demostren dia a dia que tenen la força i el potencial per assumir el protagonisme que se’ls ha de donar.
-
-Segon, hem de comptar amb el comerç. Els comerciants de Llucmajor aporten fortalesa i identitat. Les fires han de ser el seu millor aparador, una plataforma de dinamització econòmica local, enfora de la competència de venedors que venen de fora, sense l’esperit que necessita la fira.
-
-Tercer, i potser el més important: hem d’involucrar la resta de nuclis del municipi. Llucmajor és molt més que el seu poble. Les fires no seran un èxit fins que a s’Arenal no se les senti seves, fins que a les urbanitzacions no se les sentin seves. Els veïnats de tot el municipi han de marcar aquestes dates al calendari.
-
-I totes aquestes peces s’han d’encaixar. Això és cosa de l’Ajuntament. L’Administració ha de ser l’eix vertebrador d’aquesta transformació. Però ser l’eix transformador vol dir estirar del carro i no limitar-se a dir que “la porta és oberta i qui vulgui que hi entri”. Aquesta passivitat, disfressada d’accessibilitat, no és el que necessitam.  L’Ajuntament ha de ser proactiu, ha de sortir a cerca la participació, ha de liderar, motivar i facilitar. L’Ajuntament ha de ser el motor, i ara mateix és el fre de mà.
-
-Nosaltres ho tenim molt clar i així és com ho farem. Transformar les fires és el primer pas per transformar Llucmajor. Ja no hi valen les excuses ni les mitges tintes. Necessitam ambició, idees noves i la valentia per executar-les. En definitiva, Llucmajor necessita més.
-
-Oriol Gómez`
+                content: `L’equip de govern de Llucmajor ha tocat fons. La política és gestió, és debat, però, sobretot, és vocació de servei públic. El que vàrem viure al plenari del mes passat a la nostra casa consistorial no va ser política. L’equip de govern va degradar d’una forma mai vista, la institució que representen.`,
+                createdAt: 1735603200000
             },
             {
                 id: 'op-10',
@@ -252,22 +183,48 @@ Oriol Gómez`
                 date: "OCTUBRE 2025",
                 image: "imatges/participacio.png",
                 summary: "La mobilització ciutadana als plens és l'evidència que Llucmajor demana un canvi.",
-                content: `Darrerament, la sala de plens de l’Ajuntament de Llucmajor s’ha convertit en el lloc on el ciutadà es reuneix el darrer dimecres de cada mes. Amb el concurs d’idees de Cas Coix sumant mesos sense ser una realitat, la sala del segon pis de l’Ajuntament és l’escenari de moda.
-
-El que passa és que els ciutadans no hi van a veure una obra de ficció. Van a demanar respostes davant els problemes que tenen en el seu dia a dia, provocats per la manca d’acció real al carrer de qui governa Llucmajor.
-
-En els darrers mesos, hem vist passar pel micro de la participació ciutadana, des de famílies afectades per la manca de places 0-3 fins als veïnats desesperats per les pudors de la macrogranja de Son Perot o per l’acumulació de fems a s'Arenal. Des dels veïnats que reclamen la reforma del SITT de Badia Blava fins als defensors de la cultura amb samarretes per Cas Coix, passant pels afectats pel traçat del tren de Migjorn o els que reclamen la millora urgent de l’escola de música. També hem vist mobilitzacions al carrer de qui, des de fa més de deu anys, demana la construcció de l’IES Son Granada, a Maioris. La gent ha hagut d'aixecar-se del sofà i anar a la Casa de la Vila a recordar als nostres governants que Llucmajor necessita acció per millorar la qualitat de vida de tothom.
-
-A la Fundació Toni Catany s’hi ha inaugurat fa poc una exposició sobre les fotografies que el batle de Barcelona, Pasqual Maragall feia amb el seu mòbil. És l’excusa perfecta per parlar sobre l’Alzheimer. Més enllà d’això, destaca a una paret de la Fundació la frase: "Barcelona és la gent". Avui, més que mai, podem afirmar que Llucmajor és la gent. La mobilització ciutadana mou el món i la determinació de qui ho fa provoca coses que semblen impossibles, com va ser la unanimitat en la definició del projecte del tren que volem a Llucmajor.
-
-Però aquesta unanimitat va ser puntual i no tapa que Llucmajor té mancances. La llista de temes pendents és tan llarga que fa empegueir. I com que la informació no arriba, vàrem presentar al plenari del mes de setembre una petició per ser informats de les dates concretes d’execució dels grans projectes i inversions pendents: tenim un contracte de recollida de fems caducat, necessitam un pla de manteniment de les nostres escoles. La reforma de la residència de la gent gran o el concurs d'idees de Cas Coix s'han convertit en una llegenda urbana. I mentrestant, nuclis com s’Estanyol, s’Arenal o les urbanitzacions perden connectivitat de transport públic, cosa que aïlla la gent de serveis bàsics com l'hospital de Son Llàtzer.
-Els problemes no es resolen, sinó que s'agreugen. I davant la crítica o la pregunta, la resposta és el silenci, una promesa vaga que el vent s'endú o un esperar una alineació astral. No hi ha planificació, no hi ha iniciativa, no hi ha informació. Només hi ha reacció, i només quan la pressió ciutadana és tan forta que ignorar-la suposaria un cost polític massa alt i, fins i tot, tampoc així.
-Des de MÉS per Llucmajor entenem la política d'una altra manera. La nostra feina és ser una eina útil per a la gent. Governar no és seure a una cadira i esperar que passin coses, governar és arromangar-se per transformar el nostre municipi en el Llucmajor que volem. Un Llucmajor que no només posi pegats, sinó que anticipi els problemes. Un govern municipal ha de liderar, no anar a remolc de les protestes. S'ha de protegir la nostra terra i el nostre paisatge i garantir que els serveis públics funcionin, que les infraestructures siguin dignes i que la cultura no sigui la darrera de les prioritats.
-Un ajuntament que escolta no necessita que els seus ciutadans cridin als plens. Un ajuntament que planifica no deixa caducar contractes essencials ni permet que els seus edificis es degradin. Un ajuntament valent posa les necessitats de la gent al centre, sempre. La força del poble, ara més organitzat que mai, és la nostra gran esperança, però també l'evidència més clara que alguna cosa no va bé. 
-Llucmajor ha despertat i demana un canvi. És hora d'oferir un projecte a l'altura de la seva gent, és hora de veure que Llucmajor necessita més.
-
-Oriol Gómez
-`
+                content: `Darrerament, la sala de plens de l’Ajuntament de Llucmajor s’ha convertit en el lloc on el ciutadà es reuneix el darrer dimecres de cada mes. Els ciutadans no hi van a veure una obra de ficció. Van a demanar respostes davant els problemes que tenen en el seu dia a dia.`,
+                createdAt: 1730332800000
+            },
+            {
+                id: 'op-8',
+                category: 'opinio',
+                title: "MÉS marca el camí del tren",
+                date: "JULIOL 2025",
+                image: "imatges/tren.png",
+                summary: "Volem el tren de Migjorn respectant el territori i protegint els espais naturals.",
+                content: `Des de MÉS per Llucmajor tornam a demostrar que tenim una visió clara i compromís amb el futur del nostre municipi...`,
+                createdAt: 1722470400000
+            },
+            {
+                id: 'n-2',
+                category: 'noticia',
+                title: "Rebuig al circuit de motos nàutiques",
+                date: "23 DES 2025",
+                image: "imatges/MotosAigua.png",
+                summary: "Aconseguim el rebuig unànime del Ple al circuit de motos nàutiques de s’Arena",
+                content: `Gràcies a la iniciativa i la pressió política de MÉS per Llucmajor, el Ple de l’Ajuntament ha rebutjat per unanimitat la instal·lació d’un circuit tancat de motos d'aigua...`,
+                createdAt: 1734912000000
+            },
+            {
+                id: 'op-9',
+                category: 'opinio',
+                title: "Les Fires que volem",
+                date: "NOVEMBRE 2025",
+                image: "imatges/Fires.jpg",
+                summary: "Llucmajor ha d'actuar com la ciutat que és oficialment.",
+                content: `S’ha celebrat la 479a edició de les fires de Llucmajor. Gairebé cinc segles d’història les situen com una de les cites més antigues de l’Illa...`,
+                createdAt: 1731628800000
+            },
+            {
+                id: 'op-7',
+                category: 'opinio',
+                title: "Dins pressupost no vol dir que se gasti",
+                date: "JUNY 2025",
+                image: "https://images.unsplash.com/photo-1454165833767-027ffea9e77b",
+                summary: "La batlessa admet la paràlisi de gestió.",
+                content: "L'afirmació de la batlessa de Llucmajor durant el debat dels pressuposts 2025...",
+                createdAt: 1718409600000
             }
         ];
 
@@ -279,11 +236,11 @@ Oriol Gómez
         ];
 
         const zones = [
-            { id: 'poble', name: 'Llucmajor Poble', img: "imatges/Llucmajor1.png" },
-            { id: 'arenal', name: "S'Arenal", img: "imatges/sarenal.png" },
-            { id: 'urb', name: 'Urbanitzacions', img: "imatges/badies1.png" },
-            { id: 'mariners', name: "S'Estanyol i Son Bieló", img: "imatges/estanyol.png" },
-            { id: 'foravila', name: 'Foravila', img: "imatges/Foravila.png" }
+            { id: 'poble', name: 'Llucmajor Poble', img: "https://images.unsplash.com/photo-1548685913-fe6678babe8d" },
+            { id: 'arenal', name: "S'Arenal", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963" },
+            { id: 'urb', name: 'Urbanitzacions', img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750" },
+            { id: 'mariners', name: "S'Estanyol i Son Bieló", img: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9" },
+            { id: 'foravila', name: 'Foravila', img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b" }
         ];
 
         const teamRegidors = [
@@ -316,7 +273,6 @@ Oriol Gómez
             const [isAdmin, setIsAdmin] = useState(false);
             const [selectedItem, setSelectedItem] = useState(null);
             const [filterZone, setFilterZone] = useState('all');
-            const [form, setForm] = useState({ title: '', category: 'noticia', summary: '', content: '', image: '' });
 
             // 1. Auth Initializer
             useEffect(() => {
@@ -328,14 +284,14 @@ Oriol Gómez
                         } else {
                             await auth.signInAnonymously();
                         }
-                    } catch (err) { console.warn("Firebase Auth Fail:", err); }
+                    } catch (err) { console.warn("Auth Fail:", err); }
                 };
                 initAuth();
                 const unsubscribe = auth.onAuthStateChanged(u => setUser(u));
                 return () => unsubscribe();
             }, []);
 
-            // 2. Data Fetching (Si hi ha Firebase)
+            // 2. Data Fetching
             useEffect(() => {
                 if (!user || !db) return;
                 try {
@@ -344,7 +300,7 @@ Oriol Gómez
                         const docs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
                         const combined = [...initialArticles, ...docs];
                         setNews(combined.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)));
-                    }, (error) => console.error("Firestore Error:", error));
+                    }, (error) => console.error("Snapshot Error:", error));
                     return () => unsubscribe();
                 } catch (e) { console.error(e); }
             }, [user]);
@@ -362,7 +318,7 @@ Oriol Gómez
                 return () => window.removeEventListener('hashchange', handleHash);
             }, []);
 
-            // 4. Carousel
+            // 4. Carousel Timer
             useEffect(() => {
                 const interval = setInterval(() => setActiveSlide(s => (s + 1) % bannerSlides.length), 6000);
                 return () => clearInterval(interval);
@@ -370,21 +326,9 @@ Oriol Gómez
 
             const navigateTo = (p) => { window.location.hash = `#/${p}`; };
 
-            const handleAddNews = async (e) => {
-                e.preventDefault();
-                if (!db || !user || !form.title) return;
-                try {
-                    await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('news').add({
-                        ...form,
-                        date: new Date().toLocaleDateString('ca-ES', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase(),
-                        createdAt: Date.now()
-                    });
-                    setForm({ title: '', category: 'noticia', summary: '', content: '', image: '' });
-                    setIsAdmin(false);
-                } catch (err) { console.error("Error", err); }
-            };
-
+            // Variables derivades per evitar ReferenceErrors
             const filteredProposals = filterZone === 'all' ? initialProposals : initialProposals.filter(p => p.zone === filterZone);
+            const latestNewsList = news.slice(0, 6);
 
             return (
                 <div className="min-h-screen bg-white text-mes-dark font-sans selection:bg-mes-lime selection:text-black">
@@ -399,11 +343,9 @@ Oriol Gómez
                             <button onClick={() => navigateTo('projectes')} className={page === 'projectes' ? 'text-mes-lime border-b-2 border-mes-lime' : 'hover:text-mes-lime'}>Projecte</button>
                             <button onClick={() => navigateTo('equip')} className={page === 'equip' ? 'text-mes-lime border-b-2 border-mes-lime' : 'hover:text-mes-lime'}>L'Equip</button>
                             <button onClick={() => {
-                                const pass = prompt("Contrasenya de Gestió:");
+                                const pass = prompt("Contrasenya:");
                                 if(pass === "mes2025") setIsAdmin(!isAdmin);
-                            }} className="bg-stone-100 px-4 py-2 hover:bg-mes-dark hover:text-white transition-all text-[9px] font-black uppercase">
-                                {isAdmin ? 'Tancar Gestió' : 'Gestió ✨'}
-                            </button>
+                            }} className="bg-stone-100 px-3 py-1 text-[8px] font-black uppercase hover:bg-mes-dark hover:text-white transition-all">Gestió ✨</button>
                         </div>
                     </nav>
 
@@ -419,12 +361,12 @@ Oriol Gómez
                                 ))}
                                 <div className="relative z-20 max-w-7xl mx-auto px-8 w-full text-left">
                                     <div className="max-w-4xl">
-                                        <span className="section-title-box bg-mes-lime !text-black mb-6 uppercase tracking-widest">Som la veu del municipi</span>
-                                        <h1 className="text-5xl md:text-[100px] font-black uppercase text-white leading-[0.85] tracking-tighter mb-10 drop-shadow-2xl">
+                                        <span className="section-title-box bg-mes-lime !text-black mb-6 uppercase tracking-widest text-left">Som la veu del municipi</span>
+                                        <h1 className="text-5xl md:text-[100px] font-black uppercase text-white leading-[0.85] tracking-tighter mb-10 drop-shadow-2xl text-left">
                                             {bannerSlides[activeSlide].title.split(' ').slice(0, -1).join(' ')} <br/>
                                             <span className="text-mes-lime">{bannerSlides[activeSlide].title.split(' ').pop()}</span>.
                                         </h1>
-                                        <p className="text-xl md:text-3xl text-white/95 font-medium mb-12 max-w-3xl border-l-4 border-mes-lime pl-8 leading-tight italic">
+                                        <p className="text-xl md:text-3xl text-white/95 font-medium mb-12 max-w-3xl border-l-4 border-mes-lime pl-8 leading-tight italic text-left">
                                             {bannerSlides[activeSlide].sub}
                                         </p>
                                         <div className="flex flex-wrap gap-4 text-left">
@@ -437,19 +379,19 @@ Oriol Gómez
                             </header>
 
                             {/* 2. OBSERVATORI MUNICIPAL */}
-                            <section id="observatori" className="py-24 bg-stone-50 px-8 border-b border-stone-200">
-                                <div className="max-w-6xl mx-auto text-left text-left">
-                                    <div className="mb-16 text-left">
+                            <section id="observatori" className="py-32 bg-stone-50 px-8 section-accent-top">
+                                <div className="max-w-7xl mx-auto text-left">
+                                    <div className="mb-16">
                                         <div className="section-title-box text-left">Fiscalització i Seguiment</div>
-                                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none text-mes-dark text-left">L'Observatori Municipal</h2>
-                                        <p className="text-stone-400 text-sm font-bold uppercase tracking-widest mt-2 italic text-left">Mocions aprovades que el govern manté bloquejades</p>
+                                        <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none text-mes-dark text-left">L'Observatori Municipal</h2>
+                                        <p className="text-stone-400 text-sm font-bold uppercase tracking-widest mt-4 italic max-w-2xl border-l-2 border-mes-lime pl-4 text-left">Mocions aprovades que l'equip de govern manté bloquejades o sense pressupost real.</p>
                                     </div>
-                                    <div className="bg-white shadow-2xl overflow-x-auto border border-stone-200 text-left">
+                                    <div className="bg-white shadow-2xl overflow-x-auto border border-stone-200">
                                         <table className="w-full text-left min-w-[600px] text-left">
                                             <thead className="bg-mes-dark text-white text-[11px] uppercase tracking-[0.2em] text-left">
                                                 <tr>
                                                     <th className="p-6 font-black text-left">Proposta Aprovada</th>
-                                                    <th className="p-6 font-black text-center">Estat actual</th>
+                                                    <th className="p-6 font-black text-center text-center">Estat actual</th>
                                                     <th className="p-6 font-black text-left">Nota seguiment</th>
                                                 </tr>
                                             </thead>
@@ -457,7 +399,7 @@ Oriol Gómez
                                                 {initialObservatory.map(obs => (
                                                     <tr key={obs.id} className="border-b border-stone-100 hover:bg-stone-50 transition-colors text-left">
                                                         <td className="p-6 font-black text-base uppercase text-mes-dark text-left">{obs.topic}</td>
-                                                        <td className="p-6 text-center whitespace-nowrap text-left">
+                                                        <td className="p-6 text-center whitespace-nowrap text-center">
                                                             <span className={`px-4 py-1 text-[9px] font-black uppercase ${obs.status.includes('ATURAT') ? 'bg-red-50 text-red-600' : 'bg-yellow-50 text-yellow-600'}`}>
                                                                 {obs.status}
                                                             </span>
@@ -472,81 +414,157 @@ Oriol Gómez
                             </section>
 
                             {/* 3. ACTUALITAT */}
-                            <section id="actualitat" className="py-24 px-8 max-w-7xl mx-auto text-left">
-                                <div className="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-4 text-left">
-                                    <div className="text-left">
-                                        <div className="section-title-box">Informació i Opinió</div>
-                                        <h2 className="text-4xl font-black uppercase tracking-tighter leading-none text-mes-dark text-left">L'Actualitat</h2>
-                                    </div>
-                                    <button onClick={() => navigateTo('arxiu')} className="text-xs font-black uppercase border-b-4 border-mes-lime pb-1 hover:text-mes-lime transition-all">Veure-ho tot</button>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-left">
-                                    {news.slice(0, 6).map(a => (
-                                        <div key={a.id} className="flex flex-col text-left group cursor-pointer" onClick={() => setSelectedItem(a)}>
-                                            <div className="relative h-56 overflow-hidden mb-6 border-b-8 border-mes-dark group-hover:border-mes-lime transition-all bg-stone-100">
-                                                {a.image && <img src={a.image} className="w-full h-full object-cover" alt={a.title} onError={(e) => e.target.src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4"} />}
-                                                <div className="absolute top-0 right-0 bg-mes-dark text-white px-3 py-1 text-[9px] font-black uppercase tracking-widest">{a.category}</div>
-                                            </div>
-                                            <span className="text-[10px] font-bold text-stone-300 uppercase mb-3 tracking-widest text-left">{a.date}</span>
-                                            <h3 className="text-2xl font-black uppercase leading-tight mb-4 group-hover:text-mes-lime transition-colors text-left">{a.title}</h3>
-                                            <p className="text-sm text-stone-500 line-clamp-3 mb-8 leading-relaxed font-medium text-left">{a.summary}</p>
-                                            <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime self-start">Llegir completa</button>
+                            <section id="actualitat" className="py-32 bg-white px-8 section-separator text-left">
+                                <div className="max-w-7xl mx-auto">
+                                    <div className="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-6 text-left">
+                                        <div className="text-left text-left">
+                                            <div className="section-title-box text-left">Informació i Opinió</div>
+                                            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none text-mes-dark text-left text-left">L'Actualitat</h2>
                                         </div>
-                                    ))}
+                                        <button onClick={() => navigateTo('arxiu')} className="text-xs font-black uppercase border-b-4 border-mes-lime pb-1 hover:text-mes-lime transition-all text-left">Anar a l'Arxiu complet</button>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-left">
+                                        {latestNewsList.map(a => (
+                                            <div key={a.id} className="flex flex-col text-left group cursor-pointer bg-white border border-stone-100 p-6 hover:shadow-xl transition-all duration-300 text-left" onClick={() => setSelectedItem(a)}>
+                                                <div className="relative h-56 overflow-hidden mb-6 border-b-4 border-mes-dark group-hover:border-mes-lime transition-all bg-stone-100 text-left">
+                                                    {a.image && <img src={a.image} className="w-full h-full object-cover" alt={a.title} onError={(e) => e.target.src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4"} />}
+                                                    <div className="absolute top-0 right-0 bg-mes-dark text-white px-3 py-1 text-[9px] font-black uppercase tracking-widest text-left">{a.category}</div>
+                                                </div>
+                                                <span className="text-[10px] font-bold text-stone-300 uppercase mb-3 tracking-widest text-left">{a.date}</span>
+                                                <h3 className="text-xl font-black uppercase leading-tight mb-4 group-hover:text-mes-lime transition-colors text-left">{a.title}</h3>
+                                                <p className="text-sm text-stone-500 line-clamp-3 mb-8 leading-relaxed font-medium text-left">{a.summary}</p>
+                                                <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime self-start text-left text-left">Llegir completa</button>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </section>
 
                             {/* 4. PROPOSTES PER ZONA */}
-                            <section id="visio" className="py-24 bg-white px-8 border-t border-stone-100 text-left">
+                            <section id="visio" className="py-32 bg-stone-50 px-8 section-separator text-left">
                                 <div className="max-w-7xl mx-auto">
                                     <div className="mb-16 text-left">
-                                        <div className="section-title-box">El Llucmajor que volem</div>
-                                        <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-mes-dark leading-none">Propostes per transformar el municipi</h2>
+                                        <div className="section-title-box text-left">El Llucmajor que volem</div>
+                                        <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-mes-dark leading-none text-left">Propostes per zona</h2>
+                                        <p className="text-stone-400 font-bold uppercase text-[12px] tracking-widest mt-4 max-w-2xl border-l-2 border-mes-lime pl-4 italic text-left">Tria el teu territori i descobreix el nostre projecte.</p>
                                     </div>
-                                    <div className="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[500px]">
+                                    <div className="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[550px] border-t-8 border-mes-lime text-left">
                                         {zones.map(z => (
                                             <div 
                                                 key={z.id} 
-                                                className="zone-col group flex-1"
+                                                className="zone-col group flex-1 text-left"
                                                 onClick={() => { setFilterZone(z.id); navigateTo('projectes'); }}
                                             >
-                                                <img src={z.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={z.name} />
+                                                <img src={z.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 text-left" alt={z.name} />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent flex flex-col justify-end p-8 text-left">
-                                                    <h3 className="text-3xl font-black uppercase text-white leading-none mb-4 group-hover:text-mes-lime transition-colors">{z.name}</h3>
-                                                    <span className="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity">Explorar projectes →</span>
+                                                    <h3 className="text-3xl font-black uppercase text-white leading-none mb-4 group-hover:text-mes-lime transition-colors text-left text-left">{z.name}</h3>
+                                                    <span className="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity text-left">Explorar projectes →</span>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
                             </section>
+
+                            {/* FOOTER INTEGRAT */}
+                            <footer className="bg-white py-32 px-10 border-t border-stone-200 text-left mt-auto text-left">
+                                <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-20 text-left">
+                                    <div className="max-w-xs text-left leading-none text-left">
+                                        <div className="bg-mes-lime text-black font-black w-14 h-14 flex items-center justify-center text-3xl mb-8 text-left">M</div>
+                                        <p className="font-black text-3xl tracking-tighter uppercase mb-2 text-mes-dark text-left text-left">MÉS per Llucmajor</p>
+                                        <p className="font-bold text-xs text-stone-300 uppercase tracking-[0.3em] mt-2 text-left text-left">Compromís · Proximitat · Futur</p>
+                                    </div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-20 w-full md:w-auto text-left font-black uppercase text-[11px] tracking-widest text-left">
+                                        <div className="space-y-12 text-left">
+                                            <a href="https://instagram.com/mesperllucmajor" target="_blank" className="group flex items-center gap-4 text-left">
+                                                <div className="w-12 h-12 bg-stone-50 flex items-center justify-center border border-stone-200 group-hover:bg-mes-lime transition-all text-left"><IconInstagram /></div>
+                                                <div className="flex flex-col text-left">
+                                                    <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left">Instagram</span>
+                                                    <span className="text-[9px] text-stone-400 lowercase tracking-widest text-left">@mesperllucmajor</span>
+                                                </div>
+                                            </a>
+                                            <a href="https://facebook.com/mesperllucmajor" target="_blank" className="group flex items-center gap-4 text-left">
+                                                <div className="w-12 h-12 bg-stone-50 flex items-center justify-center border border-stone-200 group-hover:bg-mes-lime transition-all text-left"><IconFacebook /></div>
+                                                <div className="flex flex-col text-left">
+                                                    <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left">Facebook</span>
+                                                    <span className="text-[9px] text-stone-400 lowercase tracking-widest text-left">mesperllucmajor</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div className="space-y-12 text-left text-left">
+                                            <a href="mailto:mesperllucmajor@gmail.com" className="group flex items-center gap-4 text-left">
+                                                <div className="w-12 h-12 bg-stone-50 flex items-center justify-center border border-stone-200 group-hover:bg-mes-lime transition-all text-left"><IconMail /></div>
+                                                <div className="flex flex-col text-left">
+                                                    <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left text-left">Email</span>
+                                                    <span className="text-[9px] text-stone-400 lowercase tracking-widest text-left text-left">mesperllucmajor@gmail.com</span>
+                                                </div>
+                                            </a>
+                                            <a href="https://chat.whatsapp.com/KjSrg2jMp2a32DIZ50h2WX" target="_blank" className="group flex items-center gap-4 text-left">
+                                                <div className="w-12 h-12 bg-stone-50 flex items-center justify-center border border-stone-200 group-hover:bg-mes-lime transition-all text-green-600 text-left"><IconWhatsapp /></div>
+                                                <div className="flex flex-col text-left">
+                                                    <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left text-left">WhatsApp</span>
+                                                    <span className="text-[10px] bg-stone-100 px-3 py-1 text-stone-600 font-black tracking-widest text-left">Comunitat de WhatsApp</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </footer>
+
+                            <footer className="bg-mes-dark py-12 px-6 text-center text-white/10 text-[10px] font-black uppercase tracking-[0.5em] text-center">
+                                MÉS PER LLUCMAJOR · 2026 · CONSTRUÏM EL MUNICIPI QUE VOLEM
+                            </footer>
                         </div>
                     )}
 
                     {/* VISTES DE PÀGINA */}
-                    {page === 'projectes' && (
-                        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left text-left">
-                            <div className="mb-20 border-l-[12px] border-mes-lime pl-10 text-left">
-                                <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4 text-mes-dark text-left">Els Projectes</h1>
-                                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em] text-left text-left">Propostes per transformar el municipi</p>
+                    {page === 'arxiu' && (
+                        <section className="pt-40 pb-32 px-8 max-w-5xl mx-auto animate-fade text-left">
+                            <div className="mb-20 border-l-[12px] border-mes-lime pl-10 text-left text-left">
+                                <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4 text-mes-dark text-left">L'Arxiu</h1>
+                                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em] text-left text-left">Memòria institucional i opinió ciutadana</p>
                             </div>
-                            <div className="flex flex-wrap gap-4 mb-16 border-b border-stone-200 pb-8 text-left">
-                                <button onClick={() => setFilterZone('all')} className={`px-6 py-3 uppercase font-black text-[10px] tracking-widest transition-all ${filterZone === 'all' ? 'bg-mes-lime text-black' : 'bg-stone-100 text-stone-500'}`}>Totes les zones</button>
-                                {zones.map(z => (
-                                    <button key={z.id} onClick={() => setFilterZone(z.id)} className={`px-6 py-3 uppercase font-black text-[10px] tracking-widest transition-all ${filterZone === z.id ? 'bg-mes-lime text-black' : 'bg-stone-100 text-stone-500'}`}>{z.name}</button>
+                            <div className="space-y-6 text-left">
+                                {news.map((a) => (
+                                    <div key={a.id} className="archive-item bg-white border border-stone-100 flex flex-col md:flex-row items-center p-8 gap-10 shadow-sm hover:shadow-md transition-all text-left">
+                                        <div className="shrink-0 text-left w-full md:w-36 leading-none text-left">
+                                            <div className="text-[11px] font-black text-stone-300 uppercase tracking-widest mb-2 text-left">{a.date}</div>
+                                            <div className={`text-[8px] font-black px-2 py-0.5 inline-block uppercase ${a.category === 'opinio' ? 'bg-mes-lime text-black' : 'bg-mes-dark text-white'} text-left`}>
+                                                {a.category}
+                                            </div>
+                                        </div>
+                                        <div className="flex-grow text-left">
+                                            <h3 className="text-xl md:text-2xl font-black uppercase leading-tight text-mes-dark hover:text-mes-lime transition-colors cursor-pointer text-left text-left" onClick={() => setSelectedItem(a)}>{a.title}</h3>
+                                        </div>
+                                        <button onClick={() => setSelectedItem(a)} className="bg-mes-dark text-white hover:bg-mes-lime hover:text-black font-black uppercase text-[10px] px-8 py-3 transition-all w-full md:w-auto text-left">Llegir</button>
+                                    </div>
                                 ))}
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        </section>
+                    )}
+
+                    {page === 'projectes' && (
+                        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left">
+                            <div className="mb-20 border-l-[12px] border-mes-lime pl-10 text-left">
+                                <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4 text-mes-dark text-left text-left text-left">Els Projectes</h1>
+                                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em] text-left text-left text-left">Més de 10 propostes territorials</p>
+                            </div>
+                            <div className="flex flex-wrap gap-4 mb-16 border-b border-stone-200 pb-8 text-left text-left">
+                                <button onClick={() => setFilterZone('all')} className={`px-6 py-3 uppercase font-black text-[10px] tracking-widest transition-all ${filterZone === 'all' ? 'bg-mes-lime text-black shadow-lg' : 'bg-stone-100 text-stone-500'}`}>Totes les zones</button>
+                                {zones.map(z => (
+                                    <button key={z.id} onClick={() => setFilterZone(z.id)} className={`px-6 py-3 uppercase font-black text-[10px] tracking-widest transition-all ${filterZone === z.id ? 'bg-mes-lime text-black shadow-lg' : 'bg-stone-100 text-stone-500'}`}>{z.name}</button>
+                                ))}
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
                                 {filteredProposals.map(p => (
-                                    <div key={p.id} className="bg-stone-50 border-b-8 border-transparent hover:border-mes-lime transition-all cursor-pointer group shadow-sm text-left" onClick={() => setSelectedItem(p)}>
-                                        <div className="h-64 overflow-hidden relative">
-                                            <img src={p.images[0]} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={p.title} />
-                                            <div className="absolute top-0 right-0 bg-mes-dark text-white px-3 py-1 text-[8px] font-black uppercase tracking-widest">{zones.find(z => z.id === p.zone)?.name}</div>
+                                    <div key={p.id} className="bg-stone-50 border-b-8 border-transparent hover:border-mes-lime transition-all cursor-pointer group shadow-sm text-left text-left" onClick={() => setSelectedItem(p)}>
+                                        <div className="h-64 overflow-hidden relative text-left">
+                                            <img src={p.images[0]} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 text-left" alt={p.title} />
                                         </div>
-                                        <div className="p-8 text-left">
-                                            <h3 className="text-2xl font-black uppercase leading-none mb-4 group-hover:text-mes-lime transition-colors tracking-tighter text-left">{p.title}</h3>
-                                            <p className="text-sm text-stone-500 font-medium italic mb-8 line-clamp-2 text-left">{p.summary}</p>
-                                            <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime pb-1">Llegir proposta completa</button>
+                                        <div className="p-8 text-left text-left text-left">
+                                            <h3 className="text-2xl font-black uppercase leading-none mb-4 group-hover:text-mes-lime transition-colors tracking-tighter text-left text-left">{p.title}</h3>
+                                            <p className="text-sm text-stone-500 font-medium italic mb-8 line-clamp-2 text-left text-left">{p.summary}</p>
+                                            <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime pb-1 text-left text-left">Llegir proposta</button>
                                         </div>
                                     </div>
                                 ))}
@@ -555,17 +573,17 @@ Oriol Gómez
                     )}
 
                     {page === 'equip' && (
-                        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left text-left">
+                        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left">
                             <div className="text-center mb-24 text-left">
                                 <div className="section-title-box text-left">Les mans que fan feina</div>
-                                <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-mes-dark leading-none text-left">L'Equip de MÉS</h2>
+                                <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-mes-dark leading-none text-center text-left">L'Equip de MÉS</h2>
                             </div>
                             <div className="mb-32 text-left">
-                                <div className="section-title-box bg-mes-lime !text-black text-sm mb-12 font-black uppercase text-left">Representació al Plenari</div>
+                                <div className="section-title-box bg-mes-lime !text-black text-sm mb-12 uppercase font-black text-left">Grup Municipal</div>
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 text-left">
                                     {teamRegidors.map((r, i) => (
-                                        <div key={i} className="flex flex-col md:flex-row bg-white border border-stone-100 shadow-xl overflow-hidden text-left">
-                                            <img src={r.image} className="w-full md:w-64 h-96 team-img" alt={r.name} onError={(e) => e.target.src="https://via.placeholder.com/400x600"} />
+                                        <div key={i} className="flex flex-col md:flex-row bg-white border border-stone-100 shadow-xl overflow-hidden text-left text-left">
+                                            <img src={r.image} className="w-full md:w-64 h-96 team-img text-left" alt={r.name} onError={(e) => e.target.src="https://via.placeholder.com/400x600"} />
                                             <div className="p-10 flex flex-col justify-center text-left">
                                                 <h3 className="text-4xl font-black uppercase leading-none mb-3 text-mes-dark tracking-tighter text-left">{r.name}</h3>
                                                 <p className="text-mes-lime font-black uppercase text-xs mb-8 tracking-[0.2em] text-left">{r.role}</p>
@@ -575,15 +593,15 @@ Oriol Gómez
                                     ))}
                                 </div>
                             </div>
-                            <div className="text-left text-left">
-                                <div className="section-title-box text-sm mb-12 font-black uppercase text-left">Executiva Local</div>
-                                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 text-left">
+                            <div className="text-left">
+                                <div className="section-title-box text-sm mb-12 font-black uppercase text-left text-left text-left">Executiva Local de Llucmajor</div>
+                                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 text-left text-left text-left">
                                     {teamExecutiva.map((e, i) => (
-                                        <div key={i} className="text-left bg-stone-50 p-4 border border-stone-100 transition-colors hover:bg-stone-100 text-left text-left">
+                                        <div key={i} className="text-left bg-stone-50 p-4 border border-stone-100 transition-colors hover:bg-stone-100 text-left">
                                             <img src={e.image} className="w-full h-64 team-img object-cover mb-4 text-left" alt={e.name} onError={(e) => e.target.src="https://via.placeholder.com/300x400"} />
-                                            <h4 className="font-black uppercase text-lg leading-none mb-1 text-mes-dark text-left">{e.name}</h4>
-                                            <p className="text-[9px] font-bold text-mes-lime uppercase tracking-widest mb-4 leading-tight text-left">{e.role}</p>
-                                            <p className="text-[10px] text-stone-500 font-medium leading-relaxed opacity-70 text-left">{e.cv}</p>
+                                            <h4 className="font-black uppercase text-lg leading-none mb-1 text-mes-dark text-left text-left text-left">{e.name}</h4>
+                                            <p className="text-[9px] font-bold text-mes-lime uppercase tracking-widest mb-4 leading-tight text-left text-left text-left">{e.role}</p>
+                                            <p className="text-[10px] text-stone-500 font-medium leading-relaxed opacity-70 text-left text-left text-left">{e.cv}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -591,137 +609,27 @@ Oriol Gómez
                         </section>
                     )}
 
-                    {page === 'arxiu' && (
-                        <section className="pt-40 pb-32 px-8 max-w-5xl mx-auto animate-fade text-left">
-                            <div className="mb-20 border-l-[12px] border-mes-lime pl-10">
-                                <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4 text-mes-dark">L'Arxiu</h1>
-                                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em]">Memòria institucional i opinió ciutadana</p>
-                            </div>
-                            <div className="space-y-4">
-                                {news.map((a) => (
-                                    <div key={a.id} className="archive-item bg-stone-50 flex flex-col md:flex-row items-center p-8 gap-10 border border-stone-100 shadow-sm text-left">
-                                        <div className="shrink-0 text-left w-full md:w-36 leading-none">
-                                            <div className="text-[11px] font-black text-stone-300 uppercase tracking-widest mb-2">{a.date}</div>
-                                            <div className={`text-[8px] font-black px-2 py-0.5 inline-block uppercase ${a.category === 'opinio' ? 'bg-mes-lime text-black' : 'bg-mes-dark text-white'}`}>
-                                                {a.category}
-                                            </div>
-                                        </div>
-                                        <div className="flex-grow text-left">
-                                            <h3 className="text-xl md:text-2xl font-black uppercase leading-tight text-mes-dark hover:text-mes-lime transition-colors cursor-pointer" onClick={() => setSelectedItem(a)}>{a.title}</h3>
-                                        </div>
-                                        <button onClick={() => setSelectedItem(a)} className="bg-mes-dark text-white hover:bg-mes-lime hover:text-black font-black uppercase text-[10px] px-8 py-3 transition-all w-full md:w-auto">Llegir</button>
-                                    </div>
-                                ))}
-                            </div>
-                        </section>
-                    )}
-
                     {/* MODAL LECTOR */}
                     {selectedItem && (
-                        <div className="fixed inset-0 bg-mes-dark/98 z-[200] flex items-center justify-center p-4 animate-fade text-left text-left" onClick={() => setSelectedItem(null)}>
+                        <div className="fixed inset-0 bg-mes-dark/98 z-[200] flex items-center justify-center p-4 animate-fade text-left" onClick={() => setSelectedItem(null)}>
                             <div className="bg-white max-w-5xl w-full border border-stone-200 shadow-2xl overflow-hidden flex flex-col max-h-[95vh] text-left" onClick={e => e.stopPropagation()}>
                                 <div className="p-8 md:p-14 flex-grow overflow-y-auto modal-scroll text-left">
                                     <div className="flex justify-between items-center mb-10 border-b-2 border-mes-lime pb-6 text-left">
-                                        <span className="bg-mes-dark text-white px-3 py-1 text-[10px] font-black uppercase tracking-widest text-left">{selectedItem.category || 'PROJECTE'}</span>
-                                        <button onClick={() => setSelectedItem(null)} className="text-4xl font-light hover:text-mes-lime transition-colors text-stone-400 leading-none">&times;</button>
+                                        <span className="bg-mes-dark text-white px-3 py-1 text-[10px] font-black uppercase tracking-widest text-left text-left">{selectedItem.category || 'PROJECTE'}</span>
+                                        <button onClick={() => setSelectedItem(null)} className="text-4xl font-light hover:text-mes-lime transition-colors text-stone-400 leading-none text-left text-left">&times;</button>
                                     </div>
-                                    <h2 className="text-4xl md:text-7xl font-black uppercase mb-4 leading-none tracking-tighter text-mes-dark text-left leading-[0.9]">{selectedItem.title}</h2>
-                                    <p className="text-[12px] font-bold text-stone-400 mb-10 tracking-[0.3em] uppercase text-left">{selectedItem.date || (selectedItem.zone && zones.find(z => z.id === selectedItem.zone)?.name)}</p>
-                                    <div className="article-body whitespace-pre-wrap font-medium text-left text-mes-dark text-lg md:text-xl md:max-w-4xl text-left">
+                                    <h2 className="text-4xl md:text-7xl font-black uppercase mb-4 leading-none tracking-tighter text-mes-dark text-left leading-[0.9] text-left text-left">{selectedItem.title}</h2>
+                                    <p className="text-[12px] font-bold text-stone-400 mb-10 tracking-[0.3em] uppercase text-left text-left">{selectedItem.date || (selectedItem.zone && zones.find(z => z.id === selectedItem.zone)?.name)}</p>
+                                    <div className="article-body whitespace-pre-wrap font-medium text-left text-mes-dark text-lg md:text-xl md:max-w-4xl text-left text-left">
                                         {selectedItem.content}
                                     </div>
-                                    <div className="mt-16 pt-10 flex justify-center border-t border-stone-100">
-                                        <button onClick={() => setSelectedItem(null)} className="btn-primary !text-xs !px-12">Tancar lector</button>
+                                    <div className="mt-16 pt-10 flex justify-center border-t border-stone-100 text-left text-left">
+                                        <button onClick={() => setSelectedItem(null)} className="btn-primary !text-xs !px-12 text-left text-left">Tancar lector</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     )}
-
-                    {/* ADMIN PANELL */}
-                    {isAdmin && (
-                        <div className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4 text-left">
-                            <div className="bg-white w-full max-w-4xl p-10 text-left shadow-2xl border-t-[20px] border-mes-lime">
-                                <div className="flex justify-between items-center mb-8">
-                                    <h2 className="text-3xl font-black uppercase text-left text-mes-dark">✍️ Publicar Notícia</h2>
-                                    <button onClick={() => setIsAdmin(false)} className="text-stone-400 hover:text-black text-4xl">&times;</button>
-                                </div>
-                                <form onSubmit={handleAddNews} className="space-y-6">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-bold uppercase text-[11px] text-left">
-                                        <div className="flex flex-col gap-2">
-                                            <label>Títol de la notícia</label>
-                                            <input className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.title} onChange={e => setForm({...form, title: e.target.value})} required />
-                                        </div>
-                                        <div className="flex flex-col gap-2 text-left">
-                                            <label>Categoria</label>
-                                            <select className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.category} onChange={e => setForm({...form, category: e.target.value})}>
-                                                <option value="noticia">NOTÍCIA</option>
-                                                <option value="opinio">OPINIÓ</option>
-                                                <option value="agenda">AGENDA</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <button type="submit" className="w-full bg-mes-lime text-black font-black py-5 uppercase hover:bg-mes-dark hover:text-white transition-all">Publicar Ara</button>
-                                </form>
-                            </div>
-                        </div>
-                    )}
-{/* FOOTER INTEGRAT AMB LOGOS I WHATSAPP */}
-                    <footer className="bg-white py-32 px-10 border-t border-stone-200 text-left mt-auto text-left text-left">
-                        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-20 text-left text-left text-left">
-                            <div className="max-w-xs text-left leading-none text-left text-left text-left text-left text-left">
-                                <div className="bg-mes-lime text-black font-black w-14 h-14 flex items-center justify-center text-3xl mb-8 text-left text-left">M</div>
-                                <p className="font-black text-3xl tracking-tighter uppercase mb-2 text-mes-dark text-left text-left text-left text-left">MÉS per Llucmajor</p>
-                                <p className="font-bold text-xs text-stone-300 uppercase tracking-[0.3em] mt-2 text-left text-left text-left text-left text-left">Compromís · Proximitat · Futur</p>
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-20 w-full md:w-auto text-left font-black uppercase text-[11px] tracking-widest text-left text-left text-left text-left text-left">
-                                <div className="space-y-12 text-left text-left text-left text-left">
-                                    <a href="https://instagram.com/mesperllucmajor" target="_blank" className="group flex items-center gap-4 text-left text-left">
-                                        <div className="w-12 h-12 bg-stone-50 flex items-center justify-center border border-stone-200 group-hover:bg-mes-lime transition-all text-left text-left">
-                                            <IconInstagram />
-                                        </div>
-                                        <div className="flex flex-col text-left text-left">
-                                            <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left text-left">Instagram</span>
-                                            <span className="text-[9px] text-stone-400 lowercase tracking-widest text-left text-left text-left">@mesperllucmajor</span>
-                                        </div>
-                                    </a>
-                                    <a href="https://facebook.com/mesperllucmajor" target="_blank" className="group flex items-center gap-4 text-left text-left text-left">
-                                        <div className="w-12 h-12 bg-stone-50 flex items-center justify-center border border-stone-200 group-hover:bg-mes-lime transition-all text-left text-left text-left">
-                                            <IconFacebook />
-                                        </div>
-                                        <div className="flex flex-col text-left text-left">
-                                            <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left text-left text-left">Facebook</span>
-                                            <span className="text-[9px] text-stone-400 lowercase tracking-widest text-left text-left text-left text-left">mesperllucmajor</span>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div className="space-y-12 text-left text-left text-left text-left">
-                                    <a href="mailto:mesperllucmajor@gmail.com" className="group flex items-center gap-4 text-left text-left text-left text-left">
-                                        <div className="w-12 h-12 bg-stone-50 flex items-center justify-center border border-stone-200 group-hover:bg-mes-lime transition-all text-left text-left text-left text-left text-left">
-                                            <IconMail />
-                                        </div>
-                                        <div className="flex flex-col text-left text-left">
-                                            <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left text-left text-left text-left">Email</span>
-                                            <span className="text-[9px] text-stone-400 lowercase tracking-widest text-left text-left text-left text-left text-left text-left">mesperllucmajor@gmail.com</span>
-                                        </div>
-                                    </a>
-                                    <a href="https://chat.whatsapp.com/KjSrg2jMp2a32DIZ50h2WX" target="_blank" className="group flex items-center gap-4 text-left text-left text-left text-left text-left">
-                                        <div className="w-12 h-12 bg-stone-50 flex items-center justify-center border border-stone-200 group-hover:bg-mes-lime transition-all text-green-600 text-left text-left text-left text-left text-left text-left">
-                                            <IconWhatsapp />
-                                        </div>
-                                        <div className="flex flex-col text-left text-left text-left text-left text-left text-left">
-                                            <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left text-left text-left text-left text-left text-left">WhatsApp</span>
-                                            <span className="text-[10px] bg-stone-100 px-3 py-1 text-stone-600 font-black tracking-widest text-left text-left text-left text-left text-left text-left text-left text-left">Comunitat de WhatsApp</span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-
-                    <footer className="bg-mes-dark py-12 px-6 text-center text-white/10 text-[10px] font-black uppercase tracking-[0.5em] text-left text-left text-left text-left text-left text-left text-left">
-                        MÉS PER LLUCMAJOR · 2026 · CONSTRUÏM EL MUNICIPI QUE VOLEM
-                    </footer>
                 </div>
             );
         }
