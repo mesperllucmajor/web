@@ -514,26 +514,36 @@ Oriol Gómez`
                             </section>
 
                             {/* PROJECTE: EL LLUCMAJOR QUE VOLEM */}
+                            {/* PROJECTE: EL LLUCMAJOR QUE VOLEM (REDISSENYAT GALERIA) */}
                             <section id="visio" className="py-32 bg-mes-dark text-white px-8">
-                                <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-20 items-center text-left">
-                                    <div className="md:w-1/2 text-left">
-                                        <div className="bg-mes-lime text-black px-4 py-1 inline-block font-black uppercase text-xs mb-8 tracking-widest">El nostre horitzó</div>
-                                        <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] mb-10 text-left">EL <br/>LLUCMAJOR <br/><span className="text-mes-lime text-4xl md:text-7xl">QUE VOLEM</span></h2>
-                                        <p className="text-lg text-stone-400 leading-relaxed italic border-l-4 border-mes-lime pl-8 mb-12">"Propostes visuals barri a barri per transformar el nostre municipi."</p>
-                                        <button onClick={() => handleScrollTo('actualitat')} className="btn-primary !py-5">Suma-t'hi ara</button>
+                                <div className="max-w-7xl mx-auto">
+                                    <div className="text-left mb-20 max-w-4xl">
+                                        <div className="bg-mes-lime text-black px-4 py-1 inline-block font-black uppercase text-xs mb-8 tracking-widest font-black">La nostra visió</div>
+                                        <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] mb-10 text-left italic">EL LLUCMAJOR <br/><span className="text-mes-lime">QUE VOLEM</span></h2>
+                                        <p className="text-xl text-stone-400 leading-relaxed border-l-4 border-mes-lime pl-8 mb-12 font-medium">
+                                            Més que promeses, presentem projectes visuals i tangibles per transformar el nostre municipi en un lloc més humà, verd i segur.
+                                        </p>
                                     </div>
-                                    <div className="md:w-1/2 grid grid-cols-1 gap-8 w-full">
-                                        {proposals.map(p => (
-                                            <div key={p.id} className="bg-stone-800 p-1 group cursor-pointer border border-white/5 hover:border-mes-lime transition-all shadow-2xl" onClick={() => setSelectedItem(p)}>
-                                                <div className="relative h-72 md:h-96 overflow-hidden">
-                                                    <img src={p.image.includes('Poliesportiu') ? "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1200" : p.image} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt={p.title} />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-8 text-left">
-                                                        <h3 className="text-2xl font-black uppercase mb-2 text-mes-lime">{p.title}</h3>
-                                                        <p className="text-xs font-bold text-white uppercase tracking-widest underline">Prem per veure els detalls</p>
-                                                    </div>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                        {initialProposals.map(p => (
+                                            <div key={p.id} className="gallery-item h-[600px]" onClick={() => setSelectedItem(p)}>
+                                                <img src={p.images[0]} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" alt={p.title} />
+                                                <div className="gallery-overlay">
+                                                    <span className="text-[10px] font-black text-mes-lime uppercase tracking-[0.3em] mb-4">Projecte Destacat</span>
+                                                    <h3 className="text-5xl font-black uppercase text-white mb-6 leading-none">{p.title}</h3>
+                                                    <p className="text-stone-300 text-lg mb-8 line-clamp-3 font-medium italic">{p.summary}</p>
+                                                    <button className="btn-primary self-start !py-4 !px-10">Veure Galeria i Detalls</button>
                                                 </div>
                                             </div>
                                         ))}
+                                        {/* Espai per a més projectes futurs */}
+                                        <div className="bg-stone-800 flex items-center justify-center p-12 text-left border border-white/5">
+                                            <div className="max-w-xs">
+                                                <h3 className="text-3xl font-black uppercase text-stone-600 mb-4">Pròximament...</h3>
+                                                <p className="text-stone-500 font-medium italic">Estem treballant en nous projectes per S'Arenal i les Urbanitzacions. Molt aviat els podràs consultar aquí.</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </section>
