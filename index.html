@@ -1,595 +1,67 @@
-import React, { useState, useEffect } from 'react';
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, addDoc, onSnapshot, query, doc, deleteDoc } from 'firebase/firestore';
-import { 
-  Users, 
-  Map as MapIcon, 
-  Newspaper, 
-  Eye, 
-  MessageSquare, 
-  Instagram, 
-  Facebook, 
-  Mail, 
-  ChevronRight,
-  X,
-  Plus,
-  Info
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MÉS per Llucmajor - Proximitat i Futur</title>
+    
+    <!-- Scripts: React, ReactDOM i Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-// --- CONFIGURACIÓ FIREBASE ---
-const firebaseConfig = JSON.parse(__firebase_config);
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    <!-- Firebase SDKs (Compat v9) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-// --- CONSTANTS DE DISSENY I DADES ---
-const bannerSlides = [
-  { 
-    title: "POLÍTICA PER A LA GENT", 
-    sub: "Treballem cada dia per un municipi més just, sostenible i participatiu des de la proximitat.",
-    img: "imatges/imatge1.jpeg?auto=format&fit=crop&q=80&w=1600"
-  },
-  { 
-    title: "CONSTRUÏM JUNTS EL LLUCMAJOR QUE VOLEM", 
-    sub: "Un projecte compartit on la veu dels ciutadans és el motor del canvi real.",
-    img: "imatges/Llucmajor1.png?auto=format&fit=crop&q=80&w=1600"
-  },
-  { 
-    title: "FEM UN S'ARENAL MILLOR", 
-    sub: "Volem un nucli costaner cuidat, segur i amb els serveis que els seus veïnats mereixen.",
-    img: "imatges/sarenal.png?auto=format&fit=crop&q=80&w=1600"
-  },
-  { 
-    title: "LES URBANITZACIONS QUE MEREIXEM", 
-    sub: "Reivindiquem millores estructurals i una gestió eficient per a tots els nuclis del terme.",
-    img: "imatges/badies2.jpeg?auto=format&fit=crop&q=80&w=1600"
-  },
-  { 
-    title: "S'ESTANYOL I SON BIELÓ TAMBÉ SÓN LLUCMAJOR", 
-    sub: "Protegim l'essència dels nostres pobles mariners i el nostre medi ambient.",
-    img: "imatges/estanyol.png?auto=format&fit=crop&q=80&w=1600"
-  },
-  { 
-    title: "SERVEIS PER FORA VILA", 
-    sub: "Garantim la igualtat de drets i serveis per a tota la ciutadania, visqui on visqui.",
-    img: "imatges/Foravila.png?auto=format&fit=crop&q=80&w=1600"
-  }
-];
+    <!-- Fonts corporatives -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
 
-const zones = [
-  { id: 'poble', name: 'Llucmajor Poble', img: "https://images.unsplash.com/photo-1548685913-fe6678babe8d?auto=format&fit=crop&q=80&w=800" },
-  { id: 'arenal', name: "S'Arenal", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&q=80&w=800" },
-  { id: 'urb', name: 'Urbanitzacions', img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800" },
-  { id: 'mariners', name: "S'Estanyol i Son Bieló", img: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&q=80&w=800" },
-  { id: 'foravila', name: 'Foravila', img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800" }
-];
-
-const initialArticles = [
-  {
-    id: 'n-3',
-    category: 'noticia',
-    title: "L’equip de govern de Llucmajor protegeix l’insult: el PP, Vox i ASI rebutgen reprovar la regidora Pérez",
-    date: "DESEMBRE 2025",
-    image: "imatges/Govern.png?auto=format&fit=crop&q=80&w=1200",
-    summary: "L'equip de govern de Llucmajor ha tocat fons. El menyspreu cap al ciutadà és inacceptable.",
-    content: `L'ètica i el respecte a la ciutadania han tornat a brillar per la seva absència al darrer Ple ordinari de Llucmajor. Des de MÉS per Llucmajor vàrem presentar una proposta per reprovar públicament la regidora d'Urbanisme, Inmaculada Pérez, després que el passat mes de novembre el sistema de gravació captàs un comentari seu intolerable cap als veïnats assistents: «Que les den por el culo a todos»...`
-  },
-  {
-    id: 'op-11',
-    category: 'opinio',
-    title: "La legislatura del menyspreu",
-    date: "DESEMBRE 2025",
-    image: "imatges/atpc.png?auto=format&fit=crop&q=80&w=1200",
-    summary: "L'equip de govern de Llucmajor ha tocat fons. El menyspreu cap al ciutadà és inacceptable.",
-    content: `L’equip de govern de Llucmajor ha tocat fons. La política és gestió, és debat, però, sobretot, és vocació de servei públic. El que vàrem viure al plenari del mes passat a la nostra casa consistorial no va ser política. L’equip de govern va degradar d’una forma mai vista, la institució que representen...`
-  },
-  {
-    id: 'op-10',
-    category: 'opinio',
-    title: "Llucmajor desperta",
-    date: "OCTUBRE 2025",
-    image: "imatges/participacio.png?auto=format&fit=crop&q=80&w=1200",
-    summary: "La mobilització ciutadana als plens és l'evidència que Llucmajor demana un canvi.",
-    content: `Darrerament, la sala de plens de l’Ajuntament de Llucmajor s’ha convertit en el lloc on el ciutadà es reuneix el darrer dimecres de cada mes. Els ciutadans no hi van a veure una obra de ficció. Van a demanar respostes davant els problemes que tenen en el seu dia a dia...`
-  }
-];
-
-const initialProposals = [
-  { id: 'p-1', zone: 'poble', title: "Nou accés al Poliesportiu", summary: "Urbanització i millora d'accessos per garantir la seguretat.", images: ["https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1200"], content: "Volem urbanitzar i millorar els accessos al poliesportiu per fer-los més segurs per a vianants i esportistes." },
-  { id: 'p-2', zone: 'arenal', title: "Reforma del Passeig Marítim", summary: "Recuperació de l'espai públic al litoral per als veïnats.", images: ["https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1200"], content: "L'Arenal mereix un espai públic de qualitat que prioritzi el resident." }
-];
-
-const initialObservatory = [
-  { id: 1, topic: "Auditoria externa d'Urbanisme", status: "🔴 ATURAT", note: "Més d'un any esperant la licitació." },
-  { id: 2, topic: "Millora carrer Pere Maimó", status: "🟡 PENDENT", note: "Projecte al calaix sense pressupost real." },
-  { id: 3, topic: "Residència de la gent gran", status: "🔴 ATURAT", note: "Sense conveni signat amb el Govern." },
-  { id: 4, topic: "Escola de música digna", status: "🟡 PENDENT", note: "Pressupostos participatius bloquejats." }
-];
-
-const teamRegidors = [
-  { name: "Maria Barceló Calviño", role: "Portaveu Municipal", image: "imatges/02.Maria.jpg", cv: "Nascuda a Llucmajor el 1976. Mare de dos fills. Fa feina de docent a l’IES Llucmajor Regidora des de l’any 2015." },
-  { name: "Oriol Gómez Díaz", role: "Regidor", image: "imatges/Oriol2.jpg", cv: "Informàtic de formació. Expert en gestió de projectes. Regidor des del mes de setembre de 2024." }
-];
-
-const teamExecutiva = [
-  { name: "Maria Barceló", role: "Coordinadora Local", image: "imatges/02.Maria.jpg", cv: "Lideratge polític." },
-  { name: "Oriol Gómez", role: "Secretari d'Organització", image: "imatges/Oriol2.jpg", cv: "Coordinació interna." },
-  { name: "Miquel Serra", role: "Tresorer", image: "imatges/01.Miquel.jpg", cv: "Gestió econòmica." },
-  { name: "Marina Ferre", role: "Secretària de comunicació", image: "imatges/06.Marina.jpeg", cv: "Premsa i xarxes." },
-  { name: "Toni Tomàs", role: "Secretari de comunicació", image: "imatges/Tuni.jpg", cv: "Estratègia digital." },
-  { name: "Tià Maimó", role: "Secretari de comunicació", image: "imatges/05.Sebastia.jpg", cv: "Creativitat visual." },
-  { name: "Joana Catany", role: "Vocal", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2", cv: "Vocal executiva." },
-  { name: "Maria del Mar Vanrell", role: "Vocal", image: "imatges/04.MariadelMar.jpg", cv: "Vocal executiva." },
-  { name: "Francina Crespí", role: "Vocal", image: "imatges/Francina.jpg", cv: "Vocal executiva." },
-  { name: "Jaume Tomàs", role: "Vocal", image: "imatges/JaumeTomas.jpg", cv: "Vocal executiva." }
-];
-
-export default function App() {
-  const [user, setUser] = useState(null);
-  const [news, setNews] = useState([]);
-  const [page, setPage] = useState('home'); 
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [filterZone, setFilterZone] = useState('all');
-  const [form, setForm] = useState({ title: '', category: 'noticia', summary: '', content: '', image: '' });
-  const [authError, setAuthError] = useState(null);
-
-  // 1. Auth Initializer (Rule 3)
-  useEffect(() => {
-    const initAuth = async () => {
-      try {
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Barlow', 'sans-serif'] },
+                    colors: {
+                        mes: { 
+                            lime: '#c6d100', 
+                            dark: '#1a1a1a', 
+                            soft: '#f4f4f4', 
+                            stone: '#e5e2d9', 
+                            text: '#1a1a1a' 
+                        }
+                    }
+                }
+            }
         }
-      } catch (err) {
-        console.error("Auth error", err);
-        setAuthError("Error d'autenticació");
-      }
-    };
-    initAuth();
-    const unsubscribe = onAuthStateChanged(auth, setUser);
-    return () => unsubscribe();
-  }, []);
+    </script>
 
-  // 2. Data Fetching (Rule 1 & 2)
-  useEffect(() => {
-    if (!user) return;
-    const q = collection(db, 'artifacts', appId, 'public', 'data', 'news');
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const docs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-      const allNews = [...initialArticles, ...docs];
-      const sorted = allNews.sort((a, b) => {
-        const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
-        const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0);
-        return dateB - dateA;
-      });
-      setNews(sorted);
-    }, (error) => {
-      console.error("Firestore error", error);
-    });
-    return () => unsubscribe();
-  }, [user]);
+    <style>
+        body { font-family: 'Barlow', sans-serif; overflow-x: hidden; color: #1a1a1a; scroll-behavior: smooth; background-color: #ffffff; }
+        * { border-radius: 0 !important; }
 
-  // 3. Navigation
-  useEffect(() => {
-    const handleHash = () => {
-      const hash = window.location.hash.replace('#/', '');
-      if (['home', 'arxiu', 'projectes', 'equip'].includes(hash)) setPage(hash);
-      else setPage('home');
-      window.scrollTo(0, 0);
-    };
-    window.addEventListener('hashchange', handleHash);
-    handleHash();
-    return () => window.removeEventListener('hashchange', handleHash);
-  }, []);
-
-  // 4. Carousel
-  useEffect(() => {
-    const interval = setInterval(() => setActiveSlide(s => (s + 1) % bannerSlides.length), 6000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const navigateTo = (p) => { window.location.hash = `#/${p}`; };
-
-  const handleAddNews = async (e) => {
-    e.preventDefault();
-    if (!user || !form.title) return;
-    try {
-      await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'news'), {
-        ...form,
-        date: new Date().toLocaleDateString('ca-ES', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase(),
-        createdAt: new Date().toISOString()
-      });
-      setForm({ title: '', category: 'noticia', summary: '', content: '', image: '' });
-      setIsAdmin(false);
-    } catch (err) { console.error("Error", err); }
-  };
-
-  const filteredProposals = filterZone === 'all' ? initialProposals : initialProposals.filter(p => p.zone === filterZone);
-
-  return (
-    <div className="min-h-screen bg-white text-mes-dark font-sans selection:bg-mes-lime selection:text-black text-left">
-      {/* Navbar */}
-      <nav className="fixed w-full z-[100] bg-white border-b-2 border-stone-200 px-4 md:px-8 py-4 flex justify-between items-center shadow-sm">
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigateTo('home')}>
-          <img src="Logo.png" alt="MÉS" className="h-10 w-auto" />
-        </div>
-        <div className="hidden md:flex gap-10 items-center font-bold text-[11px] uppercase tracking-[0.15em]">
-          <button onClick={() => navigateTo('home')} className={page === 'home' ? 'text-mes-lime border-b-2 border-mes-lime' : 'hover:text-mes-lime transition-colors'}>Inici</button>
-          <button onClick={() => navigateTo('arxiu')} className={page === 'arxiu' ? 'text-mes-lime border-b-2 border-mes-lime' : 'hover:text-mes-lime transition-colors'}>Actualitat</button>
-          <button onClick={() => navigateTo('projectes')} className={page === 'projectes' ? 'text-mes-lime border-b-2 border-mes-lime' : 'hover:text-mes-lime transition-colors'}>Projecte</button>
-          <button onClick={() => navigateTo('equip')} className={page === 'equip' ? 'text-mes-lime border-b-2 border-mes-lime' : 'hover:text-mes-lime transition-colors'}>L'Equip</button>
-          <button onClick={() => {
-            const pass = prompt("Contrasenya de Gestió:");
-            if(pass === "mes2025") setIsAdmin(!isAdmin);
-          }} className="bg-stone-100 px-4 py-2 hover:bg-mes-dark hover:text-white transition-all text-[9px] font-black uppercase">
-            {isAdmin ? 'Tancar Gestió' : 'Gestió ✨'}
-          </button>
-        </div>
-      </nav>
-
-      {authError && (
-        <div className="fixed top-20 right-4 z-[100] bg-red-600 text-white p-4 flex items-center gap-2 shadow-xl animate-fade">
-          <Info size={16} /> {authError}
-        </div>
-      )}
-
-      {page === 'home' && (
-        <div className="animate-fade">
-          {/* 1. Banner inicial */}
-          <header className="relative h-[85vh] w-full bg-mes-dark overflow-hidden flex items-center pt-16">
-            {bannerSlides.map((slide, i) => (
-              <div key={i} className={`absolute inset-0 transition-opacity duration-1000 ${i === activeSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}>
-                <img src={slide.img} className="w-full h-full object-cover animate-zoom" alt={slide.title} />
-                <div className="absolute inset-0 bg-black/45"></div>
-              </div>
-            ))}
-            <div className="relative z-20 max-w-7xl mx-auto px-8 w-full text-left">
-              <div className="max-w-4xl">
-                <span className="bg-mes-lime text-black font-black uppercase text-[10px] px-3 py-1 mb-6 inline-block tracking-widest">Som la veu del municipi</span>
-                <h1 className="text-5xl md:text-[100px] font-black uppercase text-white leading-[0.85] tracking-tighter mb-10 drop-shadow-2xl">
-                  {bannerSlides[activeSlide].title.split(' ').slice(0, -1).join(' ')} <br/>
-                  <span className="text-mes-lime">{bannerSlides[activeSlide].title.split(' ').pop()}</span>.
-                </h1>
-                <p className="text-xl md:text-3xl text-white/95 font-medium mb-12 max-w-3xl border-l-4 border-mes-lime pl-8 leading-tight italic text-left">
-                  {bannerSlides[activeSlide].sub}
-                </p>
-                <div className="flex gap-6">
-                  <button onClick={() => document.getElementById('observatori').scrollIntoView({behavior:'smooth'})} className="btn-primary">Observatori</button>
-                  <button onClick={() => document.getElementById('actualitat').scrollIntoView({behavior:'smooth'})} className="bg-white/10 backdrop-blur-md text-white border-2 border-white px-10 py-4 font-black uppercase text-sm hover:bg-white hover:text-black transition-all">Notícies</button>
-                </div>
-              </div>
-            </div>
-          </header>
-
-          {/* 2. Observatori municipal */}
-          <section id="observatori" className="py-24 bg-stone-50 px-8 border-b border-stone-200">
-            <div className="max-w-6xl mx-auto text-left">
-              <div className="mb-16 text-left">
-                <div className="section-title-box">Fiscalització i Seguiment</div>
-                <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none text-mes-dark">L'Observatori Municipal</h2>
-                <p className="text-stone-400 text-sm font-bold uppercase tracking-widest mt-2 italic">Mocions aprovades que el govern manté bloquejades</p>
-              </div>
-              <div className="bg-white shadow-2xl overflow-x-auto border border-stone-200 text-left">
-                <table className="w-full text-left min-w-[600px]">
-                  <thead className="bg-mes-dark text-white text-[11px] uppercase tracking-[0.2em]">
-                    <tr>
-                      <th className="p-6 font-black text-left">Proposta Aprovada</th>
-                      <th className="p-6 font-black text-center">Estat actual</th>
-                      <th className="p-6 font-black text-left">Nota seguiment</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {initialObservatory.map(obs => (
-                      <tr key={obs.id} className="border-b border-stone-100 hover:bg-stone-50 transition-colors">
-                        <td className="p-6 font-black text-base uppercase text-mes-dark text-left">{obs.topic}</td>
-                        <td className="p-6 text-center whitespace-nowrap">
-                          <span className={`px-4 py-1 text-[9px] font-black uppercase ${obs.status.includes('ATURAT') ? 'bg-red-50 text-red-600' : 'bg-yellow-50 text-yellow-600'}`}>
-                            {obs.status}
-                          </span>
-                        </td>
-                        <td className="p-6 text-sm text-stone-500 font-medium italic border-l border-stone-50 text-left">"{obs.note}"</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </section>
-
-          {/* 3. Actualitat */}
-          <section id="actualitat" className="py-24 px-8 max-w-7xl mx-auto text-left">
-            <div className="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-4 text-left">
-              <div className="text-left">
-                <div className="section-title-box">Darreres publicacions</div>
-                <h2 className="text-4xl font-black uppercase tracking-tighter leading-none">L'Actualitat</h2>
-              </div>
-              <button onClick={() => navigateTo('arxiu')} className="text-xs font-black uppercase border-b-4 border-mes-lime pb-1 hover:text-mes-lime transition-all">Veure tot</button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-left">
-              {news.slice(0, 6).map(a => (
-                <div key={a.id} className="flex flex-col text-left group">
-                  <div className="relative h-56 overflow-hidden mb-6 border-b-8 border-mes-dark group-hover:border-mes-lime transition-all bg-stone-100">
-                    {a.image && <img src={a.image} className="w-full h-full object-cover" alt={a.title} />}
-                    <div className="absolute top-0 right-0 bg-mes-dark text-white px-3 py-1 text-[9px] font-black uppercase tracking-widest">{a.category}</div>
-                  </div>
-                  <span className="text-[10px] font-bold text-stone-300 uppercase mb-3 tracking-widest">{a.date}</span>
-                  <h3 className="text-2xl font-black uppercase leading-tight mb-4 group-hover:text-mes-lime cursor-pointer" onClick={() => setSelectedItem(a)}>{a.title}</h3>
-                  <p className="text-sm text-stone-500 line-clamp-3 mb-8 leading-relaxed font-medium">{a.summary}</p>
-                  <button onClick={() => setSelectedItem(a)} className="text-[10px] font-black uppercase border-b-2 border-mes-lime self-start hover:bg-mes-lime hover:text-black transition-all">Llegir completa</button>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* 4. Propostes per zona */}
-          <section id="visio" className="py-24 bg-white px-8 text-left">
-            <div className="max-w-7xl mx-auto">
-              <div className="mb-16 text-left text-left">
-                <div className="section-title-box">El Llucmajor que volem</div>
-                <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-mes-dark leading-none text-left">Propostes per zona</h2>
-                <p className="text-stone-400 font-bold uppercase text-[12px] tracking-widest mt-4 max-w-2xl border-l-2 border-mes-lime pl-4 italic text-left">
-                  Tria el teu territori i descobreix el nostre projecte.
-                </p>
-              </div>
-              <div className="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[500px] text-left">
-                {zones.map(z => (
-                  <div 
-                    key={z.id} 
-                    className="relative flex-1 group overflow-hidden cursor-pointer border-r border-white/10 last:border-none transition-all duration-700 hover:flex-[2] text-left"
-                    onClick={() => { setFilterZone(z.id); navigateTo('projectes'); }}
-                  >
-                    <img src={z.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={z.name} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent flex flex-col justify-end p-8 text-left">
-                      <h3 className="text-3xl font-black uppercase text-white leading-none mb-4 group-hover:text-mes-lime transition-colors text-left">{z.name}</h3>
-                      <span className="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity text-left">Explorar projectes →</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        </div>
-      )}
-
-      {/* Altres pàgines */}
-      {page === 'projectes' && (
-        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left text-left">
-          <div className="mb-20 border-l-[12px] border-mes-lime pl-10 text-left text-left">
-            <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4 text-mes-dark">Els Projectes</h1>
-            <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em]">Més de 10 propostes de futur per transformar el municipi</p>
-          </div>
-          <div className="flex flex-wrap gap-4 mb-16 border-b border-stone-200 pb-8 uppercase font-black text-[10px] text-left">
-            <button onClick={() => setFilterZone('all')} className={`px-6 py-3 transition-all ${filterZone === 'all' ? 'bg-mes-lime text-black shadow-lg' : 'bg-stone-100 text-stone-500'}`}>Totes les zones</button>
-            {zones.map(z => (
-              <button key={z.id} onClick={() => setFilterZone(z.id)} className={`px-6 py-3 transition-all ${filterZone === z.id ? 'bg-mes-lime text-black shadow-lg' : 'bg-stone-100 text-stone-500'}`}>{z.name}</button>
-            ))}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProposals.map(p => (
-              <div key={p.id} className="bg-stone-50 border-b-8 border-transparent hover:border-mes-lime transition-all cursor-pointer group shadow-sm text-left" onClick={() => setSelectedItem(p)}>
-                <div className="h-64 overflow-hidden relative">
-                  <img src={p.images[0]} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={p.title} />
-                  <div className="absolute top-0 right-0 bg-mes-dark text-white px-3 py-1 text-[8px] font-black uppercase tracking-widest">{zones.find(z => z.id === p.zone)?.name}</div>
-                </div>
-                <div className="p-8 text-left">
-                  <h3 className="text-2xl font-black uppercase leading-none mb-4 group-hover:text-mes-lime transition-colors tracking-tighter">{p.title}</h3>
-                  <p className="text-sm text-stone-500 font-medium italic mb-8 line-clamp-2">{p.summary}</p>
-                  <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime pb-1">Llegir proposta completa</button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {page === 'equip' && (
-        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left text-left text-left">
-          <div className="mb-24 text-left">
-            <div className="section-title-box">Les mans que fan feina</div>
-            <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-mes-dark leading-none">L'Equip de MÉS</h2>
-          </div>
-          <div className="mb-32 text-left">
-            <div className="section-title-box bg-mes-lime !text-black text-sm mb-12 uppercase font-black text-left">Representació al Plenari</div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 text-left">
-              {teamRegidors.map((r, i) => (
-                <div key={i} className="flex flex-col md:flex-row bg-white border border-stone-100 shadow-xl overflow-hidden text-left">
-                  <img src={r.image} className="w-full md:w-64 h-96 team-img" alt={r.name} />
-                  <div className="p-10 flex flex-col justify-center text-left">
-                    <h3 className="text-4xl font-black uppercase leading-none mb-3 text-mes-dark tracking-tighter">{r.name}</h3>
-                    <p className="text-mes-lime font-black uppercase text-xs mb-8 tracking-[0.2em]">{r.role}</p>
-                    <p className="text-base text-stone-600 font-medium italic border-l-4 border-mes-stone pl-6 leading-relaxed">"{r.cv}"</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="text-left text-left text-left">
-            <div className="section-title-box text-sm mb-12 uppercase tracking-widest font-black text-left">Executiva Local</div>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 text-left text-left">
-              {teamExecutiva.map((e, i) => (
-                <div key={i} className="text-left bg-stone-50 p-4 border border-stone-100 transition-colors hover:bg-stone-100 text-left">
-                  <img src={e.image} className="w-full h-64 team-img object-cover mb-4" alt={e.name} />
-                  <h4 className="font-black uppercase text-lg leading-none mb-1 text-mes-dark text-left text-left">{e.name}</h4>
-                  <p className="text-[9px] font-bold text-mes-lime uppercase tracking-widest mb-4 leading-tight text-left text-left">{e.role}</p>
-                  <p className="text-[10px] text-stone-500 font-medium leading-relaxed opacity-70 text-left">{e.cv}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {page === 'arxiu' && (
-        <section className="pt-40 pb-32 px-8 max-w-5xl mx-auto animate-fade text-left text-left text-left">
-          <div className="mb-20 border-l-[12px] border-mes-lime pl-10 text-left">
-            <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4 text-mes-dark text-left">L'Arxiu</h1>
-            <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em] text-left">Memòria institucional i opinió ciutadana</p>
-          </div>
-          <div className="space-y-4 text-left text-left text-left">
-            {news.map((a) => (
-              <div key={a.id} className="archive-item bg-stone-50 flex flex-col md:flex-row items-center p-8 gap-10 border border-stone-100 shadow-sm text-left text-left">
-                <div className="shrink-0 text-left w-full md:w-36 leading-none text-left">
-                  <div className="text-[11px] font-black text-stone-300 uppercase tracking-widest mb-2">{a.date}</div>
-                  <div className={`text-[8px] font-black px-2 py-0.5 inline-block uppercase ${a.category === 'opinio' ? 'bg-mes-lime text-black' : 'bg-mes-dark text-white'}`}>
-                    {a.category}
-                  </div>
-                </div>
-                <div className="flex-grow text-left text-left text-left text-left">
-                  <h3 className="text-xl md:text-2xl font-black uppercase leading-tight text-mes-dark hover:text-mes-lime transition-colors cursor-pointer text-left text-left" onClick={() => setSelectedItem(a)}>{a.title}</h3>
-                </div>
-                <button onClick={() => setSelectedItem(a)} className="bg-mes-dark text-white hover:bg-mes-lime hover:text-black font-black uppercase text-[10px] px-8 py-3 transition-all w-full md:w-auto">Llegir</button>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Lector Modal */}
-      {selectedItem && (
-        <div className="fixed inset-0 bg-mes-dark/98 z-[200] flex items-center justify-center p-4 animate-fade text-left text-left text-left text-left" onClick={() => setSelectedItem(null)}>
-          <div className="bg-white max-w-5xl w-full border border-stone-200 shadow-2xl overflow-hidden flex flex-col max-h-[95vh] text-left" onClick={e => e.stopPropagation()}>
-            <div className="p-8 md:p-14 flex-grow overflow-y-auto modal-scroll text-left">
-              <div className="flex justify-between items-center mb-10 border-b-2 border-mes-lime pb-6 text-left">
-                <span className="bg-mes-dark text-white px-3 py-1 text-[10px] font-black uppercase tracking-widest text-left">{selectedItem.category || 'PROJECTE'}</span>
-                <button onClick={() => setSelectedItem(null)} className="text-4xl font-light hover:text-mes-lime transition-colors text-stone-400 leading-none">&times;</button>
-              </div>
-              
-              <h2 className="text-4xl md:text-7xl font-black uppercase mb-4 leading-none tracking-tighter text-mes-dark text-left leading-[0.9]">{selectedItem.title}</h2>
-              <p className="text-[12px] font-bold text-stone-400 mb-10 tracking-[0.3em] uppercase text-left">{selectedItem.date || (selectedItem.zone && zones.find(z => z.id === selectedItem.zone)?.name)}</p>
-              
-              {selectedItem.images ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
-                  {selectedItem.images.map((img, idx) => (
-                    <img key={idx} src={img} className={`w-full object-cover ${idx === 0 ? 'md:col-span-2 h-[500px]' : 'h-[300px]'}`} alt={`Detall ${idx}`} />
-                  ))}
-                </div>
-              ) : (
-                selectedItem.image && <img src={selectedItem.image} className="w-full h-80 object-cover mb-12" alt="Destacat" />
-              )}
-
-              <div className="article-body whitespace-pre-wrap font-medium text-left text-mes-dark text-lg md:text-xl md:max-w-4xl text-left">
-                {selectedItem.content}
-              </div>
-              
-              <div className="mt-16 pt-10 flex justify-center border-t border-stone-100">
-                <button onClick={() => setSelectedItem(null)} className="btn-primary !text-xs !px-12">Tancar lector</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Panell Admin */}
-      {isAdmin && (
-        <div className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-4xl p-10 text-left shadow-2xl border-t-[20px] border-mes-lime">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-black uppercase">✍️ Publicar Notícia</h2>
-              <button onClick={() => setIsAdmin(false)} className="text-stone-400 hover:text-black text-4xl">&times;</button>
-            </div>
-            <form onSubmit={handleAddNews} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-bold uppercase text-[11px] text-left">
-                <div className="flex flex-col gap-2">
-                  <label>Títol de la notícia</label>
-                  <input className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.title} onChange={e => setForm({...form, title: e.target.value})} required />
-                </div>
-                <div className="flex flex-col gap-2 text-left">
-                  <label>Categoria</label>
-                  <select className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.category} onChange={e => setForm({...form, category: e.target.value})}>
-                    <option value="noticia">NOTÍCIA</option>
-                    <option value="opinio">OPINIÓ</option>
-                    <option value="agenda">AGENDA</option>
-                  </select>
-                </div>
-              </div>
-              <div className="flex flex-col gap-2 font-bold uppercase text-[11px] text-left">
-                <label>URL de la imatge</label>
-                <input className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.image} onChange={e => setForm({...form, image: e.target.value})} placeholder="https://..." />
-              </div>
-              <div className="flex flex-col gap-2 font-bold uppercase text-[11px] text-left">
-                <label>Resum per a la graella</label>
-                <textarea className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.summary} onChange={e => setForm({...form, summary: e.target.value})} required />
-              </div>
-              <div className="flex flex-col gap-2 font-bold uppercase text-[11px] text-left">
-                <label>Contingut Complet</label>
-                <textarea rows="6" className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.content} onChange={e => setForm({...form, content: e.target.value})} required />
-              </div>
-              <button type="submit" className="w-full bg-mes-lime text-black font-black py-5 uppercase hover:bg-mes-dark hover:text-white transition-all">Publicar Ara</button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Footer */}
-      <footer className="bg-white py-24 px-10 border-t border-stone-100 text-left mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-20 text-left text-left">
-          <div className="max-w-xs text-left leading-none text-left">
-            <div className="bg-mes-lime text-black font-black w-14 h-14 flex items-center justify-center text-3xl mb-8">M</div>
-            <p className="font-black text-2xl tracking-tighter uppercase mb-2 text-mes-dark">MÉS per Llucmajor</p>
-            <p className="font-bold text-xs text-stone-300 uppercase tracking-[0.3em] leading-none mt-2 text-left">Compromís · Proximitat · Futur</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-20 w-full md:w-auto text-left font-black uppercase text-[11px] tracking-widest text-left">
-            <div className="space-y-12 text-left text-left text-left">
-              <a href="https://instagram.com/mesperllucmajor" target="_blank" className="flex items-center gap-6 group text-left text-left">
-                <div className="w-14 h-14 bg-stone-50 flex items-center justify-center border border-stone-100 group-hover:bg-mes-lime transition-all duration-500 text-xl text-left"><Instagram size={24}/></div>
-                <div className="text-left leading-none text-left">
-                  <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block text-left leading-none">Instagram</span>
-                  <span className="text-[9px] text-stone-400 lowercase text-left">@mesperllucmajor</span>
-                </div>
-              </a>
-              <a href="https://facebook.com/mesperllucmajor" target="_blank" className="flex items-center gap-6 group text-left text-left">
-                <div className="w-14 h-14 bg-stone-50 flex items-center justify-center border border-stone-100 group-hover:bg-mes-lime transition-all duration-500 text-left text-xl text-left">👤</div>
-                <div className="text-left leading-none text-left">
-                  <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block text-left leading-none">Facebook</span>
-                  <span className="text-[9px] text-stone-400 lowercase text-left">mesperllucmajor</span>
-                </div>
-              </a>
-            </div>
-            <div className="space-y-12 text-left text-left text-left">
-              <a href="mailto:mesperllucmajor@gmail.com" className="flex items-center gap-6 group text-left leading-none text-left text-left">
-                <div className="w-14 h-14 bg-stone-50 flex items-center justify-center border border-stone-100 group-hover:bg-mes-lime transition-all duration-500 text-3xl text-left"><Mail size={24}/></div>
-                <div className="text-left leading-none text-left text-left">
-                  <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left text-left">Email</span>
-                  <span className="text-[9px] text-stone-400 lowercase text-left text-left">mesperllucmajor@gmail.com</span>
-                </div>
-              </a>
-              <a href="https://chat.whatsapp.com/KjSrg2jMp2a32DIZ50h2WX" target="_blank" className="flex items-center gap-6 group text-left text-left text-left">
-                <div className="w-14 h-14 bg-stone-50 flex items-center justify-center border border-stone-100 group-hover:bg-mes-lime transition-all duration-500 text-2xl text-green-600 leading-none text-left text-left"><MessageSquare size={24}/></div>
-                <div className="text-left leading-none text-left text-left">
-                  <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left text-left">WhatsApp</span>
-                  <span className="text-[10px] bg-stone-100 px-3 py-1 text-stone-600 hover:bg-mes-dark hover:text-white transition-all text-left text-left">Suma't a la llista</span>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
-
-      <footer className="bg-mes-dark py-12 px-6 text-center text-white/10 text-[10px] font-black uppercase tracking-[0.5em]">
-        MÉS PER LLUCMAJOR · 2026 · CONSTRUÏM EL MUNICIPI QUE VOLEM
-      </footer>
-
-      <style>{`
-        @keyframes zoomEffect {
-          from { transform: scale(1); }
-          to { transform: scale(1.1); }
+        .bg-mes-lime { background-color: #c6d100; }
+        .text-mes-lime { color: #c6d100; }
+        
+        .btn-primary { 
+            background-color: #c6d100; 
+            color: #1a1a1a; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            padding: 1rem 2.5rem; 
+            transition: all 0.3s ease; 
+            display: inline-flex;
+            align-items: center;
+            letter-spacing: 0.1em;
+            font-size: 0.8rem;
         }
-        .animate-zoom {
-          animation: zoomEffect 20s infinite alternate linear;
+        .btn-primary:hover { 
+            background-color: #1a1a1a; 
+            color: #c6d100;
         }
-        .animate-fade {
-          animation: fadeIn 0.8s ease-out forwards;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
+        
         .section-title-box {
             background-color: #1a1a1a;
             color: white;
@@ -601,11 +73,24 @@ export default function App() {
             margin-bottom: 0.5rem;
             font-size: 0.6rem;
         }
+
         .article-body { font-size: 1.1rem; line-height: 1.7; color: #1a1a1a; }
         .article-body p { margin-bottom: 1.2rem; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade { animation: fadeIn 0.8s ease-out forwards; }
+
+        .hero-slide { position: absolute; inset: 0; transition: opacity 1.5s ease-in-out; opacity: 0; z-index: 0; }
+        .hero-slide.active { opacity: 1; z-index: 10; }
+        .hero-zoom { animation: zoomEffect 25s infinite alternate linear; }
+        @keyframes zoomEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
+
+        .archive-item { border-left: 4px solid transparent; transition: all 0.2s; border-bottom: 1px solid #f0f0f0; }
+        .archive-item:hover { border-left-color: #c6d100; background-color: #f9f8f4; }
+        
         .modal-scroll { max-height: 75vh; overflow-y: auto; }
         .team-img { object-fit: cover; }
-        
+
         .zone-col { 
             position: relative; 
             height: 500px; 
@@ -618,7 +103,530 @@ export default function App() {
         @media (min-width: 768px) {
             .zone-col:hover { flex-grow: 2; }
         }
-      `}</style>
-    </div>
-  );
-}
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- FIREBASE SETUP ---
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "", authDomain: "", projectId: "", storageBucket: "", messagingSenderId: "", appId: ""
+        };
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        // --- CONSTANTS DE DADES ---
+        const bannerSlides = [
+            { title: "POLÍTICA PER A LA GENT", sub: "Treballem cada dia per un municipi més just, sostenible i participatiu des de la proximitat.", img: "imatges/imatge1.jpeg" },
+            { title: "CONSTRUÏM JUNTS EL LLUCMAJOR QUE VOLEM", sub: "Un projecte compartit on la veu dels ciutadans és el motor del canvi real.", img: "imatges/Llucmajor1.png" },
+            { title: "FEM UN S'ARENAL MILLOR", sub: "Volem un nucli costaner cuidat, segur i amb els serveis que els seus veïnats mereixen.", img: "imatges/sarenal.png" },
+            { title: "LES URBANITZACIONS QUE MEREIXEM", sub: "Reivindiquem millores estructurals i una gestió eficient per a tots els nuclis del terme.", img: "imatges/badies2.jpeg" },
+            { title: "S'ESTANYOL I SON BIELÓ TAMBÉ SÓN LLUCMAJOR", sub: "Protegim l'essència dels nostres pobles mariners i el nostre medi ambient.", img: "imatges/estanyol.png" },
+            { title: "SERVEIS PER FORA VILA", sub: "Garantim la igualtat de drets i serveis per a tota la ciutadania, visqui on visqui.", img: "imatges/Foravila.png" }
+        ];
+
+        const initialArticles = [
+            {
+                id: 'n-3',
+                category: 'noticia',
+                title: "L’equip de govern de Llucmajor protegeix l’insult: el PP, Vox i ASI rebutgen reprovar la regidora Pérez",
+                date: "DESEMBRE 2025",
+                image: "imatges/Govern.png",
+                summary: "L'equip de govern de Llucmajor ha tocat fons. El menyspreu cap al ciutadà és inacceptable.",
+                content: `L'ètica i el respecte a la ciutadania han tornat a brillar per la seva absència al darrer Ple ordinari de Llucmajor. Des de MÉS per Llucmajor vàrem presentar una proposta per reprovar públicament la regidora d'Urbanisme, Inmaculada Pérez, després que el passat mes de novembre el sistema de gravació captàs un comentari seu intolerable cap als veïnats assistents: «Que les den por el culo a todos». Malgrat la gravetat dels fets, la dreta i l'extrema dreta han fet servir la seva majoria per blanquejar aquest insult.`
+            },
+            {
+                id: 'op-11',
+                category: 'opinio',
+                title: "La legislatura del menyspreu",
+                date: "DESEMBRE 2025",
+                image: "imatges/atpc.png",
+                summary: "L'equip de govern de Llucmajor ha tocat fons. El menyspreu cap al ciutadà és inacceptable.",
+                content: `L’equip de govern de Llucmajor ha tocat fons. La política és gestió, és debat, però, sobretot, és vocació de servei públic. El que vàrem viure al plenari del mes passat a la nostra casa consistorial no va ser política. L’equip de govern va degradar d’una forma mai vista, la institució que representen.`
+            },
+            {
+                id: 'op-10',
+                category: 'opinio',
+                title: "Llucmajor desperta",
+                date: "OCTUBRE 2025",
+                image: "imatges/participacio.png",
+                summary: "La mobilització ciutadana als plens és l'evidència que Llucmajor demana un canvi.",
+                content: `Darrerament, la sala de plens de l’Ajuntament de Llucmajor s’ha convertit en el lloc on el ciutadà es reuneix el darrer dimecres de cada mes. Els ciutadans no hi van a veure una obra de ficció. Van a demanar respostes davant els problemes que tenen en el seu dia a dia.`
+            }
+        ];
+
+        const initialObservatory = [
+            { id: 1, topic: "Auditoria externa d'Urbanisme", status: "🔴 ATURAT", note: "Més d'un any esperant la licitació." },
+            { id: 2, topic: "Millora carrer Pere Maimó", status: "🟡 PENDENT", note: "Projecte al calaix sense pressupost real." },
+            { id: 3, topic: "Residència de la gent gran", status: "🔴 ATURAT", note: "Sense conveni signat amb el Govern." },
+            { id: 4, topic: "Escola de música digna", status: "🟡 PENDENT", note: "Pressupostos participatius bloquejats." }
+        ];
+
+        const zones = [
+            { id: 'poble', name: 'Llucmajor Poble', img: "https://images.unsplash.com/photo-1548685913-fe6678babe8d" },
+            { id: 'arenal', name: "S'Arenal", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963" },
+            { id: 'urb', name: 'Urbanitzacions', img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750" },
+            { id: 'mariners', name: "S'Estanyol i Son Bieló", img: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9" },
+            { id: 'foravila', name: 'Foravila', img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b" }
+        ];
+
+        const teamRegidors = [
+            { name: "Maria Barceló Calviño", role: "Portaveu Municipal", image: "imatges/02.Maria.jpg", cv: "Docent a l’IES Llucmajor. Regidora des de l’any 2015." },
+            { name: "Oriol Gómez Díaz", role: "Regidor", image: "imatges/Oriol2.jpg", cv: "Docent de Formació Professional. Regidor des de setembre de 2024." }
+        ];
+
+        const teamExecutiva = [
+            { name: "Maria Barceló", role: "Coordinadora Local", image: "imatges/02.Maria.jpg", cv: "Lideratge polític." },
+            { name: "Oriol Gómez", role: "Secretari d'Organització", image: "imatges/Oriol2.jpg", cv: "Coordinació interna." },
+            { name: "Miquel Serra", role: "Tresorer", image: "imatges/01.Miquel.jpg", cv: "Gestió econòmica." },
+            { name: "Marina Ferre", role: "Secretària de comunicació", image: "imatges/06.Marina.jpeg", cv: "Premsa i xarxes." },
+            { name: "Toni Tomàs", role: "Secretari de comunicació", image: "imatges/Tuni.jpg", cv: "Estratègia digital." },
+            { name: "Tià Maimó", role: "Secretari de comunicació", image: "imatges/05.Sebastia.jpg", cv: "Creativitat visual." },
+            { name: "Joana Catany", role: "Vocal", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2", cv: "Vocal executiva." },
+            { name: "Maria del Mar Vanrell", role: "Vocal", image: "imatges/04.MariadelMar.jpg", cv: "Vocal executiva." },
+            { name: "Francina Crespí", role: "Vocal", image: "imatges/Francina.jpg", cv: "Vocal executiva." },
+            { name: "Jaume Tomàs", role: "Vocal", image: "imatges/JaumeTomas.jpg", cv: "Vocal executiva." }
+        ];
+
+        const initialProposals = [
+            { id: 'p-1', zone: 'poble', title: "Nou accés al Poliesportiu", summary: "Urbanització i millora d'accessos per garantir la seguretat.", images: ["https://images.unsplash.com/photo-1574629810360-7efbbe195018"], content: "Volem urbanitzar i millorar els accessos al poliesportiu per fer-los més segurs per a vianants i esportistes." }
+        ];
+
+        function App() {
+            const [user, setUser] = useState(null);
+            const [news, setNews] = useState([]);
+            const [page, setPage] = useState('home'); 
+            const [activeSlide, setActiveSlide] = useState(0);
+            const [isAdmin, setIsAdmin] = useState(false);
+            const [selectedItem, setSelectedItem] = useState(null);
+            const [filterZone, setFilterZone] = useState('all');
+            const [form, setForm] = useState({ title: '', category: 'noticia', summary: '', content: '', image: '' });
+
+            useEffect(() => {
+                const initAuth = async () => {
+                    try {
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await auth.signInWithCustomToken(__initial_auth_token);
+                        } else {
+                            await auth.signInAnonymously();
+                        }
+                    } catch (err) { console.error("Auth error", err); }
+                };
+                initAuth();
+                const unsubscribe = auth.onAuthStateChanged(setUser);
+                return () => unsubscribe();
+            }, []);
+
+            useEffect(() => {
+                if (!user) return;
+                const q = db.collection('artifacts').doc(appId).collection('public').doc('data').collection('news');
+                const unsubscribe = q.onSnapshot((snapshot) => {
+                    const docs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    const combined = [...initialArticles, ...docs];
+                    setNews(combined.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)));
+                }, (error) => console.error("Firestore Error:", error));
+                return () => unsubscribe();
+            }, [user]);
+
+            useEffect(() => {
+                const handleHash = () => {
+                    const hash = window.location.hash.replace('#/', '');
+                    if (['home', 'arxiu', 'projectes', 'equip'].includes(hash)) setPage(hash);
+                    else setPage('home');
+                    window.scrollTo(0, 0);
+                };
+                window.addEventListener('hashchange', handleHash);
+                handleHash();
+                return () => window.removeEventListener('hashchange', handleHash);
+            }, []);
+
+            useEffect(() => {
+                const interval = setInterval(() => setActiveSlide(s => (s + 1) % bannerSlides.length), 6000);
+                return () => clearInterval(interval);
+            }, []);
+
+            const navigateTo = (p) => { window.location.hash = `#/${p}`; };
+
+            const handleAddNews = async (e) => {
+                e.preventDefault();
+                if (!user || !form.title) return;
+                try {
+                    await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('news').add({
+                        ...form,
+                        date: new Date().toLocaleDateString('ca-ES', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase(),
+                        createdAt: Date.now()
+                    });
+                    setForm({ title: '', category: 'noticia', summary: '', content: '', image: '' });
+                    setIsAdmin(false);
+                } catch (err) { console.error("Error", err); }
+            };
+
+            const filteredProposals = filterZone === 'all' ? initialProposals : initialProposals.filter(p => p.zone === filterZone);
+
+            return (
+                <div className="min-h-screen bg-white text-mes-dark font-sans selection:bg-mes-lime selection:text-black">
+                    {/* NAV */}
+                    <nav className="fixed w-full z-[100] bg-white border-b-2 border-stone-200 px-4 md:px-8 py-4 flex justify-between items-center shadow-sm">
+                        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigateTo('home')}>
+                            <img src="Logo.png" alt="MÉS" className="h-10 w-auto" />
+                        </div>
+                        <div className="hidden md:flex gap-10 items-center font-bold text-[11px] uppercase tracking-[0.15em]">
+                            <button onClick={() => navigateTo('home')} className={page === 'home' ? 'text-mes-lime border-b-2 border-mes-lime' : 'hover:text-mes-lime'}>Inici</button>
+                            <button onClick={() => navigateTo('arxiu')} className={page === 'arxiu' ? 'text-mes-lime border-b-2 border-mes-lime' : 'hover:text-mes-lime'}>Actualitat</button>
+                            <button onClick={() => navigateTo('projectes')} className={page === 'projectes' ? 'text-mes-lime border-b-2 border-mes-lime' : 'hover:text-mes-lime'}>Projecte</button>
+                            <button onClick={() => navigateTo('equip')} className={page === 'equip' ? 'text-mes-lime border-b-2 border-mes-lime' : 'hover:text-mes-lime'}>L'Equip</button>
+                            <button onClick={() => {
+                                const pass = prompt("Contrasenya de Gestió:");
+                                if(pass === "mes2025") setIsAdmin(!isAdmin);
+                            }} className="bg-stone-100 px-4 py-2 hover:bg-mes-dark hover:text-white transition-all text-[9px] font-black uppercase">
+                                {isAdmin ? 'Tancar' : 'Gestió ✨'}
+                            </button>
+                        </div>
+                    </nav>
+
+                    {page === 'home' && (
+                        <div className="animate-fade">
+                            {/* 1. BANNER */}
+                            <header className="relative h-[85vh] w-full bg-mes-dark overflow-hidden flex items-center pt-16">
+                                {bannerSlides.map((slide, i) => (
+                                    <div key={i} className={`hero-slide ${i === activeSlide ? 'active' : ''}`}>
+                                        <img src={slide.img} className="w-full h-full object-cover hero-zoom" alt={slide.title} />
+                                        <div className="absolute inset-0 bg-black/45"></div>
+                                    </div>
+                                ))}
+                                <div className="relative z-20 max-w-7xl mx-auto px-8 w-full text-left">
+                                    <div className="max-w-4xl">
+                                        <span className="section-title-box bg-mes-lime !text-black mb-6 uppercase tracking-widest">Som la veu del municipi</span>
+                                        <h1 className="text-5xl md:text-[100px] font-black uppercase text-white leading-[0.85] tracking-tighter mb-10 drop-shadow-2xl">
+                                            {bannerSlides[activeSlide].title.split(' ').slice(0, -1).join(' ')} <br/>
+                                            <span className="text-mes-lime">{bannerSlides[activeSlide].title.split(' ').pop()}</span>.
+                                        </h1>
+                                        <p className="text-xl md:text-3xl text-white/95 font-medium mb-12 max-w-3xl border-l-4 border-mes-lime pl-8 leading-tight italic">
+                                            {bannerSlides[activeSlide].sub}
+                                        </p>
+                                        <div className="flex gap-6">
+                                            <button onClick={() => document.getElementById('observatori').scrollIntoView({behavior:'smooth'})} className="btn-primary">Observatori</button>
+                                            <button onClick={() => document.getElementById('actualitat').scrollIntoView({behavior:'smooth'})} className="bg-white/10 backdrop-blur-md text-white border-2 border-white px-10 py-4 font-black uppercase text-sm hover:bg-white hover:text-black transition-all">Notícies</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
+
+                            {/* 2. OBSERVATORI */}
+                            <section id="observatori" className="py-24 bg-stone-50 px-8 border-b border-stone-200">
+                                <div className="max-w-6xl mx-auto text-left">
+                                    <div className="mb-16">
+                                        <div className="section-title-box">Fiscalització i Seguiment</div>
+                                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none text-mes-dark">L'Observatori Municipal</h2>
+                                        <p className="text-stone-400 text-sm font-bold uppercase tracking-widest mt-2 italic text-left">Mocions aprovades que el govern manté bloquejades</p>
+                                    </div>
+                                    <div className="bg-white shadow-2xl overflow-x-auto border border-stone-200 text-left">
+                                        <table className="w-full text-left min-w-[600px]">
+                                            <thead className="bg-mes-dark text-white text-[11px] uppercase tracking-[0.2em]">
+                                                <tr>
+                                                    <th className="p-6 font-black text-left">Proposta Aprovada</th>
+                                                    <th className="p-6 font-black text-center">Estat actual</th>
+                                                    <th className="p-6 font-black text-left">Nota seguiment</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {initialObservatory.map(obs => (
+                                                    <tr key={obs.id} className="border-b border-stone-100 hover:bg-stone-50 transition-colors">
+                                                        <td className="p-6 font-black text-base uppercase text-mes-dark text-left">{obs.topic}</td>
+                                                        <td className="p-6 text-center whitespace-nowrap text-left">
+                                                            <span className={`px-4 py-1 text-[9px] font-black uppercase ${obs.status.includes('ATURAT') ? 'bg-red-50 text-red-600' : 'bg-yellow-50 text-yellow-600'}`}>
+                                                                {obs.status}
+                                                            </span>
+                                                        </td>
+                                                        <td className="p-6 text-sm text-stone-500 font-medium italic border-l border-stone-50 text-left">"{obs.note}"</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+
+                            {/* 3. ACTUALITAT */}
+                            <section id="actualitat" className="py-24 px-8 max-w-7xl mx-auto text-left">
+                                <div className="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-4 text-left">
+                                    <div className="text-left">
+                                        <div className="section-title-box">Informació i Opinió</div>
+                                        <h2 className="text-4xl font-black uppercase tracking-tighter leading-none text-mes-dark">L'Actualitat</h2>
+                                    </div>
+                                    <button onClick={() => navigateTo('arxiu')} className="text-xs font-black uppercase border-b-4 border-mes-lime pb-1 hover:text-mes-lime transition-all">Veure tot</button>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-left">
+                                    {news.slice(0, 6).map(a => (
+                                        <div key={a.id} className="flex flex-col text-left group cursor-pointer" onClick={() => setSelectedItem(a)}>
+                                            <div className="relative h-56 overflow-hidden mb-6 border-b-8 border-mes-dark group-hover:border-mes-lime transition-all bg-stone-100">
+                                                {a.image && <img src={a.image} className="w-full h-full object-cover" alt={a.title} />}
+                                                <div className="absolute top-0 right-0 bg-mes-dark text-white px-3 py-1 text-[9px] font-black uppercase tracking-widest">{a.category}</div>
+                                            </div>
+                                            <span className="text-[10px] font-bold text-stone-300 uppercase mb-3 tracking-widest text-left">{a.date}</span>
+                                            <h3 className="text-2xl font-black uppercase leading-tight mb-4 group-hover:text-mes-lime transition-colors text-left">{a.title}</h3>
+                                            <p className="text-sm text-stone-500 line-clamp-3 mb-8 leading-relaxed font-medium text-left">{a.summary}</p>
+                                            <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime self-start">Llegir completa</button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+
+                            {/* 4. PROPOSTES PER ZONA */}
+                            <section id="visio" className="py-24 bg-white px-8 border-t border-stone-100 text-left">
+                                <div className="max-w-7xl mx-auto">
+                                    <div className="mb-16 text-left">
+                                        <div className="section-title-box">El Llucmajor que volem</div>
+                                        <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-mes-dark leading-none">Propostes per zona</h2>
+                                    </div>
+                                    <div className="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[500px]">
+                                        {zones.map(z => (
+                                            <div 
+                                                key={z.id} 
+                                                className="zone-col group flex-1"
+                                                onClick={() => { setFilterZone(z.id); navigateTo('projectes'); }}
+                                            >
+                                                <img src={z.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={z.name} />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent flex flex-col justify-end p-8 text-left">
+                                                    <h3 className="text-3xl font-black uppercase text-white leading-none mb-4 group-hover:text-mes-lime transition-colors">{z.name}</h3>
+                                                    <span className="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] opacity-0 group-hover:opacity-100 transition-opacity">Explorar projectes →</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    )}
+
+                    {/* VISTES ALTERNATIVES */}
+                    {page === 'projectes' && (
+                        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left">
+                            <div className="mb-20 border-l-[12px] border-mes-lime pl-10">
+                                <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4 text-mes-dark text-left">Els Projectes</h1>
+                                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em] text-left">Propostes per transformar el municipi</p>
+                            </div>
+                            <div className="flex flex-wrap gap-4 mb-16 border-b border-stone-200 pb-8 text-left">
+                                <button onClick={() => setFilterZone('all')} className={`px-6 py-3 uppercase font-black text-[10px] tracking-widest transition-all ${filterZone === 'all' ? 'bg-mes-lime text-black' : 'bg-stone-100 text-stone-500'}`}>Totes les zones</button>
+                                {zones.map(z => (
+                                    <button key={z.id} onClick={() => setFilterZone(z.id)} className={`px-6 py-3 uppercase font-black text-[10px] tracking-widest transition-all ${filterZone === z.id ? 'bg-mes-lime text-black' : 'bg-stone-100 text-stone-500'}`}>{z.name}</button>
+                                ))}
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredProposals.map(p => (
+                                    <div key={p.id} className="bg-stone-50 border-b-8 border-transparent hover:border-mes-lime transition-all cursor-pointer group shadow-sm text-left" onClick={() => setSelectedItem(p)}>
+                                        <div className="h-64 overflow-hidden relative">
+                                            <img src={p.images[0]} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={p.title} />
+                                            <div className="absolute top-0 right-0 bg-mes-dark text-white px-3 py-1 text-[8px] font-black uppercase tracking-widest">{zones.find(z => z.id === p.zone)?.name}</div>
+                                        </div>
+                                        <div className="p-8 text-left">
+                                            <h3 className="text-2xl font-black uppercase leading-none mb-4 group-hover:text-mes-lime transition-colors tracking-tighter">{p.title}</h3>
+                                            <p className="text-sm text-stone-500 font-medium italic mb-8 line-clamp-2">{p.summary}</p>
+                                            <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime pb-1 text-left">Llegir proposta completa</button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {page === 'equip' && (
+                        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left">
+                            <div className="text-center mb-24 text-left">
+                                <div className="section-title-box text-left">Les mans que fan feina</div>
+                                <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-mes-dark leading-none text-left">L'Equip de MÉS</h2>
+                            </div>
+                            <div className="mb-32 text-left">
+                                <div className="section-title-box bg-mes-lime !text-black text-sm mb-12 font-black uppercase text-left">Representació al Plenari</div>
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 text-left">
+                                    {teamRegidors.map((r, i) => (
+                                        <div key={i} className="flex flex-col md:flex-row bg-white border border-stone-100 shadow-xl overflow-hidden text-left">
+                                            <img src={r.image} className="w-full md:w-64 h-96 team-img" alt={r.name} />
+                                            <div className="p-10 flex flex-col justify-center text-left">
+                                                <h3 className="text-4xl font-black uppercase leading-none mb-3 text-mes-dark tracking-tighter text-left">{r.name}</h3>
+                                                <p className="text-mes-lime font-black uppercase text-xs mb-8 tracking-[0.2em] text-left">{r.role}</p>
+                                                <p className="text-base text-stone-600 font-medium italic border-l-4 border-mes-stone pl-6 leading-relaxed text-left">"{r.cv}"</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="text-left">
+                                <div className="section-title-box text-sm mb-12 font-black uppercase text-left">Executiva Local de Llucmajor</div>
+                                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 text-left">
+                                    {teamExecutiva.map((e, i) => (
+                                        <div key={i} className="text-left bg-stone-50 p-4 border border-stone-100 transition-colors hover:bg-stone-100 text-left">
+                                            <img src={e.image} className="w-full h-64 team-img object-cover mb-4" alt={e.name} />
+                                            <h4 className="font-black uppercase text-lg leading-none mb-1 text-mes-dark text-left">{e.name}</h4>
+                                            <p className="text-[9px] font-bold text-mes-lime uppercase tracking-widest mb-4 leading-tight text-left">{e.role}</p>
+                                            <p className="text-[10px] text-stone-500 font-medium leading-relaxed opacity-70 text-left">{e.cv}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
+                    {page === 'arxiu' && (
+                        <section className="pt-40 pb-32 px-8 max-w-5xl mx-auto animate-fade text-left">
+                            <div className="mb-20 border-l-[12px] border-mes-lime pl-10 text-left">
+                                <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4 text-mes-dark text-left">L'Arxiu</h1>
+                                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em] text-left">Memòria institucional i opinió ciutadana</p>
+                            </div>
+                            <div className="space-y-4 text-left">
+                                {news.map((a) => (
+                                    <div key={a.id} className="archive-item bg-stone-50 flex flex-col md:flex-row items-center p-8 gap-10 border border-stone-100 shadow-sm text-left">
+                                        <div className="shrink-0 text-left w-full md:w-36 leading-none text-left">
+                                            <div className="text-[11px] font-black text-stone-300 uppercase tracking-widest mb-2 text-left">{a.date}</div>
+                                            <div className={`text-[8px] font-black px-2 py-0.5 inline-block uppercase ${a.category === 'opinio' ? 'bg-mes-lime text-black' : 'bg-mes-dark text-white'}`}>
+                                                {a.category}
+                                            </div>
+                                        </div>
+                                        <div className="flex-grow text-left">
+                                            <h3 className="text-xl md:text-2xl font-black uppercase leading-tight text-mes-dark hover:text-mes-lime transition-colors cursor-pointer text-left" onClick={() => setSelectedItem(a)}>{a.title}</h3>
+                                        </div>
+                                        <button onClick={() => setSelectedItem(a)} className="bg-mes-dark text-white hover:bg-mes-lime hover:text-black font-black uppercase text-[10px] px-8 py-3 transition-all w-full md:w-auto">Llegir</button>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {/* MODAL LECTOR (100% CONTINGUT) */}
+                    {selectedItem && (
+                        <div className="fixed inset-0 bg-mes-dark/98 z-[200] flex items-center justify-center p-4 animate-fade text-left" onClick={() => setSelectedItem(null)}>
+                            <div className="bg-white max-w-5xl w-full border border-stone-200 shadow-2xl overflow-hidden flex flex-col max-h-[95vh] text-left" onClick={e => e.stopPropagation()}>
+                                <div className="p-8 md:p-14 flex-grow overflow-y-auto modal-scroll text-left">
+                                    <div className="flex justify-between items-center mb-10 border-b-2 border-mes-lime pb-6 text-left">
+                                        <span className="bg-mes-dark text-white px-3 py-1 text-[10px] font-black uppercase tracking-widest text-left">{selectedItem.category || 'PROJECTE'}</span>
+                                        <button onClick={() => setSelectedItem(null)} className="text-4xl font-light hover:text-mes-lime transition-colors text-stone-400 leading-none">&times;</button>
+                                    </div>
+                                    
+                                    <h2 className="text-4xl md:text-7xl font-black uppercase mb-4 leading-none tracking-tighter text-mes-dark text-left leading-[0.9]">{selectedItem.title}</h2>
+                                    <p className="text-[12px] font-bold text-stone-400 mb-10 tracking-[0.3em] uppercase text-left">{selectedItem.date || (selectedItem.zone && zones.find(z => z.id === selectedItem.zone)?.name)}</p>
+                                    
+                                    {selectedItem.images ? (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+                                            {selectedItem.images.map((img, idx) => (
+                                                <img key={idx} src={img} className={`w-full object-cover ${idx === 0 ? 'md:col-span-2 h-[500px]' : 'h-[300px]'}`} alt={`Detall ${idx}`} />
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        selectedItem.image && <img src={selectedItem.image} className="w-full h-80 object-cover mb-12" alt="Destacat" />
+                                    )}
+
+                                    <div className="article-body whitespace-pre-wrap font-medium text-left text-mes-dark text-lg md:text-xl md:max-w-4xl text-left">
+                                        {selectedItem.content}
+                                    </div>
+                                    
+                                    <div className="mt-16 pt-10 flex justify-center border-t border-stone-100">
+                                        <button onClick={() => setSelectedItem(null)} className="btn-primary !text-xs !px-12">Tancar lector</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* ADMIN PANELL */}
+                    {isAdmin && (
+                        <div className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4">
+                            <div className="bg-white w-full max-w-4xl p-10 text-left shadow-2xl border-t-[20px] border-mes-lime">
+                                <div className="flex justify-between items-center mb-8">
+                                    <h2 className="text-3xl font-black uppercase text-left text-mes-dark">✍️ Publicar Notícia</h2>
+                                    <button onClick={() => setIsAdmin(false)} className="text-stone-400 hover:text-black text-4xl">&times;</button>
+                                </div>
+                                <form onSubmit={handleAddNews} className="space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-bold uppercase text-[11px] text-left">
+                                        <div className="flex flex-col gap-2">
+                                            <label>Títol de la notícia</label>
+                                            <input className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.title} onChange={e => setForm({...form, title: e.target.value})} required />
+                                        </div>
+                                        <div className="flex flex-col gap-2 text-left">
+                                            <label>Categoria</label>
+                                            <select className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.category} onChange={e => setForm({...form, category: e.target.value})}>
+                                                <option value="noticia">NOTÍCIA</option>
+                                                <option value="opinio">OPINIÓ</option>
+                                                <option value="agenda">AGENDA</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col gap-2 font-bold uppercase text-[11px] text-left">
+                                        <label>URL de la imatge</label>
+                                        <input className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.image} onChange={e => setForm({...form, image: e.target.value})} placeholder="https://..." />
+                                    </div>
+                                    <div className="flex flex-col gap-2 font-bold uppercase text-[11px] text-left">
+                                        <label>Resum per a la graella</label>
+                                        <textarea className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.summary} onChange={e => setForm({...form, summary: e.target.value})} required />
+                                    </div>
+                                    <div className="flex flex-col gap-2 font-bold uppercase text-[11px] text-left">
+                                        <label>Contingut Complet</label>
+                                        <textarea rows="6" className="bg-stone-100 p-4 outline-none border-b-2 border-transparent focus:border-mes-lime" value={form.content} onChange={e => setForm({...form, content: e.target.value})} required />
+                                    </div>
+                                    <button type="submit" className="w-full bg-mes-lime text-black font-black py-5 uppercase hover:bg-mes-dark hover:text-white transition-all">Publicar Ara</button>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* FOOTER */}
+                    <footer className="bg-white py-24 px-10 border-t border-stone-100 text-left mt-auto">
+                        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-20 text-left">
+                            <div className="max-w-xs text-left leading-none text-left">
+                                <div className="bg-mes-lime text-black font-black w-14 h-14 flex items-center justify-center text-3xl mb-8">M</div>
+                                <p className="font-black text-2xl tracking-tighter uppercase mb-2 text-mes-dark text-left">MÉS per Llucmajor</p>
+                                <p className="font-bold text-xs text-stone-300 uppercase tracking-[0.3em] leading-none mt-2 text-left">Compromís · Proximitat · Futur</p>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-20 w-full md:w-auto text-left font-black uppercase text-[11px] tracking-widest text-left">
+                                <div className="space-y-12 text-left text-left">
+                                    <a href="https://instagram.com/mesperllucmajor" target="_blank" className="flex items-center gap-6 group text-left text-left">
+                                        <div className="w-14 h-14 bg-stone-50 flex items-center justify-center border border-stone-100 group-hover:bg-mes-lime transition-all duration-500 text-xl text-left">📸</div>
+                                        <div className="text-left leading-none text-left">
+                                            <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block text-left leading-none">Instagram</span>
+                                            <span className="text-[9px] text-stone-400 lowercase text-left text-left">@mesperllucmajor</span>
+                                        </div>
+                                    </a>
+                                    <a href="https://facebook.com/mesperllucmajor" target="_blank" className="flex items-center gap-6 group text-left text-left">
+                                        <div className="w-14 h-14 bg-stone-50 flex items-center justify-center border border-stone-100 group-hover:bg-mes-lime transition-all duration-500 text-left text-xl text-left">👤</div>
+                                        <div className="text-left leading-none text-left text-left">
+                                            <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block text-left leading-none text-left">Facebook</span>
+                                            <span className="text-[9px] text-stone-400 lowercase text-left text-left">mesperllucmajor</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div className="space-y-12 text-left text-left">
+                                    <a href="mailto:mesperllucmajor@gmail.com" className="flex items-center gap-6 group text-left leading-none text-left text-left">
+                                        <div className="w-14 h-14 bg-stone-50 flex items-center justify-center border border-stone-100 group-hover:bg-mes-lime transition-all duration-500 text-3xl text-left text-left text-left">✉️</div>
+                                        <div className="text-left leading-none text-left text-left">
+                                            <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left text-left">Email</span>
+                                            <span className="text-[9px] text-stone-400 lowercase text-left text-left text-left">mesperllucmajor@gmail.com</span>
+                                        </div>
+                                    </a>
+                                    <a href="https://chat.whatsapp.com/KjSrg2jMp2a32DIZ50h2WX" target="_blank" className="flex items-center gap-6 group text-left text-left">
+                                        <div className="w-14 h-14 bg-stone-50 flex items-center justify-center border border-stone-100 group-hover:bg-mes-lime transition-all duration-500 text-2xl text-green-600 leading-none text-left text-left">💬</div>
+                                        <div className="text-left leading-none text-left text-left">
+                                            <span className="font-bold text-xl text-mes-dark group-hover:text-mes-lime transition-colors block leading-none mb-1 text-left text-left">WhatsApp</span>
+                                            <span className="text-[10px] bg-stone-100 px-3 py-1 text-stone-600 hover:bg-mes-dark hover:text-white transition-all text-left text-left">Suma't a la llista</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+
+                    <footer className="bg-mes-dark py-12 px-6 text-center text-white/10 text-[10px] font-black uppercase tracking-[0.5em]">
+                        MÉS PER LLUCMAJOR · 2026 · CONSTRUÏM EL MUNICIPI QUE VOLEM
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
