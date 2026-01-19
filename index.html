@@ -236,11 +236,11 @@
         ];
 
         const zones = [
-            { id: 'poble', name: 'Llucmajor Poble', img: "https://images.unsplash.com/photo-1548685913-fe6678babe8d" },
-            { id: 'arenal', name: "S'Arenal", img: "https://images.unsplash.com/photo-1516483638261-f4dbaf036963" },
-            { id: 'urb', name: 'Urbanitzacions', img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750" },
-            { id: 'mariners', name: "S'Estanyol i Son Bieló", img: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9" },
-            { id: 'foravila', name: 'Foravila', img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b" }
+            { id: 'poble', name: 'Llucmajor Poble', img: "imatges/Llucmajor2.png" },
+            { id: 'arenal', name: "S'Arenal", img: "imatges/sarenal.png" },
+            { id: 'urb', name: 'Urbanitzacions', img: "imatges/badies2.jpeg" },
+            { id: 'mariners', name: "S'Estanyol i Son Bieló", img: "imatges/estanyol.png" },
+            { id: 'foravila', name: 'Foravila', img: "imatges/Foravila.png" }
         ];
 
         const teamRegidors = [
@@ -371,7 +371,7 @@
                                         </p>
                                         <div className="flex flex-wrap gap-4 text-left">
                                             <button onClick={() => document.getElementById('observatori').scrollIntoView({behavior:'smooth'})} className="btn-primary">Observatori</button>
-                                            <button onClick={() => document.getElementById('visio').scrollIntoView({behavior:'smooth'})} className="bg-white/20 backdrop-blur-md text-white border-2 border-white px-8 py-4 font-black uppercase text-sm hover:bg-mes-lime hover:text-black hover:border-mes-lime transition-all">Propostes per zona</button>
+                                            <button onClick={() => document.getElementById('visio').scrollIntoView({behavior:'smooth'})} className="bg-white/20 backdrop-blur-md text-white border-2 border-white px-8 py-4 font-black uppercase text-sm hover:bg-mes-lime hover:text-black hover:border-mes-lime transition-all">Propostes per nucli</button>
                                             <button onClick={() => document.getElementById('actualitat').scrollIntoView({behavior:'smooth'})} className="bg-transparent text-white border-2 border-white/30 px-8 py-4 font-black uppercase text-sm hover:bg-white hover:text-black transition-all">Notícies</button>
                                         </div>
                                     </div>
@@ -445,8 +445,8 @@
                                 <div className="max-w-7xl mx-auto">
                                     <div className="mb-16 text-left">
                                         <div className="section-title-box text-left">El Llucmajor que volem</div>
-                                        <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-mes-dark leading-none text-left">Propostes per zona</h2>
-                                        <p className="text-stone-400 font-bold uppercase text-[12px] tracking-widest mt-4 max-w-2xl border-l-2 border-mes-lime pl-4 italic text-left">Tria el teu territori i descobreix el nostre projecte.</p>
+                                        <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-mes-dark leading-none text-left">Propostes per nucli/h2>
+                                        <p className="text-stone-400 font-bold uppercase text-[12px] tracking-widest mt-4 max-w-2xl border-l-2 border-mes-lime pl-4 italic text-left">Tria el teu nucli i descobreix el nostre projecte.</p>
                                     </div>
                                     <div className="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[550px] border-t-8 border-mes-lime text-left">
                                         {zones.map(z => (
