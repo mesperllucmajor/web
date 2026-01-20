@@ -259,7 +259,7 @@ Oriol Gómez
             useEffect(() => {
                 const handleHash = () => {
                     const hash = window.location.hash.replace('#/', '');
-                    if (['home', 'arxiu', 'projectes', 'equip'].includes(hash)) setPage(hash);
+                    if (['home', 'arxiu', 'projectes', 'equip', 'contacte'].includes(hash)) setPage(hash);
                     else setPage('home');
                     window.scrollTo(0, 0);
                 };
@@ -321,6 +321,7 @@ Oriol Gómez
                             <button onClick={scrollToNuclis} className="hover:text-mes-lime transition-colors">Projecte</button>
                             
                             <button onClick={() => navigateTo('equip')} className={page === 'equip' ? 'text-mes-lime border-b-2 border-mes-lime' : 'hover:text-mes-lime transition-colors'}>L'Equip</button>
+                            <button onClick={() => navigateTo('contacte')} className={page === 'contacte' ? 'text-mes-lime' : ''}>Contacte</button>
                             <button onClick={() => {
                                 const p = prompt("Clau:");
                                 if(p === "mes2025") setIsAdmin(!isAdmin);
@@ -539,6 +540,82 @@ Oriol Gómez
                                             <p className="text-[10px] text-stone-500 font-medium leading-relaxed opacity-70 text-left text-left">{e.cv}</p>
                                         </div>
                                     ))}
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
+                    {page === 'contacte' && (
+                        <section className="pt-40 pb-32 px-8 max-w-5xl mx-auto animate-fade text-left text-left text-left">
+                            <div className="mb-16 border-l-[12px] border-mes-lime pl-10 text-left">
+                                <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-4 text-mes-dark text-left">Contacte</h1>
+                                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em] text-left">Digues la teva proposta per al municipi.</p>
+                            </div>
+                            
+                            <div className="bg-white border-2 border-stone-100 p-8 md:p-12 shadow-sm text-left">
+                                <div className="max-w-3xl mx-auto">
+                                    <p className="text-stone-500 font-medium text-lg mb-10 italic leading-relaxed text-left text-left">
+                                        Per a MÉS per Llucmajor, la teva veu és la base del nostre projecte. Escriu-nos directament per fer arribar un suggeriment, avisar d’una incidència o simplement per contactar amb nosaltres.
+                                    </p>
+                                    
+                                    <form onSubmit={handleContactSubmit} className="space-y-8 text-left">
+                                        <div className="form-group text-left">
+                                            <label className="form-label text-left">Nom i Llinatges</label>
+                                            <input 
+                                                className="form-input text-left" 
+                                                type="text" 
+                                                placeholder="Ex: Joan Maimó" 
+                                                value={contactForm.nom} 
+                                                onChange={e => setContactForm({...contactForm, nom: e.target.value})} 
+                                                required 
+                                            />
+                                        </div>
+                                        <div className="form-group text-left">
+                                            <label className="form-label text-left">Correu Electrònic de contacte</label>
+                                            <input 
+                                                className="form-input text-left" 
+                                                type="email" 
+                                                placeholder="correu@exemple.cat" 
+                                                value={contactForm.email} 
+                                                onChange={e => setContactForm({...contactForm, email: e.target.value})} 
+                                                required 
+                                            />
+                                        </div>
+                                        <div className="form-group text-left">
+                                            <label className="form-label text-left">Proposta o missatge</label>
+                                            <textarea 
+                                                className="form-input text-left" 
+                                                rows="8" 
+                                                placeholder="Escriu aquí el teu suggeriment per a Llucmajor..." 
+                                                value={contactForm.missatge} 
+                                                onChange={e => setContactForm({...contactForm, missatge: e.target.value})} 
+                                                required
+                                            ></textarea>
+                                        </div>
+                                        <div className="flex items-start gap-4 p-5 bg-stone-50 border border-stone-100 text-left">
+                                            <input type="checkbox" className="w-5 h-5 mt-1 accent-mes-lime cursor-pointer" required />
+                                            <span className="text-xs text-stone-500 font-medium leading-relaxed text-left">
+                                                He llegit i accepto que les meves dades siguin utilitzades exclusivament per gestionar aquesta proposta per part de MÉS per Llucmajor.
+                                            </span>
+                                        </div>
+                                        <button type="submit" className="w-full btn-primary text-center justify-center py-6 text-lg tracking-[0.2em] text-left">
+                                            Enviar proposta ara
+                                        </button>
+                                    </form>
+                                    
+                                    <div className="mt-16 pt-10 border-t border-stone-100 flex flex-col md:flex-row justify-between items-center gap-6 text-left">
+                                        <div className="text-left">
+                                            <span className="block text-[10px] font-black uppercase text-stone-400 mb-1 text-left">Vols rebre novetats?</span>
+                                            <a href="https://chat.whatsapp.com/KjSrg2jMp2a32DIZ50h2WX" target="_blank" className="flex items-center gap-3 text-green-600 font-bold hover:underline transition-all">
+                                                <IconWhatsapp />
+                                                <span className="text-sm">Suma't a la Comunitat de WhatsApp</span>
+                                            </a>
+                                        </div>
+                                        <div className="flex gap-4">
+                                            <a href="https://instagram.com/mesperllucmajor" target="_blank" className="p-3 bg-stone-50 border border-stone-200 hover:bg-mes-lime transition-all"><IconInstagram /></a>
+                                            <a href="https://facebook.com/mesperllucmajor" target="_blank" className="p-3 bg-stone-50 border border-stone-200 hover:bg-mes-lime transition-all"><IconFacebook /></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </section>
