@@ -275,7 +275,7 @@
                         <div className="hidden md:flex gap-10 items-center font-bold text-[11px] uppercase tracking-[0.15em]">
                             <button onClick={() => navigateTo('home')} className={page === 'home' ? 'text-mes-lime' : ''}>Inici</button>
                             <button onClick={() => navigateTo('arxiu')} className={page === 'arxiu' ? 'text-mes-lime' : ''}>Actualitat</button>
-                            <button onClick={scrollToNuclis}>Projecte</button>
+                            <button onClick={scrollToNuclis}>Proposta</button>
                             <button onClick={() => navigateTo('equip')} className={page === 'equip' ? 'text-mes-lime' : ''}>L'Equip</button>
                             <button onClick={() => navigateTo('contacte')} className={page === 'contacte' ? 'text-mes-lime' : ''}>Contacte</button>
                             <button onClick={() => {
@@ -321,10 +321,10 @@
                                         <h1 className="text-5xl md:text-[90px] font-black uppercase text-white leading-none tracking-tighter mb-8">{bannerSlides[activeSlide].title}</h1>
                                         <p className="text-xl md:text-2xl text-white/90 font-medium mb-10 border-l-4 border-mes-lime pl-6 italic">{bannerSlides[activeSlide].sub}</p>
                                         <div className="flex flex-wrap gap-4">
-                                            <button onClick={() => document.getElementById('observatori').scrollIntoView({behavior:'smooth'})} className="btn-primary">Observatori</button>
-                                            <button onClick={scrollToNuclis} className="bg-white/20 backdrop-blur-md text-white border-2 border-white px-8 py-4 font-black uppercase text-sm hover:bg-mes-lime hover:text-black transition-all">Propostes per nucli</button>
+                                            <button onClick={() => document.getElementById('observatori').scrollIntoView({behavior:'smooth'})} className="btn-primary">Observatori Municipal</button>
+                                            <button onClick={scrollToNuclis} className="bg-white/20 backdrop-blur-md text-white border-2 border-white px-8 py-4 font-black uppercase text-sm hover:bg-mes-lime hover:text-black transition-all">Propostes</button>
                                             <button onClick={() => document.getElementById('actualitat').scrollIntoView({behavior:'smooth'})} className="bg-transparent text-white border-2 border-white/30 px-8 py-4 font-black uppercase text-sm hover:bg-white hover:text-black transition-all">Notícies</button>
-                                            <button onClick={() => navigateTo('contacte')} className="bg-transparent text-white border-2 border-white/30 px-8 py-4 font-black uppercase text-sm hover:bg-white hover:text-black transition-all">Fes la teva proposta</button>
+                                            <button onClick={() => navigateTo('contacte')} className="bg-transparent text-white border-2 border-white/30 px-8 py-4 font-black uppercase text-sm hover:bg-white hover:text-black transition-all">Digues la teva</button>
                                         </div>
                                     </div>
                                 </div>
