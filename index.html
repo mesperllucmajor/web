@@ -398,6 +398,36 @@
                                     </div>
                                 </div>
                             </section>
+
+                            {/* Nova secció d'Invitació a la Participació */}
+                            <section className="py-20 bg-mes-dark text-white px-8 text-center">
+                                <div className="max-w-4xl mx-auto">
+                                    <h2 className="text-3xl md:text-5xl font-black uppercase mb-6 tracking-tighter">Vols proposar una millora per al teu carrer?</h2>
+                                    <p className="text-lg md:text-xl text-white/70 mb-10 italic">Llucmajor el fem entre tots. Escriu-nos el teu suggeriment o reporta una incidència.</p>
+                                    <button onClick={() => navigateTo('contacte')} className="btn-primary !bg-white !text-black hover:!bg-mes-lime">Fes una proposta ara</button>
+                                </div>
+                            </section>
+
+                            <section id="visio" className="py-32 bg-stone-50 px-8 section-separator text-left text-left">
+                                <div className="max-w-7xl mx-auto">
+                                    <div className="mb-16 text-left text-left">
+                                        <div className="section-title-box">El nostre municipi</div>
+                                        <h2 className="text-4xl md:text-6xl font-black uppercase text-left text-left">Propostes per nucli</h2>
+                                        <p className="text-stone-400 font-bold uppercase text-[12px] tracking-widest mt-4 italic max-w-2xl border-l-2 border-mes-lime pl-4 text-left text-left">Tria el teu nucli i descobreix el nostre projecte.</p>
+                                    </div>
+                                    <div className="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[500px] text-left">
+                                        {zones.map(z => (
+                                            <div key={z.id} className="zone-col group flex-1 text-left" onClick={() => { setFilterZone(z.id); navigateTo('projectes'); }}>
+                                                <img src={z.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={z.name} />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-8 text-left text-left">
+                                                    <h3 className="text-3xl font-black uppercase text-white group-hover:text-mes-lime transition-colors text-left text-left">{z.name}</h3>
+                                                    <span className="text-[9px] text-white/50 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity mt-2 text-left text-left">Veure projectes →</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </section>
                         </main>
                     )}
 
