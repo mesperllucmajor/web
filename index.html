@@ -8,21 +8,19 @@
     <meta name="description" content="MÉS per Llucmajor: Treballem per un municipi just, sostenible i participatiu. Informa't de les nostres propostes i actualitat.">
     <meta property="og:title" content="MÉS per Llucmajor - Construïm el municipi que volem">
     <meta property="og:description" content="Notícies, propostes i transparència per a Llucmajor, s'Arenal i les Urbanitzacions.">
-    <meta property="og:image" content="imatges/Llucmajor2.png"> <meta property="og:type" content="website">
+    <meta property="og:image" content="imatges/Llucmajor2.png">
+    <meta property="og:type" content="website">
 
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
-
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-
 
     <script>
         tailwind.config = {
@@ -50,7 +48,6 @@
         }
     </script>
 
-
     <style>
         body { font-family: 'Barlow', sans-serif; background-color: #FAFAFA; color: #2E2E2E; overflow-x: hidden; }
         .clip-diagonal { clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); }
@@ -68,6 +65,20 @@
             background-color: transparent; 
             color: #2E2E2E; 
         }
+        .btn-dark {
+            background-color: #2E2E2E;
+            color: white;
+            font-weight: 800;
+            padding: 0.75rem 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+            border: 2px solid #2E2E2E;
+        }
+        .btn-dark:hover {
+            background-color: white;
+            color: #2E2E2E;
+        }
         .section-title-box {
             display: inline-block;
             background: #2E2E2E;
@@ -80,7 +91,7 @@
         }
         .modal-title { font-size: 2.5rem; line-height: 1.1; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
         .article-body p { margin-bottom: 1.5rem; line-height: 1.8; color: #555; font-size: 1.1rem; }
-        /* Scrollbar personalitzada */
+        
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #C4D600; }
@@ -90,9 +101,8 @@
 <body>
     <div id="root"></div>
 
-
     <script type="text/babel">
-        // --- CONFIGURACIÓ FIREBASE (Mantingues les teves claus reals aquí) ---
+        // --- CONFIGURACIÓ FIREBASE ---
         const firebaseConfig = {
              apiKey: "AIzaSyD...", // Posa la teva API Key real
              authDomain: "mes-llucmajor-app.firebaseapp.com",
@@ -102,24 +112,20 @@
              appId: "1:3389..."
         };
         
-        // Inicialitzar Firebase (evitem errors si ja està inicialitzat)
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-
         const { useState, useEffect } = React;
 
-
-        // Dades Mock (simulació) per si no hi ha base de dades connectada encara
+        // Dades Mock
         const mockNews = [
             { id: 1, title: "Llucmajor necessita un pla de mobilitat real", date: "12 FEB 2026", category: "Mobilitat", content: "El caos circulatori a l'estiu demostra que el model actual està esgotat. Proposem..." },
             { id: 2, title: "Presentem la llista per renovar l'Ajuntament", date: "10 FEB 2026", category: "Partit", content: "Un equip transversal, jove i preparat per governar des del minut u..." },
             { id: 3, title: "Més zones verdes a s'Arenal: una urgència", date: "05 FEB 2026", category: "Sostenibilitat", content: "No podem seguir cimentant cada racó. Els veïns reclamen pulmons verds..." }
         ];
-
 
         const mockPropostes = [
             { title: "Habitatge Digne", icon: "🏠", desc: "Creació d'un parc públic de lloguer i regulació dels preus." },
@@ -128,26 +134,18 @@
             { title: "Llucmajor Verd", icon: "🌳", desc: "Pla de reforestació i protecció del sòl rústic." }
         ];
 
-
-        const equip = [
-            { name: "Miquel Àngel", role: "Candidat a Batle", img: "https://via.placeholder.com/150" },
-            { name: "Maria Barceló", role: "Urbanisme i Medi Ambient", img: "https://via.placeholder.com/150" },
-            { name: "Joan Obrador", role: "Cultura i Participació", img: "https://via.placeholder.com/150" }
-        ];
-
-
         function App() {
             const [user, setUser] = useState(null);
             const [news, setNews] = useState(mockNews);
-            const [page, setPage] = useState('home'); // home, arxiu, propostes, equip, contacte
-            const [selectedItem, setSelectedItem] = useState(null); // Per obrir modals de notícies
-            const [isAdmin, setIsAdmin] = useState(false); // Mode edició
-            
-            // NOU ESTAT PER AL MENÚ MÒBIL
+            const [page, setPage] = useState('home');
+            const [selectedItem, setSelectedItem] = useState(null);
+            const [isAdmin, setIsAdmin] = useState(false);
             const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+            // Estats per al Butlletí (Newsletter)
+            const [email, setEmail] = useState("");
+            const [subStatus, setSubStatus] = useState("idle"); // idle, loading, success, error
 
-            // Efecte per comprovar l'autenticació
             useEffect(() => {
                 const unsubscribe = auth.onAuthStateChanged((u) => {
                     if (u) { setUser(u); setIsAdmin(true); }
@@ -156,43 +154,57 @@
                 return () => unsubscribe();
             }, []);
 
-
-            // Navegació simple
             const navigateTo = (target) => {
                 setPage(target);
                 setSelectedItem(null);
-                setIsMobileMenuOpen(false); // Tanquem el menú mòbil en navegar
+                setIsMobileMenuOpen(false);
                 window.scrollTo(0, 0);
             };
 
+            // Funció per gestionar la subscripció
+            const handleSubscribe = async (e) => {
+                e.preventDefault();
+                if(!email) return;
+                setSubStatus("loading");
+                
+                try {
+                    // Guardem a Firebase (Col·lecció 'subscribers')
+                    await db.collection("subscribers").add({
+                        email: email,
+                        date: new Date(),
+                        source: 'web_home'
+                    });
+                    setSubStatus("success");
+                    setEmail("");
+                    setTimeout(() => setSubStatus("idle"), 5000); // Reset després de 5s
+                } catch (error) {
+                    console.error("Error afegint subscriptor:", error);
+                    setSubStatus("error");
+                }
+            };
 
             return (
                 <div className="min-h-screen flex flex-col font-sans">
                     
-                    {/* NAV DE NAVEGACIÓ MILLORADA */}
+                    {/* NAV */}
                     <nav className="fixed w-full z-[100] bg-white border-b-2 border-stone-200 px-4 md:px-8 py-4 shadow-sm">
                         <div className="flex justify-between items-center">
-                            {/* LOGO */}
                             <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigateTo('home')}>
                                 <span className="font-black text-2xl tracking-tighter uppercase">MÉS<span className="text-mes-lime">/</span>Llucmajor</span>
                             </div>
 
-                            {/* MENÚ ESCRIPTORI (Hidden en mòbil) */}
                             <div className="hidden md:flex gap-8 items-center font-bold text-[11px] uppercase tracking-[0.15em]">
                                 <button onClick={() => navigateTo('home')} className={`hover:text-mes-lime transition ${page === 'home' ? 'text-mes-lime' : ''}`}>Inici</button>
                                 <button onClick={() => navigateTo('arxiu')} className={`hover:text-mes-lime transition ${page === 'arxiu' ? 'text-mes-lime' : ''}`}>Actualitat</button>
                                 <button onClick={() => navigateTo('propostes')} className={`hover:text-mes-lime transition ${page === 'propostes' ? 'text-mes-lime' : ''}`}>Propostes</button>
                                 <button onClick={() => navigateTo('equip')} className={`hover:text-mes-lime transition ${page === 'equip' ? 'text-mes-lime' : ''}`}>L'Equip</button>
                                 <button onClick={() => navigateTo('contacte')} className={`btn-primary !py-2 !px-4 !text-[10px]`}>Suma't-hi!</button>
-                                
-                                {/* Botó Gestió Discret */}
                                 <button onClick={() => { 
                                     const p = prompt("Clau:"); 
                                     if(p === "mes2025") setIsAdmin(!isAdmin); 
                                 }} className="text-stone-300 hover:text-mes-dark text-[14px]">⚙️</button>
                             </div>
 
-                            {/* BOTÓ HAMBURGUESA (Només mòbil) */}
                             <div className="md:hidden">
                                 <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-mes-dark p-2 focus:outline-none">
                                     {isMobileMenuOpen ? (
@@ -204,7 +216,6 @@
                             </div>
                         </div>
 
-                        {/* DESPLEGABLE MÒBIL */}
                         {isMobileMenuOpen && (
                             <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-stone-200 shadow-xl py-6 flex flex-col items-center gap-6 font-bold uppercase tracking-widest text-sm animate-fade">
                                 <button onClick={() => navigateTo('home')} className="hover:text-mes-lime">Inici</button>
@@ -216,13 +227,11 @@
                         )}
                     </nav>
 
-
                     {/* PÀGINA: HOME */}
                     {page === 'home' && (
                         <div className="animate-fade">
-                            {/* HERO SECTION */}
+                            {/* HERO */}
                             <header className="relative h-[85vh] flex items-center justify-center overflow-hidden clip-diagonal bg-mes-dark">
-                                {/* Fons decoratiu */}
                                 <div className="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80')] bg-cover bg-center grayscale"></div>
                                 <div className="absolute inset-0 bg-gradient-to-t from-mes-dark via-transparent to-transparent"></div>
                                 
@@ -241,8 +250,7 @@
                                 </div>
                             </header>
 
-
-                            {/* NOTÍCIES DESTACADES (Grid 3) */}
+                            {/* NOTÍCIES */}
                             <section className="py-20 px-6 max-w-7xl mx-auto">
                                 <div className="flex justify-between items-end mb-12">
                                     <div>
@@ -251,7 +259,6 @@
                                     </div>
                                     <button onClick={() => navigateTo('arxiu')} className="hidden md:block text-sm font-bold border-b-2 border-mes-lime pb-1 hover:text-mes-lime transition">VEURE TOT L'ARXIU</button>
                                 </div>
-
 
                                 <div className="grid md:grid-cols-3 gap-8">
                                     {news.map(n => (
@@ -268,11 +275,34 @@
                                         </div>
                                     ))}
                                 </div>
-                                <div className="mt-8 text-center md:hidden">
-                                     <button onClick={() => navigateTo('arxiu')} className="text-sm font-bold border-b-2 border-mes-lime pb-1">VEURE TOT L'ARXIU</button>
-                                </div>
                             </section>
 
+                            {/* NEWSLETTER (NOVA SECCIÓ DE CAPTACIÓ) */}
+                            <section className="bg-mes-lime text-mes-dark py-20 px-6">
+                                <div className="max-w-4xl mx-auto text-center">
+                                    <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight mb-4">No deixis que decideixin per tu</h2>
+                                    <p className="text-lg md:text-xl font-medium mb-8 max-w-2xl mx-auto">Uneix-te a les més de 2.000 persones que reben informació real sobre Llucmajor, sense filtres.</p>
+                                    
+                                    <form onSubmit={handleSubscribe} className="flex flex-col md:flex-row gap-4 justify-center items-center">
+                                        <input 
+                                            type="email" 
+                                            placeholder="El teu correu electrònic" 
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            required
+                                            className="w-full md:w-96 px-6 py-4 bg-white border-2 border-mes-dark focus:outline-none focus:ring-2 focus:ring-mes-dark placeholder-gray-500 text-lg"
+                                        />
+                                        <button type="submit" disabled={subStatus === 'loading' || subStatus === 'success'} className="btn-dark w-full md:w-auto whitespace-nowrap">
+                                            {subStatus === 'loading' ? 'Enviant...' : subStatus === 'success' ? '✔ Subscrit!' : 'Inscriu-me ara'}
+                                        </button>
+                                    </form>
+                                    
+                                    {subStatus === 'success' && <p className="mt-4 font-bold text-mes-dark animate-fade">Gràcies! Rebràs notícies aviat.</p>}
+                                    {subStatus === 'error' && <p className="mt-4 font-bold text-red-700">Hi ha hagut un error. Torna-ho a provar.</p>}
+                                    
+                                    <p className="mt-6 text-xs opacity-60 uppercase tracking-widest font-bold">Sense spam. Només política útil. Et pots donar de baixa quan vulguis.</p>
+                                </div>
+                            </section>
 
                             {/* BANNER PROPOSTES */}
                             <section className="bg-mes-dark text-white py-24 px-6 relative overflow-hidden">
@@ -296,7 +326,6 @@
                         </div>
                     )}
 
-
                     {/* MODAL LECTURA */}
                     {selectedItem && (
                         <div className="fixed inset-0 z-[200] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fade" onClick={() => setSelectedItem(null)}>
@@ -312,7 +341,6 @@
                         </div>
                     )}
 
-
                     {/* FOOTER GENERAL */}
                     <footer className="bg-mes-dark py-12 px-6 text-center text-white/10 text-[10px] font-black uppercase tracking-[0.5em] text-center">
                         MÉS PER LLUCMAJOR · 2026 · CONSTRUÏM EL MUNICIPI QUE VOLEM
@@ -320,7 +348,6 @@
                 </div>
             );
         }
-
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
