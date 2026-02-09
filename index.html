@@ -168,4 +168,107 @@
 
                             <section className="py-20 bg-mes-stone px-8 section-separator">
                                 <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                                    <div><div className="section-title-box">Participació</div>
+                                    <div><div className="section-title-box">Participació</div><h2 className="text-4xl font-black uppercase tracking-tighter mb-4">Suma't al projecte</h2><p className="text-stone-500 italic border-l-4 border-mes-lime pl-6">Et necessitem per construir el futur del municipi.</p></div>
+                                    <div className="bg-white p-8 border-2 border-stone-200 shadow-xl">
+                                        {submitted ? <div className="text-center py-6 font-black uppercase">Gràcies! Ens veiem aviat.</div> : 
+                                        <form onSubmit={(e) => {e.preventDefault(); setSubmitted(true);}} className="space-y-4">
+                                            <input className="form-input" placeholder="Nom" required />
+                                            <input className="form-input" type="email" placeholder="Email" required />
+                                            <button type="submit" className="btn-primary w-full justify-center">Participar</button>
+                                        </form>}
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section className="py-24 bg-white px-8 section-separator">
+                                <div className="max-w-7xl mx-auto">
+                                    <div className="flex justify-between items-end mb-12 border-b-4 border-mes-dark pb-4">
+                                        <div><div className="section-title-box">Notícies</div><h2 className="text-4xl font-black uppercase">L'Actualitat</h2></div>
+                                        <button onClick={() => navTo('arxiu')} className="text-xs font-black uppercase border-b-2 border-mes-lime">Veure tot</button>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                        {initialArticles.map(a => (
+                                            <div key={a.id} className="group cursor-pointer" onClick={() => setSelectedItem(a)}>
+                                                <div className="h-56 overflow-hidden mb-4 border-b-4 border-mes-dark group-hover:border-mes-lime"><img src={a.image} className="w-full h-full object-cover" /></div>
+                                                <div className="text-[10px] text-stone-300 font-bold mb-2 uppercase">{a.date}</div>
+                                                <h3 className="font-black uppercase text-lg group-hover:text-mes-lime transition-colors">{a.title}</h3>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section className="py-24 bg-stone-50 px-8 section-accent-top">
+                                <div className="max-w-7xl mx-auto">
+                                    <div className="section-title-box">Control</div><h2 className="text-4xl font-black uppercase mb-10">Observatori Municipal</h2>
+                                    <div className="bg-white shadow-xl overflow-x-auto border border-stone-200">
+                                        <table className="w-full text-left min-w-[500px]">
+                                            <thead className="bg-mes-dark text-white text-[10px] uppercase tracking-widest"><tr><th className="p-4">Proposta</th><th className="p-4 text-center">Estat</th><th className="p-4">Nota</th></tr></thead>
+                                            <tbody>
+                                                {initialObservatory.map(o => (
+                                                    <tr key={o.id} className="border-b border-stone-100"><td className="p-4 font-bold text-sm">{o.topic}</td><td className="p-4 text-center"><span className="text-[10px] bg-red-50 text-red-600 px-2 py-1 font-black uppercase">{o.status}</span></td><td className="p-4 text-sm italic text-stone-500">"{o.note}"</td></tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+                        </main>
+                    )}
+
+                    {page === 'arxiu' && (
+                        <section className="pt-32 pb-32 px-8 max-w-7xl mx-auto animate-fade">
+                            <h1 className="text-6xl font-black uppercase mb-12 border-l-[12px] border-mes-lime pl-8">L'Arxiu</h1>
+                            <div className="space-y-4">
+                                {initialArticles.map(a => (
+                                    <div key={a.id} className="archive-item bg-white border border-stone-100 flex items-center p-6 gap-6" onClick={() => setSelectedItem(a)}>
+                                        <div className="w-24 text-[11px] font-black text-stone-300 uppercase">{a.date}</div>
+                                        <div className="flex-grow font-black uppercase text-xl hover:text-mes-lime">{a.title}</div>
+                                        <button className="bg-mes-dark text-white px-6 py-2 text-[10px] font-black uppercase">Llegir</button>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {page === 'equip' && (
+                        <section className="pt-32 pb-32 px-8 max-w-7xl mx-auto animate-fade">
+                            <h2 className="text-6xl font-black uppercase text-center mb-20">L'Equip</h2>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                                {teamRegidors.map((r, i) => (
+                                    <div key={i} className="flex bg-white border border-stone-100 shadow-xl overflow-hidden">
+                                        <img src={r.image} className="w-48 object-cover grayscale hover:grayscale-0 transition-all" alt={r.name} />
+                                        <div className="p-8 flex flex-col justify-center">
+                                            <h3 className="text-3xl font-black uppercase mb-2">{r.name}</h3>
+                                            <p className="text-mes-lime font-black uppercase text-xs mb-4">{r.role}</p>
+                                            <p className="text-stone-600 text-sm italic">"{r.cv}"</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {selectedItem && (
+                        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[300] flex items-center justify-center p-4" onClick={() => setSelectedItem(null)}>
+                            <div className="bg-white max-w-4xl w-full max-h-[90vh] overflow-y-auto p-12 relative shadow-2xl" onClick={e => e.stopPropagation()}>
+                                <button onClick={() => setSelectedItem(null)} className="absolute top-6 right-8 text-4xl text-stone-400 hover:text-mes-lime">&times;</button>
+                                <div className="section-title-box mb-4">{selectedItem.category}</div>
+                                <h2 className="text-4xl font-black uppercase mb-8">{selectedItem.title}</h2>
+                                <div className="text-lg leading-relaxed whitespace-pre-wrap">{selectedItem.content}</div>
+                            </div>
+                        </div>
+                    )}
+
+                    <footer className="bg-mes-dark py-10 px-6 text-center text-white/10 text-[10px] font-black uppercase tracking-[0.5em]">
+                        MÉS PER LLUCMAJOR · 2026
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
