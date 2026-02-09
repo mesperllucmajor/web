@@ -364,4 +364,80 @@
                         </section>
                     )}
 
-                    {page === 'equip'
+                    {page === 'equip' && (
+                        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left text-left">
+                            <h2 className="text-5xl md:text-8xl font-black uppercase text-center mb-24 text-left">L'Equip</h2>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-32 text-left">
+                                {teamRegidors.map((r, i) => (
+                                    <div key={i} className="flex flex-col md:flex-row bg-white border border-stone-100 shadow-xl overflow-hidden text-left">
+                                        <img src={r.image} className="w-full md:w-64 h-96 object-cover" alt="" />
+                                        <div className="p-10 flex flex-col justify-center text-left">
+                                            <h3 className="text-4xl font-black uppercase leading-none mb-3">{r.name}</h3>
+                                            <p className="text-mes-lime font-black uppercase text-xs mb-8 tracking-widest">{r.role}</p>
+                                            <p className="text-base text-stone-600 italic border-l-4 border-mes-lime pl-6">"{r.cv}"</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-left">
+                                {teamExecutiva.map((e, i) => (
+                                    <div key={i} className="bg-stone-50 p-4 border border-stone-100 text-left">
+                                        <img src={e.image} className="w-full h-64 object-cover mb-4" alt="" />
+                                        <h4 className="font-black uppercase text-lg leading-none mb-1">{e.name}</h4>
+                                        <p className="text-[9px] font-bold text-mes-lime uppercase">{e.role}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {page === 'contacte' && (
+                        <section className="pt-40 pb-32 px-8 max-w-5xl mx-auto animate-fade text-left text-left">
+                            <div className="mb-16 border-l-[12px] border-mes-lime pl-10 text-left">
+                                <h1 className="text-6xl font-black uppercase mb-4 text-mes-dark text-left">Contacte</h1>
+                                <p className="text-stone-400 font-bold uppercase text-[10px]">Digues la teva</p>
+                            </div>
+                            <div className="bg-white border-2 border-stone-100 p-8 md:p-12 shadow-sm text-left">
+                                <form className="space-y-8 text-left" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
+                                    <div className="form-group text-left"><label className="section-title-box !bg-transparent !text-stone-400 !p-0">Nom</label><input className="form-input" required /></div>
+                                    <div className="form-group text-left"><label className="section-title-box !bg-transparent !text-stone-400 !p-0">Email</label><input className="form-input" type="email" required /></div>
+                                    <div className="form-group text-left"><label className="section-title-box !bg-transparent !text-stone-400 !p-0">Missatge</label><textarea className="form-input" rows="8" required></textarea></div>
+                                    <button type="submit" className="w-full btn-primary justify-center text-lg">Enviar missatge</button>
+                                </form>
+                                <div className="mt-16 pt-10 border-t border-stone-100 flex flex-col md:flex-row justify-between items-center gap-6">
+                                    <a href="https://chat.whatsapp.com/KjSrg2jMp2a32DIZ50h2WX" target="_blank" className="flex items-center gap-3 text-green-600 font-bold hover:underline transition-all"><IconWhatsapp /><span>WhatsApp Municipal</span></a>
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
+                    {selectedItem && (
+                        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[300] flex items-center justify-center p-4 text-left" onClick={() => setSelectedItem(null)}>
+                            <div className="bg-white max-w-4xl w-full max-h-[90vh] overflow-y-auto p-12 relative shadow-2xl text-left" onClick={e => e.stopPropagation()}>
+                                <button onClick={() => setSelectedItem(null)} className="absolute top-6 right-8 text-4xl text-stone-400 hover:text-mes-lime transition-colors text-left">&times;</button>
+                                <div className="section-title-box mb-4 text-left">{selectedItem.category}</div>
+                                <h2 className="modal-title text-left">{selectedItem.title}</h2>
+                                <div className="article-body whitespace-pre-wrap text-left">{selectedItem.content}</div>
+                                <div className="mt-12 pt-8 border-t border-stone-100 flex justify-between items-center gap-6">
+                                    <div className="flex items-center gap-4 text-left">
+                                        <span className="text-[10px] font-black uppercase text-stone-400">Comparteix:</span>
+                                        <button onClick={() => shareOnWhatsapp(selectedItem)} className="p-3 bg-green-50 text-green-600 hover:bg-green-600 hover:text-white transition-all"><IconWhatsapp size={16} /></button>
+                                    </div>
+                                    <button onClick={() => setSelectedItem(null)} className="btn-primary !px-12 text-left">Tancar</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    <footer className="bg-mes-dark py-12 px-6 text-center text-white/10 text-[10px] font-black uppercase tracking-[0.5em] text-center">
+                        MÉS PER LLUCMAJOR · 2026 · CONSTRUÏM EL MUNICIPI QUE VOLEM
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
