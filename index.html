@@ -120,14 +120,16 @@
 
         const IconWhatsapp = ({size=20}) => (<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>);
 
-        // NOU COMPONENT: Capçalera amb imatge de fons
+        // NOU COMPONENT: Capçalera amb imatge Unsplash i text a l'esquerra
         const PageHeader = ({ title, sub, img }) => (
-            <header className="relative h-[300px] flex items-center overflow-hidden">
-                <img src={img} className="absolute inset-0 w-full h-full object-cover" alt="" />
-                <div className="absolute inset-0 bg-black/60"></div>
-                <div className="relative z-10 max-w-7xl mx-auto px-8 text-left">
-                    <h1 className="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter mb-4">{title}</h1>
-                    <p className="text-mes-lime text-lg font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-4">{sub}</p>
+            <header className="relative h-[350px] flex items-center overflow-hidden">
+                <img src={img} className="absolute inset-0 w-full h-full object-cover scale-105" alt="" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40"></div>
+                <div className="relative z-10 w-full px-8 md:px-16 text-left">
+                    <div className="max-w-3xl">
+                        <h1 className="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter mb-4 leading-none">{title}</h1>
+                        <p className="text-mes-lime text-lg font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-4 inline-block bg-black/30 pr-4 py-1">{sub}</p>
+                    </div>
                 </div>
             </header>
         );
@@ -268,16 +270,16 @@
 
                             <section id="observatori" className="py-24 bg-stone-50 px-8 section-accent-top text-left">
                                 <div className="max-w-7xl mx-auto">
-                                    <div className="mb-12"><div className="section-title-box">Fiscalització</div><h2 className="text-5xl font-black uppercase tracking-tighter">Observatori Municipal</h2></div>
+                                    <div className="mb-12"><div className="section-title-box">Fiscalització</div><h2 className="text-5xl font-black uppercase tracking-tighter text-left">Observatori Municipal</h2></div>
                                     <div className="bg-white shadow-2xl overflow-x-auto border border-stone-200">
-                                        <table className="w-full min-w-[600px]">
+                                        <table className="w-full min-w-[600px] text-left">
                                             <thead className="bg-mes-dark text-white text-[11px] uppercase tracking-widest text-left">
-                                                <tr><th className="p-6">Proposta</th><th className="p-6 text-center">Estat</th><th className="p-6">Seguiment</th></tr>
+                                                <tr><th className="p-6 text-left">Proposta</th><th className="p-6 text-center">Estat</th><th className="p-6 text-left">Seguiment</th></tr>
                                             </thead>
                                             <tbody>
                                                 {initialObservatory.map(obs => (
                                                     <tr key={obs.id} className="border-b border-stone-100 hover:bg-stone-50 text-left">
-                                                        <td className="p-6 font-bold uppercase text-sm">{obs.topic}</td>
+                                                        <td className="p-6 font-bold uppercase text-sm text-left">{obs.topic}</td>
                                                         <td className="p-6 text-center"><span className="text-[10px] bg-red-50 text-red-600 px-3 py-1 font-black uppercase">{obs.status}</span></td>
                                                         <td className="p-6 text-sm italic text-stone-500">"{obs.note}"</td>
                                                     </tr>
@@ -290,8 +292,8 @@
 
                             <section id="actualitat-home" className="py-32 bg-white px-8 section-separator text-left">
                                 <div className="max-w-7xl mx-auto">
-                                    <div className="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-6">
-                                        <div><div className="section-title-box">Veu ciutadana</div><h2 className="text-4xl md:text-6xl font-black uppercase">L'Actualitat</h2></div>
+                                    <div className="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-6 text-left">
+                                        <div><div className="section-title-box">Veu ciutadana</div><h2 className="text-4xl md:text-6xl font-black uppercase text-left">L'Actualitat</h2></div>
                                         <button onClick={() => navigateTo('arxiu')} className="text-xs font-black uppercase border-b-2 border-mes-lime">Veure tot</button>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -301,7 +303,7 @@
                                                     <img src={a.image} className="w-full h-full object-cover group-hover:scale-105 transition-all" />
                                                 </div>
                                                 <span className="text-[10px] text-stone-300 font-bold mb-2 uppercase">{a.date}</span>
-                                                <h3 className="font-black uppercase text-xl leading-tight mb-4 group-hover:text-mes-lime transition-colors">{a.title}</h3>
+                                                <h3 className="font-black uppercase text-xl leading-tight mb-4 group-hover:text-mes-lime transition-colors text-left">{a.title}</h3>
                                                 <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime">Llegir</button>
                                             </div>
                                         ))}
@@ -333,7 +335,7 @@
 
                     {page === 'arxiu' && (
                         <section className="animate-fade">
-                            <PageHeader title="Actualitat" sub="Tota la informació i opinions del nostre grup" img="imatges/Llucmajor2.png" />
+                            <PageHeader title="Actualitat" sub="Tota la informació i opinions del nostre grup" img="https://images.unsplash.com/photo-1504711434969-e33886168f5c" />
                             <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto">
                                 <div className="mb-12 space-y-8 bg-stone-50 p-8 border border-stone-200">
                                     <input type="text" placeholder="Cerca..." className="form-input max-w-xl" onChange={(e) => setSearchQuery(e.target.value)} />
@@ -362,7 +364,7 @@
 
                     {page === 'programa' && (
                         <section className="animate-fade">
-                            <PageHeader title="El Programa" sub="Compromís real per un municipi més just" img="imatges/imatge1.jpeg" />
+                            <PageHeader title="El Programa" sub="Compromís real per un municipi més just" img="https://images.unsplash.com/photo-1450101499163-c8848c66ca85" />
                             <div className="pt-20 pb-32 px-8 max-w-5xl mx-auto">
                                 <div className="space-y-4">
                                     {programData.map((item, index) => (
@@ -384,7 +386,7 @@
 
                     {page === 'projectes' && (
                         <section className="animate-fade">
-                            <PageHeader title="Propostes" sub="Construïm el futur de Llucmajor, nucli a nucli" img="imatges/sarenal.png" />
+                            <PageHeader title="Propostes" sub="Construïm el futur de Llucmajor, nucli a nucli" img="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8" />
                             <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto">
                                 <div className="flex flex-wrap gap-4 mb-16 border-b border-stone-200 pb-8">
                                     <button onClick={() => setFilterZone('all')} className={"px-6 py-3 uppercase font-black text-[10px] " + (filterZone === 'all' ? 'bg-mes-lime' : 'bg-stone-100 text-stone-400')}>Tots els nuclis</button>
@@ -408,7 +410,7 @@
 
                     {page === 'equip' && (
                         <section className="animate-fade">
-                            <PageHeader title="L'Equip" sub="Gent compromesa amb el municipi" img="imatges/badies2.jpeg" />
+                            <PageHeader title="L'Equip" sub="Gent compromesa amb el municipi" img="https://images.unsplash.com/photo-1522071820081-009f0129c71c" />
                             <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto">
                                 <div className="section-title-box bg-mes-lime !text-black text-sm mb-12 font-black">Regidors</div>
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-32">
@@ -439,7 +441,7 @@
 
                     {page === 'contacte' && (
                         <section className="animate-fade">
-                            <PageHeader title="Contacte" sub="Som aquí per escoltar-te i treballar junts" img="imatges/Foravila.png" />
+                            <PageHeader title="Contacte" sub="Som aquí per escoltar-te i treballar junts" img="https://images.unsplash.com/photo-1516387938699-a93567ec168e" />
                             <div className="pt-20 pb-32 px-8 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
                                 <div className="md:col-span-2 bg-white border-2 border-stone-100 p-8 shadow-sm">
                                     {contactStatus === 'success' ? (
