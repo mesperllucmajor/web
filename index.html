@@ -1,47 +1,37 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="ca">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MÉS per Llucmajor - Proximitat i Futur</title>
     
-    <meta name="description" content="MÉS per Llucmajor: Treballem per un municipi just, sostenible i participatiu. Informa't de les nostres propostes i actualitat.">
-    <meta property="og:title" content="MÉS per Llucmajor - Construïm el municipi que volem">
-    <meta property="og:description" content="Notícies, propostes i transparència per a Llucmajor, s'Arenal i les Urbanitzacions.">
-    <meta property="og:image" content="imatges/Llucmajor2.png">
-    <meta property="og:type" content="website">
-
+    <!-- Scripts: React, ReactDOM i Babel -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Firebase SDKs (Compat v9) -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <!-- Fonts corporatives -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: { sans: ['Barlow', 'sans-serif'] },
                     colors: {
-                        'mes-lime': '#C4D600',  /* Verd corporatiu MÉS */
-                        'mes-dark': '#2E2E2E',  /* Gris fosc */
-                        'mes-light': '#F3F4F6'
-                    },
-                    fontFamily: {
-                        sans: ['Barlow', 'sans-serif'],
-                    },
-                    keyframes: {
-                        fade: {
-                            '0%': { opacity: '0', transform: 'translateY(-10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        mes: { 
+                            lime: '#c6d100', 
+                            dark: '#1a1a1a', 
+                            soft: '#f4f4f4', 
+                            stone: '#f9f8f4', 
+                            text: '#1a1a1a' 
                         }
-                    },
-                    animation: {
-                        fade: 'fade 0.3s ease-out forwards',
                     }
                 }
             }
@@ -49,44 +39,666 @@
     </script>
 
     <style>
-        body { font-family: 'Barlow', sans-serif; background-color: #FAFAFA; color: #2E2E2E; overflow-x: hidden; }
-        .clip-diagonal { clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); }
+        body { font-family: 'Barlow', sans-serif; overflow-x: hidden; color: #1a1a1a; scroll-behavior: smooth; background-color: #ffffff; }
+        * { border-radius: 0 !important; }
+
+        .bg-mes-lime { background-color: #c6d100; }
+        .text-mes-lime { color: #c6d100; }
+        
         .btn-primary { 
-            background-color: #C4D600; 
-            color: #2E2E2E; 
-            font-weight: 800; 
-            padding: 0.75rem 2rem; 
-            text-transform: uppercase; 
-            letter-spacing: 0.1em; 
-            transition: all 0.3s;
-            border: 2px solid #C4D600;
+            background-color: #c6d100; color: #1a1a1a; font-weight: 800; text-transform: uppercase; 
+            padding: 1rem 2.5rem; transition: all 0.3s ease; display: inline-flex; align-items: center;
+            letter-spacing: 0.1em; font-size: 0.8rem;
         }
-        .btn-primary:hover { 
-            background-color: transparent; 
-            color: #2E2E2E; 
-        }
-        .btn-dark {
-            background-color: #2E2E2E;
-            color: white;
-            font-weight: 800;
-            padding: 0.75rem 2rem; 
-            text-transform: uppercase; 
-            letter-spacing: 0.1em; 
-            transition: all 0.3s;
-            border: 2px solid #2E2E2E;
-        }
-        .btn-dark:hover {
-            background-color: white;
-            color: #2E2E2E;
-        }
+        .btn-primary:hover { background-color: #1a1a1a; color: #c6d100; }
+        
         .section-title-box {
-            display: inline-block;
-            background: #2E2E2E;
-            color: white;
-            padding: 4px 12px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
+            background-color: #1a1a1a; color: white; padding: 0.2rem 0.6rem; display: inline-block;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; font-size: 0.6rem;
         }
-        .modal-title { font-size: 2.5rem; line-height: 1.1; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0
+
+        .article-body { font-size: 1.1rem; line-height: 1.7; color: #1a1a1a; }
+        .article-body p { margin-bottom: 1.2rem; }
+
+        .modal-title { font-size: 1.3rem; font-weight: 800; line-height: 1.3; margin-bottom: 1.5rem; text-transform: uppercase; color: #1a1a1a; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade { animation: fadeIn 0.8s ease-out forwards; }
+
+        .hero-slide { position: absolute; inset: 0; transition: opacity 1.5s ease-in-out; opacity: 0; z-index: 0; }
+        .hero-slide.active { opacity: 1; z-index: 10; }
+        .hero-zoom { animation: zoomEffect 25s infinite alternate linear; }
+        @keyframes zoomEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
+
+        .archive-item { border-left: 4px solid transparent; transition: all 0.2s; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
+        .archive-item:hover { border-left-color: #c6d100; background-color: #f9f8f4; }
+        
+        .modal-scroll { max-height: 75vh; overflow-y: auto; }
+        .team-img { object-fit: cover; }
+
+        .zone-col { 
+            position: relative; height: 500px; overflow: hidden; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
+            cursor: pointer; border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .zone-col:last-child { border-right: none; }
+        @media (min-width: 768px) { .zone-col:hover { flex-grow: 2; } }
+        
+        .section-separator { border-top: 1px solid #e5e2d9; }
+        .section-accent-top { border-top: 8px solid #c6d100; }
+
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #666; margin-bottom: 0.5rem; }
+        .form-input { border: 2px solid #e5e2d9; padding: 1rem; width: 100%; transition: all 0.2s; font-size: 1rem; background: #fff; }
+        .form-input:focus { border-color: #c6d100; outline: none; background-color: #f9f8f4; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- CONSTANTS DE DADES ---
+        const bannerSlides = [
+            { title: "POLÍTICA PER A LA GENT", sub: "Treballem cada dia per un municipi més just, sostenible i participatiu des de la proximitat.", img: "imatges/imatge1.jpeg" },
+            { title: "CONSTRUÏM JUNTS EL LLUCMAJOR QUE VOLEM", sub: "Un projecte compartit on la veu dels ciutadans és el motor del canvi real.", img: "imatges/Llucmajor2.png" },
+            { title: "FEM UN S'ARENAL MILLOR", sub: "Volem un nucli costaner cuidat, segur i amb els serveis que els seus veïnats mereixen.", img: "imatges/sarenal.png" },
+            { title: "LES URBANITZACIONS QUE MEREIXEM", sub: "Reivindiquem millores estructurals i una gestió eficient per a tots els nuclis del terme.", img: "imatges/badies2.jpeg" },
+            { title: "S'ESTANYOL i SON BIELÓ TAMBÉ SÓN LLUCMAJOR", sub: "Protegim l'essència dels nosres pobles mariners i el nostre medi ambient.", img: "imatges/estanyol.png" },
+            { title: "SERVEIS PER FORA VILA", sub: "Garantim la igualtat de drets i serveis per a tota la ciutadania, visqui on visqui.", img: "imatges/Foravila.png" }
+        ];
+
+        const initialArticles = [
+            { id: 'n-5', category: 'noticia', title: "Aconseguim el rebuig unànime del Ple al circuit de motos nàutiques de s’Arenal", date: "DESEMBRE 2025", image: "imatges/MotosAigua.png", summary: "Ho hem aconseguit: Llucmajor diu NO al circuit", content: `Gràcies a la iniciativa i la pressió política de MÉS per Llucmajor, el Ple de l’Ajuntament ha rebutjat per unanimitat la instal·lació d’un circuit tancat de motos d'aigua a la costa de s’Arenal. La proposta, defensada pel nostre regidor Josep Oriol Gómez, ha obligat l’equip de govern a posicionar-se clarament en contra d’un projecte que amenaçava el descans dels veïnats i la integritat del nostre medi marí.
+
+Davant la contundència dels arguments presentats per MÉS, l’equip de govern va haver de rectificar i admetre que aquest tipus d’instal·lacions no tenen lloc al municipi. Hem aconseguit que el consistori assumeixi el compromís de protegir s’Arenal d’un model d’oci invasiu i nociu.
+
+Una amenaça aturada a temps
+El projecte, que va sortir a exposició pública el 29 de novembre, pretenia ocupar 22.500 m² de fons marí per a un ús privat i lucratiu. Des de MÉS vàrem denunciar que aquesta activitat és del tot incompatible amb el benestar de Llucmajor per diversos motius:
+
+Contaminació acústica: Les motos generen un soroll impulsiu i intrusiu que, per la propagació sobre la mar, afectaria directament els residents de primera línia.
+
+Desastre mediambiental: La instal·lació de cadenes i blocs de formigó suposava una amenaça mecànica per a les praderies de posidònia oceànica i per a la Pinna nobilis, una espècie en perill crític d'extinció.
+
+Saturació i perill: La Badia de Palma ja pateix una saturació nàutica evident, i aquest circuit només hagués augmentat el risc d’accidents i dificultat les tasques de salvament.
+
+El govern diu "no", però MÉS estarà vigilant
+Tot i que celebram que l’equip de govern hagi votat a favor de la nostra proposta i hagi manifestat que no vol aquest tipus d’instal·lacions, des de MÉS per Llucmajor no abaixarem la guàrdia. No ens conformam amb paraules; volem fets.
+
+La proposta aprovada inclou punts clau que fiscalitzarem de prop: l'elaboració d'informes tècnics sobre l'impacte acústic i la presentació formal d'al·legacions davant la Demarcació de Costes per denegar l'ocupació de l'espai públic. També exigirem que s'insti el Govern Balear a protegir la Xarxa Natura 2000 en aquesta zona.
+
+Hem demostrat que, quan MÉS per Llucmajor actua amb decisió, l’Ajuntament es veu obligat a defensar l’interès general per sobre dels negocis privats. Seguirem vigilants per garantir que s'Arenal sigui, d’una vegada per totes, un espai per viure-hi amb dignitat.`, createdAt: 1735689600000 },
+            { id: 'n-4', category: 'noticia', title: "L’equip de govern de Llucmajor protegeix l’insult: el PP, Vox i ASI rebutgen reprovar la regidora Pérez", date: "DESEMBRE 2025", image: "imatges/Govern.png", summary: "L'equip de govern de Llucmajor ha tocat fons. El menyspreu cap al ciutadà és inacceptable.", content: `L'ètica i el respecte a la ciutadania han tornat a brillar per la seva absència al darrer Ple ordinari de Llucmajor. Des de MÉS per Llucmajor vàrem presentar una proposta per reprovar públicament la regidora d'Urbanisme, Inmaculada Pérez , després que el passat mes de novembre el sistema de gravació captàs un comentari seu intolerable cap als veïnats assistents: «Que les den por el culo a todos». Malgrat la gravetat dels fets, la dreta i l'extrema dreta (PP, Vox i ASI) han fet servir la seva majoria per blanquejar aquest insult i evitar qualsevol assumpció de responsabilitats.
+
+Oriol Gómez, va ser molt clar durant el debat: un representant públic té l'obligació moral de mantenir un comportament exemplar. El que vàrem viure a la sessió de novembre no va ser una anècdota, sinó una mostra de la supèrbia i la manca d'empatia d'un equip de govern que se sent impune davant el poble.
+
+Una batlessa més preocupada per anar a casa que pels veïnats
+Des de MÉS no només hem denunciat les paraules grolleres de la regidora Pérez, sinó també l'actitud de la batlessa de Llucmajor. Lluny de recriminar l'insult de la seva companya de files, les gravacions demostren que la seva única preocupació era acabar aviat el debat públic: «Yo lo que quiero es que se vayan» o «a veure si fan via i a les 10 som a casa».
+
+Aquesta actitud contrasta dolorosament amb el comportament dels veïnats que aquell dia havien assistit al Ple per reclamar millores a l'Escola de Música, els quals varen ser respectuosos i educats en tot moment. És inacceptable que mentre el poble manté les formes, els governants responguin amb menyspreu i ganes de tancar la persiana per anar-se'n a dormir.
+
+El govern de la por: ningú demana perdó
+Amb la nostra moció, demanàvem dues coses molt senzilles de cara a la higiene democràtica:
+
+Reprovar públicament la regidora Pérez per unes expressions dignes de qualsevol lloc manco d'una sala de plens.
+
+Emetre una disculpa institucional dirigida a tots els veïnats de Llucmajor.
+
+No obstant això, el PP, Vox i ASI han decidit que és més important protegir la cadira dels seus socis que demanar perdó a la ciutadania que els paga el sou. En votar en contra d’aquesta proposta, han demostrat que l'insult ja forma part de la seva manera de governar.
+
+MÉS per Llucmajor no normalitzarà l’insult
+Des del nostre grup municipal seguirem denunciant cada falta de respecte. No permetrem que es normalitzi que un regidor pugui enviar «a la porra» (per dir-ho suaument) els ciutadans sense cap conseqüència.
+
+Tot i que l'equip de govern hagi volgut girar full, des de MÉS per Llucmajor estarem molt pendents de l'actitud d'aquests regidors en cada plenari. L’Ajuntament és la casa de tots i totes, no el saló privat on el PP i els seus socis poden riure’s dels problemes dels veïnats. Seguirem exigint la dignitat que Llucmajor es mereix.`, createdAt: 1735689600000 },
+
+            { id: 'n-3', category: 'noticia', title: "MÉS per Llucmajor força l'Ajuntament a exigir la construcció immediata dels habitatges de l'IBAVI", date: "NOVEMBRE 2025", image: "imatges/llucmajor1.png", summary: "MÉS lidera la política d'habitatge a Llucmajor", content: `Davant la inacció històrica del Partit Popular i els seus socis, MÉS per Llucmajor ha tornat a liderar la iniciativa social al plenari per posar fi a una vergonya que dura dècades. Hem aconseguit que el Ple insti l'IBAVI a desbloquejar, d'una vegada per totes, la construcció d'habitatges de protecció pública (HPP) al carrer Grup Escolar, un projecte que l'equip de govern ha tengut abandonat a un calaix mentre el preu del lloguer i la compra a Llucmajor es disparava més d'un 40% des de 2015.
++4
+
+La nostra portaveu, Maria Barceló, ha estat contundent: «L'habitatge és una necessitat bàsica, no un privilegi». Mentre les famílies i els joves del nostre municipi es veuen expulsats dels seus barris per falta de preus assequibles, l'Ajuntament ha permès que dos solars públics cedits fa dècades es converteixin en focus de brutor i deixadesa.
+
+Fets i calendaris, no més titulars buits
+Des de MÉS per Llucmajor no ens conformam amb bones paraules. Per això, la nostra proposta —aprovada al plenari de novembre— exigeix compromisos concrets que fiscalitzarem dia a dia:
+
+Inici d'obres el 2026: Reclamam que l'IBAVI fixi un calendari real per començar a construir els habitatges l'any que ve, aprofitant el projecte que tenen aturat des de fa més d'una dècada.
+
+Pressupost real: Exigim al Govern de les Illes Balears que inclogui les partides necessàries als pròxims comptes per fer realitat aquestes cases.
+
+Dignitat per al barri: Hem imposat que l'IBAVI faci un manteniment periòdic dels solars del carrer Grup Escolar, que actualment presenten un tancament precari i un risc per a la salubritat del nucli urbà.
+
+Noves reserves de sòl: Instam l'equip de govern a no dependre només d'aquesta promoció i a cercar o reservar nous solars per a habitatge assequible a tot el municipi.
+
+MÉS lidera la política d'habitatge
+Resulta incomprensible que l'equip de govern s'hagi limitat a ser un «testimoni passiu» d'aquesta situació. Ha hagut de ser MÉS per Llucmajor qui torni a posar sobre la taula la necessitat d'una reunió urgent de coordinació institucional per treure el projecte de l'atzucac on es troba.
+
+Seguirem vigilants perquè els compromisos del Ple no es quedin en paper banyat. Llucmajor necessita fets i habitatges per a la seva gent, i des de MÉS no aturarem fins que les claus de les cases del carrer Grup Escolar estiguin en mans dels nostres veïnats.`, createdAt: 1735689600000 },            
+{ id: 'op-11', category: 'opinio', title: "La legislatura del menyspreu", date: "DESEMBRE 2025", image: "imatges/atpc.png", summary: "L'equip de govern de Llucmajor ha tocat fons. El menyspreu cap al ciutadà és inacceptable.", content: `Llucmajor, desembre de 2025
+
+L’equip de govern de Llucmajor ha tocat fons. La política és gestió, és debat, però, sobretot, és vocació de servei públic. El que vàrem viure al plenari del mes passat a la nostra casa consistorial no va ser política. L’equip de govern va degradar d’una forma mai vista, la institució que representen. 
+La cosa va anar així: la batlessa, aprofitant un recés per facilitar la sortida dels veïnats i veïnades que havien assistit al ple, va deixar el micròfon obert, cosa que va destapar la veritable cara d'aquest equip de govern. Mentre els ciutadans —que aquell dia havien estat exquisits en les formes i respectuosos com feia mesos que no es veia— abandonaven la sala, la regidora d’Urbanisme deixava anar una frase que la inhabilita moralment per a aquest càrrec: «Tenías que haber seguido con el pleno. Que les den por el culo a todos».
+Davant d’aquest menyspreu majúscul, quina va ser la reacció de la batlessa? Cridar-li l’atenció? Doncs no. La resposta va ser confirmar que la prioritat no són els problemes dels llucmajorers, sinó la seva pròpia pressa: «Yo lo que quiero es que se vayan» i «a veure si fan via i a les deu som a casa». Fins i tot se la va sentir murmurar amb por: «Em poden denunciar per haver dit...», conscient que alguna cosa que havia dit podria ser susceptible de revisió judicial.
+No podem permetre que això quedi en una anècdota. Per això, si no hi ha dimissions abans, des de MÉS per Llucmajor, anunciam que al pròxim plenari presentarem una moció per exigir la reprovació de la regidora d'Urbanisme. Aquesta acció permetrà censurar pública i formalment aquesta actitud i farà que tots els partits polítics donin la seva opinió públicament i es posicionin respecte a aquest fet, inclosos els socis de govern del Partit Popular.
+Ho feim perquè aquest incident no és un fet aïllat, sinó el símptoma final d'una patologia política greu. Patim la pitjor legislatura que es recorda. Un govern que té més doblers que mai al banc, però que és incapaç de treure projectes endavant. La legislatura de la inestabilitat, dels canvis constants de cadira i de les baralles internes airejades en públic sense vergonya.
+Durant els darrers mesos, la seva gestió ha derivat en la política del «NO», del «rodillo», del «mando y ordeno». Una legislatura marcada per no escoltar, per la manca de previsió i per la desídia absoluta. Esperen que els problemes s'arreglin sols mentre miren el rellotge desitjant ser a casa.
+Sempre hem dit que el problema de fons a Llucmajor no és un micròfon traïdor. A micro obert, la batlessa permet que els seus socis de govern de la ultradreta siguin xenòfobs i racistes. El problema és la manca de respecte estructural. Aquesta grolleria verbal és la mateixa que veim plasmada als nostres carrers: en la brutor, en la falta de manteniment i en l’absència de criteri i gestió. Si no respecten els ciutadans amb les paraules, com podem esperar que els respectin amb els fets?
+Els representants públics han d'estar a l'altura del càrrec. Si la regidora pensa que als veïns «que les den por el culo» i la batlessa només vol que «se vayan» per plegar prest, aleshores no haurien d'ocupar les cadires on seuen.
+Per respecte a tots els ciutadans de Llucmajor —els hagin votat o no—, no ens quedarem de braços plegats. Si elles han perdut la vergonya, nosaltres no hem perdut la dignitat de defensar el nostre poble.
+Oriol Gómez
+`, createdAt: 1735603200000 },
+            { id: 'op-10', category: 'opinio', title: "Llucmajor desperta", date: "OCTUBRE 2025", image: "imatges/participacio.png", summary: "La mobilització ciutadana als plens és l'evidència que Llucmajor demana un canvi.", content: `Llucmajor, octubre de 2025
+
+Darrerament, la sala de plens de l’Ajuntament de Llucmajor s’ha convertit en el lloc on el ciutadà es reuneix el darrer dimecres de cada mes. Amb el concurs d’idees de Cas Coix sumant mesos sense ser una realitat, la sala del segon pis de l’Ajuntament és l’escenari de moda.
+
+El que passa és que els ciutadans no hi van a veure una obra de ficció. Van a demanar respostes davant els problemes que tenen en el seu dia a dia, provocats per la manca d’acció real al carrer de qui governa Llucmajor.
+
+En els darrers mesos, hem vist passar pel micro de la participació ciutadana, des de famílies afectades per la manca de places 0-3 fins als veïnats desesperats per les pudors de la macrogranja de Son Perot o per l’acumulació de fems a s'Arenal. Des dels veïnats que reclamen la reforma del SITT de Badia Blava fins als defensors de la cultura amb samarretes per Cas Coix, passant pels afectats pel traçat del tren de Migjorn o els que reclamen la millora urgent de l’escola de música. També hem vist mobilitzacions al carrer de qui, des de fa més de deu anys, demana la construcció de l’IES Son Granada, a Maioris. La gent ha hagut d'aixecar-se del sofà i anar a la Casa de la Vila a recordar als nostres governants que Llucmajor necessita acció per millorar la qualitat de vida de tothom.
+
+A la Fundació Toni Catany s’hi ha inaugurat fa poc una exposició sobre les fotografies que el batle de Barcelona, Pasqual Maragall feia amb el seu mòbil. És l’excusa perfecta per parlar sobre l’Alzheimer. Més enllà d’això, destaca a una paret de la Fundació la frase: "Barcelona és la gent". Avui, més que mai, podem afirmar que Llucmajor és la gent. La mobilització ciutadana mou el món i la determinació de qui ho fa provoca coses que semblen impossibles, com va ser la unanimitat en la definició del projecte del tren que volem a Llucmajor.
+
+Però aquesta unanimitat va ser puntual i no tapa que Llucmajor té mancances. La llista de temes pendents és tan llarga que fa empegueir. I com que la informació no arriba, vàrem presentar al plenari del mes de setembre una petició per ser informats de les dates concretes d’execució dels grans projectes i inversions pendents: tenim un contracte de recollida de fems caducat, necessitam un pla de manteniment de les nostres escoles. La reforma de la residència de la gent gran o el concurs d'idees de Cas Coix s'han convertit en una llegenda urbana. I mentrestant, nuclis com s’Estanyol, s’Arenal o les urbanitzacions perden connectivitat de transport públic, cosa que aïlla la gent de serveis bàsics com l'hospital de Son Llàtzer.
+Els problemes no es resolen, sinó que s'agreugen. I davant la crítica o la pregunta, la resposta és el silenci, una promesa vaga que el vent s'endú o un esperar una alineació astral. No hi ha planificació, no hi ha iniciativa, no hi ha informació. Només hi ha reacció, i només quan la pressió ciutadana és tan forta que ignorar-la suposaria un cost polític massa alt i, fins i tot, tampoc així.
+Des de MÉS per Llucmajor entenem la política d'una altra manera. La nostra feina és ser una eina útil per a la gent. Governar no és seure a una cadira i esperar que passin coses, governar és arromangar-se per transformar el nostre municipi en el Llucmajor que volem. Un Llucmajor que no només posi pegats, sinó que anticipi els problemes. Un govern municipal ha de liderar, no anar a remolc de les protestes. S'ha de protegir la nostra terra i el nostre paisatge i garantir que els serveis públics funcionin, que les infraestructures siguin dignes i que la cultura no sigui la darrera de les prioritats.
+Un ajuntament que escolta no necessita que els seus ciutadans cridin als plens. Un ajuntament que planifica no deixa caducar contractes essencials ni permet que els seus edificis es degradin. Un ajuntament valent posa les necessitats de la gent al centre, sempre. La força del poble, ara més organitzat que mai, és la nostra gran esperança, però també l'evidència més clara que alguna cosa no va bé. 
+Llucmajor ha despertat i demana un canvi. És hora d'oferir un projecte a l'altura de la seva gent, és hora de veure que Llucmajor necessita més.
+
+Oriol Gómez
+`, createdAt: 1730332800000 }
+        ];
+
+        const zones = [
+            { id: 'poble', name: 'Llucmajor Poble', img: "imatges/Llucmajor2.png" },
+            { id: 'arenal', name: "S'Arenal", img: "imatges/sarenal.png" },
+            { id: 'urb', name: 'Urbanitzacions', img: "imatges/badies2.jpeg" },
+            { id: 'mariners', name: "S'Estanyol i Son Bieló", img: "imatges/estanyol.png" },
+            { id: 'foravila', name: 'Foravila', img: "imatges/Foravila.png" }
+        ];
+
+        const initialProposals = [
+            { id: 'p-1', zone: 'poble', title: "Nou accés al Poliesportiu", summary: "Urbanització i millora d'accessos per garantir la seguretat.", content: "Proposta per millorar els accessos i garantir la seguretat viària al poliesportiu municipal.", img: "https://images.unsplash.com/photo-1574629810360-7efbbe195018" },
+            { id: 'p-2', zone: 'arenal', title: "Reforma Passeig Marítim", summary: "Un espai públic de qualitat per als residents de S'Arenal.", content: "Volem recuperar el front marítim per al gaudi dels veïnats.", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e" }
+        ];
+
+        const teamRegidors = [
+            { name: "Maria Barceló Calviño", role: "Portaveu Municipal", image: "imatges/02.Maria.jpg", cv: "Docent a l’IES Llucmajor. Regidora des de l’any 2015." },
+            { name: "Oriol Gómez Díaz", role: "Regidor", image: "imatges/Oriol2.jpg", cv: "Docent de setembre de 2024." }
+        ];
+
+        const teamExecutiva = [
+            { name: "Maria Barceló", role: "Coordinadora Local", image: "imatges/02.Maria.jpg", cv: "Lideratge." },
+            { name: "Oriol Gómez", role: "Secretari d'Organització", image: "imatges/Oriol2.jpg", cv: "Gestió." },
+            { name: "Miquel Serra", role: "Tresorer", image: "imatges/01.Miquel.jpg", cv: "Economia." },
+            { name: "Marina Ferre", role: "Secretària de comunicació", image: "imatges/06.Marina.jpeg", cv: "Premsa." },
+            { name: "Toni Tomàs", role: "Secretari de comunicació", image: "imatges/Tuni.jpg", cv: "Estratègia digital." },
+            { name: "Tià Maimó", role: "Secretari de comunicació", image: "imatges/05.Sebastia.jpg", cv: "Creativitat visual." },
+            { name: "Joana Catany", role: "Vocal", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2", cv: "Vocal." },
+            { name: "Maria del Mar Vanrell", role: "Vocal", image: "imatges/04.MariadelMar.jpg", cv: "Vocal." },
+            { name: "Francina Crespí", role: "Vocal", image: "imatges/Francina.jpg", cv: "Vocal." },
+            { name: "Jaume Tomàs", role: "Vocal", image: "imatges/JaumeTomas.jpg", cv: "Vocal." }
+        ];
+
+        const initialObservatory = [
+            { id: 1, topic: "Auditoria externa d'Urbanisme", status: "🔴 ATURAT", note: "Més d'un any esperant la licitació." },
+            { id: 2, topic: "Millora carrer Pere Maimó", status: "🟡 PENDENT", note: "Projecte al calaix sense pressupost real." },
+            { id: 3, topic: "Residència de la gent gran", status: "🔴 ATURAT", note: "Sense conveni signat amb el Govern." }
+        ];
+
+        // --- ICONES ---
+        const IconInstagram = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>);
+        const IconFacebook = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>);
+        const IconMail = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>);
+        const IconWhatsapp = () => (<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>);
+
+        // --- FIREBASE INITIALIZATION ---
+        let db = null;
+        let auth = null;
+        const fbAppId = typeof __app_id !== 'undefined' ? __app_id : 'mes-llucmajor-default';
+
+        try {
+            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                const config = JSON.parse(__firebase_config);
+                firebase.initializeApp(config);
+                auth = firebase.auth();
+                db = firebase.firestore();
+            }
+        } catch (e) { console.warn("Firebase no actiu."); }
+
+        function App() {
+            const [user, setUser] = useState(null);
+            const [news, setNews] = useState(initialArticles);
+            const [page, setPage] = useState('home'); 
+            const [activeSlide, setActiveSlide] = useState(0);
+            const [isAdmin, setIsAdmin] = useState(false);
+            const [selectedItem, setSelectedItem] = useState(null);
+            const [filterZone, setFilterZone] = useState('all');
+            const [form, setForm] = useState({ title: '', category: 'noticia', summary: '', content: '', image: '' });
+            const [contactForm, setContactForm] = useState({ nom: '', email: '', missatge: '' });
+
+            // Auth
+            useEffect(() => {
+                if (!auth) return;
+                const initAuth = async () => {
+                    try {
+                        const token = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                        if (token) await auth.signInWithCustomToken(token);
+                        else await auth.signInAnonymously();
+                    } catch (err) { console.warn(err); }
+                };
+                initAuth();
+                const unsubscribe = auth.onAuthStateChanged(setUser);
+                return () => unsubscribe();
+            }, []);
+
+            // Data
+            useEffect(() => {
+                if (!user || !db) return;
+                const q = db.collection('artifacts').doc(fbAppId).collection('public').doc('data').collection('news');
+                const unsubscribe = q.onSnapshot((snapshot) => {
+                    const docs = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    const combined = [...initialArticles, ...docs];
+                    setNews(combined.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)));
+                });
+                return () => unsubscribe();
+            }, [user]);
+
+            // Router
+            useEffect(() => {
+                const handleHash = () => {
+                    const hash = window.location.hash.replace('#/', '');
+                    if (['home', 'arxiu', 'projectes', 'equip', 'contacte'].includes(hash)) setPage(hash);
+                    else setPage('home');
+                    window.scrollTo(0, 0);
+                };
+                window.addEventListener('hashchange', handleHash);
+                handleHash();
+                return () => window.removeEventListener('hashchange', handleHash);
+            }, []);
+
+            // Carousel
+            useEffect(() => {
+                const interval = setInterval(() => setActiveSlide(s => (s + 1) % bannerSlides.length), 6000);
+                return () => clearInterval(interval);
+            }, []);
+
+            const navigateTo = (p) => { window.location.hash = `#/${p}`; };
+
+            const scrollToNuclis = () => {
+                if (page !== 'home') {
+                    setPage('home');
+                    window.location.hash = "#/home";
+                }
+                setTimeout(() => {
+                    const el = document.getElementById('visio');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            };
+
+            const handleAddNews = async (e) => {
+                e.preventDefault();
+                if (!db || !user || !form.title) return;
+                try {
+                    await db.collection('artifacts').doc(fbAppId).collection('public').doc('data').collection('news').add({
+                        ...form,
+                        date: new Date().toLocaleDateString('ca-ES', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase(),
+                        createdAt: Date.now()
+                    });
+                    setForm({ title: '', category: 'noticia', summary: '', content: '', image: '' });
+                    setIsAdmin(false);
+                } catch (err) { console.error(err); }
+            };
+
+            const handleContactSubmit = (e) => {
+                e.preventDefault();
+                const { nom, email, missatge } = contactForm;
+                const bodyText = `Nom: ${nom}\nEmail: ${email}\n\nMissatge/Proposta:\n${missatge}`;
+                window.location.href = `mailto:mesperllucmajor@gmail.com?subject=Proposta web&body=${encodeURIComponent(bodyText)}`;
+            };
+
+            const filteredProposals = filterZone === 'all' ? initialProposals : initialProposals.filter(p => p.zone === filterZone);
+            const latestNewsList = news.slice(0, 6);
+
+            return (
+                <div className="min-h-screen bg-white text-mes-dark font-sans text-left">
+                    {/* Navbar */}
+                    <nav className="fixed w-full z-[100] bg-white border-b-2 border-stone-200 px-4 md:px-8 py-4 flex justify-between items-center shadow-sm">
+                        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigateTo('home')}>
+                            <img src="Logo.png" alt="MÉS" className="h-10 w-auto" />
+                        </div>
+                        <div className="hidden md:flex gap-10 items-center font-bold text-[11px] uppercase tracking-[0.15em]">
+                            <button onClick={() => navigateTo('home')} className={page === 'home' ? 'text-mes-lime' : ''}>Inici</button>
+                            <button onClick={() => navigateTo('arxiu')} className={page === 'arxiu' ? 'text-mes-lime' : ''}>Actualitat</button>
+                            <button onClick={() => navigateTo('propostes')} className={page === 'propostes' ? 'text-mes-lime' : ''}>Propostes</button>
+                            <button onClick={() => navigateTo('equip')} className={page === 'equip' ? 'text-mes-lime' : ''}>L'Equip</button>
+                            <button onClick={() => navigateTo('contacte')} className={page === 'contacte' ? 'text-mes-lime' : ''}>Contacte</button>
+                            <button onClick={() => {
+                                const p = prompt("Clau:");
+                                if(p === "mes2025") setIsAdmin(!isAdmin);
+                            }} className="bg-stone-100 px-3 py-1 text-[8px] font-black uppercase">Gestió ✨</button>
+                        </div>
+                    </nav>
+
+                    {isAdmin && (
+                        <div className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4">
+                            <div className="bg-white w-full max-w-2xl p-8 shadow-2xl border-t-[10px] border-mes-lime text-left">
+                                <div className="flex justify-between items-center mb-6">
+                                    <h2 className="text-2xl font-black uppercase text-mes-dark">✍️ Backoffice</h2>
+                                    <button onClick={() => setIsAdmin(false)} className="text-3xl">&times;</button>
+                                </div>
+                                <form onSubmit={handleAddNews} className="space-y-4">
+                                    <select className="w-full bg-stone-100 p-3 outline-none" value={form.category} onChange={e => setForm({...form, category: e.target.value})}>
+                                        <option value="noticia">NOTÍCIA</option>
+                                        <option value="opinio">OPINIÓ</option>
+                                    </select>
+                                    <input className="w-full bg-stone-100 p-3 outline-none focus:border-mes-lime border-b-2 border-transparent" placeholder="Títol..." value={form.title} onChange={e => setForm({...form, title: e.target.value})} required />
+                                    <input className="w-full bg-stone-100 p-3 outline-none" placeholder="URL Imatge..." value={form.image} onChange={e => setForm({...form, image: e.target.value})} />
+                                    <textarea className="w-full bg-stone-100 p-3 outline-none h-20" placeholder="Resum..." value={form.summary} onChange={e => setForm({...form, summary: e.target.value})} required />
+                                    <textarea className="w-full bg-stone-100 p-3 outline-none h-40" placeholder="Contingut..." value={form.content} onChange={e => setForm({...form, content: e.target.value})} required />
+                                    <button type="submit" className="w-full bg-mes-lime text-black font-black py-4 uppercase">Publicar</button>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+
+                    {page === 'home' && (
+                        <main className="animate-fade">
+                            <header className="relative h-[85vh] w-full bg-mes-dark overflow-hidden flex items-center pt-16">
+                                {bannerSlides.map((slide, i) => (
+                                    <div key={i} className={`hero-slide ${i === activeSlide ? 'active' : ''}`}>
+                                        <img src={slide.img} className="w-full h-full object-cover hero-zoom" alt={slide.title} />
+                                        <div className="absolute inset-0 bg-black/45"></div>
+                                    </div>
+                                ))}
+                                <div className="relative z-20 max-w-7xl mx-auto px-8 w-full">
+                                    <div className="max-w-4xl">
+                                        <h1 className="text-5xl md:text-[90px] font-black uppercase text-white leading-none tracking-tighter mb-8">{bannerSlides[activeSlide].title}</h1>
+                                        <p className="text-xl md:text-2xl text-white/90 font-medium mb-10 border-l-4 border-mes-lime pl-6 italic">{bannerSlides[activeSlide].sub}</p>
+                                        <div className="flex flex-wrap gap-4">
+                                            <button onClick={() => document.getElementById('observatori').scrollIntoView({behavior:'smooth'})} className="btn-primary">Observatori Municipal</button>
+                                            <button onClick={scrollToNuclis} className="bg-white/20 backdrop-blur-md text-white border-2 border-white px-8 py-4 font-black uppercase text-sm hover:bg-mes-lime hover:text-black transition-all">Propostes</button>
+                                            <button onClick={() => document.getElementById('actualitat').scrollIntoView({behavior:'smooth'})} className="bg-transparent text-white border-2 border-white/30 px-8 py-4 font-black uppercase text-sm hover:bg-white hover:text-black transition-all">Notícies</button>
+                                            <button onClick={() => navigateTo('contacte')} className="bg-transparent text-white border-2 border-white/30 px-8 py-4 font-black uppercase text-sm hover:bg-white hover:text-black transition-all">Digues la teva</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
+
+                            <section id="observatori" className="py-32 bg-stone-50 px-8 section-accent-top text-left">
+                                <div className="max-w-7xl mx-auto">
+                                    <div className="mb-16">
+                                        <div className="section-title-box">Fiscalització</div>
+                                        <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-mes-dark">L'Observatori Municipal</h2>
+                                        <p className="text-stone-400 text-sm font-bold uppercase tracking-widest mt-4 italic max-w-2xl border-l-2 border-mes-lime pl-4 text-left">Mocions aprovades que el govern manté bloquejades.</p>
+                                    </div>
+                                    <div className="bg-white shadow-2xl overflow-x-auto border border-stone-200">
+                                        <table className="w-full text-left min-w-[600px]">
+                                            <thead className="bg-mes-dark text-white text-[11px] uppercase tracking-[0.2em]">
+                                                <tr><th className="p-6 text-left">Proposta</th><th className="p-6 text-center">Estat</th><th className="p-6 text-left text-left">Nota seguiment</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                {initialObservatory.map(obs => (
+                                                    <tr key={obs.id} className="border-b border-stone-100 hover:bg-stone-50 transition-colors">
+                                                        <td className="p-6 font-bold uppercase text-sm text-left">{obs.topic}</td>
+                                                        <td className="p-6 text-center whitespace-nowrap text-center"><span className="text-[10px] bg-red-50 text-red-600 px-3 py-1 font-black uppercase">{obs.status}</span></td>
+                                                        <td className="p-6 text-sm italic text-stone-500 text-left">"{obs.note}"</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="actualitat" className="py-32 bg-white px-8 section-separator text-left">
+                                <div className="max-w-7xl mx-auto">
+                                    <div className="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-6">
+                                        <div><div className="section-title-box">Veu ciutadana</div><h2 className="text-4xl md:text-6xl font-black uppercase text-mes-dark">L'Actualitat</h2></div>
+                                        <button onClick={() => navigateTo('arxiu')} className="text-xs font-black uppercase border-b-2 border-mes-lime">Arxiu complet</button>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+                                        {latestNewsList.map(a => (
+                                            <div key={a.id} className="flex flex-col group cursor-pointer bg-white border border-stone-100 p-6 hover:shadow-xl transition-all duration-300 text-left" onClick={() => setSelectedItem(a)}>
+                                                <div className="h-56 overflow-hidden mb-6 border-b-4 border-mes-dark group-hover:border-mes-lime transition-all bg-stone-100 relative text-left">
+                                                    {a.image && <img src={a.image} className="w-full h-full object-cover" alt={a.title} onError={(e) => e.target.src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4"} />}
+                                                    <div className="absolute top-0 right-0 bg-mes-dark text-white text-[8px] font-black px-2 py-1 uppercase text-left">{a.category}</div>
+                                                </div>
+                                                <span className="text-[10px] text-stone-300 font-bold mb-2 text-left">{a.date}</span>
+                                                <h3 className="font-black uppercase text-xl leading-tight mb-4 group-hover:text-mes-lime transition-colors text-left">{a.title}</h3>
+                                                <p className="text-sm text-stone-500 line-clamp-3 mb-6 text-left">{a.summary}</p>
+                                                <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime self-start text-left">Llegir-ho tot</button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section id="visio" className="py-32 bg-stone-50 px-8 section-separator text-left">
+                                <div className="max-w-7xl mx-auto">
+                                    <div className="mb-16 text-left">
+                                        <div className="section-title-box">El nostre municipi</div>
+                                        <h2 className="text-4xl md:text-6xl font-black uppercase text-left">Construim el Llucmajor del futur</h2>
+                                        <p className="text-stone-400 text-sm font-bold uppercase tracking-widest mt-4 italic max-w-2xl border-l-2 border-mes-lime pl-4 text-left">Aquestes són les nostres propostes per Llucmajor.</p>
+                                    </div>
+                                    <div className="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[500px]">
+                                        {zones.map(z => (
+                                            <div key={z.id} className="zone-col group flex-1 text-left" onClick={() => navigateTo('projectes')}>
+                                                <img src={z.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 text-left" alt={z.name} />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-8 text-left">
+                                                    <h3 className="text-3xl font-black uppercase text-white group-hover:text-mes-lime transition-colors text-left">{z.name}</h3>
+                                                    <span className="text-[9px] text-white/50 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity mt-2 text-left">Veure projectes →</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </section>
+
+                            {/* Nova secció d'Invitació a la Participació */}
+                            <section className="py-20 bg-mes-dark text-white px-8 text-center">
+                                <div className="max-w-4xl mx-auto">
+                                    <h2 className="text-3xl md:text-5xl font-black uppercase mb-6 tracking-tighter">Vols proposar una millora?</h2>
+                                    <p className="text-lg md:text-xl text-white/70 mb-10 italic">Llucmajor el fem entre tots. Escriu-nos el teu suggeriment o reporta una incidència.</p>
+                                    <button onClick={() => navigateTo('contacte')} className="btn-primary !bg-white !text-black hover:!bg-mes-lime">Fes una proposta ara</button>
+                                </div>
+                            </section>
+
+                            
+                        </main>
+                    )}
+
+                    {page === 'arxiu' && (
+                        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left text-left text-left">
+                            <div className="mb-20 border-l-[12px] border-mes-lime pl-10 text-left">
+                                <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-4 text-mes-dark text-left">L'Arxiu</h1>
+                                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em]">Memòria institucional i opinió ciutadana</p>
+                            </div>
+                            <div className="space-y-6 text-left">
+                                {news.map((a) => (
+                                    <div key={a.id} className="archive-item bg-white border border-stone-100 flex flex-col md:flex-row items-center p-8 gap-10 shadow-sm hover:shadow-md transition-all text-left text-left" onClick={() => setSelectedItem(a)}>
+                                        <div className="shrink-0 text-left w-full md:w-36 leading-none text-left">
+                                            <div className="text-[11px] font-black text-stone-300 uppercase tracking-widest mb-2 text-left">{a.date}</div>
+                                            <div className={`text-[8px] font-black px-2 py-0.5 inline-block uppercase ${a.category === 'opinio' ? 'bg-mes-lime text-black' : 'bg-mes-dark text-white'} text-left`}>
+                                                {a.category}
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="w-32 h-20 shrink-0 bg-stone-100 overflow-hidden border-2 border-mes-dark text-left">
+                                            {a.image && <img src={a.image} className="w-full h-full object-cover text-left" alt={a.title} onError={(e) => e.target.src="https://via.placeholder.com/150"} />}
+                                        </div>
+
+                                        <div className="flex-grow text-left text-left">
+                                            <h3 className="text-xl md:text-2xl font-black uppercase leading-tight text-mes-dark hover:text-mes-lime transition-colors cursor-pointer text-left">{a.title}</h3>
+                                        </div>
+                                        <button className="bg-mes-dark text-white hover:bg-mes-lime hover:text-black font-black uppercase text-[10px] px-8 py-3 transition-all w-full md:w-auto text-left">Llegir</button>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {page === 'projectes' && (
+                        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left text-left">
+                            <div className="mb-20 border-l-[12px] border-mes-lime pl-10 text-left">
+                                <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-4 text-mes-dark">Els Projectes</h1>
+                                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em] text-left">Propostes territorials de futur</p>
+                            </div>
+                            <div className="flex flex-wrap gap-4 mb-16 border-b border-stone-200 pb-8 text-left">
+                                <button onClick={() => setFilterZone('all')} className={`px-6 py-3 uppercase font-black text-[10px] tracking-widest transition-all ${filterZone === 'all' ? 'bg-mes-lime text-black shadow-lg' : 'bg-stone-100 text-stone-500'}`}>Totes les propostes</button>
+                                {zones.map(z => (
+                                    <button key={z.id} onClick={() => setFilterZone(z.id)} className={`px-6 py-3 uppercase font-black text-[10px] tracking-widest transition-all ${filterZone === z.id ? 'bg-mes-lime text-black shadow-lg' : 'bg-stone-100 text-stone-500'}`}>{z.name}</button>
+                                ))}
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left text-left">
+                                {filteredProposals.map(p => (
+                                    <div key={p.id} className="bg-white border-b-8 border-transparent hover:border-mes-lime transition-all cursor-pointer group shadow-sm text-left text-left" onClick={() => setSelectedItem({...p, category: 'PROJECTE'})}>
+                                        <div className="h-64 overflow-hidden relative text-left">
+                                            <img src={p.img} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 text-left" alt={p.title} />
+                                            <div className="absolute top-0 right-0 bg-mes-dark text-white px-3 py-1 text-[8px] font-black uppercase tracking-widest text-left">{zones.find(z => z.id === p.zone)?.name}</div>
+                                        </div>
+                                        <div className="p-8 text-left">
+                                            <h3 className="text-2xl font-black uppercase leading-none mb-4 group-hover:text-mes-lime transition-colors tracking-tighter text-left">{p.title}</h3>
+                                            <p className="text-sm text-stone-500 font-medium italic mb-8 line-clamp-2 text-left">{p.summary}</p>
+                                            <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime pb-1 text-left">Veure projecte</button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                    )}
+
+                    {page === 'equip' && (
+                        <section className="pt-40 pb-32 px-8 max-w-7xl mx-auto animate-fade text-left text-left text-left">
+                            <div className="text-center mb-24 text-left">
+                                <div className="section-title-box text-left">Qui som</div>
+                                <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-mes-dark leading-none text-center">L'Equip de MÉS</h2>
+                            </div>
+                            <div className="mb-32">
+                                <div className="section-title-box bg-mes-lime !text-black text-sm mb-12 uppercase font-black text-left">Representació al Plenari</div>
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 text-left text-left">
+                                    {teamRegidors.map((r, i) => (
+                                        <div key={i} className="flex flex-col md:flex-row bg-white border border-stone-100 shadow-xl overflow-hidden text-left text-left">
+                                            <img src={r.image} className="w-full md:w-64 h-96 team-img text-left" alt={r.name} onError={(e) => e.target.src="https://via.placeholder.com/400x600"} />
+                                            <div className="p-10 flex flex-col justify-center text-left text-left">
+                                                <h3 className="text-4xl font-black uppercase leading-none mb-3 text-mes-dark tracking-tighter text-left">{r.name}</h3>
+                                                <p className="text-mes-lime font-black uppercase text-xs mb-8 tracking-[0.2em] text-left">{r.role}</p>
+                                                <p className="text-base text-stone-600 font-medium italic border-l-4 border-mes-stone pl-6 leading-relaxed text-left text-left">"{r.cv}"</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div>
+                                <div className="section-title-box text-sm mb-12 font-black uppercase text-left">Executiva Local de Llucmajor</div>
+                                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 text-left text-left">
+                                    {teamExecutiva.map((e, i) => (
+                                        <div key={i} className="text-left bg-stone-50 p-4 border border-stone-100 transition-colors hover:bg-stone-100 text-left text-left">
+                                            <img src={e.image} className="w-full h-64 team-img object-cover mb-4 text-left" alt={e.name} onError={(e) => e.target.src="https://via.placeholder.com/300x400"} />
+                                            <h4 className="font-black uppercase text-lg leading-none mb-1 text-mes-dark text-left text-left">{e.name}</h4>
+                                            <p className="text-[9px] font-bold text-mes-lime uppercase tracking-widest mb-4 leading-tight text-left text-left">{e.role}</p>
+                                            <p className="text-[10px] text-stone-500 font-medium leading-relaxed opacity-70 text-left text-left text-left">{e.cv}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
+                    {page === 'contacte' && (
+                        <section className="pt-40 pb-32 px-8 max-w-5xl mx-auto animate-fade text-left text-left text-left">
+                            <div className="mb-16 border-l-[12px] border-mes-lime pl-10 text-left">
+                                <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-4 text-mes-dark text-left">Contacte</h1>
+                                <p className="text-stone-400 font-bold uppercase text-[10px] tracking-[0.3em] text-left">Digues la teva proposta per al municipi.</p>
+                            </div>
+                            
+                            <div className="bg-white border-2 border-stone-100 p-8 md:p-12 shadow-sm text-left">
+                                <div className="max-w-3xl mx-auto">
+                                    <p className="text-stone-500 font-medium text-lg mb-10 italic leading-relaxed text-left text-left">
+                                        Per a MÉS per Llucmajor, la teva veu és la base del nostre projecte. Escriu-nos directament per fer arribar un suggeriment, avisar d’una incidència o simplement per contactar amb nosaltres.
+                                    </p>
+                                    
+                                    <form onSubmit={handleContactSubmit} className="space-y-8 text-left">
+                                        <div className="form-group text-left">
+                                            <label className="form-label text-left">Nom i Llinatges</label>
+                                            <input 
+                                                className="form-input text-left" 
+                                                type="text" 
+                                                placeholder="Ex: Joan Maimó" 
+                                                value={contactForm.nom} 
+                                                onChange={e => setContactForm({...contactForm, nom: e.target.value})} 
+                                                required 
+                                            />
+                                        </div>
+                                        <div className="form-group text-left">
+                                            <label className="form-label text-left">Correu Electrònic de contacte</label>
+                                            <input 
+                                                className="form-input text-left" 
+                                                type="email" 
+                                                placeholder="correu@exemple.cat" 
+                                                value={contactForm.email} 
+                                                onChange={e => setContactForm({...contactForm, email: e.target.value})} 
+                                                required 
+                                            />
+                                        </div>
+                                        <div className="form-group text-left">
+                                            <label className="form-label text-left">Proposta o missatge</label>
+                                            <textarea 
+                                                className="form-input text-left" 
+                                                rows="8" 
+                                                placeholder="Escriu aquí el teu suggeriment per a Llucmajor..." 
+                                                value={contactForm.missatge} 
+                                                onChange={e => setContactForm({...contactForm, missatge: e.target.value})} 
+                                                required
+                                            ></textarea>
+                                        </div>
+                                        <div className="flex items-start gap-4 p-5 bg-stone-50 border border-stone-100 text-left">
+                                            <input type="checkbox" className="w-5 h-5 mt-1 accent-mes-lime cursor-pointer" required />
+                                            <span className="text-xs text-stone-500 font-medium leading-relaxed text-left">
+                                                He llegit i accepto que les meves dades siguin utilitzades exclusivament per gestionar aquesta proposta per part de MÉS per Llucmajor.
+                                            </span>
+                                        </div>
+                                        <button type="submit" className="w-full btn-primary text-center justify-center py-6 text-lg tracking-[0.2em] text-left">
+                                            Enviar proposta ara
+                                        </button>
+                                    </form>
+                                    
+                                    <div className="mt-16 pt-10 border-t border-stone-100 flex flex-col md:flex-row justify-between items-center gap-6 text-left">
+                                        <div className="text-left">
+                                            <span className="block text-[10px] font-black uppercase text-stone-400 mb-1 text-left">Vols rebre novetats?</span>
+                                            <a href="https://chat.whatsapp.com/KjSrg2jMp2a32DIZ50h2WX" target="_blank" className="flex items-center gap-3 text-green-600 font-bold hover:underline transition-all">
+                                                <IconWhatsapp />
+                                                <span className="text-sm">Suma't a la Comunitat de WhatsApp</span>
+                                            </a>
+                                        </div>
+                                        <div className="flex gap-4">
+                                            <a href="https://instagram.com/mesperllucmajor" target="_blank" className="p-3 bg-stone-50 border border-stone-200 hover:bg-mes-lime transition-all"><IconInstagram /></a>
+                                            <a href="https://facebook.com/mesperllucmajor" target="_blank" className="p-3 bg-stone-50 border border-stone-200 hover:bg-mes-lime transition-all"><IconFacebook /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    )}
+
+                    {/* MODAL LECTOR */}
+                    {selectedItem && (
+                        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[300] flex items-center justify-center p-4 text-left" onClick={() => setSelectedItem(null)}>
+                            <div className="bg-white max-w-4xl w-full max-h-[90vh] overflow-y-auto p-12 relative text-left shadow-[0_20px_50px_rgba(0,0,0,0.3)] ring-1 ring-black/5" onClick={e => e.stopPropagation()}>
+                                <button onClick={() => setSelectedItem(null)} className="absolute top-6 right-8 text-4xl text-left hover:text-mes-lime transition-colors text-stone-400">&times;</button>
+                                <div className="section-title-box mb-4 text-left">{selectedItem.category}</div>
+                                <h2 className="modal-title text-left">{selectedItem.title}</h2>
+                                <div className="article-body whitespace-pre-wrap text-left">{selectedItem.content}</div>
+                                <div className="mt-12 pt-8 border-t border-stone-100 flex justify-center text-left"><button onClick={() => setSelectedItem(null)} className="btn-primary !px-12 text-left">Tancar lectura</button></div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* FOOTER GENERAL */}
+                    <footer className="bg-mes-dark py-12 px-6 text-center text-white/10 text-[10px] font-black uppercase tracking-[0.5em] text-center">
+                        MÉS PER LLUCMAJOR · 2026 · CONSTRUÏM EL MUNICIPI QUE VOLEM
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
