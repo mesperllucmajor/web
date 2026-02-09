@@ -293,8 +293,8 @@
                             <section id="actualitat-home" className="py-32 bg-white px-8 section-separator text-left">
                                 <div className="max-w-7xl mx-auto">
                                     <div className="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-6 text-left">
-                                        <div><div className="section-title-box">Veu ciutadana</div><h2 className="text-4xl md:text-6xl font-black uppercase text-left">L'Actualitat</h2></div>
-                                        <button onClick={() => navigateTo('arxiu')} className="text-xs font-black uppercase border-b-2 border-mes-lime">Veure tot</button>
+                                        <div><div className="section-title-box">Informació</div><h2 className="text-4xl md:text-6xl font-black uppercase text-left">L'Actualitat</h2></div>
+                                        <button onClick={() => navigateTo('arxiu')} className="text-xs font-black uppercase border-b-2 border-mes-lime">Veure-ho tot</button>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                                         {initialArticles.slice(0, 3).map(a => (
@@ -314,7 +314,7 @@
                             <section id="visio" className="py-32 bg-stone-50 px-8 section-separator text-left">
                                 <div className="max-w-7xl mx-auto">
                                     <div className="flex justify-between items-end mb-16">
-                                        <div><div className="section-title-box">Territori</div><h2 className="text-4xl md:text-6xl font-black uppercase">El municipi</h2></div>
+                                        <div><div className="section-title-box">Territori</div><h2 className="text-4xl md:text-6xl font-black uppercase">El Llucmajor que volem</h2></div>
                                         <button onClick={() => {setFilterZone('all'); navigateTo('projectes');}} className="btn-primary !py-3 !px-8 text-[10px]">Projecte Global</button>
                                     </div>
                                     <div className="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[500px]">
@@ -335,7 +335,7 @@
 
                     {page === 'arxiu' && (
                         <section className="animate-fade">
-                            <PageHeader title="Actualitat" sub="Tota la informació i opinions del nostre grup" img="https://images.unsplash.com/photo-1504711434969-e33886168f5c" />
+                            <PageHeader title="Actualitat" sub="Tota la informació i les nostres opinions" img="https://images.unsplash.com/photo-1504711434969-e33886168f5c" />
                             <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto">
                                 <div className="mb-12 space-y-8 bg-stone-50 p-8 border border-stone-200">
                                     <input type="text" placeholder="Cerca..." className="form-input max-w-xl" onChange={(e) => setSearchQuery(e.target.value)} />
@@ -386,7 +386,7 @@
 
                     {page === 'projectes' && (
                         <section className="animate-fade">
-                            <PageHeader title="Propostes" sub="Construïm el futur de Llucmajor, nucli a nucli" img="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8" />
+                            <PageHeader title="El Llucmajor que volem" sub="Construïm el nostre, nucli a nucli" img="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8" />
                             <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto">
                                 <div className="flex flex-wrap gap-4 mb-16 border-b border-stone-200 pb-8">
                                     <button onClick={() => setFilterZone('all')} className={"px-6 py-3 uppercase font-black text-[10px] " + (filterZone === 'all' ? 'bg-mes-lime' : 'bg-stone-100 text-stone-400')}>Tots els nuclis</button>
@@ -410,7 +410,7 @@
 
                     {page === 'equip' && (
                         <section className="animate-fade">
-                            <PageHeader title="L'Equip" sub="Gent compromesa amb el municipi" img="https://images.unsplash.com/photo-1522071820081-009f0129c71c" />
+                            <PageHeader title="L'Equip" sub="Persones compromeses amb el municipi" img="https://images.unsplash.com/photo-1522071820081-009f0129c71c" />
                             <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto">
                                 <div className="section-title-box bg-mes-lime !text-black text-sm mb-12 font-black">Regidors</div>
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-32">
