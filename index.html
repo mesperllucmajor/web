@@ -114,11 +114,54 @@ title: Inici
             <p class="text-xl text-stone-500 italic border-l-4 border-mes-lime pl-6 text-left">Volem un municipi millor i et necessitem. Tria com vols participar.</p>
         </div>
         <div class="bg-mes-stone p-10 border-2 border-stone-200 shadow-2xl text-left">
-            <form action="https://formspree.io/f/xlgwyklo" method="POST" class="space-y-6 text-left">
-                <input class="form-input" name="nom" placeholder="Nom complet" required />
-                <input class="form-input" type="email" name="email" placeholder="Email" required />
-                <button type="submit" class="btn-primary w-full justify-center">Participar</button>
-            </form>
+            <form id="sumat-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="space-y-4 text-left relative">
+            <input class="form-input text-left" type="text" name="nom" placeholder="Nom complet" required />
+            <input class="form-input text-left" type="email" name="email" placeholder="Correu electrònic" required />
+            <input class="form-input text-left" type="tel" name="telefon" placeholder="Telèfon (opcional)" />
+            
+            <button id="sumat-btn" type="submit" class="btn-primary w-full justify-center text-left mt-4">Vull col·laborar</button>
+            
+            <div id="sumat-status" class="hidden mt-4 p-4 bg-green-50 text-green-700 border border-green-200 font-bold text-center text-xs uppercase tracking-widest">
+                ✅ Gràcies per sumar-te! Ens posarem en contacte amb tu ben aviat.
+            </div>
+        </form>
+
+        <script>
+            var sumatForm = document.getElementById("sumat-form");
+            var sumatStatus = document.getElementById("sumat-status");
+            var sumatBtn = document.getElementById("sumat-btn");
+
+            sumatForm.addEventListener("submit", async function(event) {
+                event.preventDefault(); // Evita sortir de la pàgina
+                sumatBtn.innerHTML = "Enviant..."; // Feedback visual
+                sumatBtn.style.opacity = "0.5";
+                sumatBtn.disabled = true;
+
+                var data = new FormData(event.target);
+                
+                fetch(event.target.action, {
+                    method: sumatForm.method,
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                }).then(response => {
+                    if (response.ok) {
+                        sumatStatus.classList.remove("hidden"); // Mostra el missatge verd
+                        sumatForm.reset(); // Neteja els camps
+                        sumatBtn.innerHTML = "Vull col·laborar"; // Retorna el botó a l'estat original
+                        sumatBtn.style.opacity = "1";
+                        sumatBtn.disabled = false;
+                        
+                        // Opcional: amagar el missatge al cap de 5 segons
+                        setTimeout(() => { sumatStatus.classList.add("hidden"); }, 5000);
+                    } else {
+                        sumatBtn.innerHTML = "Hi ha hagut un error";
+                        sumatBtn.style.backgroundColor = "#ffcccc";
+                    }
+                }).catch(error => {
+                    sumatBtn.innerHTML = "Error de connexió";
+                });
+            });
+        </script>
         </div>
     </div>
 </section>
