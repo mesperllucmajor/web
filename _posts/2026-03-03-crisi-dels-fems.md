@@ -3,7 +3,7 @@ layout: post
 title: "La crisi dels fems a Llucmajor"
 category: noticia
 tags: [Medi Ambient]
-image: "/imatges/MotosAigua.png"
+image: "/imatges/fems1.png"
 summary: "Llucmajor viu dins la merda"
 ---
 
