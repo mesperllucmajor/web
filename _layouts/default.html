@@ -64,9 +64,8 @@
 <body class="min-h-screen flex flex-col">
 
     <nav class="sticky top-0 w-full z-[100] bg-white border-b-2 border-stone-200 px-4 py-4 flex justify-between items-center shadow-sm">
-        <a href="{{ site.baseurl }}/" class="flex items-center gap-3 cursor-pointer hover:opacity-80 transition-opacity">
-            <div class="bg-mes-lime text-black font-black px-3 py-1 text-xl tracking-tighter">MÉS</div>
-            <div class="font-bold text-xs tracking-[0.2em] hidden sm:block uppercase">Llucmajor</div>
+        <a href="{{ site.baseurl }}/" class="flex items-center cursor-pointer hover:opacity-80 transition-opacity">
+            <img src="{{ site.baseurl }}/imatges/Logo.png" alt="MÉS per Llucmajor" class="h-10 w-auto" />
         </a>
         <div class="hidden md:flex gap-8 font-bold text-[11px] uppercase tracking-widest text-left">
             <a href="{{ site.baseurl }}/" class="{% if page.url == '/' %}text-mes-lime{% else %}hover:text-mes-lime transition-colors{% endif %}">Inici</a>
@@ -85,7 +84,7 @@
     <footer class="bg-mes-dark text-white pt-24 pb-12 px-8 border-t-8 border-mes-lime text-left">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 text-left">
             <div class="md:col-span-1 text-left">
-                <div class="bg-mes-lime text-black font-black px-4 py-2 text-3xl inline-block mb-6 tracking-tighter">MÉS</div>
+                <img src="{{ site.baseurl }}/imatges/Logo.png" alt="MÉS per Llucmajor" class="h-14 w-auto mb-6" />
                 <p class="text-stone-400 font-bold uppercase text-xs tracking-widest mb-4">Llucmajor · s'Arenal · Urbanitzacions</p>
                 <p class="text-stone-500 text-sm leading-relaxed italic">"Treballem des de la proximitat per un futur més just per a tota la ciutadania."</p>
             </div>
