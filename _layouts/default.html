@@ -10,7 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
 
-        <title>{{ page.title | default: site.title }} - {{ site.description }}</title>
+       <title>
+  {% if page.url == "/" or page.url == "/index.html" %}
+    MÉS per Llucmajor | Política per a la gent
+  {% else %}
+    {{ page.title }} | MÉS per Llucmajor
+  {% endif %}
+</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
