@@ -19,7 +19,7 @@ title: Inici
         <div class="absolute inset-0 bg-black/45"></div>
         <div class="absolute inset-0 flex items-center px-8 md:px-20 text-left pb-32">
             <div class="max-w-4xl text-left">
-                <h1 class="text-5xl md:text-[90px] font-black uppercase text-white leading-none mb-8">CONSTRUÏM EL MUNICIPI QUE VOLEM</h1>
+                <h1 class="text-5xl md:text-[90px] font-black uppercase text-white leading-none mb-8">CONSTRUÏM EL LLUCMAJOR QUE VOLEM</h1>
                 <p class="text-xl md:text-2xl text-white/90 border-l-4 border-mes-lime pl-6 italic mb-0">Un projecte compartit on la veu dels ciutadans és el motor.</p>
             </div>
         </div>
@@ -67,7 +67,7 @@ title: Inici
             <div class="text-left">
                 <h2 class="section-title-box mb-4">PROXIMITAT</h2>
                 <h3 class="text-4xl font-black uppercase tracking-tighter mb-6 text-mes-dark">Properes Cites</h3>
-                <p class="text-stone-500 italic text-left">Ens agrada ser als pobles i estar amb la gent. Consulta on ens pots trobar.</p>
+                <p class="text-stone-500 italic text-left">Ens agrada ser als pobles i estar amb la gent.</p>
             </div>
             <div class="lg:col-span-2 grid grid-cols-1 gap-4">
                 {% for acte in site.data.agenda limit:3 %}
@@ -79,7 +79,7 @@ title: Inici
                         </div>
                         <div class="text-left">
                             <h4 class="font-black uppercase text-mes-dark group-hover:text-mes-lime transition-colors">{{ acte.titol }}</h4>
-                            <p class="text-xs text-stone-500 uppercase tracking-widest">{{ acte.hora }} · {{ acte.lloc }}</p>
+                            <p class="text-xs text-stone-500 uppercase tracking-widest text-left">{{ acte.hora }} · {{ acte.lloc }}</p>
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,6 @@ title: Inici
                 <h2 class="section-title-box mb-4">FISCALITZACIÓ</h2>
                 <h3 class="text-4xl font-black uppercase tracking-tighter text-mes-dark">Observatori Municipal</h3>
             </div>
-
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
@@ -108,9 +107,7 @@ title: Inici
                         {% for item in site.data.observatori limit:5 %}
                         <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors group">
                             <td class="py-6 font-bold uppercase text-sm md:text-base pr-4 text-mes-dark group-hover:text-mes-lime transition-colors">{{ item.tema }}</td>
-                            <td class="py-6">
-                                <span class="text-[9px] md:text-[10px] font-black uppercase tracking-widest {{ item.color }} px-3 py-1.5 whitespace-nowrap">{{ item.estat }}</span>
-                            </td>
+                            <td class="py-6"><span class="text-[9px] md:text-[10px] font-black uppercase tracking-widest {{ item.color }} px-3 py-1.5 whitespace-nowrap">{{ item.estat }}</span></td>
                             <td class="py-6 text-sm text-stone-500 italic hidden md:table-cell">{{ item.nota }}</td>
                         </tr>
                         {% endfor %}
@@ -125,16 +122,16 @@ title: Inici
             <div class="text-left">
                 <h2 class="section-title-box mb-6">EL NOSTRE MODEL</h2>
                 <h3 class="text-5xl font-black uppercase leading-none mb-8 tracking-tighter">La proposta visual del canvi</h3>
-                <p class="text-xl text-stone-500 mb-8 italic border-l-2 border-mes-lime pl-6">Transformem els espais per a les persones. Una visió moderna per a un municipi viu.</p>
+                <p class="text-xl text-stone-500 mb-8 italic border-l-2 border-mes-lime pl-6">Un municipi viu es construeix amb projectes valents.</p>
                 <a href="{{ site.baseurl }}/propostes/" class="btn-primary">Explora els projectes</a>
             </div>
             <div class="bg-white p-4 shadow-xl transform rotate-1">
-                <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 shadow-inner">
+                <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
             </div>
         </div>
     </section>
 
-    <section id="programa-home" class="py-24 bg-white px-8 text-left">
+    <section id="programa-home" class="py-24 bg-white px-8 text-left border-b border-stone-100">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 items-center">
             <div class="md:w-1/3 w-full">
                 <div class="bg-mes-lime p-12 aspect-[3/4] flex flex-col justify-end shadow-2xl transform -rotate-2">
@@ -144,13 +141,13 @@ title: Inici
             <div class="md:w-2/3 text-left">
                 <h2 class="section-title-box mb-6">EL CONTRACTE</h2>
                 <h3 class="text-4xl font-black uppercase mb-6 text-mes-dark">Compromís amb la ciutadania</h3>
-                <p class="text-lg text-stone-600 mb-8">Un document detallat amb solucions reals per a cada racó del municipi.</p>
+                <p class="text-lg text-stone-600 mb-8">Solucions reals per a cada racó del municipi.</p>
                 <a href="{{ site.baseurl }}/programa/" class="btn-primary">Llegir el Programa</a>
             </div>
         </div>
     </section>
 
-    <section id="equip-home" class="py-24 bg-stone-100 px-8 text-left border-t border-stone-200">
+    <section id="equip-home" class="py-24 bg-stone-100 px-8 text-left border-b border-stone-200">
         <div class="max-w-7xl mx-auto">
             <h2 class="section-title-box mb-4">L'EQUIP</h2>
             <h3 class="text-4xl font-black uppercase tracking-tighter mb-12 text-mes-dark">Gent que estima el municipi</h3>
@@ -160,11 +157,89 @@ title: Inici
                     <div class="aspect-square overflow-hidden mb-4 grayscale group-hover:grayscale-0 transition-all border-b-4 border-transparent group-hover:border-mes-lime bg-white shadow-sm p-2">
                         <img src="{{ site.baseurl }}{{ membre.foto }}" class="w-full h-full object-cover">
                     </div>
-                    <h5 class="font-black uppercase text-sm text-mes-dark">{{ membre.nom }}</h5>
-                    <p class="text-[10px] text-stone-500 uppercase tracking-widest">{{ membre.carrec }}</p>
+                    <h5 class="font-black uppercase text-sm text-mes-dark text-left">{{ membre.nom }}</h5>
+                    <p class="text-[10px] text-stone-500 uppercase tracking-widest text-left">{{ membre.carrec }}</p>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </section>
 </main>
+
+<button id="open-index-contact" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-lime text-mes-dark px-6 py-4 font-black uppercase text-xs md:text-sm tracking-widest shadow-2xl z-40 flex items-center gap-2 hover:bg-mes-dark hover:text-white transition-all transform hover:-translate-y-1">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+    Suma't al projecte
+</button>
+
+<div id="index-contact-modal" class="fixed inset-0 bg-mes-dark/90 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+    <div class="bg-white w-full max-w-lg relative shadow-2xl transform scale-95 transition-transform duration-300" id="index-modal-content">
+        <button id="close-index-contact" class="absolute top-4 right-4 text-stone-400 hover:text-mes-dark p-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="p-8 md:p-10 text-left">
+            <h3 class="text-3xl font-black uppercase mb-2 text-mes-dark leading-none">Fes pinya amb noltros</h3>
+            <p class="text-stone-500 mb-6 text-sm italic">Suma't al projecte o envia'ns la teva consulta.</p>
+            <form id="index-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="space-y-4">
+                <input class="form-input text-left" type="text" name="nom" placeholder="Nom complet" required />
+                <input class="form-input text-left" type="email" name="email" placeholder="Correu electrònic" required />
+                <textarea class="form-input text-left" name="missatge" rows="4" placeholder="Com vols col·laborar?" required></textarea>
+                <button id="index-form-btn" type="submit" class="btn-primary w-full justify-center text-left">Enviar</button>
+                <div id="index-form-status" class="hidden mt-4 p-4 bg-green-50 text-green-700 border border-green-200 font-bold text-center text-xs uppercase tracking-widest">✅ Gràcies! Rebut.</div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 1. Slider
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-dot');
+    function showSlide(index) {
+        slides.forEach(s => s.classList.remove('active'));
+        dots.forEach(d => d.classList.remove('active'));
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentSlide = index;
+    }
+    setInterval(() => { showSlide((currentSlide + 1) % slides.length); }, 8000);
+    dots.forEach((dot, i) => { dot.addEventListener('click', () => showSlide(i)); });
+
+    // 2. Modal Logic
+    const btnOpen = document.getElementById('open-index-contact');
+    const btnClose = document.getElementById('close-index-contact');
+    const modal = document.getElementById('index-contact-modal');
+    const modalContent = document.getElementById('index-modal-content');
+
+    btnOpen.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        setTimeout(() => { modal.classList.remove('opacity-0'); modalContent.classList.remove('scale-95'); }, 10);
+    });
+
+    const closeM = () => {
+        modal.classList.add('opacity-0'); modalContent.classList.add('scale-95');
+        setTimeout(() => { modal.classList.add('hidden'); }, 300);
+    };
+    btnClose.addEventListener('click', closeM);
+    modal.addEventListener('click', (e) => { if(e.target === modal) closeM(); });
+
+    // 3. AJAX Formspree
+    const form = document.getElementById("index-form");
+    const status = document.getElementById("index-form-status");
+    const fbtn = document.getElementById("index-form-btn");
+
+    form.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        fbtn.innerHTML = "Enviant...";
+        const data = new FormData(e.target);
+        fetch(e.target.action, { method: form.method, body: data, headers: { 'Accept': 'application/json' } })
+        .then(response => {
+            if (response.ok) {
+                status.classList.remove("hidden");
+                form.reset();
+                fbtn.innerHTML = "Enviar";
+                setTimeout(() => { status.classList.add("hidden"); closeM(); }, 3000);
+            }
+        });
+    });
+</script>
