@@ -3,7 +3,7 @@ layout: post
 title: "Llucmajor té pressupost però no té inversió"
 category: Article
 tags: [Pressupostos, Opinió]
-image: "/imatges/inversio.jpg"
+image: "/imatges/inversio.png"
 summary: "Els comptes que PP, VOX i ASI van aprovar demostren que la seva única prioritat és sobreviure uns mesos més a la cadira."
 ---
 
