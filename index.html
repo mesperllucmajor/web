@@ -108,6 +108,33 @@ title: Inici
     </div>
 </section>
 
+<section id="actualitat-home" class="py-32 bg-white px-8 text-left">
+    <div class="max-w-7xl mx-auto text-left">
+        <div class="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-6 text-left">
+            <div class="text-left">
+                <div class="section-title-box text-left">Actualitat</div>
+                <h2 class="text-4xl md:text-6xl font-black uppercase text-left">Veu ciutadana</h2>
+            </div>
+            <a href="{{ site.baseurl }}/actualitat/" class="text-xs font-black uppercase border-b-2 border-mes-lime">Veure tot</a>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+            {% for post in site.posts limit:3 %}
+            <a href="{{ site.baseurl }}{{ post.url }}" class="cursor-pointer group text-left block">
+                <div class="h-56 overflow-hidden mb-6 border-b-4 border-mes-dark group-hover:border-mes-lime relative bg-stone-100 text-left">
+                    {% if post.image %}
+                    <img src="{{ site.baseurl }}{{ post.image }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-all text-left" />
+                    {% endif %}
+                </div>
+                <span class="text-[10px] text-stone-300 font-bold mb-2 uppercase text-left">{{ post.date | date: "%d/%m/%Y" }}</span>
+                <h3 class="font-black uppercase text-xl leading-tight mb-4 group-hover:text-mes-lime transition-colors text-left text-mes-dark">{{ post.title }}</h3>
+                <span class="text-[10px] font-black uppercase border-b-2 border-mes-lime text-left text-mes-dark">Llegir més</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
 <section id="visio" class="py-32 bg-white px-8 text-left">
     <div class="max-w-7xl mx-auto text-left">
         <div class="flex justify-between items-end mb-16 text-left">
