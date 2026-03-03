@@ -1,0 +1,25 @@
+---
+layout: default
+---
+<article class="max-w-4xl mx-auto px-8 pt-20 pb-32 animate-fade">
+    <div class="mb-8">
+        <span class="section-title-box">{{ page.category }}</span>
+        <span class="text-sm font-black text-stone-300 ml-4">{{ page.date | date: "%d/%m/%Y" }}</span>
+    </div>
+    
+    <h1 class="text-4xl md:text-5xl font-black uppercase leading-tight mb-8">{{ page.title }}</h1>
+    
+    {% if page.image %}
+    <img src="{{ site.baseurl }}{{ page.image }}" alt="{{ page.title }}" class="w-full h-96 object-cover mb-12 shadow-md">
+    {% endif %}
+    
+    <div class="text-lg text-stone-600 leading-relaxed whitespace-pre-wrap">
+        {{ content }}
+    </div>
+    
+    <div class="mt-12 pt-8 border-t border-stone-100">
+        <a href="https://wa.me/?text=He llegit això a MÉS per Llucmajor: {{ page.title | cgi_escape }} - {{ site.url }}{{ site.baseurl }}{{ page.url }}" target="_blank" class="p-3 bg-green-50 text-green-600 border border-green-200 inline-block font-bold text-sm hover:bg-green-100 transition-colors">
+            Compartir per WhatsApp
+        </a>
+    </div>
+</article>
