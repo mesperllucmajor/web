@@ -1,7 +1,19 @@
 ---
 layout: default
 ---
-<article class="max-w-4xl mx-auto px-8 pt-20 pb-32 animate-fade">
+
+<a href="{{ site.baseurl }}/actualitat/" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-dark text-white px-6 py-4 font-black uppercase text-xs tracking-widest border-2 border-transparent hover:border-mes-lime hover:text-mes-lime shadow-2xl z-50 flex items-center gap-2 transition-all">
+    ← Tornar
+</a>
+
+<article class="max-w-4xl mx-auto px-8 pt-12 pb-32 animate-fade relative">
+    
+    <div class="mb-10">
+        <a href="{{ site.baseurl }}/actualitat/" class="text-xs font-bold text-stone-400 hover:text-mes-lime transition-colors uppercase tracking-widest border-b border-stone-300 pb-1">
+            ← Totes les notícies
+        </a>
+    </div>
+
     <div class="mb-8">
         <span class="section-title-box">{{ page.category }}</span>
         <span class="text-sm font-black text-stone-300 ml-4">{{ page.date | date: "%d/%m/%Y" }}</span>
@@ -17,9 +29,12 @@ layout: default
         {{ content }}
     </div>
     
-    <div class="mt-12 pt-8 border-t border-stone-100">
-        <a href="https://wa.me/?text=He llegit això a MÉS per Llucmajor: {{ page.title | cgi_escape }} - {{ site.url }}{{ site.baseurl }}{{ page.url }}" target="_blank" class="p-3 bg-green-50 text-green-600 border border-green-200 inline-block font-bold text-sm hover:bg-green-100 transition-colors">
+    <div class="mt-16 pt-8 border-t border-stone-100 flex flex-col sm:flex-row gap-4 justify-between items-center text-left">
+        <a href="https://wa.me/?text=He llegit això a MÉS per Llucmajor: {{ page.title | cgi_escape }} - {{ site.url }}{{ site.baseurl }}{{ page.url }}" target="_blank" class="p-4 bg-green-50 text-green-700 border border-green-200 inline-block font-black uppercase text-xs tracking-widest hover:bg-green-100 transition-colors w-full sm:w-auto text-center">
             Compartir per WhatsApp
+        </a>
+        <a href="{{ site.baseurl }}/actualitat/" class="btn-primary w-full sm:w-auto justify-center">
+            Més Actualitat
         </a>
     </div>
 </article>
