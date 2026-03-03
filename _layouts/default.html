@@ -63,17 +63,36 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <nav class="sticky top-0 w-full z-[100] bg-white border-b-2 border-stone-200 px-4 py-4 flex justify-between items-center shadow-sm">
-        <a href="{{ site.baseurl }}/" class="flex items-center cursor-pointer hover:opacity-80 transition-opacity">
-            <img src="{{ site.baseurl }}/imatges/Logo.png" alt="MÉS per Llucmajor" class="h-14 w-auto" />
-        </a>
-        <div class="hidden md:flex gap-8 font-bold text-[11px] uppercase tracking-widest text-left">
-            <a href="{{ site.baseurl }}/" class="{% if page.url == '/' %}text-mes-lime{% else %}hover:text-mes-lime transition-colors{% endif %}">Inici</a>
-            <a href="{{ site.baseurl }}/actualitat/" class="{% if page.url contains '/actualitat' %}text-mes-lime{% else %}hover:text-mes-lime transition-colors{% endif %}">Actualitat</a>
-            <a href="{{ site.baseurl }}/propostes/" class="{% if page.url contains '/propostes' %}text-mes-lime{% else %}hover:text-mes-lime transition-colors{% endif %}">Propostes</a>
-            <a href="{{ site.baseurl }}/programa/" class="{% if page.url contains '/programa' %}text-mes-lime{% else %}hover:text-mes-lime transition-colors{% endif %}">Programa</a>
-            <a href="{{ site.baseurl }}/equip/" class="{% if page.url contains '/equip' %}text-mes-lime{% else %}hover:text-mes-lime transition-colors{% endif %}">Equip</a>
-            <a href="{{ site.baseurl }}/contacte/" class="{% if page.url contains '/contacte' %}text-mes-lime{% else %}hover:text-mes-lime transition-colors{% endif %}">Contacte</a>
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm z-50 border-b-4 border-mes-lime transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center text-left">
+            
+            <a href="{{ site.baseurl }}/" class="flex items-center cursor-pointer hover:opacity-80 transition-opacity">
+                <img src="{{ site.baseurl }}/imatges/Logo.png" alt="MÉS per Llucmajor" class="h-14 w-auto" />
+            </a>
+            
+            <div class="hidden md:flex gap-8 items-center font-black uppercase text-sm tracking-widest text-left">
+                <a href="{{ site.baseurl }}/actualitat/" class="hover:text-mes-lime transition-colors">Actualitat</a>
+                <a href="{{ site.baseurl }}/propostes/" class="hover:text-mes-lime transition-colors">Propostes</a>
+                <a href="{{ site.baseurl }}/programa/" class="hover:text-mes-lime transition-colors">Programa</a>
+                <a href="{{ site.baseurl }}/equip/" class="hover:text-mes-lime transition-colors">Equip</a>
+                <a href="{{ site.baseurl }}/contacte/" class="btn-primary !px-6 !py-2 text-[10px]">Contacte</a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-mes-dark hover:text-mes-lime focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-stone-100 absolute w-full left-0 shadow-2xl text-left">
+            <div class="flex flex-col px-8 py-6 gap-6 font-black uppercase text-lg tracking-widest text-left">
+                <a href="{{ site.baseurl }}/actualitat/" class="hover:text-mes-lime transition-colors block">Actualitat</a>
+                <a href="{{ site.baseurl }}/propostes/" class="hover:text-mes-lime transition-colors block">Propostes</a>
+                <a href="{{ site.baseurl }}/programa/" class="hover:text-mes-lime transition-colors block">Programa</a>
+                <a href="{{ site.baseurl }}/equip/" class="hover:text-mes-lime transition-colors block">Equip</a>
+                <a href="{{ site.baseurl }}/contacte/" class="text-mes-lime border-b-2 border-mes-lime self-start pb-1 block">Contacte</a>
+            </div>
         </div>
     </nav>
 
