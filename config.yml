@@ -1,5 +1,23 @@
 title: "MÉS per Llucmajor"
-description: "Proximitat i Futur"
+description: "Proximitat i Futur. Treballem cada dia per un municipi més just des de la proximitat: Llucmajor, s'Arenal i Urbanitzacions."
 url: "https://mesperllucmajor.github.io"
-baseurl: "/web" # Això és vital perquè els estils i enllaços funcionin
-theme: minima # Un tema base per defecte necessari per arrencar Jekyll
+baseurl: "/web"
+lang: "ca" # Informem a Google que la web és en català
+author: "MÉS per Llucmajor"
+
+# Imatge per defecte quan compartiu la web a WhatsApp o xarxes
+image: "/imatges/Llucmajor2.png" 
+
+# Xarxes socials del partit (ajuda a Google a connectar-ho tot)
+social:
+  name: "MÉS per Llucmajor"
+  links:
+    - https://www.facebook.com/mesperllucmajor
+    - https://www.instagram.com/mesperllucmajor
+    - https://twitter.com/mesperllucmajor # Si en teniu, si no, esborra aquesta línia
+
+# Activem la màgia del SEO
+plugins:
+  - jekyll-seo-tag
+
+theme: minima
