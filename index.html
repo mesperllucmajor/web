@@ -4,31 +4,29 @@ title: Inici
 ---
 
 <header class="relative h-[85vh] w-full bg-mes-dark overflow-hidden flex items-center pt-16">
-    
     <div class="hero-slide active">
         <img src="{{ site.baseurl }}/imatges/imatge1.jpeg" class="w-full h-full object-cover hero-zoom" alt="Política per a la gent" />
         <div class="absolute inset-0 bg-black/45"></div>
         <div class="absolute inset-0 flex items-center px-8 md:px-20 text-left pb-32">
-            <div class="max-w-4xl">
+            <div class="max-w-4xl text-left">
                 <h1 class="text-5xl md:text-[90px] font-black uppercase text-white leading-none mb-8">POLÍTICA PER A LA GENT</h1>
                 <p class="text-xl md:text-2xl text-white/90 border-l-4 border-mes-lime pl-6 italic mb-0">Treballem cada dia per un municipi més just des de la proximitat.</p>
             </div>
         </div>
     </div>
-
     <div class="hero-slide">
-        <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="w-full h-full object-cover hero-zoom" alt="Construïm junts" />
+        <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="w-full h-full object-cover hero-zoom" alt="Construïm el Llucmajor que volem" />
         <div class="absolute inset-0 bg-black/45"></div>
         <div class="absolute inset-0 flex items-center px-8 md:px-20 text-left pb-32">
-            <div class="max-w-4xl">
-                <h1 class="text-5xl md:text-[90px] font-black uppercase text-white leading-none mb-8">CONSTRUÏM EL LLUCMAJOR QUE VOLEM</h1>
+            <div class="max-w-4xl text-left">
+                <h1 class="text-5xl md:text-[90px] font-black uppercase text-white leading-none mb-8">CONSTRUÏM EL MUNICIPI QUE VOLEM</h1>
                 <p class="text-xl md:text-2xl text-white/90 border-l-4 border-mes-lime pl-6 italic mb-0">Un projecte compartit on la veu dels ciutadans és el motor.</p>
             </div>
         </div>
     </div>
 
     <div class="absolute bottom-24 md:bottom-32 left-0 w-full z-20 px-8 md:px-20">
-        <div class="max-w-4xl flex gap-4">
+        <div class="max-w-4xl flex gap-4 text-left">
             <a href="#agenda-home" class="btn-primary">Veure Agenda</a>
             <a href="#observatori-home" class="bg-white text-black px-8 py-4 font-black uppercase text-sm hover:bg-mes-lime transition-all">Control Municipal</a>
         </div>
@@ -41,63 +39,83 @@ title: Inici
 </header>
 
 <main>
-    <section id="actualitat-home" class="py-24 bg-white px-8 border-b border-stone-100 text-left">
+    <section id="actualitat-home" class="py-24 bg-white px-8 text-left">
         <div class="max-w-7xl mx-auto">
             <div class="flex justify-between items-end mb-12">
                 <div class="text-left">
                     <h2 class="section-title-box inline-block mb-4">DIA A DIA</h2>
                     <h3 class="text-4xl font-black uppercase tracking-tighter">Actualitat i Opinió</h3>
                 </div>
-                <a href="{{ site.baseurl }}/actualitat/" class="hidden md:block text-xs font-black uppercase border-b-2 border-mes-lime pb-1 hover:text-mes-lime transition-all">Veure tot l'històric</a>
+                <a href="{{ site.baseurl }}/actualitat/" class="hidden md:block text-xs font-black uppercase border-b-2 border-mes-lime pb-1 hover:text-mes-lime transition-all">Anar a actualitat</a>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
                 {% for post in site.posts limit:3 %}
                 <a href="{{ site.baseurl }}{{ post.url }}" class="group block text-left">
                     <div class="h-64 overflow-hidden mb-6 bg-stone-100 border-b-4 border-mes-dark group-hover:border-mes-lime transition-all">
-                        {% if post.image %}
-                        <img src="{{ site.baseurl }}{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ post.title }}">
-                        {% endif %}
+                        {% if post.image %}<img src="{{ site.baseurl }}{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">{% endif %}
                     </div>
-                    <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest text-left">{{ post.date | date: "%d/%m/%Y" }}</span>
-                    <h4 class="text-xl font-black uppercase mt-2 leading-tight group-hover:text-mes-lime transition-colors text-left">{{ post.title }}</h4>
+                    <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">{{ post.date | date: "%d/%m/%Y" }}</span>
+                    <h4 class="text-xl font-black uppercase mt-2 leading-tight group-hover:text-mes-lime transition-colors">{{ post.title }}</h4>
                 </a>
                 {% endfor %}
             </div>
         </div>
     </section>
 
-    <section id="observatori-home" class="py-24 bg-stone-50 px-8 text-left">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-16 text-left">
-                <h2 class="section-title-box mb-4">FISCALITZACIÓ</h2>
-                <h3 class="text-4xl font-black uppercase tracking-tighter">Observatori Municipal</h3>
-                <p class="text-stone-500 mt-4 max-w-2xl italic text-left">L'evidència de la nostra feina: seguiment real de les mocions i la gestió pública.</p>
+    <section id="agenda-home" class="py-24 bg-stone-50 px-8 text-left border-y border-stone-100">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16">
+            <div class="text-left">
+                <h2 class="section-title-box mb-4">PROXIMITAT</h2>
+                <h3 class="text-4xl font-black uppercase tracking-tighter mb-6">Properes Cites</h3>
+                <p class="text-stone-500 italic text-left">Consulta la nostra activitat al carrer. Volem escoltar-te.</p>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-                {% for item in site.data.observatori limit:4 %}
-                <div class="bg-white p-8 border-l-4 border-mes-dark shadow-sm text-left">
-                    <span class="text-[10px] font-black uppercase tracking-widest {{ item.color }} px-2 py-1">{{ item.estat }}</span>
-                    <h4 class="text-lg font-black uppercase mt-4 mb-2 text-left">{{ item.tema }}</h4>
-                    <p class="text-sm text-stone-500 text-left">{{ item.nota }}</p>
+            <div class="lg:col-span-2 grid grid-cols-1 gap-4">
+                {% for acte in site.data.agenda limit:4 %}
+                <div class="bg-white p-6 border-l-4 border-mes-lime flex items-center justify-between shadow-sm group hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-6">
+                        <div class="text-center min-w-[80px]">
+                            <span class="block text-2xl font-black leading-none">{{ acte.dia | split: " " | first }}</span>
+                            <span class="block text-[10px] font-bold uppercase text-stone-400">{{ acte.dia | split: " " | last }}</span>
+                        </div>
+                        <div class="text-left">
+                            <h4 class="font-black uppercase text-mes-dark group-hover:text-mes-lime transition-colors">{{ acte.titol }}</h4>
+                            <p class="text-xs text-stone-500 uppercase tracking-widest">{{ acte.hora }} · {{ acte.lloc }}</p>
+                        </div>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </section>
 
-    <section id="model-home" class="py-24 bg-mes-dark text-white px-8 overflow-hidden text-left">
+    <section id="observatori-home" class="py-24 bg-white px-8 text-left">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16 text-left">
+                <h2 class="section-title-box mb-4">FISCALITZACIÓ</h2>
+                <h3 class="text-4xl font-black uppercase tracking-tighter">Observatori Municipal</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for item in site.data.observatori limit:4 %}
+                <div class="bg-stone-50 p-8 border-l-4 border-mes-dark hover:border-mes-lime transition-colors text-left relative overflow-hidden group">
+                    <span class="text-[10px] font-black uppercase tracking-widest {{ item.color }} px-2 py-1 mb-4 inline-block">{{ item.estat }}</span>
+                    <h4 class="text-lg font-black uppercase mt-2 mb-4 group-hover:text-mes-lime transition-colors">{{ item.tema }}</h4>
+                    <p class="text-sm text-stone-500 italic leading-relaxed">{{ item.nota }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section id="model-home" class="py-24 bg-mes-dark text-white px-8 text-left">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div class="text-left">
                 <h2 class="section-title-box !bg-mes-lime !text-black mb-6">EL NOSTRE MODEL</h2>
-                <h3 class="text-5xl font-black uppercase leading-none mb-8">La proposta visual del canvi</h3>
-                <p class="text-xl text-stone-400 mb-8 italic border-l-2 border-mes-lime pl-6 text-left">Transformem Llucmajor amb propostes concretes per a cada nucli.</p>
+                <h3 class="text-5xl font-black uppercase leading-none mb-8">La proposta de canvi real</h3>
+                <p class="text-xl text-stone-400 mb-8 italic border-l-2 border-mes-lime pl-6">Transformem els espais per a les persones. De la crítica a la proposta visual.</p>
                 <a href="{{ site.baseurl }}/propostes/" class="btn-primary">Explora els projectes</a>
             </div>
-            <div class="relative group cursor-pointer h-80 lg:h-full">
-                <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Model MÉS">
-                <div class="absolute inset-0 bg-mes-lime/20 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="bg-stone-800 aspect-video overflow-hidden">
+                <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
             </div>
         </div>
     </section>
@@ -106,63 +124,24 @@ title: Inici
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 items-center">
             <div class="md:w-1/3 w-full">
                 <div class="bg-mes-lime p-12 aspect-[3/4] flex flex-col justify-end shadow-2xl transform -rotate-2">
-                    <h4 class="text-4xl font-black uppercase leading-none text-left">Programa<br>Polític<br>2023-27</h4>
+                    <h4 class="text-4xl font-black uppercase leading-none">Programa<br>Polític<br>2023-27</h4>
                 </div>
             </div>
             <div class="md:w-2/3 text-left">
                 <h2 class="section-title-box mb-6">EL CONTRACTE</h2>
-                <h3 class="text-4xl font-black uppercase mb-6">Un compromís signat amb la ciutadania</h3>
-                <p class="text-lg text-stone-600 mb-8 text-left">Totes les accions detallades per eixos temàtics. La nostra fulla de ruta per a la legislatura.</p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="{{ site.baseurl }}/programa/" class="btn-primary">Llegir el Programa</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="equip-home" class="py-24 bg-stone-50 px-8 text-left border-y border-stone-100">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="section-title-box mb-4">PROXIMITAT</h2>
-            <h3 class="text-4xl font-black uppercase tracking-tighter mb-12 text-left">L'Equip al teu servei</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-left">
-                {% for membre in site.data.executiva limit:4 %}
-                <div class="text-left group">
-                    <div class="aspect-square overflow-hidden mb-4 grayscale group-hover:grayscale-0 transition-all border-b-4 border-transparent group-hover:border-mes-lime bg-stone-200">
-                        <img src="{{ site.baseurl }}{{ membre.foto }}" class="w-full h-full object-cover" alt="{{ membre.nom }}">
-                    </div>
-                    <h5 class="font-black uppercase text-sm text-left">{{ membre.nom }}</h5>
-                    <p class="text-[10px] text-stone-500 uppercase tracking-widest text-left">{{ membre.carrec }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
-
-    <section id="sumat-home" class="py-32 bg-mes-lime px-8 text-center">
-        <div class="max-w-4xl mx-auto">
-            <h3 class="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-8 text-mes-dark">Fes pinya amb noltros</h3>
-            <p class="text-xl font-bold uppercase tracking-widest mb-12 text-mes-dark/70 italic">Ajuda'ns a fer realitat el municipi que mereixem.</p>
-            
-            <div class="bg-white p-8 md:p-12 shadow-2xl text-left">
-                <form id="sumat-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <input class="form-input" type="text" name="nom" placeholder="Nom complet" required />
-                    <input class="form-input" type="email" name="email" placeholder="Correu" required />
-                    <button id="sumat-btn" type="submit" class="bg-mes-dark text-white font-black uppercase text-xs tracking-widest hover:bg-black transition-all py-4">Vull col·laborar</button>
-                    <div id="sumat-status" class="hidden col-span-full mt-4 p-4 bg-green-50 text-green-700 border border-green-200 font-bold text-center text-xs uppercase tracking-widest">
-                        ✅ Gràcies! Ens posarem en contacte amb tu.
-                    </div>
-                </form>
+                <h3 class="text-4xl font-black uppercase mb-6">Compromís amb la ciutadania</h3>
+                <p class="text-lg text-stone-600 mb-8">Un document detallat amb solucions reals per a cada racó del municipi.</p>
+                <a href="{{ site.baseurl }}/programa/" class="btn-primary">Llegir el Programa</a>
             </div>
         </div>
     </section>
 </main>
 
 <script>
-    // 1. Script del Slider
+    // Slider Logic
     let currentSlide = 0;
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-dot');
-
     function showSlide(index) {
         slides.forEach(s => s.classList.remove('active'));
         dots.forEach(d => d.classList.remove('active'));
@@ -170,39 +149,6 @@ title: Inici
         dots[index].classList.add('active');
         currentSlide = index;
     }
-
-    setInterval(() => {
-        let next = (currentSlide + 1) % slides.length;
-        showSlide(next);
-    }, 8000);
-
-    dots.forEach((dot, i) => {
-        dot.addEventListener('click', () => showSlide(i));
-    });
-
-    // 2. Script del Formulari Suma't (Transparent)
-    const sumatForm = document.getElementById("sumat-form");
-    const sumatStatus = document.getElementById("sumat-status");
-    const sumatBtn = document.getElementById("sumat-btn");
-
-    if(sumatForm) {
-        sumatForm.addEventListener("submit", async function(event) {
-            event.preventDefault();
-            sumatBtn.innerHTML = "Enviant...";
-            sumatBtn.disabled = true;
-            const data = new FormData(event.target);
-            fetch(event.target.action, {
-                method: sumatForm.method,
-                body: data,
-                headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    sumatStatus.classList.remove("hidden");
-                    sumatForm.reset();
-                    sumatBtn.innerHTML = "Vull col·laborar";
-                    sumatBtn.disabled = false;
-                }
-            });
-        });
-    }
+    setInterval(() => { showSlide((currentSlide + 1) % slides.length); }, 8000);
+    dots.forEach((dot, i) => { dot.addEventListener('click', () => showSlide(i)); });
 </script>
