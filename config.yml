@@ -1,0 +1,5 @@
+title: "MÉS per Llucmajor"
+description: "Proximitat i Futur"
+url: "https://mesperllucmajor.github.io"
+baseurl: "/web" # Això és vital perquè els estils i enllaços funcionin
+theme: minima # Un tema base per defecte necessari per arrencar Jekyll

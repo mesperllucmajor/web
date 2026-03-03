@@ -1,509 +1,163 @@
-<!DOCTYPE html>
-<html lang="ca">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Web oficial de MÉS per Llucmajor. Treballem cada dia per un municipi més just des de la proximitat: Llucmajor, s'Arenal i Urbanitzacions.">
-    <title>MÉS per Llucmajor - Proximitat i Futur</title>
-    
-    <link rel="preconnect" href="https://unpkg.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" defer></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" defer></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js" defer></script>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
+---
+layout: default
+title: Inici
+---
 
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Barlow', 'sans-serif'] },
-                    colors: {
-                        mes: { lime: '#c6d100', dark: '#1a1a1a', soft: '#f4f4f4', stone: '#f9f8f4', text: '#1a1a1a' }
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        body { font-family: 'Barlow', sans-serif; overflow-x: hidden; color: #1a1a1a; scroll-behavior: smooth; background-color: #ffffff; text-align: left; }
-        * { border-radius: 0 !important; }
-        .bg-mes-lime { background-color: #c6d100; }
-        .btn-primary { background-color: #c6d100; color: #1a1a1a; font-weight: 800; text-transform: uppercase; padding: 1rem 2.5rem; transition: all 0.3s ease; display: inline-flex; align-items: center; letter-spacing: 0.1em; font-size: 0.8rem; }
-        .btn-primary:hover { background-color: #1a1a1a; color: #c6d100; }
-        .section-title-box { background-color: #1a1a1a; color: white; padding: 0.2rem 0.6rem; display: inline-block; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; font-size: 0.6rem; }
-        
-        .hero-slide { position: absolute; inset: 0; transition: opacity 1.5s ease-in-out; opacity: 0; z-index: 0; }
-        .hero-slide.active { opacity: 1; z-index: 10; }
-        .hero-zoom { animation: zoomEffect 25s infinite alternate linear; }
-        @keyframes zoomEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
-
-        .archive-item { border-left: 4px solid transparent; transition: all 0.2s; border-bottom: 1px solid #f0f0f0; cursor: pointer; text-align: left; }
-        .archive-item:hover { border-left-color: #c6d100; background-color: #f9f8f4; }
-        
-        .zone-col { 
-            position: relative; height: 500px; overflow: hidden; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
-            cursor: pointer; border-right: 1px solid rgba(255,255,255,0.1); flex-grow: 1;
-        }
-        @media (min-width: 768px) { .zone-col:hover { flex-grow: 3; } }
-
-        .form-input { border: 2px solid #e5e2d9; padding: 1rem; width: 100%; transition: all 0.2s; font-size: 1rem; background: #fff; display: block; }
-        .form-input:focus { border-color: #c6d100; outline: none; background-color: #f9f8f4; }
-        
-        .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; }
-        .hero-dot.active { background: #c6d100; width: 24px; border-radius: 4px; }
-        
-        .event-card { border-left: 4px solid #c6d100; background: white; transition: all 0.3s ease; }
-        .event-card:hover { transform: translateX(10px); background: #f9f8f4; }
-        
-        .tag-pill { cursor: pointer; padding: 4px 12px; font-size: 10px; font-weight: 800; text-transform: uppercase; border: 1px solid #e5e2d9; transition: all 0.2s; }
-        .tag-pill.active { background: #c6d100; border-color: #c6d100; color: black; }
-        
-        .accordion-item { border-bottom: 1px solid #e5e2d9; }
-        .accordion-header { width: 100%; padding: 2rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: white; transition: background 0.2s; }
-        .accordion-header:hover { background: #f9f8f4; }
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0, 1, 0, 1); background: #fcfbf8; }
-        .accordion-content.open { max-height: 1000px; transition: max-height 0.6s ease-in; }
-    </style>
-</head>
-<body>
-    <div id="root"></div>
-
-    <script type="text/babel">
-        const { useState, useEffect, useMemo } = React;
-
-        // --- DADES GLOBALS ---
-        const zones = [
-            { id: 'poble', name: 'Llucmajor Poble', img: "imatges/Llucmajor2.png" },
-            { id: 'arenal', name: "S'Arenal", img: "imatges/sarenal.png" },
-            { id: 'urb', name: 'Urbanitzacions', img: "imatges/badies2.jpeg" },
-            { id: 'mariners', name: "S'Estanyol i Son Bieló", img: "imatges/estanyol.png" },
-            { id: 'foravila', name: 'Foravila', img: "imatges/Foravila.png" }
-        ];
-
-        const bannerSlides = [
-            { title: "POLÍTICA PER A LA GENT", sub: "Treballem cada dia per un municipi més just des de la proximitat.", img: "imatges/imatge1.jpeg" },
-            { title: "CONSTRUÏM JUNTS EL LLUCMAJOR QUE VOLEM", sub: "Un projecte compartit on la veu dels ciutadans és el motor.", img: "imatges/Llucmajor2.png" },
-            { title: "FEM UN S'ARENAL MILLOR", sub: "Volem un nucli costaner cuidat, segur i amb serveis dignes.", img: "imatges/sarenal.png" },
-            { title: "LES URBANITZACIONS QUE MEREIXEM", sub: "Millores estructurals per a tots els nuclis del terme.", img: "imatges/badies2.jpeg" },
-            { title: "S'ESTANYOL i SON BIELÓ TAMBÉ SÓN LLUCMAJOR", sub: "Protegim l'essència dels nostres pobles mariners.", img: "imatges/estanyol.png" },
-            { title: "SERVEIS PER FORA VILA", sub: "Garantim igualtat de drets visquis on visquis.", img: "imatges/Foravila.png" }
-        ];
-
-        const initialArticles = [
-            { id: 'n-5', category: 'noticia', tags: ['Medi Ambient', 'Urbanisme'], title: "Aconseguim el rebuig unànime al circuit de motos nàutiques de s’Arenal", date: "DESEMBRE 2025", image: "imatges/MotosAigua.png", summary: "Ho hem aconseguit: Llucmajor diu NO al circuit", content: "Gràcies a la iniciativa i la pressió política de MÉS per Llucmajor, el Ple de l’Ajuntament ha rebutjat per unanimitat la instal·lació d’un circuit tancat de motos d'aigua a la costa de s’Arenal." },
-            { id: 'n-4', category: 'noticia', tags: ['Ètica', 'Transparència'], title: "L’equip de govern de Llucmajor protegeix l’insult: PP, Vox i ASI rebutgen la reprovació", date: "DESEMBRE 2025", image: "imatges/Govern.png", summary: "L'equip de govern ha tocat fons.", content: "L'ètica i el respecte a la ciutadania han tornat a brillar per la seva absència al darrer Ple ordinari de Llucmajor, on la coalició de govern ha blindat regidors malgrat els seus comentaris contra els veïnats." },
-            { id: 'n-3', category: 'noticia', tags: ['Habitatge', 'Social'], title: "Forcem l'Ajuntament a exigir la construcció immediata dels habitatges de l'IBAVI", date: "NOVEMBRE 2025", image: "imatges/llucmajor1.png", summary: "MÉS lidera la política d'habitatge", content: "Davant la inacció històrica del Partit Popular i els seus socis, MÉS per Llucmajor ha tornat a liderar la iniciativa social al plenari forçant a reclamar la construcció d'habitatges de protecció pública al carrer Grup Escolar." },
-            { id: 'op-11', category: 'opinio', tags: ['Política'], title: "La legislatura del menyspreu", date: "DESEMBRE 2025", image: "imatges/atpc.png", summary: "L’equip de govern de Llucmajor ha tocat fons.", content: "Llucmajor, desembre de 2025. La política és gestió, és debat, però, sobretot, és vocació de servei públic. Malauradament, el que vivim és el contrari." }
-        ];
-
-        const initialEvents = [
-            { d: "15 FEB", t: "19:00h", h: "Assemblea Oberta: Urbanitzacions", l: "Centre Cívic Badia Blava" },
-            { d: "22 FEB", t: "10:30h", h: "Paradeta Informativa", l: "Plaça d'Espanya, Llucmajor" },
-            { d: "28 FEB", t: "18:00h", h: "Reunió Veïnal: s'Arenal", l: "Oficina Municipal de s'Arenal" }
-        ];
-
-        const initialProposals = [
-            { id: 'p-1', zone: 'poble', title: "Nou accés al Poliesportiu", summary: "Urbanització i millora d'accessos.", content: "Projecte integral per millorar els accessos i garantir la seguretat viària al poliesportiu municipal.", img: "https://images.unsplash.com/photo-1574629810360-7efbbe195018" },
-            { id: 'p-2', zone: 'arenal', title: "Reforma Passeig Marítim", summary: "Un espai públic de qualitat.", content: "Recuperar el front marítim per al gaudi dels veïnats de s'Arenal.", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e" }
-        ];
-
-        const initialObservatory = [
-            { id: 1, topic: "Auditoria externa d'Urbanisme", status: "🔴 ATURAT", note: "Més d'un year esperant la licitació pública." },
-            { id: 2, topic: "Millora carrer Pere Maimó", status: "🟡 PENDENT", note: "Projecte al calaix sense pressupost real assignat." },
-            { id: 3, topic: "Residència de la gent gran", status: "🔴 ATURAT", note: "Sense conveni signat amb el Govern de les Illes Balears." }
-        ];
-
-        const teamExecutiva = [
-            { name: "Maria Barceló", role: "Coordinadora Local", image: "imatges/02.Maria.jpg" },
-            { name: "Oriol Gómez", role: "Organització", image: "imatges/Oriol2.jpg" },
-            { name: "Miquel Serra", role: "Tresorer", image: "imatges/01.Miquel.jpg" },
-            { name: "Marina Ferre", role: "Comunicació", image: "imatges/06.Marina.jpeg" },
-            { name: "Toni Tomàs", role: "Estratègia Digital", image: "imatges/Tuni.jpg" },
-            { name: "Tià Maimó", role: "Creativitat Visual", image: "imatges/05.Sebastia.jpg" },
-            { name: "Joana Catany", role: "Vocal", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2" },
-            { name: "Maria del Mar Vanrell", role: "Vocal", image: "imatges/04.MariadelMar.jpg" },
-            { name: "Francina Crespí", role: "Vocal", image: "imatges/Francina.jpg" },
-            { name: "Jaume Tomàs", role: "Vocal", image: "imatges/JaumeTomas.jpg" }
-        ];
-
-        const programData = [
-            { title: "Sostenibilitat i Territori", summary: "Protegim el nostre entorn per garantir el futur.", points: ["Protecció del litoral i zones forestals.", "Impuls de les energies renovables municipals.", "Pla de xoc per a la gestió de l'aigua.", "Defensa de l'accés públic al medi natural."] },
-            { title: "Justícia Social i Benestar", summary: "Un municipi que cuida de tota la seva gent.", points: ["Habitatge públic per a joves i famílies.", "Reforç de l'atenció domiciliària per a gent gran.", "Millora de les infraestructures educatives.", "Igualtat real: polítiques feministes transversals."] },
-            { title: "Transparència i Bon Govern", summary: "L'Ajuntament ha de ser una casa de vidre.", points: ["Pressupostos participatius reals en cada nucli.", "Publicació íntegra de contractes i sous públics.", "Oficina d'atenció ciutadana a s'Arenal i Urbanitzacions.", "Administració 100% digital i eficient."] }
-        ];
-
-        // --- ICONES SVG ---
-        const IconInsta = () => (<svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>);
-        const IconFb = () => (<svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>);
-        const IconMail = () => (<svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>);
-
-        // --- COMPONENTS ---
-        const PageHeader = ({ title, sub, img }) => (
-            <header className="relative h-[350px] flex items-center overflow-hidden">
-                <img src={img} loading="eager" className="absolute inset-0 w-full h-full object-cover scale-105" alt="" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
-                <div className="relative z-10 w-full px-8 md:px-16 text-left">
-                    <div className="max-w-3xl text-left">
-                        <h1 className="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter mb-4 leading-none">{title}</h1>
-                        <p className="text-mes-lime text-lg font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-4 inline-block bg-black/40 pr-6 py-1">{sub}</p>
-                    </div>
+<header class="relative h-[85vh] w-full bg-mes-dark overflow-hidden flex items-center pt-16">
+    <div class="hero-slide active">
+        <img src="{{ site.baseurl }}/imatges/imatge1.jpeg" class="w-full h-full object-cover hero-zoom" alt="Política per a la gent" />
+        <div class="absolute inset-0 bg-black/45"></div>
+        <div class="absolute inset-0 flex items-center px-8 md:px-20 text-left">
+            <div class="max-w-4xl text-left">
+                <h1 class="text-5xl md:text-[90px] font-black uppercase text-white leading-none mb-8">POLÍTICA PER A LA GENT</h1>
+                <p class="text-xl md:text-2xl text-white/90 border-l-4 border-mes-lime pl-6 italic mb-10">Treballem cada dia per un municipi més just des de la proximitat.</p>
+                <div class="flex gap-4">
+                    <a href="#agenda" class="btn-primary">Veure Agenda</a>
+                    <a href="#observatori-home" class="bg-white text-black px-8 py-4 font-black uppercase text-sm hover:bg-mes-lime transition-all">Control Municipal</a>
                 </div>
-            </header>
-        );
+            </div>
+        </div>
+    </div>
 
-        function App() {
-            const [page, setPage] = useState('home'); 
-            const [activeSlide, setActiveSlide] = useState(0);
-            const [selectedItem, setSelectedItem] = useState(null);
-            const [filterZone, setFilterZone] = useState('all');
-            const [searchQuery, setSearchQuery] = useState('');
-            const [selectedTag, setSelectedTag] = useState('Tots');
-            const [openAccordion, setOpenAccordion] = useState(null);
-            const [submittedSumaT, setSubmittedSumaT] = useState(false);
-
-            useEffect(() => {
-                const handleHash = () => {
-                    const h = window.location.hash.replace('#/', '');
-                    const valid = ['home', 'arxiu', 'projectes', 'equip', 'contacte', 'programa'];
-                    setPage(valid.includes(h) ? h : 'home');
-                    window.scrollTo(0, 0);
-                };
-                window.addEventListener('hashchange', handleHash);
-                handleHash();
-                return () => window.removeEventListener('hashchange', handleHash);
-            }, []);
-
-            useEffect(() => {
-                const itv = setInterval(() => setActiveSlide(s => (s + 1) % bannerSlides.length), 8000);
-                return () => clearInterval(itv);
-            }, []);
-
-            const navigateTo = (p) => { window.location.hash = "#/" + p; };
-
-            const allTags = useMemo(() => {
-                const tags = new Set(['Tots']);
-                initialArticles.forEach(a => a.tags?.forEach(t => tags.add(t)));
-                return Array.from(tags);
-            }, []);
-
-            const filteredNews = useMemo(() => {
-                return initialArticles.filter(a => {
-                    const mS = a.title.toLowerCase().includes(searchQuery.toLowerCase()) || a.content.toLowerCase().includes(searchQuery.toLowerCase());
-                    const mT = selectedTag === 'Tots' || a.tags?.includes(selectedTag);
-                    return mS && mT;
-                });
-            }, [searchQuery, selectedTag]);
-
-            const filteredProposals = useMemo(() => {
-                return filterZone === 'all' ? initialProposals : initialProposals.filter(p => p.zone === filterZone);
-            }, [filterZone]);
-
-            const shareOnWhatsapp = (item) => {
-                const text = encodeURIComponent(`He llegit això a MÉS per Llucmajor: ${item.title} - https://mesperllucmajor.cat`);
-                window.open(`https://wa.me/?text=${text}`, '_blank');
-            };
-
-            return (
-                <div className="min-h-screen bg-white text-mes-dark font-sans text-left flex flex-col">
-                    <nav className="sticky top-0 w-full z-[100] bg-white border-b-2 border-stone-200 px-4 py-4 flex justify-between items-center shadow-sm">
-                        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigateTo('home')}>
-                            <div className="bg-mes-lime text-black font-black px-3 py-1 text-xl tracking-tighter">MÉS</div>
-                            <div className="font-bold text-xs tracking-[0.2em] hidden sm:block uppercase">Llucmajor</div>
-                        </div>
-                        <div className="hidden md:flex gap-8 font-bold text-[11px] uppercase tracking-widest text-left">
-                            <button onClick={() => navigateTo('home')} className={page === 'home' ? 'text-mes-lime' : ''}>Inici</button>
-                            <button onClick={() => navigateTo('arxiu')} className={page === 'arxiu' ? 'text-mes-lime' : ''}>Actualitat</button>
-                            <button onClick={() => navigateTo('projectes')} className={page === 'projectes' ? 'text-mes-lime' : ''}>Propostes</button>
-                            <button onClick={() => navigateTo('programa')} className={page === 'programa' ? 'text-mes-lime' : ''}>Programa</button>
-                            <button onClick={() => navigateTo('equip')} className={page === 'equip' ? 'text-mes-lime' : ''}>Equip</button>
-                            <button onClick={() => navigateTo('contacte')} className={page === 'contacte' ? 'text-mes-lime' : ''}>Contacte</button>
-                        </div>
-                    </nav>
-
-                    <div className="flex-grow">
-                        {page === 'home' && (
-                            <main className="animate-fade text-left text-left">
-                                <header className="relative h-[85vh] w-full bg-mes-dark overflow-hidden flex items-center pt-16">
-                                    {bannerSlides.map((slide, i) => (
-                                        <div key={i} className={"hero-slide " + (i === activeSlide ? 'active' : '')}>
-                                            <img src={slide.img} loading={i === 0 ? "eager" : "lazy"} decoding="async" alt={slide.title} className="w-full h-full object-cover hero-zoom" />
-                                            <div className="absolute inset-0 bg-black/45"></div>
-                                            <div className="absolute inset-0 flex items-center px-8 md:px-20 text-left">
-                                                <div className="max-w-4xl text-left">
-                                                    <h1 className="text-5xl md:text-[90px] font-black uppercase text-white leading-none mb-8">{slide.title}</h1>
-                                                    <p className="text-xl md:text-2xl text-white/90 border-l-4 border-mes-lime pl-6 italic mb-10">{slide.sub}</p>
-                                                    <div className="flex gap-4">
-                                                        <button onClick={() => document.getElementById('agenda').scrollIntoView({behavior:'smooth'})} className="btn-primary">Veure Agenda</button>
-                                                        <button onClick={() => document.getElementById('observatori-home').scrollIntoView({behavior:'smooth'})} className="bg-white text-black px-8 py-4 font-black uppercase text-sm hover:bg-mes-lime transition-all">Control Municipal</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                    <div className="absolute bottom-10 left-0 w-full z-30 flex justify-center gap-3">
-                                        {bannerSlides.map((_, i) => <div key={i} onClick={() => setActiveSlide(i)} className={`hero-dot ${i === activeSlide ? 'active' : ''}`}></div>)}
-                                    </div>
-                                </header>
-
-                                <section id="agenda" className="py-24 bg-stone-50 px-8 text-left text-left">
-                                    <div className="max-w-7xl mx-auto">
-                                        <div className="mb-12"><div className="section-title-box">Properament</div><h2 className="text-5xl font-black uppercase tracking-tighter">L'Agenda</h2></div>
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                            {initialEvents.map((ev, i) => (
-                                                <div key={i} className="event-card p-8 shadow-sm text-left">
-                                                    <div className="text-mes-lime font-black text-2xl mb-2">{ev.d}</div>
-                                                    <div className="text-stone-400 font-bold text-xs uppercase mb-4">{ev.t}</div>
-                                                    <h3 className="text-xl font-black uppercase mb-2">{ev.h}</h3>
-                                                    <div className="text-stone-500 text-sm italic">📍 {ev.l}</div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <section id="actualitat-home" className="py-32 bg-white px-8 section-separator text-left text-left">
-                                    <div className="max-w-7xl mx-auto text-left text-left">
-                                        <div className="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-6 text-left">
-                                            <div className="text-left"><div className="section-title-box">Actualitat</div><h2 className="text-4xl md:text-6xl font-black uppercase text-left">Veu ciutadana</h2></div>
-                                            <button onClick={() => navigateTo('arxiu')} className="text-xs font-black uppercase border-b-2 border-mes-lime">Veure tot</button>
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
-                                            {initialArticles.slice(0, 3).map(a => (
-                                                <div key={a.id} className="cursor-pointer group text-left" onClick={() => setSelectedItem(a)}>
-                                                    <div className="h-56 overflow-hidden mb-6 border-b-4 border-mes-dark group-hover:border-mes-lime relative bg-stone-100 text-left">
-                                                        <img src={a.image} loading="lazy" decoding="async" alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-all text-left" />
-                                                    </div>
-                                                    <span className="text-[10px] text-stone-300 font-bold mb-2 uppercase text-left">{a.date}</span>
-                                                    <h3 className="font-black uppercase text-xl leading-tight mb-4 group-hover:text-mes-lime transition-colors text-left">{a.title}</h3>
-                                                    <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime text-left">Llegir més</button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <section id="visio" className="py-32 bg-stone-50 px-8 section-separator text-left text-left">
-                                    <div className="max-w-7xl mx-auto text-left text-left">
-                                        <div className="flex justify-between items-end mb-16 text-left text-left">
-                                            <div className="text-left text-left text-left text-left">
-                                                <div className="section-title-box text-left">Territori</div>
-                                                <h2 className="text-4xl md:text-6xl font-black uppercase text-left text-left">El nostre municipi</h2>
-                                            </div>
-                                            <button onClick={() => {setFilterZone('all'); navigateTo('projectes');}} className="btn-primary !py-3 !px-8 text-[10px] text-left">Projecte Global</button>
-                                        </div>
-                                        <div className="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[500px] text-left text-left">
-                                            {zones.map(z => (
-                                                <div key={z.id} className="zone-col group text-left text-left" onClick={() => {setFilterZone(z.id); navigateTo('projectes');}}>
-                                                    <img src={z.img} loading="lazy" decoding="async" alt={z.name} className="w-full h-full object-cover group-hover:scale-110 transition-all text-left text-left" />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-8 text-left text-left">
-                                                        <h3 className="text-3xl font-black uppercase text-white group-hover:text-mes-lime transition-colors text-left text-left">{z.name}</h3>
-                                                        <span className="text-[10px] text-mes-lime font-bold uppercase mt-2 opacity-0 group-hover:opacity-100 transition-opacity text-left">Veure propostes →</span>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </section>
-                                
-                                <section id="observatori-home" className="py-24 bg-white px-8 section-accent-top text-left text-left">
-                                    <div className="max-w-7xl mx-auto text-left text-left">
-                                        <div className="mb-12 text-left"><div className="section-title-box">Fiscalització</div><h2 className="text-5xl font-black uppercase tracking-tighter text-left">Observatori Municipal</h2></div>
-                                        <div className="bg-white shadow-2xl overflow-x-auto border border-stone-200 text-left text-left">
-                                            <table className="w-full min-w-[600px] text-left text-left">
-                                                <thead className="bg-mes-dark text-white text-[11px] uppercase tracking-widest text-left text-left">
-                                                    <tr><th className="p-6 text-left">Proposta</th><th className="p-6 text-center text-left">Estat</th><th className="p-6 text-left">Seguiment</th></tr>
-                                                </thead>
-                                                <tbody>
-                                                    {initialObservatory.map(obs => (
-                                                        <tr key={obs.id} className="border-b border-stone-100 hover:bg-stone-50 text-left text-left">
-                                                            <td className="p-6 font-bold uppercase text-sm text-left">{obs.topic}</td>
-                                                            <td className="p-6 text-center text-left"><span className="text-[10px] bg-red-50 text-red-600 px-3 py-1 font-black uppercase text-left">{obs.status}</span></td>
-                                                            <td className="p-6 text-sm italic text-stone-500 text-left">"{obs.note}"</td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </section>
-                            </main>
-                        )}
-
-                        {page === 'arxiu' && (
-                            <section className="animate-fade text-left text-left text-left">
-                                <PageHeader title="Actualitat" sub="Informació i opinió del grup municipal" img="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=2000" />
-                                <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto text-left text-left">
-                                    <div className="mb-12 space-y-8 bg-stone-50 p-8 border border-stone-200 text-left text-left text-left">
-                                        <input type="text" placeholder="Cerca paraules clau..." className="form-input max-w-xl text-left text-left" onChange={(e) => setSearchQuery(e.target.value)} />
-                                        <div className="flex flex-wrap gap-3 text-left text-left">
-                                            {allTags.map(tag => <button key={tag} onClick={() => setSelectedTag(tag)} className={`tag-pill ${selectedTag === tag ? 'active' : ''}`}>{tag}</button>)}
-                                        </div>
-                                    </div>
-                                    <div className="space-y-6 text-left text-left">
-                                        {filteredNews.map(a => (
-                                            <div key={a.id} className="archive-item bg-white border border-stone-100 flex flex-col md:flex-row items-center p-8 gap-10 shadow-sm text-left text-left" onClick={() => setSelectedItem(a)}>
-                                                <div className="shrink-0 w-36 text-left text-left text-left text-left">
-                                                    <div className="text-[11px] font-black text-stone-300 mb-2 uppercase text-left text-left text-left">{a.date}</div>
-                                                    <div className={"text-[8px] font-black px-2 py-0.5 inline-block uppercase bg-mes-dark text-white text-left text-left text-left"}>{a.category}</div>
-                                                </div>
-                                                <div className="flex-grow text-left text-left text-left">
-                                                    <h3 className="text-xl md:text-2xl font-black uppercase hover:text-mes-lime transition-colors text-left text-left text-left text-left">{a.title}</h3>
-                                                    <div className="flex gap-2 mt-2 text-left text-left"><span className="text-[8px] font-bold text-stone-400 uppercase text-left">#{a.tags?.[0]}</span></div>
-                                                </div>
-                                                <button className="bg-mes-dark text-white px-8 py-3 text-[10px] font-black uppercase text-left text-left">Llegir</button>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </section>
-                        )}
-
-                        {page === 'programa' && (
-                            <section className="animate-fade text-left text-left text-left text-left">
-                                <PageHeader title="El Programa" sub="El nostre compromís amb Llucmajor" img="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=2000" />
-                                <div className="pt-20 pb-32 px-8 max-w-5xl mx-auto text-left text-left">
-                                    <div className="space-y-4 text-left text-left text-left">
-                                        {programData.map((item, index) => (
-                                            <div key={index} className="accordion-item text-left text-left text-left text-left">
-                                                <button className="accordion-header text-left text-left text-left text-left" onClick={() => setOpenAccordion(openAccordion === index ? null : index)}>
-                                                    <div className="text-left text-left text-left text-left"><h3 className="text-2xl font-black uppercase text-left text-left text-left">{item.title}</h3><p className="text-stone-400 font-medium italic text-left text-left text-left">{item.summary}</p></div>
-                                                    <span className="text-3xl text-left text-left">{openAccordion === index ? '−' : '+'}</span>
-                                                </button>
-                                                <div className={`accordion-content text-left text-left text-left text-left ${openAccordion === index ? 'open' : ''}`}>
-                                                    <ul className="p-8 space-y-4 text-left text-left text-left">{item.points.map((p, i) => <li key={i} className="text-lg text-stone-600 flex gap-4 text-left text-left"><span className="text-mes-lime font-black text-left">✓</span>{p}</li>)}</ul>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </section>
-                        )}
-
-                        {page === 'projectes' && (
-                            <section className="animate-fade text-left text-left text-left text-left text-left text-left">
-                                <PageHeader title="Propostes" sub="Projectes nucli a nucli per un municipi viu" img="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?auto=format&fit=crop&q=80&w=2000" />
-                                <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto text-left text-left text-left text-left">
-                                    <div className="flex flex-wrap gap-4 mb-16 border-b border-stone-200 pb-8 text-left text-left text-left">
-                                        <button onClick={() => setFilterZone('all')} className={"px-6 py-3 uppercase font-black text-[10px] " + (filterZone === 'all' ? 'bg-mes-lime text-black' : 'bg-stone-100 text-stone-400 text-left')}>Tots els nuclis</button>
-                                        {zones.map(z => <button key={z.id} onClick={() => setFilterZone(z.id)} className={"px-6 py-3 uppercase font-black text-[10px] " + (filterZone === z.id ? 'bg-mes-lime text-black' : 'bg-stone-100 text-stone-400 text-left text-left text-left')}>{z.name}</button>)}
-                                    </div>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left text-left text-left">
-                                        {filteredProposals.length > 0 ? filteredProposals.map(p => (
-                                            <div key={p.id} className="bg-white border-b-8 border-transparent hover:border-mes-lime transition-all cursor-pointer group shadow-sm text-left text-left text-left text-left" onClick={() => setSelectedItem({...p, category: 'PROJECTE'})}>
-                                                <img src={p.img} loading="lazy" decoding="async" alt={p.title} className="w-full h-56 object-cover text-left text-left text-left" />
-                                                <div className="p-8 text-left text-left text-left text-left">
-                                                    <h3 className="text-2xl font-black uppercase mb-4 group-hover:text-mes-lime text-left text-left text-left">{p.title}</h3>
-                                                    <p className="text-sm text-stone-500 mb-8 italic text-left text-left text-left">{p.summary}</p>
-                                                    <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime text-left text-left text-left">Saber-ne més</button>
-                                                </div>
-                                            </div>
-                                        )) : <div className="py-20 text-stone-400 font-bold uppercase text-center w-full col-span-full text-left text-left text-left text-left">Aviat noves propostes.</div>}
-                                    </div>
-                                </div>
-                            </section>
-                        )}
-
-                        {page === 'equip' && (
-                            <section className="animate-fade text-left text-left text-left text-left text-left text-left text-left text-left text-left">
-                                <PageHeader title="L'Equip" sub="Gent compromesa amb el municipi" img="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2000" />
-                                <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto text-left text-left text-left text-left text-left text-left text-left">
-                                    <div className="section-title-box bg-mes-lime !text-black text-sm mb-12 font-black text-left text-left text-left">Regidors al consistori</div>
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-32 text-left text-left text-left text-left text-left text-left">
-                                        {[
-                                            {n:"Maria Barceló Calviño", r:"Portaveu Municipal", i:"imatges/02.Maria.jpg", cv:"Docent a l’IES Llucmajor. Regidora des de l’any 2015."},
-                                            {n:"Oriol Gómez Díaz", r:"Regidor", i:"imatges/Oriol2.jpg", cv:"Docent de setembre de 2024. Secretari d'Organització."}
-                                        ].map((r, i) => (
-                                            <div key={i} className="flex flex-col md:flex-row bg-white border border-stone-100 shadow-xl overflow-hidden text-left text-left text-left text-left text-left">
-                                                <img src={r.i} loading="lazy" decoding="async" alt={r.n} className="w-full md:w-64 h-96 object-cover text-left text-left text-left text-left text-left text-left" />
-                                                <div className="p-10 flex flex-col justify-center text-left text-left text-left text-left text-left">
-                                                    <h3 className="text-4xl font-black uppercase leading-none mb-3 text-left text-left text-left text-left text-left text-left">{r.n}</h3>
-                                                    <p className="text-mes-lime font-black uppercase text-xs mb-8 tracking-widest text-left text-left text-left text-left text-left text-left">{r.r}</p>
-                                                    <p className="text-stone-600 italic border-l-4 border-mes-lime pl-6 text-left text-left text-left text-left text-left text-left text-left">"{r.cv}"</p>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className="section-title-box text-sm mb-12 font-black text-left text-left text-left text-left text-left text-left text-left">Executiva Local</div>
-                                    <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-left text-left text-left text-left text-left text-left text-left text-left">
-                                        {teamExecutiva.map((e, i) => (
-                                            <div key={i} className="bg-stone-50 p-4 border border-stone-100 text-left text-left text-left text-left text-left text-left text-left">
-                                                <img src={e.image} loading="lazy" decoding="async" className="w-full h-64 object-cover mb-4 text-left text-left text-left text-left text-left text-left" alt={e.name} />
-                                                <h4 className="font-black uppercase text-lg leading-none mb-1 text-left text-left text-left text-left text-left text-left text-left">{e.name}</h4>
-                                                <p className="text-[9px] font-bold text-mes-lime uppercase text-left text-left text-left text-left text-left text-left text-left text-left">{e.role}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </section>
-                        )}
-
-                        {page === 'contacte' && (
-                            <section className="animate-fade text-left text-left text-left text-left text-left text-left text-left text-left text-left">
-                                <PageHeader title="Contacte" sub="Digues la teva: t'escoltem" img="https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&q=80&w=2000" />
-                                <div className="pt-20 pb-32 px-8 max-w-5xl mx-auto text-left text-left text-left text-left text-left text-left text-left text-left">
-                                    <div className="bg-white border-2 border-stone-100 p-8 shadow-sm text-left text-left text-left text-left text-left text-left">
-                                        <form className="space-y-8 text-left text-left text-left text-left text-left text-left" onSubmit={(e) => { e.preventDefault(); alert('Gràcies!'); }}>
-                                            <input className="form-input text-left text-left text-left text-left text-left" placeholder="Nom complet" required />
-                                            <input className="form-input text-left text-left text-left text-left text-left text-left" type="email" placeholder="Correu electrònic" required />
-                                            <textarea className="form-input text-left text-left text-left text-left text-left text-left text-left" rows="8" placeholder="Com et podem ajudar?" required></textarea>
-                                            <button type="submit" className="btn-primary w-full justify-center text-left text-left text-left text-left text-left text-left text-left">Enviar missatge</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </section>
-                        )}
-                    </div>
-
-                    {/* --- FOOTER FINAL --- */}
-                    <footer className="bg-mes-dark text-white pt-24 pb-12 px-8 border-t-8 border-mes-lime text-left text-left text-left text-left text-left text-left">
-                        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 text-left text-left text-left text-left text-left text-left">
-                            <div className="md:col-span-1 text-left text-left text-left text-left text-left text-left text-left">
-                                <div className="bg-mes-lime text-black font-black px-4 py-2 text-3xl inline-block mb-6 tracking-tighter text-left text-left text-left text-left">MÉS</div>
-                                <p className="text-stone-400 font-bold uppercase text-xs tracking-widest mb-4 text-left text-left text-left text-left">Llucmajor · s'Arenal · Urbanitzacions</p>
-                            </div>
-                            <div className="text-left text-left text-left text-left text-left text-left text-left text-left">
-                                <h4 className="text-white font-black uppercase text-sm mb-8 border-b border-white/10 pb-2 text-left text-left text-left text-left text-left">Seccions</h4>
-                                <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-stone-400 text-left text-left text-left text-left text-left text-left text-left">
-                                    <li><button onClick={() => navigateTo('home')} className="hover:text-mes-lime transition-colors text-left">Inici</button></li>
-                                    <li><button onClick={() => navigateTo('arxiu')} className="hover:text-mes-lime transition-colors text-left">Actualitat</button></li>
-                                </ul>
-                            </div>
-                            <div className="text-left text-left text-left text-left text-left text-left text-left text-left text-left">
-                                <h4 className="text-white font-black uppercase text-sm mb-8 border-b border-white/10 pb-2 text-left text-left text-left text-left text-left text-left text-left text-left">Contacte</h4>
-                                <ul className="space-y-6 text-left text-left text-left text-left text-left text-left text-left text-left text-left">
-                                    <li><a href="mailto:mesperllucmajor@gmail.com" className="flex items-center gap-4 hover:text-mes-lime transition-all group text-left text-left text-left text-left text-left text-left text-left text-left"><span className="p-2 bg-white/5 group-hover:bg-mes-lime group-hover:text-black transition-all text-left text-left text-left text-left text-left text-left"><IconMail /></span><span className="text-xs font-bold text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">mesperllucmajor@gmail.com</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </footer>
-
-                    {/* MODAL LECTURA */}
-                    {selectedItem && (
-                        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[300] flex items-center justify-center p-4 text-left text-left text-left text-left" onClick={() => setSelectedItem(null)}>
-                            <div className="bg-white max-w-4xl w-full max-h-[90vh] overflow-y-auto p-12 relative shadow-2xl text-left text-left text-left text-left" onClick={e => e.stopPropagation()}>
-                                <button onClick={() => setSelectedItem(null)} className="absolute top-6 right-8 text-4xl text-stone-400 hover:text-mes-lime text-left text-left text-left">&times;</button>
-                                <div className="section-title-box mb-4 text-left text-left text-left">{selectedItem.category}</div>
-                                <h2 className="modal-title text-left text-left text-left text-left text-left">{selectedItem.title}</h2>
-                                <div className="article-body whitespace-pre-wrap text-left text-left text-left text-left">{selectedItem.content}</div>
-                                <div className="mt-12 pt-8 border-t border-stone-100 flex justify-between items-center text-left text-left text-left text-left">
-                                    <button onClick={() => shareOnWhatsapp(selectedItem)} className="p-3 bg-green-50 text-green-600 border border-green-200 text-left text-left text-left">Compartir per WhatsApp</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+    <div class="hero-slide">
+        <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="w-full h-full object-cover hero-zoom" alt="Construïm junts" />
+        <div class="absolute inset-0 bg-black/45"></div>
+        <div class="absolute inset-0 flex items-center px-8 md:px-20 text-left">
+            <div class="max-w-4xl text-left">
+                <h1 class="text-5xl md:text-[90px] font-black uppercase text-white leading-none mb-8">CONSTRUÏM JUNTS EL LLUCMAJOR QUE VOLEM</h1>
+                <p class="text-xl md:text-2xl text-white/90 border-l-4 border-mes-lime pl-6 italic mb-10">Un projecte compartit on la veu dels ciutadans és el motor.</p>
+                <div class="flex gap-4">
+                    <a href="#agenda" class="btn-primary">Veure Agenda</a>
+                    <a href="#observatori-home" class="bg-white text-black px-8 py-4 font-black uppercase text-sm hover:bg-mes-lime transition-all">Control Municipal</a>
                 </div>
-            );
+            </div>
+        </div>
+    </div>
+
+    <div class="absolute bottom-10 left-0 w-full z-30 flex justify-center gap-3" id="hero-dots">
+        <div class="hero-dot active" data-index="0"></div>
+        <div class="hero-dot" data-index="1"></div>
+    </div>
+</header>
+
+<section id="agenda" class="py-24 bg-stone-50 px-8 text-left">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-12"><div class="section-title-box">Properament</div><h2 class="text-5xl font-black uppercase tracking-tighter">L'Agenda</h2></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="event-card p-8 shadow-sm text-left">
+                <div class="text-mes-lime font-black text-2xl mb-2">15 FEB</div>
+                <div class="text-stone-400 font-bold text-xs uppercase mb-4">19:00h</div>
+                <h3 class="text-xl font-black uppercase mb-2">Assemblea Oberta: Urbanitzacions</h3>
+                <div class="text-stone-500 text-sm italic">📍 Centre Cívic Badia Blava</div>
+            </div>
+            <div class="event-card p-8 shadow-sm text-left">
+                <div class="text-mes-lime font-black text-2xl mb-2">22 FEB</div>
+                <div class="text-stone-400 font-bold text-xs uppercase mb-4">10:30h</div>
+                <h3 class="text-xl font-black uppercase mb-2">Paradeta Informativa</h3>
+                <div class="text-stone-500 text-sm italic">📍 Plaça d'Espanya, Llucmajor</div>
+            </div>
+            <div class="event-card p-8 shadow-sm text-left">
+                <div class="text-mes-lime font-black text-2xl mb-2">28 FEB</div>
+                <div class="text-stone-400 font-bold text-xs uppercase mb-4">18:00h</div>
+                <h3 class="text-xl font-black uppercase mb-2">Reunió Veïnal: s'Arenal</h3>
+                <div class="text-stone-500 text-sm italic">📍 Oficina Municipal de s'Arenal</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-24 bg-white px-8 text-left">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div class="text-left">
+            <div class="section-title-box text-left">Participació</div>
+            <h2 class="text-5xl font-black uppercase tracking-tighter leading-none mb-6 text-left">Suma't al projecte</h2>
+            <p class="text-xl text-stone-500 italic border-l-4 border-mes-lime pl-6 text-left">Volem un municipi millor i et necessitem. Tria com vols participar.</p>
+        </div>
+        <div class="bg-mes-stone p-10 border-2 border-stone-200 shadow-2xl text-left">
+            <form action="#" method="POST" class="space-y-6 text-left">
+                <input class="form-input" name="nom" placeholder="Nom complet" required />
+                <input class="form-input" type="email" name="email" placeholder="Email" required />
+                <button type="submit" class="btn-primary w-full justify-center">Participar</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section id="observatori-home" class="py-24 bg-stone-50 px-8 text-left">
+    <div class="max-w-7xl mx-auto text-left">
+        <div class="mb-12 text-left"><div class="section-title-box">Fiscalització</div><h2 class="text-5xl font-black uppercase tracking-tighter text-left">Observatori Municipal</h2></div>
+        <div class="bg-white shadow-2xl overflow-x-auto border border-stone-200 text-left">
+            <table class="w-full min-w-[600px] text-left">
+                <thead class="bg-mes-dark text-white text-[11px] uppercase tracking-widest text-left">
+                    <tr><th class="p-6 text-left">Proposta</th><th class="p-6 text-center text-left">Estat</th><th class="p-6 text-left">Seguiment</th></tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b border-stone-100 hover:bg-stone-50 text-left">
+                        <td class="p-6 font-bold uppercase text-sm text-left">Auditoria externa d'Urbanisme</td>
+                        <td class="p-6 text-center text-left"><span class="text-[10px] bg-red-50 text-red-600 px-3 py-1 font-black uppercase text-left">🔴 ATURAT</span></td>
+                        <td class="p-6 text-sm italic text-stone-500 text-left">"Més d'un any esperant la licitació pública."</td>
+                    </tr>
+                    <tr class="border-b border-stone-100 hover:bg-stone-50 text-left">
+                        <td class="p-6 font-bold uppercase text-sm text-left">Millora carrer Pere Maimó</td>
+                        <td class="p-6 text-center text-left"><span class="text-[10px] bg-yellow-50 text-yellow-600 px-3 py-1 font-black uppercase text-left">🟡 PENDENT</span></td>
+                        <td class="p-6 text-sm italic text-stone-500 text-left">"Projecte al calaix sense pressupost real assignat."</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section id="visio" class="py-32 bg-white px-8 text-left">
+    <div class="max-w-7xl mx-auto text-left">
+        <div class="flex justify-between items-end mb-16 text-left">
+            <div class="text-left">
+                <div class="section-title-box text-left">Territori</div>
+                <h2 class="text-4xl md:text-6xl font-black uppercase text-left">El nostre municipi</h2>
+            </div>
+            <a href="{{ site.baseurl }}/propostes/" class="btn-primary !py-3 !px-8 text-[10px] text-left">Projecte Global</a>
+        </div>
+        <div class="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[500px] text-left">
+            <a href="{{ site.baseurl }}/propostes/" class="zone-col group text-left flex-grow border-right block">
+                <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="w-full h-full object-cover group-hover:scale-110 transition-all" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-8 text-left">
+                    <h3 class="text-3xl font-black uppercase text-white group-hover:text-mes-lime transition-colors">Llucmajor Poble</h3>
+                </div>
+            </a>
+            <a href="{{ site.baseurl }}/propostes/" class="zone-col group text-left flex-grow border-right block">
+                <img src="{{ site.baseurl }}/imatges/sarenal.png" class="w-full h-full object-cover group-hover:scale-110 transition-all" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-8 text-left">
+                    <h3 class="text-3xl font-black uppercase text-white group-hover:text-mes-lime transition-colors">S'Arenal</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.hero-dot');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSlide = index;
         }
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-</body>
-</html>
+        setInterval(() => {
+            let nextSlide = (currentSlide + 1) % slides.length;
+            showSlide(nextSlide);
+        }, 8000);
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                let index = parseInt(e.target.getAttribute('data-index'));
+                showSlide(index);
+            });
+        });
+    });
+</script>
