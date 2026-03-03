@@ -15,10 +15,20 @@ permalink: /propostes/
     </div>
 </header>
 
-<div class="pt-20 pb-32 px-8 max-w-7xl mx-auto text-left">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+<div class="pt-12 pb-32 px-8 max-w-7xl mx-auto text-left">
+    
+    <div class="flex flex-wrap gap-3 mb-12 justify-start border-b border-stone-200 pb-8" id="filters">
+        <button class="filter-btn tag-pill active text-[11px] md:text-sm" data-filter="totes">Totes les propostes</button>
+        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="llucmajor">Llucmajor Poble</button>
+        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="arenal">s'Arenal</button>
+        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="urbanitzacions">Urbanitzacions</button>
+        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="estanyol">s'Estanyol i Son Bieló</button>
+        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="foravila">Foravila</button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left" id="proposals-grid">
         
-        <div class="bg-white border-b-8 border-transparent hover:border-mes-lime transition-all group shadow-sm text-left">
+        <div class="proposal-card bg-white border-b-8 border-transparent hover:border-mes-lime transition-all group shadow-sm text-left block" data-zone="llucmajor">
             <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018" class="w-full h-56 object-cover text-left" alt="Poliesportiu" />
             <div class="p-8 text-left">
                 <h3 class="text-2xl font-black uppercase mb-4 group-hover:text-mes-lime text-left">Nou accés al Poliesportiu</h3>
@@ -27,7 +37,7 @@ permalink: /propostes/
             </div>
         </div>
 
-        <div class="bg-white border-b-8 border-transparent hover:border-mes-lime transition-all group shadow-sm text-left">
+        <div class="proposal-card bg-white border-b-8 border-transparent hover:border-mes-lime transition-all group shadow-sm text-left block" data-zone="arenal">
             <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" class="w-full h-56 object-cover text-left" alt="Passeig Marítim" />
             <div class="p-8 text-left">
                 <h3 class="text-2xl font-black uppercase mb-4 group-hover:text-mes-lime text-left">Reforma Passeig Marítim</h3>
@@ -36,5 +46,30 @@ permalink: /propostes/
             </div>
         </div>
 
-    </div>
+        </div>
 </div>
+
+<script>
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const proposalCards = document.querySelectorAll('.proposal-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Canviem l'estil visual del botó clicat
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Llegim quin nucli vol veure l'usuari
+            const filterValue = btn.getAttribute('data-filter');
+
+            // Amaguem o mostrem les propostes segons la zona
+            proposalCards.forEach(card => {
+                if (filterValue === 'totes' || card.getAttribute('data-zone') === filterValue) {
+                    card.style.display = 'block'; // Mostra
+                } else {
+                    card.style.display = 'none';  // Amaga
+                }
+            });
+        });
+    });
+</script>
