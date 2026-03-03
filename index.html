@@ -84,16 +84,13 @@ title: Inici
                     <tr><th class="p-6 text-left">Proposta</th><th class="p-6 text-center text-left">Estat</th><th class="p-6 text-left">Seguiment</th></tr>
                 </thead>
                 <tbody>
+                    {% for item in site.data.observatori %}
                     <tr class="border-b border-stone-100 hover:bg-stone-50 text-left">
-                        <td class="p-6 font-bold uppercase text-sm text-left">Auditoria externa d'Urbanisme</td>
-                        <td class="p-6 text-center text-left"><span class="text-[10px] bg-red-50 text-red-600 px-3 py-1 font-black uppercase text-left">🔴 ATURAT</span></td>
-                        <td class="p-6 text-sm italic text-stone-500 text-left">"Més d'un any esperant la licitació pública."</td>
+                        <td class="p-6 font-bold uppercase text-sm text-left">{{ item.tema }}</td>
+                        <td class="p-6 text-center text-left"><span class="text-[10px] {{ item.color }} px-3 py-1 font-black uppercase text-left">{{ item.estat }}</span></td>
+                        <td class="p-6 text-sm italic text-stone-500 text-left">"{{ item.nota }}"</td>
                     </tr>
-                    <tr class="border-b border-stone-100 hover:bg-stone-50 text-left">
-                        <td class="p-6 font-bold uppercase text-sm text-left">Millora carrer Pere Maimó</td>
-                        <td class="p-6 text-center text-left"><span class="text-[10px] bg-yellow-50 text-yellow-600 px-3 py-1 font-black uppercase text-left">🟡 PENDENT</span></td>
-                        <td class="p-6 text-sm italic text-stone-500 text-left">"Projecte al calaix sense pressupost real assignat."</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

@@ -1,0 +1,9 @@
+- tema: "Millora carrer Pere Maimó"
+  estat: "🟡 PENDENT"
+  color: "bg-yellow-50 text-yellow-600"
+  nota: "Projecte pendent."
+
+- tema: "Residència de la gent gran"
+  estat: "🔴 ATURAT"
+  color: "bg-red-50 text-red-600"
+  nota: "Sense conveni signat amb el Govern de les Illes Balears."
