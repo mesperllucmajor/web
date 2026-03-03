@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Web oficial de MÉS per Llucmajor. Treballem cada dia per un municipi més just des de la proximitat: Llucmajor, s'Arenal i Urbanitzacions.">
     <title>MÉS per Llucmajor - Proximitat i Futur</title>
     
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" defer></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" defer></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js" defer></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
@@ -72,7 +78,7 @@
     <script type="text/babel">
         const { useState, useEffect, useMemo } = React;
 
-        // --- DADES GLOBALS REVISADES ---
+        // --- DADES GLOBALS ---
         const zones = [
             { id: 'poble', name: 'Llucmajor Poble', img: "imatges/Llucmajor2.png" },
             { id: 'arenal', name: "S'Arenal", img: "imatges/sarenal.png" },
@@ -109,7 +115,7 @@
         ];
 
         const initialObservatory = [
-            { id: 1, topic: "Auditoria externa d'Urbanisme", status: "🔴 ATURAT", note: "Més d'un any esperant la licitació pública." },
+            { id: 1, topic: "Auditoria externa d'Urbanisme", status: "🔴 ATURAT", note: "Més d'un year esperant la licitació pública." },
             { id: 2, topic: "Millora carrer Pere Maimó", status: "🟡 PENDENT", note: "Projecte al calaix sense pressupost real assignat." },
             { id: 3, topic: "Residència de la gent gran", status: "🔴 ATURAT", note: "Sense conveni signat amb el Govern de les Illes Balears." }
         ];
@@ -137,12 +143,11 @@
         const IconInsta = () => (<svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>);
         const IconFb = () => (<svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>);
         const IconMail = () => (<svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>);
-        const IconWhatsapp = ({size=20}) => (<svg width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>);
 
-        // --- COMPONENTS ELEGANTS ---
+        // --- COMPONENTS ---
         const PageHeader = ({ title, sub, img }) => (
             <header className="relative h-[350px] flex items-center overflow-hidden">
-                <img src={img} className="absolute inset-0 w-full h-full object-cover scale-105" alt="" />
+                <img src={img} loading="eager" className="absolute inset-0 w-full h-full object-cover scale-105" alt="" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
                 <div className="relative z-10 w-full px-8 md:px-16 text-left">
                     <div className="max-w-3xl text-left">
@@ -201,7 +206,7 @@
             }, [filterZone]);
 
             const shareOnWhatsapp = (item) => {
-                const text = encodeURIComponent(`He llegit això a MÉS per Llucmajor: ${item.title} - https://mesperllucmajor.github.io/web`);
+                const text = encodeURIComponent(`He llegit això a MÉS per Llucmajor: ${item.title} - https://mesperllucmajor.cat`);
                 window.open(`https://wa.me/?text=${text}`, '_blank');
             };
 
@@ -228,7 +233,7 @@
                                 <header className="relative h-[85vh] w-full bg-mes-dark overflow-hidden flex items-center pt-16">
                                     {bannerSlides.map((slide, i) => (
                                         <div key={i} className={"hero-slide " + (i === activeSlide ? 'active' : '')}>
-                                            <img src={slide.img} className="w-full h-full object-cover hero-zoom" />
+                                            <img src={slide.img} loading={i === 0 ? "eager" : "lazy"} decoding="async" alt={slide.title} className="w-full h-full object-cover hero-zoom" />
                                             <div className="absolute inset-0 bg-black/45"></div>
                                             <div className="absolute inset-0 flex items-center px-8 md:px-20 text-left">
                                                 <div className="max-w-4xl text-left">
@@ -263,35 +268,61 @@
                                     </div>
                                 </section>
 
-                                <section className="py-24 bg-white px-8 section-separator text-left text-left">
-                                    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                                        <div className="text-left text-left">
-                                            <div className="section-title-box text-left">Participació</div>
-                                            <h2 className="text-5xl font-black uppercase tracking-tighter leading-none mb-6 text-left">Suma't al projecte</h2>
-                                            <p className="text-xl text-stone-500 italic border-l-4 border-mes-lime pl-6 text-left">Volem un municipi millor i et necessitem. Tria com vols participar.</p>
+                                <section id="actualitat-home" className="py-32 bg-white px-8 section-separator text-left text-left">
+                                    <div className="max-w-7xl mx-auto text-left text-left">
+                                        <div className="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-6 text-left">
+                                            <div className="text-left"><div className="section-title-box">Actualitat</div><h2 className="text-4xl md:text-6xl font-black uppercase text-left">Veu ciutadana</h2></div>
+                                            <button onClick={() => navigateTo('arxiu')} className="text-xs font-black uppercase border-b-2 border-mes-lime">Veure tot</button>
                                         </div>
-                                        <div className="bg-mes-stone p-10 border-2 border-stone-200 shadow-2xl text-left">
-                                            {submittedSumaT ? <h3 className="text-2xl font-black uppercase text-center py-10">Gràcies per sumar!</h3> :
-                                            <form onSubmit={(e) => { e.preventDefault(); setSubmittedSumaT(true); }} className="space-y-6 text-left text-left">
-                                                <input className="form-input" placeholder="Nom complet" required />
-                                                <input className="form-input" type="email" placeholder="Email" required />
-                                                <button type="submit" className="btn-primary w-full justify-center">Participar</button>
-                                            </form>}
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+                                            {initialArticles.slice(0, 3).map(a => (
+                                                <div key={a.id} className="cursor-pointer group text-left" onClick={() => setSelectedItem(a)}>
+                                                    <div className="h-56 overflow-hidden mb-6 border-b-4 border-mes-dark group-hover:border-mes-lime relative bg-stone-100 text-left">
+                                                        <img src={a.image} loading="lazy" decoding="async" alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-all text-left" />
+                                                    </div>
+                                                    <span className="text-[10px] text-stone-300 font-bold mb-2 uppercase text-left">{a.date}</span>
+                                                    <h3 className="font-black uppercase text-xl leading-tight mb-4 group-hover:text-mes-lime transition-colors text-left">{a.title}</h3>
+                                                    <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime text-left">Llegir més</button>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                 </section>
 
-                                <section id="observatori-home" className="py-24 bg-stone-50 px-8 section-accent-top text-left text-left">
+                                <section id="visio" className="py-32 bg-stone-50 px-8 section-separator text-left text-left">
+                                    <div className="max-w-7xl mx-auto text-left text-left">
+                                        <div className="flex justify-between items-end mb-16 text-left text-left">
+                                            <div className="text-left text-left text-left text-left">
+                                                <div className="section-title-box text-left">Territori</div>
+                                                <h2 className="text-4xl md:text-6xl font-black uppercase text-left text-left">El nostre municipi</h2>
+                                            </div>
+                                            <button onClick={() => {setFilterZone('all'); navigateTo('projectes');}} className="btn-primary !py-3 !px-8 text-[10px] text-left">Projecte Global</button>
+                                        </div>
+                                        <div className="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[500px] text-left text-left">
+                                            {zones.map(z => (
+                                                <div key={z.id} className="zone-col group text-left text-left" onClick={() => {setFilterZone(z.id); navigateTo('projectes');}}>
+                                                    <img src={z.img} loading="lazy" decoding="async" alt={z.name} className="w-full h-full object-cover group-hover:scale-110 transition-all text-left text-left" />
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-8 text-left text-left">
+                                                        <h3 className="text-3xl font-black uppercase text-white group-hover:text-mes-lime transition-colors text-left text-left">{z.name}</h3>
+                                                        <span className="text-[10px] text-mes-lime font-bold uppercase mt-2 opacity-0 group-hover:opacity-100 transition-opacity text-left">Veure propostes →</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </section>
+                                
+                                <section id="observatori-home" className="py-24 bg-white px-8 section-accent-top text-left text-left">
                                     <div className="max-w-7xl mx-auto text-left text-left">
                                         <div className="mb-12 text-left"><div className="section-title-box">Fiscalització</div><h2 className="text-5xl font-black uppercase tracking-tighter text-left">Observatori Municipal</h2></div>
                                         <div className="bg-white shadow-2xl overflow-x-auto border border-stone-200 text-left text-left">
                                             <table className="w-full min-w-[600px] text-left text-left">
-                                                <thead className="bg-mes-dark text-white text-[11px] uppercase tracking-widest text-left text-left text-left">
+                                                <thead className="bg-mes-dark text-white text-[11px] uppercase tracking-widest text-left text-left">
                                                     <tr><th className="p-6 text-left">Proposta</th><th className="p-6 text-center text-left">Estat</th><th className="p-6 text-left">Seguiment</th></tr>
                                                 </thead>
                                                 <tbody>
                                                     {initialObservatory.map(obs => (
-                                                        <tr key={obs.id} className="border-b border-stone-100 hover:bg-stone-50 text-left text-left text-left">
+                                                        <tr key={obs.id} className="border-b border-stone-100 hover:bg-stone-50 text-left text-left">
                                                             <td className="p-6 font-bold uppercase text-sm text-left">{obs.topic}</td>
                                                             <td className="p-6 text-center text-left"><span className="text-[10px] bg-red-50 text-red-600 px-3 py-1 font-black uppercase text-left">{obs.status}</span></td>
                                                             <td className="p-6 text-sm italic text-stone-500 text-left">"{obs.note}"</td>
@@ -302,75 +333,31 @@
                                         </div>
                                     </div>
                                 </section>
-
-                                <section id="actualitat-home" className="py-32 bg-white px-8 section-separator text-left text-left text-left text-left">
-                                    <div className="max-w-7xl mx-auto text-left text-left text-left text-left">
-                                        <div className="flex justify-between items-end mb-16 border-b-4 border-mes-dark pb-6 text-left text-left">
-                                            <div className="text-left"><div className="section-title-box">Actualitat</div><h2 className="text-4xl md:text-6xl font-black uppercase text-left text-left">Veu ciutadana</h2></div>
-                                            <button onClick={() => navigateTo('arxiu')} className="text-xs font-black uppercase border-b-2 border-mes-lime">Veure tot</button>
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-left text-left text-left">
-                                            {initialArticles.slice(0, 3).map(a => (
-                                                <div key={a.id} className="cursor-pointer group text-left text-left text-left text-left" onClick={() => setSelectedItem(a)}>
-                                                    <div className="h-56 overflow-hidden mb-6 border-b-4 border-mes-dark group-hover:border-mes-lime relative bg-stone-100 text-left text-left text-left">
-                                                        <img src={a.image} className="w-full h-full object-cover group-hover:scale-105 transition-all text-left text-left text-left" />
-                                                    </div>
-                                                    <span className="text-[10px] text-stone-300 font-bold mb-2 uppercase text-left text-left">{a.date}</span>
-                                                    <h3 className="font-black uppercase text-xl leading-tight mb-4 group-hover:text-mes-lime transition-colors text-left text-left">{a.title}</h3>
-                                                    <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime text-left text-left">Llegir més</button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <section id="visio" className="py-32 bg-stone-50 px-8 section-separator text-left text-left text-left text-left">
-                                    <div className="max-w-7xl mx-auto text-left text-left text-left">
-                                        <div className="flex justify-between items-end mb-16 text-left text-left text-left text-left">
-                                            <div className="text-left text-left text-left text-left text-left">
-                                                <div className="section-title-box text-left">Territori</div>
-                                                <h2 className="text-4xl md:text-6xl font-black uppercase text-left text-left">El nostre municipi</h2>
-                                            </div>
-                                            <button onClick={() => {setFilterZone('all'); navigateTo('projectes');}} className="btn-primary !py-3 !px-8 text-[10px] text-left text-left">Projecte Global</button>
-                                        </div>
-                                        <div className="flex flex-col md:flex-row w-full bg-mes-dark shadow-2xl h-[500px] text-left text-left text-left">
-                                            {zones.map(z => (
-                                                <div key={z.id} className="zone-col group text-left text-left text-left" onClick={() => {setFilterZone(z.id); navigateTo('projectes');}}>
-                                                    <img src={z.img} className="w-full h-full object-cover group-hover:scale-110 transition-all text-left text-left text-left" />
-                                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex flex-col justify-end p-8 text-left text-left text-left">
-                                                        <h3 className="text-3xl font-black uppercase text-white group-hover:text-mes-lime transition-colors text-left text-left text-left">{z.name}</h3>
-                                                        <span className="text-[10px] text-mes-lime font-bold uppercase mt-2 opacity-0 group-hover:opacity-100 transition-opacity text-left text-left">Veure propostes →</span>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </section>
                             </main>
                         )}
 
                         {page === 'arxiu' && (
-                            <section className="animate-fade text-left text-left text-left text-left">
+                            <section className="animate-fade text-left text-left text-left">
                                 <PageHeader title="Actualitat" sub="Informació i opinió del grup municipal" img="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=2000" />
-                                <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto text-left text-left text-left">
-                                    <div className="mb-12 space-y-8 bg-stone-50 p-8 border border-stone-200 text-left text-left text-left text-left">
-                                        <input type="text" placeholder="Cerca paraules clau..." className="form-input max-w-xl text-left text-left text-left" onChange={(e) => setSearchQuery(e.target.value)} />
-                                        <div className="flex flex-wrap gap-3 text-left text-left text-left">
+                                <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto text-left text-left">
+                                    <div className="mb-12 space-y-8 bg-stone-50 p-8 border border-stone-200 text-left text-left text-left">
+                                        <input type="text" placeholder="Cerca paraules clau..." className="form-input max-w-xl text-left text-left" onChange={(e) => setSearchQuery(e.target.value)} />
+                                        <div className="flex flex-wrap gap-3 text-left text-left">
                                             {allTags.map(tag => <button key={tag} onClick={() => setSelectedTag(tag)} className={`tag-pill ${selectedTag === tag ? 'active' : ''}`}>{tag}</button>)}
                                         </div>
                                     </div>
-                                    <div className="space-y-6 text-left text-left text-left">
+                                    <div className="space-y-6 text-left text-left">
                                         {filteredNews.map(a => (
-                                            <div key={a.id} className="archive-item bg-white border border-stone-100 flex flex-col md:flex-row items-center p-8 gap-10 shadow-sm text-left text-left text-left text-left" onClick={() => setSelectedItem(a)}>
-                                                <div className="shrink-0 w-36 text-left text-left text-left text-left text-left">
+                                            <div key={a.id} className="archive-item bg-white border border-stone-100 flex flex-col md:flex-row items-center p-8 gap-10 shadow-sm text-left text-left" onClick={() => setSelectedItem(a)}>
+                                                <div className="shrink-0 w-36 text-left text-left text-left text-left">
                                                     <div className="text-[11px] font-black text-stone-300 mb-2 uppercase text-left text-left text-left">{a.date}</div>
                                                     <div className={"text-[8px] font-black px-2 py-0.5 inline-block uppercase bg-mes-dark text-white text-left text-left text-left"}>{a.category}</div>
                                                 </div>
-                                                <div className="flex-grow text-left text-left text-left text-left">
+                                                <div className="flex-grow text-left text-left text-left">
                                                     <h3 className="text-xl md:text-2xl font-black uppercase hover:text-mes-lime transition-colors text-left text-left text-left text-left">{a.title}</h3>
-                                                    <div className="flex gap-2 mt-2 text-left text-left text-left">{a.tags?.map(t => <span key={t} className="text-[8px] font-bold text-stone-400 uppercase text-left text-left">#{t}</span>)}</div>
+                                                    <div className="flex gap-2 mt-2 text-left text-left"><span className="text-[8px] font-bold text-stone-400 uppercase text-left">#{a.tags?.[0]}</span></div>
                                                 </div>
-                                                <button className="bg-mes-dark text-white px-8 py-3 text-[10px] font-black uppercase text-left text-left text-left">Llegir</button>
+                                                <button className="bg-mes-dark text-white px-8 py-3 text-[10px] font-black uppercase text-left text-left">Llegir</button>
                                             </div>
                                         ))}
                                     </div>
@@ -379,43 +366,42 @@
                         )}
 
                         {page === 'programa' && (
-                            <section className="animate-fade text-left text-left text-left text-left text-left text-left">
+                            <section className="animate-fade text-left text-left text-left text-left">
                                 <PageHeader title="El Programa" sub="El nostre compromís amb Llucmajor" img="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&q=80&w=2000" />
-                                <div className="pt-20 pb-32 px-8 max-w-5xl mx-auto text-left text-left text-left">
-                                    <div className="space-y-4 text-left text-left text-left text-left">
+                                <div className="pt-20 pb-32 px-8 max-w-5xl mx-auto text-left text-left">
+                                    <div className="space-y-4 text-left text-left text-left">
                                         {programData.map((item, index) => (
-                                            <div key={index} className="accordion-item text-left text-left text-left text-left text-left">
+                                            <div key={index} className="accordion-item text-left text-left text-left text-left">
                                                 <button className="accordion-header text-left text-left text-left text-left" onClick={() => setOpenAccordion(openAccordion === index ? null : index)}>
-                                                    <div className="text-left text-left text-left text-left text-left"><h3 className="text-2xl font-black uppercase text-left text-left text-left">{item.title}</h3><p className="text-stone-400 font-medium italic text-left text-left text-left">{item.summary}</p></div>
-                                                    <span className="text-3xl text-left text-left text-left">{openAccordion === index ? '−' : '+'}</span>
+                                                    <div className="text-left text-left text-left text-left"><h3 className="text-2xl font-black uppercase text-left text-left text-left">{item.title}</h3><p className="text-stone-400 font-medium italic text-left text-left text-left">{item.summary}</p></div>
+                                                    <span className="text-3xl text-left text-left">{openAccordion === index ? '−' : '+'}</span>
                                                 </button>
                                                 <div className={`accordion-content text-left text-left text-left text-left ${openAccordion === index ? 'open' : ''}`}>
-                                                    <ul className="p-8 space-y-4 text-left text-left text-left text-left">{item.points.map((p, i) => <li key={i} className="text-lg text-stone-600 flex gap-4 text-left text-left text-left"><span className="text-mes-lime font-black text-left text-left">✓</span>{p}</li>)}</ul>
+                                                    <ul className="p-8 space-y-4 text-left text-left text-left">{item.points.map((p, i) => <li key={i} className="text-lg text-stone-600 flex gap-4 text-left text-left"><span className="text-mes-lime font-black text-left">✓</span>{p}</li>)}</ul>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="mt-16 p-12 bg-mes-dark text-center text-left text-left text-left text-left"><button className="btn-primary text-left text-left text-left text-left text-left">📄 Baixa el programa (PDF)</button></div>
                                 </div>
                             </section>
                         )}
 
                         {page === 'projectes' && (
-                            <section className="animate-fade text-left text-left text-left text-left text-left text-left text-left text-left">
+                            <section className="animate-fade text-left text-left text-left text-left text-left text-left">
                                 <PageHeader title="Propostes" sub="Projectes nucli a nucli per un municipi viu" img="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?auto=format&fit=crop&q=80&w=2000" />
-                                <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto text-left text-left text-left text-left text-left">
-                                    <div className="flex flex-wrap gap-4 mb-16 border-b border-stone-200 pb-8 text-left text-left text-left text-left">
-                                        <button onClick={() => setFilterZone('all')} className={"px-6 py-3 uppercase font-black text-[10px] " + (filterZone === 'all' ? 'bg-mes-lime text-black' : 'bg-stone-100 text-stone-400 text-left text-left')}>Tots els nuclis</button>
-                                        {zones.map(z => <button key={z.id} onClick={() => setFilterZone(z.id)} className={"px-6 py-3 uppercase font-black text-[10px] " + (filterZone === z.id ? 'bg-mes-lime text-black' : 'bg-stone-100 text-stone-400 text-left text-left text-left text-left')}>{z.name}</button>)}
+                                <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto text-left text-left text-left text-left">
+                                    <div className="flex flex-wrap gap-4 mb-16 border-b border-stone-200 pb-8 text-left text-left text-left">
+                                        <button onClick={() => setFilterZone('all')} className={"px-6 py-3 uppercase font-black text-[10px] " + (filterZone === 'all' ? 'bg-mes-lime text-black' : 'bg-stone-100 text-stone-400 text-left')}>Tots els nuclis</button>
+                                        {zones.map(z => <button key={z.id} onClick={() => setFilterZone(z.id)} className={"px-6 py-3 uppercase font-black text-[10px] " + (filterZone === z.id ? 'bg-mes-lime text-black' : 'bg-stone-100 text-stone-400 text-left text-left text-left')}>{z.name}</button>)}
                                     </div>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left text-left text-left text-left">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left text-left text-left">
                                         {filteredProposals.length > 0 ? filteredProposals.map(p => (
-                                            <div key={p.id} className="bg-white border-b-8 border-transparent hover:border-mes-lime transition-all cursor-pointer group shadow-sm text-left text-left text-left text-left text-left" onClick={() => setSelectedItem({...p, category: 'PROJECTE'})}>
-                                                <img src={p.img} className="w-full h-56 object-cover text-left text-left text-left text-left" />
-                                                <div className="p-8 text-left text-left text-left text-left text-left">
-                                                    <h3 className="text-2xl font-black uppercase mb-4 group-hover:text-mes-lime text-left text-left text-left text-left">{p.title}</h3>
-                                                    <p className="text-sm text-stone-500 mb-8 italic text-left text-left text-left text-left">{p.summary}</p>
-                                                    <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime text-left text-left text-left text-left">Saber-ne més</button>
+                                            <div key={p.id} className="bg-white border-b-8 border-transparent hover:border-mes-lime transition-all cursor-pointer group shadow-sm text-left text-left text-left text-left" onClick={() => setSelectedItem({...p, category: 'PROJECTE'})}>
+                                                <img src={p.img} loading="lazy" decoding="async" alt={p.title} className="w-full h-56 object-cover text-left text-left text-left" />
+                                                <div className="p-8 text-left text-left text-left text-left">
+                                                    <h3 className="text-2xl font-black uppercase mb-4 group-hover:text-mes-lime text-left text-left text-left">{p.title}</h3>
+                                                    <p className="text-sm text-stone-500 mb-8 italic text-left text-left text-left">{p.summary}</p>
+                                                    <button className="text-[10px] font-black uppercase border-b-2 border-mes-lime text-left text-left text-left">Saber-ne més</button>
                                                 </div>
                                             </div>
                                         )) : <div className="py-20 text-stone-400 font-bold uppercase text-center w-full col-span-full text-left text-left text-left text-left">Aviat noves propostes.</div>}
@@ -425,32 +411,32 @@
                         )}
 
                         {page === 'equip' && (
-                            <section className="animate-fade text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">
+                            <section className="animate-fade text-left text-left text-left text-left text-left text-left text-left text-left text-left">
                                 <PageHeader title="L'Equip" sub="Gent compromesa amb el municipi" img="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=2000" />
-                                <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto text-left text-left text-left text-left text-left text-left text-left text-left text-left">
-                                    <div className="section-title-box bg-mes-lime !text-black text-sm mb-12 font-black text-left text-left text-left text-left">Regidors al consistori</div>
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-32 text-left text-left text-left text-left text-left text-left text-left text-left">
+                                <div className="pt-20 pb-32 px-8 max-w-7xl mx-auto text-left text-left text-left text-left text-left text-left text-left">
+                                    <div className="section-title-box bg-mes-lime !text-black text-sm mb-12 font-black text-left text-left text-left">Regidors al consistori</div>
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-32 text-left text-left text-left text-left text-left text-left">
                                         {[
                                             {n:"Maria Barceló Calviño", r:"Portaveu Municipal", i:"imatges/02.Maria.jpg", cv:"Docent a l’IES Llucmajor. Regidora des de l’any 2015."},
                                             {n:"Oriol Gómez Díaz", r:"Regidor", i:"imatges/Oriol2.jpg", cv:"Docent de setembre de 2024. Secretari d'Organització."}
                                         ].map((r, i) => (
-                                            <div key={i} className="flex flex-col md:flex-row bg-white border border-stone-100 shadow-xl overflow-hidden text-left text-left text-left text-left text-left text-left text-left">
-                                                <img src={r.i} className="w-full md:w-64 h-96 object-cover text-left text-left text-left text-left text-left text-left text-left" />
-                                                <div className="p-10 flex flex-col justify-center text-left text-left text-left text-left text-left text-left">
-                                                    <h3 className="text-4xl font-black uppercase leading-none mb-3 text-left text-left text-left text-left text-left text-left text-left">{r.n}</h3>
-                                                    <p className="text-mes-lime font-black uppercase text-xs mb-8 tracking-widest text-left text-left text-left text-left text-left text-left text-left">{r.r}</p>
-                                                    <p className="text-stone-600 italic border-l-4 border-mes-lime pl-6 text-left text-left text-left text-left text-left text-left text-left text-left">"{r.cv}"</p>
+                                            <div key={i} className="flex flex-col md:flex-row bg-white border border-stone-100 shadow-xl overflow-hidden text-left text-left text-left text-left text-left">
+                                                <img src={r.i} loading="lazy" decoding="async" alt={r.n} className="w-full md:w-64 h-96 object-cover text-left text-left text-left text-left text-left text-left" />
+                                                <div className="p-10 flex flex-col justify-center text-left text-left text-left text-left text-left">
+                                                    <h3 className="text-4xl font-black uppercase leading-none mb-3 text-left text-left text-left text-left text-left text-left">{r.n}</h3>
+                                                    <p className="text-mes-lime font-black uppercase text-xs mb-8 tracking-widest text-left text-left text-left text-left text-left text-left">{r.r}</p>
+                                                    <p className="text-stone-600 italic border-l-4 border-mes-lime pl-6 text-left text-left text-left text-left text-left text-left text-left">"{r.cv}"</p>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="section-title-box text-sm mb-12 font-black text-left text-left text-left text-left text-left text-left text-left text-left text-left">Executiva Local</div>
-                                    <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">
+                                    <div className="section-title-box text-sm mb-12 font-black text-left text-left text-left text-left text-left text-left text-left">Executiva Local</div>
+                                    <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-left text-left text-left text-left text-left text-left text-left text-left">
                                         {teamExecutiva.map((e, i) => (
-                                            <div key={i} className="bg-stone-50 p-4 border border-stone-100 text-left text-left text-left text-left text-left text-left text-left text-left">
-                                                <img src={e.image} className="w-full h-64 object-cover mb-4 text-left text-left text-left text-left text-left text-left text-left" alt={e.name} />
-                                                <h4 className="font-black uppercase text-lg leading-none mb-1 text-left text-left text-left text-left text-left text-left text-left text-left">{e.name}</h4>
-                                                <p className="text-[9px] font-bold text-mes-lime uppercase text-left text-left text-left text-left text-left text-left text-left text-left text-left">{e.role}</p>
+                                            <div key={i} className="bg-stone-50 p-4 border border-stone-100 text-left text-left text-left text-left text-left text-left text-left">
+                                                <img src={e.image} loading="lazy" decoding="async" className="w-full h-64 object-cover mb-4 text-left text-left text-left text-left text-left text-left" alt={e.name} />
+                                                <h4 className="font-black uppercase text-lg leading-none mb-1 text-left text-left text-left text-left text-left text-left text-left">{e.name}</h4>
+                                                <p className="text-[9px] font-bold text-mes-lime uppercase text-left text-left text-left text-left text-left text-left text-left text-left">{e.role}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -459,15 +445,15 @@
                         )}
 
                         {page === 'contacte' && (
-                            <section className="animate-fade text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">
+                            <section className="animate-fade text-left text-left text-left text-left text-left text-left text-left text-left text-left">
                                 <PageHeader title="Contacte" sub="Digues la teva: t'escoltem" img="https://images.unsplash.com/photo-1516387938699-a93567ec168e?auto=format&fit=crop&q=80&w=2000" />
-                                <div className="pt-20 pb-32 px-8 max-w-5xl mx-auto text-left text-left text-left text-left text-left text-left text-left text-left text-left">
-                                    <div className="bg-white border-2 border-stone-100 p-8 shadow-sm text-left text-left text-left text-left text-left text-left text-left">
-                                        <form className="space-y-8 text-left text-left text-left text-left text-left text-left text-left" onSubmit={(e) => { e.preventDefault(); alert('Gràcies! Ens posarem en contacte amb tu.'); }}>
-                                            <input className="form-input text-left text-left text-left text-left text-left text-left" placeholder="Nom complet" required />
-                                            <input className="form-input text-left text-left text-left text-left text-left text-left text-left" type="email" placeholder="Correu electrònic" required />
-                                            <textarea className="form-input text-left text-left text-left text-left text-left text-left text-left text-left" rows="8" placeholder="Com et podem ajudar?" required></textarea>
-                                            <button type="submit" className="btn-primary w-full justify-center text-left text-left text-left text-left text-left text-left text-left text-left">Enviar missatge</button>
+                                <div className="pt-20 pb-32 px-8 max-w-5xl mx-auto text-left text-left text-left text-left text-left text-left text-left text-left">
+                                    <div className="bg-white border-2 border-stone-100 p-8 shadow-sm text-left text-left text-left text-left text-left text-left">
+                                        <form className="space-y-8 text-left text-left text-left text-left text-left text-left" onSubmit={(e) => { e.preventDefault(); alert('Gràcies!'); }}>
+                                            <input className="form-input text-left text-left text-left text-left text-left" placeholder="Nom complet" required />
+                                            <input className="form-input text-left text-left text-left text-left text-left text-left" type="email" placeholder="Correu electrònic" required />
+                                            <textarea className="form-input text-left text-left text-left text-left text-left text-left text-left" rows="8" placeholder="Com et podem ajudar?" required></textarea>
+                                            <button type="submit" className="btn-primary w-full justify-center text-left text-left text-left text-left text-left text-left text-left">Enviar missatge</button>
                                         </form>
                                     </div>
                                 </div>
@@ -476,53 +462,38 @@
                     </div>
 
                     {/* --- FOOTER FINAL --- */}
-                    <footer className="bg-mes-dark text-white pt-24 pb-12 px-8 border-t-8 border-mes-lime text-left text-left text-left text-left text-left text-left text-left">
-                        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 text-left text-left text-left text-left text-left text-left text-left">
-                            <div className="md:col-span-1 text-left text-left text-left text-left text-left text-left text-left text-left">
-                                <div className="bg-mes-lime text-black font-black px-4 py-2 text-3xl inline-block mb-6 tracking-tighter text-left text-left text-left text-left text-left">MÉS</div>
-                                <p className="text-stone-400 font-bold uppercase text-xs tracking-widest mb-4 text-left text-left text-left text-left text-left">Llucmajor · s'Arenal · Urbanitzacions</p>
-                                <p className="text-stone-500 text-sm leading-relaxed italic text-left text-left text-left text-left text-left">"Treballem des de la proximitat per un futur més just per a tota la ciutadania."</p>
+                    <footer className="bg-mes-dark text-white pt-24 pb-12 px-8 border-t-8 border-mes-lime text-left text-left text-left text-left text-left text-left">
+                        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 text-left text-left text-left text-left text-left text-left">
+                            <div className="md:col-span-1 text-left text-left text-left text-left text-left text-left text-left">
+                                <div className="bg-mes-lime text-black font-black px-4 py-2 text-3xl inline-block mb-6 tracking-tighter text-left text-left text-left text-left">MÉS</div>
+                                <p className="text-stone-400 font-bold uppercase text-xs tracking-widest mb-4 text-left text-left text-left text-left">Llucmajor · s'Arenal · Urbanitzacions</p>
+                            </div>
+                            <div className="text-left text-left text-left text-left text-left text-left text-left text-left">
+                                <h4 className="text-white font-black uppercase text-sm mb-8 border-b border-white/10 pb-2 text-left text-left text-left text-left text-left">Seccions</h4>
+                                <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-stone-400 text-left text-left text-left text-left text-left text-left text-left">
+                                    <li><button onClick={() => navigateTo('home')} className="hover:text-mes-lime transition-colors text-left">Inici</button></li>
+                                    <li><button onClick={() => navigateTo('arxiu')} className="hover:text-mes-lime transition-colors text-left">Actualitat</button></li>
+                                </ul>
                             </div>
                             <div className="text-left text-left text-left text-left text-left text-left text-left text-left text-left">
-                                <h4 className="text-white font-black uppercase text-sm mb-8 border-b border-white/10 pb-2 text-left text-left text-left text-left text-left text-left">Seccions</h4>
-                                <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-stone-400 text-left text-left text-left text-left text-left text-left text-left text-left">
-                                    <li><button onClick={() => navigateTo('home')} className="hover:text-mes-lime transition-colors text-left text-left">Inici</button></li>
-                                    <li><button onClick={() => navigateTo('arxiu')} className="hover:text-mes-lime transition-colors text-left text-left">Actualitat</button></li>
-                                    <li><button onClick={() => navigateTo('projectes')} className="hover:text-mes-lime transition-colors text-left text-left">Propostes</button></li>
-                                    <li><button onClick={() => navigateTo('programa')} className="hover:text-mes-lime transition-colors text-left text-left">Programa</button></li>
-                                    <li><button onClick={() => navigateTo('equip')} className="hover:text-mes-lime transition-colors text-left text-left text-left">L'Equip</button></li>
-                                </ul>
-                            </div>
-                            <div className="text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">
                                 <h4 className="text-white font-black uppercase text-sm mb-8 border-b border-white/10 pb-2 text-left text-left text-left text-left text-left text-left text-left text-left">Contacte</h4>
-                                <ul className="space-y-6 text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">
-                                    <li><a href="https://www.instagram.com/mesperllucmajor" target="_blank" className="flex items-center gap-4 hover:text-mes-lime transition-all group text-left text-left text-left text-left text-left text-left"><span className="p-2 bg-white/5 group-hover:bg-mes-lime group-hover:text-black transition-all text-left text-left text-left text-left text-left"><IconInsta /></span><span className="text-xs font-bold text-left text-left text-left text-left text-left text-left text-left text-left text-left">@mesperllucmajor</span></a></li>
-                                    <li><a href="https://www.facebook.com/mesperllucmajor" target="_blank" className="flex items-center gap-4 hover:text-mes-lime transition-all group text-left text-left text-left text-left text-left text-left text-left"><span className="p-2 bg-white/5 group-hover:bg-mes-lime group-hover:text-black transition-all text-left text-left text-left text-left text-left"><IconFb /></span><span className="text-xs font-bold text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">/mesperllucmajor</span></a></li>
-                                    <li><a href="mailto:mesperllucmajor@gmail.com" className="flex items-center gap-4 hover:text-mes-lime transition-all group text-left text-left text-left text-left text-left text-left text-left text-left text-left"><span className="p-2 bg-white/5 group-hover:bg-mes-lime group-hover:text-black transition-all text-left text-left text-left text-left text-left text-left text-left"><IconMail /></span><span className="text-xs font-bold text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">mesperllucmajor@gmail.com</span></a></li>
-                                </ul>
-                            </div>
-                            <div className="text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">
-                                <h4 className="text-white font-black uppercase text-sm mb-8 border-b border-white/10 pb-2 text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">Informació</h4>
-                                <ul className="space-y-4 text-[10px] font-black uppercase tracking-[0.2em] text-stone-500 text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">
-                                    <li><a href="#" className="hover:text-white text-left text-left text-left text-left">Avís Legal</a></li>
-                                    <li><a href="#" className="hover:text-white text-left text-left text-left text-left text-left">Política de Privacitat</a></li>
-                                    <li className="pt-8 text-white/20 text-left text-left text-left text-left text-left text-left text-left text-left">© 2026 MÉS PER LLUCMAJOR</li>
+                                <ul className="space-y-6 text-left text-left text-left text-left text-left text-left text-left text-left text-left">
+                                    <li><a href="mailto:mesperllucmajor@gmail.com" className="flex items-center gap-4 hover:text-mes-lime transition-all group text-left text-left text-left text-left text-left text-left text-left text-left"><span className="p-2 bg-white/5 group-hover:bg-mes-lime group-hover:text-black transition-all text-left text-left text-left text-left text-left text-left"><IconMail /></span><span className="text-xs font-bold text-left text-left text-left text-left text-left text-left text-left text-left text-left text-left">mesperllucmajor@gmail.com</span></a></li>
                                 </ul>
                             </div>
                         </div>
                     </footer>
 
-                    {/* MODAL LECTURA RESTAURAT AMB BOTÓ WHATSAPP */}
+                    {/* MODAL LECTURA */}
                     {selectedItem && (
                         <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[300] flex items-center justify-center p-4 text-left text-left text-left text-left" onClick={() => setSelectedItem(null)}>
-                            <div className="bg-white max-w-4xl w-full max-h-[90vh] overflow-y-auto p-12 relative shadow-2xl text-left text-left text-left text-left text-left" onClick={e => e.stopPropagation()}>
+                            <div className="bg-white max-w-4xl w-full max-h-[90vh] overflow-y-auto p-12 relative shadow-2xl text-left text-left text-left text-left" onClick={e => e.stopPropagation()}>
                                 <button onClick={() => setSelectedItem(null)} className="absolute top-6 right-8 text-4xl text-stone-400 hover:text-mes-lime text-left text-left text-left">&times;</button>
-                                <div className="section-title-box mb-4 text-left text-left text-left text-left">{selectedItem.category}</div>
-                                <h2 className="modal-title text-left text-left text-left text-left text-left text-left">{selectedItem.title}</h2>
-                                <div className="article-body whitespace-pre-wrap text-left text-left text-left text-left text-left">{selectedItem.content}</div>
-                                <div className="mt-12 pt-8 border-t border-stone-100 flex justify-between items-center text-left text-left text-left text-left text-left">
-                                    <button onClick={() => shareOnWhatsapp(selectedItem)} className="p-3 bg-green-50 text-green-600 border border-green-200 text-left text-left text-left text-left">Compartir per WhatsApp</button>
-                                    <button onClick={() => setSelectedItem(null)} className="btn-primary !px-12 text-left text-left text-left text-left text-left">Tancar lectura</button>
+                                <div className="section-title-box mb-4 text-left text-left text-left">{selectedItem.category}</div>
+                                <h2 className="modal-title text-left text-left text-left text-left text-left">{selectedItem.title}</h2>
+                                <div className="article-body whitespace-pre-wrap text-left text-left text-left text-left">{selectedItem.content}</div>
+                                <div className="mt-12 pt-8 border-t border-stone-100 flex justify-between items-center text-left text-left text-left text-left">
+                                    <button onClick={() => shareOnWhatsapp(selectedItem)} className="p-3 bg-green-50 text-green-600 border border-green-200 text-left text-left text-left">Compartir per WhatsApp</button>
                                 </div>
                             </div>
                         </div>
