@@ -5,39 +5,82 @@ permalink: /actualitat/
 ---
 
 <header class="relative h-[350px] flex items-center overflow-hidden">
-    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover scale-105" alt="Actualitat MÉS" />
+    <img src="https://images.unsplash.com/photo-1504711434969-e33f5eb0be23?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover scale-105" alt="Actualitat MÉS" />
     <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
     <div class="relative z-10 w-full px-8 md:px-16 text-left">
         <div class="max-w-3xl text-left">
             <h1 class="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter mb-4 leading-none">Actualitat</h1>
-            <p class="text-mes-lime text-lg font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-4 inline-block bg-black/40 pr-6 py-1">Informació i opinió del grup municipal</p>
+            <p class="text-mes-lime text-lg font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-4 inline-block bg-black/40 pr-6 py-1">L'altaveu de Llucmajor</p>
         </div>
     </div>
 </header>
 
-<div class="pt-20 pb-32 px-8 max-w-7xl mx-auto text-left">
-    <div class="space-y-6 text-left">
+<div class="pt-12 pb-32 px-8 max-w-7xl mx-auto text-left">
+    
+    <div class="flex flex-wrap gap-3 mb-12 justify-start border-b border-stone-200 pb-8" id="filters-actualitat">
+        <button class="filter-btn tag-pill active text-[11px] md:text-sm" data-filter="tots">Tot</button>
+        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="noticia">Notícies</button>
+        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="article">Articles d'Opinió</button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left" id="news-grid">
+        
         {% for post in site.posts %}
-        <a href="{{ site.baseurl }}{{ post.url }}" class="archive-item block bg-white border border-stone-100 flex flex-col md:flex-row items-center p-8 gap-10 shadow-sm hover:-translate-y-1 transition-transform">
-            <div class="shrink-0 w-36 text-left">
-                <div class="text-[11px] font-black text-stone-300 mb-2 uppercase">{{ post.date | date: "%d/%m/%Y" }}</div>
-                <div class="text-[8px] font-black px-2 py-0.5 inline-block uppercase bg-mes-dark text-white">{{ post.category }}</div>
+        
+        {% assign post_cat = post.category | downcase %}
+        {% assign clean_cat = post_cat | replace: 'í', 'i' %}
+        
+        <a href="{{ site.baseurl }}{{ post.url }}" class="news-card cursor-pointer group text-left block" data-category="{{ clean_cat }}">
+            <div class="h-56 overflow-hidden mb-6 border-b-4 border-mes-dark group-hover:border-mes-lime relative bg-stone-100 text-left">
+                {% if post.image %}
+                <img src="{{ site.baseurl }}{{ post.image }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:scale-105 transition-all text-left" />
+                {% endif %}
+                <div class="absolute top-4 left-4 bg-mes-dark text-white text-[10px] font-black uppercase px-3 py-1">{{ post.category }}</div>
             </div>
             
-            <div class="flex-grow text-left">
-                <h3 class="text-xl md:text-2xl font-black uppercase group-hover:text-mes-lime transition-colors text-mes-dark">{{ post.title }}</h3>
-                <p class="text-sm text-stone-500 italic mt-2">{{ post.summary }}</p>
-                <div class="flex gap-2 mt-4 text-left">
-                    {% for tag in post.tags %}
-                    <span class="text-[8px] font-bold text-stone-400 uppercase border border-stone-200 px-2 py-1">#{{ tag }}</span>
-                    {% endfor %}
-                </div>
-            </div>
+            <span class="text-[10px] text-stone-400 font-bold mb-2 uppercase text-left">{{ post.date | date: "%d/%m/%Y" }}</span>
+            <h3 class="font-black uppercase text-xl leading-tight mb-4 group-hover:text-mes-lime transition-colors text-left text-mes-dark">{{ post.title }}</h3>
             
-            <span class="bg-mes-dark text-white px-8 py-3 text-[10px] font-black uppercase whitespace-nowrap">Llegir notícia</span>
+            {% if post.summary %}
+            <p class="text-stone-500 text-sm mb-6">{{ post.summary }}</p>
+            {% endif %}
+            
+            <span class="text-[10px] font-black uppercase border-b-2 border-mes-lime text-left text-mes-dark">
+                {% if clean_cat == 'article' %}
+                    Mostra article
+                {% else %}
+                    Mostra notícia
+                {% endif %}
+            </span>
         </a>
-        {% else %}
-        <p class="text-stone-400 font-bold uppercase text-center w-full py-12">Encara no hi ha notícies publicades.</p>
         {% endfor %}
+        
     </div>
 </div>
+
+<script>
+    const filterBtns = document.querySelectorAll('#filters-actualitat .filter-btn');
+    const newsCards = document.querySelectorAll('.news-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Canviem l'estil del botó actiu
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Mirem quina pestanya s'ha clicat
+            const filterValue = btn.getAttribute('data-filter');
+
+            // Filtrem les targetes
+            newsCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                
+                if (filterValue === 'tots' || cardCategory === filterValue) {
+                    card.style.display = 'block'; // Ensenya
+                } else {
+                    card.style.display = 'none';  // Amaga
+                }
+            });
+        });
+    });
+</script>
