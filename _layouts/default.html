@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    {% seo %}
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+    <title>
+      {% if page.url == "/" or page.url == "/index.html" %}
+        MÉS per Llucmajor | Política per a la gent
+      {% else %}
+        {{ page.title }} | MÉS per Llucmajor
+      {% endif %}
+    </title>
 
-       <title>
-      MÉS per Llucmajor | Política per a la gent
-  </title>
+    {% seo %}
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,36 +33,24 @@
     </script>
 
     <style>
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 80px; /* Compensa l'alçada del menú fix perquè no tapi el títol */
-        }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
         body { font-family: 'Barlow', sans-serif; overflow-x: hidden; color: #1a1a1a; background-color: #ffffff; text-align: left; }
         * { border-radius: 0 !important; }
         .bg-mes-lime { background-color: #c6d100; }
         .btn-primary { background-color: #c6d100; color: #1a1a1a; font-weight: 800; text-transform: uppercase; padding: 1rem 2.5rem; transition: all 0.3s ease; display: inline-flex; align-items: center; letter-spacing: 0.1em; font-size: 0.8rem; }
         .btn-primary:hover { background-color: #1a1a1a; color: #c6d100; }
         .section-title-box { background-color: #1a1a1a; color: white; padding: 0.2rem 0.6rem; display: inline-block; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; font-size: 0.6rem; }
-        .form-input { border: 2px solid #e5e2d9; padding: 1rem; width: 100%; transition: all 0.2s; font-size: 1rem; background: #fff; display: block; }
-        .form-input:focus { border-color: #c6d100; outline: none; background-color: #f9f8f4; }
-        .tag-pill { cursor: pointer; padding: 4px 12px; font-size: 10px; font-weight: 800; text-transform: uppercase; border: 1px solid #e5e2d9; transition: all 0.2s; }
-        .tag-pill:hover, .tag-pill.active { background: #c6d100; border-color: #c6d100; color: black; }
-
-        /* --- CLASSES DEL BANNER/SLIDER RECUPERADES --- */
+        
+        /* Classes del Slider */
         .hero-slide { position: absolute; inset: 0; transition: opacity 1.5s ease-in-out; opacity: 0; z-index: 0; }
         .hero-slide.active { opacity: 1; z-index: 10; }
         .hero-zoom { animation: zoomEffect 25s infinite alternate linear; }
         @keyframes zoomEffect { from { transform: scale(1); } to { transform: scale(1.15); } }
-        
         .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s; }
         .hero-dot.active { background: #c6d100; width: 24px; border-radius: 4px; }
-
-        /* --- CLASSES PER AL BLOC TERRITORI DE LA PORTADA --- */
-        .zone-col { position: relative; height: 500px; overflow: hidden; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; border-right: 1px solid rgba(255,255,255,0.1); flex-grow: 1; }
-        @media (min-width: 768px) { .zone-col:hover { flex-grow: 3; } }
     </style>
-
 </head>
+
 <body class="min-h-screen flex flex-col">
 
     <nav class="fixed w-full bg-white/95 backdrop-blur-sm z-50 border-b-4 border-mes-lime transition-all duration-300" id="navbar">
@@ -138,8 +126,8 @@
         </div>
     </footer>
 
-    <script>
-        // Codi que ja tenies per l'ombra de la barra de navegació
+   <script>
+        // 1. Control de l'ombra de la barra de navegació
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 10) {
@@ -149,6 +137,15 @@
             }
         });
 
+        // 2. Lògica per obrir/tancar el menú mòbil (Això és el que faltava)
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
 
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
 </body>
 </html>
