@@ -31,7 +31,11 @@
     </script>
 
     <style>
-        body { font-family: 'Barlow', sans-serif; overflow-x: hidden; color: #1a1a1a; scroll-behavior: smooth; background-color: #ffffff; text-align: left; }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px; /* Compensa l'alçada del menú fix perquè no tapi el títol */
+        }
+        body { font-family: 'Barlow', sans-serif; overflow-x: hidden; color: #1a1a1a; background-color: #ffffff; text-align: left; }
         * { border-radius: 0 !important; }
         .bg-mes-lime { background-color: #c6d100; }
         .btn-primary { background-color: #c6d100; color: #1a1a1a; font-weight: 800; text-transform: uppercase; padding: 1rem 2.5rem; transition: all 0.3s ease; display: inline-flex; align-items: center; letter-spacing: 0.1em; font-size: 0.8rem; }
