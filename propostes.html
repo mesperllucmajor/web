@@ -17,13 +17,13 @@ permalink: /propostes/
 
 <div class="pt-12 pb-32 px-8 max-w-7xl mx-auto text-left">
     
-    <div class="flex flex-wrap gap-3 mb-12 justify-start border-b border-stone-200 pb-8" id="filters">
-        <button class="filter-btn tag-pill active text-[11px] md:text-sm" data-filter="totes">Totes les propostes</button>
-        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="llucmajor">Llucmajor Poble</button>
-        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="arenal">s'Arenal</button>
-        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="urbanitzacions">Urbanitzacions</button>
-        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="estanyol">s'Estanyol i Son Bieló</button>
-        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="foravila">Foravila</button>
+    <div class="flex flex-wrap gap-4 mb-12 justify-start border-b border-stone-200 pb-8" id="filters">
+        <button class="filter-btn bg-mes-dark text-mes-lime border-mes-dark border-2 px-6 py-2.5 text-[11px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="totes">Totes les propostes</button>
+        <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-6 py-2.5 text-[11px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="llucmajor">Llucmajor Poble</button>
+        <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-6 py-2.5 text-[11px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="arenal">s'Arenal</button>
+        <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-6 py-2.5 text-[11px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="urbanitzacions">Urbanitzacions</button>
+        <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-6 py-2.5 text-[11px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="estanyol">s'Estanyol i Son Bieló</button>
+        <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-6 py-2.5 text-[11px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="foravila">Foravila</button>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left" id="proposals-grid">
@@ -46,8 +46,7 @@ permalink: /propostes/
             </div>
         </div>
 
-        </div>
-</div>
+    </div> </div>
 
 <script>
     const filterBtns = document.querySelectorAll('.filter-btn');
@@ -55,14 +54,20 @@ permalink: /propostes/
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Canviem l'estil visual del botó clicat
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            
+            // 1. Canvi Visual: Tots els botons a gris (Inactius)
+            filterBtns.forEach(b => {
+                b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+                b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200');
+            });
 
-            // Llegim quin nucli vol veure l'usuari
+            // 2. Canvi Visual: Botó clicat a negre/llima (Actiu)
+            btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
+            btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+
+            // 3. Lògica de filtratge
             const filterValue = btn.getAttribute('data-filter');
 
-            // Amaguem o mostrem les propostes segons la zona
             proposalCards.forEach(card => {
                 if (filterValue === 'totes' || card.getAttribute('data-zone') === filterValue) {
                     card.style.display = 'block'; // Mostra
@@ -74,39 +79,55 @@ permalink: /propostes/
     });
 </script>
 
-<button id="open-modal-btn" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-dark text-white px-6 py-4 font-black uppercase text-xs md:text-sm tracking-widest border-2 border-transparent hover:bg-mes-lime hover:text-mes-dark shadow-2xl z-40 flex items-center gap-2 transition-all">
+<button id="open-modal-btn" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-dark text-white px-6 py-4 font-black uppercase text-xs md:text-sm tracking-widest border-2 border-transparent hover:bg-mes-lime hover:text-mes-dark shadow-2xl z-40 flex items-center gap-2 transition-all transform hover:-translate-y-1">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
     Fes la teva proposta
 </button>
 
-<div id="proposal-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 md:p-8 opacity-0 transition-opacity duration-300">
-    <div class="bg-white w-full max-w-xl relative shadow-2xl transform scale-95 transition-transform duration-300" id="proposal-modal-content">
+<div id="proposal-modal" class="fixed inset-0 bg-mes-dark/90 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+    <div class="bg-white w-full max-w-lg relative shadow-2xl transform scale-95 transition-transform duration-300" id="proposal-modal-content">
         
-        <button id="close-modal-btn" class="absolute top-4 right-4 text-stone-400 hover:text-mes-dark p-2">
+        <button id="close-modal-btn" class="absolute top-4 right-4 text-stone-400 hover:text-mes-dark p-2 z-10">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
 
         <div class="p-8 md:p-12 text-left">
             <h3 class="text-3xl font-black uppercase mb-2 text-mes-dark">Tens una idea?</h3>
-            <p class="text-stone-500 mb-8 text-sm">Envia'ns la teva proposta per millorar Llucmajor, s'Arenal o les Urbanitzacions. L'estudiarem per incorporar-la al nostre programa.</p>
+            <p class="text-stone-500 mb-8 text-sm italic">Envia'ns la teva proposta. L'estudiarem per incorporar-la al nostre programa.</p>
 
-            <form id="proposta-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="space-y-4">
-                <input class="form-input text-left" type="text" name="nom" placeholder="El teu nom" required />
-                <input class="form-input text-left" type="email" name="email" placeholder="Correu electrònic" required />
+            <form id="proposta-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="flex flex-col gap-6">
                 
-                <select name="zona" class="form-input text-left bg-transparent" required>
-                    <option value="" disabled selected>De quin nucli és la proposta?</option>
-                    <option value="Llucmajor">Llucmajor Poble</option>
-                    <option value="s'Arenal">s'Arenal</option>
-                    <option value="Urbanitzacions">Urbanitzacions</option>
-                    <option value="s'Estanyol/Son Bieló">s'Estanyol i Son Bieló</option>
-                    <option value="Foravila">Foravila</option>
-                    <option value="Tot el municipi">És general (Tot el municipi)</option>
-                </select>
+                <div class="flex flex-col gap-2 text-left">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400 text-left">Nom i Llinatges</label>
+                    <input class="form-input text-left" type="text" name="nom" placeholder="El teu nom complet" required />
+                </div>
 
-                <textarea class="form-input text-left" name="proposta" rows="5" placeholder="Explica'ns la teva idea detalladament..." required></textarea>
+                <div class="flex flex-col gap-2 text-left">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400 text-left">Correu Electrònic</label>
+                    <input class="form-input text-left" type="email" name="email" placeholder="Exemple: joan@correu.com" required />
+                </div>
+
+                <div class="flex flex-col gap-2 text-left">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400 text-left">Selecciona el nucli</label>
+                    <select name="zona" class="form-input text-left bg-transparent" required>
+                        <option value="" disabled selected>De quin nucli és la proposta?</option>
+                        <option value="Llucmajor">Llucmajor Poble</option>
+                        <option value="s'Arenal">s'Arenal</option>
+                        <option value="Urbanitzacions">Les Urbanitzacions</option>
+                        <option value="s'Estanyol/Son Bieló">s'Estanyol i Son Bieló</option>
+                        <option value="Foravila">Foravila</option>
+                        <option value="General">És general (Tot el municipi)</option>
+                    </select>
+                </div>
+
+                <div class="flex flex-col gap-2 text-left">
+                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400 text-left">Desenvolupa la teva idea</label>
+                    <textarea class="form-input text-left" name="proposta" rows="4" placeholder="Explica'ns els detalls..." required></textarea>
+                </div>
                 
-                <button id="proposta-btn" type="submit" class="btn-primary w-full justify-center text-left mt-4">Enviar Proposta</button>
+                <div class="pt-2">
+                    <button id="proposta-btn" type="submit" class="btn-primary w-full justify-center py-5 text-base">Enviar Proposta</button>
+                </div>
                 
                 <div id="proposta-status" class="hidden mt-4 p-4 bg-green-50 text-green-700 border border-green-200 font-bold text-center text-xs uppercase tracking-widest">
                     ✅ Proposta rebuda! Moltes gràcies per la teva implicació.
@@ -117,22 +138,20 @@ permalink: /propostes/
 </div>
 
 <script>
+    // Lògica del Modal i Formspree (Igual que a l'Índex)
     const openBtn = document.getElementById('open-modal-btn');
     const closeBtn = document.getElementById('close-modal-btn');
     const modal = document.getElementById('proposal-modal');
     const modalContent = document.getElementById('proposal-modal-content');
     
-    // Obrir la finestra
     openBtn.addEventListener('click', () => {
         modal.classList.remove('hidden');
-        // Petit retard per l'animació suau d'entrada
         setTimeout(() => {
             modal.classList.remove('opacity-0');
             modalContent.classList.remove('scale-95');
         }, 10);
     });
 
-    // Tancar la finestra
     const closeModal = () => {
         modal.classList.add('opacity-0');
         modalContent.classList.add('scale-95');
@@ -140,13 +159,8 @@ permalink: /propostes/
     };
 
     closeBtn.addEventListener('click', closeModal);
-    
-    // Tancar si fan clic a fora de la capsa blanca
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-    // Enviament del formulari sense recarregar (Formspree AJAX)
     const propForm = document.getElementById("proposta-form");
     const propStatus = document.getElementById("proposta-status");
     const propBtn = document.getElementById("proposta-btn");
@@ -154,34 +168,16 @@ permalink: /propostes/
     propForm.addEventListener("submit", async function(event) {
         event.preventDefault();
         propBtn.innerHTML = "Enviant...";
-        propBtn.style.opacity = "0.5";
-        propBtn.disabled = true;
-
-        var data = new FormData(event.target);
         
-        fetch(event.target.action, {
-            method: propForm.method,
-            body: data,
-            headers: { 'Accept': 'application/json' }
-        }).then(response => {
+        var data = new FormData(event.target);
+        fetch(event.target.action, { method: propForm.method, body: data, headers: { 'Accept': 'application/json' } })
+        .then(response => {
             if (response.ok) {
                 propStatus.classList.remove("hidden");
                 propForm.reset();
                 propBtn.innerHTML = "Enviar Proposta";
-                propBtn.style.opacity = "1";
-                propBtn.disabled = false;
-                
-                // Amaga el missatge i tanca la finestra al cap de 3 segons
-                setTimeout(() => { 
-                    propStatus.classList.add("hidden"); 
-                    closeModal();
-                }, 3000);
-            } else {
-                propBtn.innerHTML = "Hi ha hagut un error";
-                propBtn.style.backgroundColor = "#ffcccc";
+                setTimeout(() => { propStatus.classList.add("hidden"); closeModal(); }, 3000);
             }
-        }).catch(error => {
-            propBtn.innerHTML = "Error de connexió";
         });
     });
 </script>
