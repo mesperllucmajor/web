@@ -32,15 +32,15 @@ permalink: /propostes/
         <div class="proposal-card bg-white border-b-8 border-transparent hover:border-mes-lime transition-all group shadow-sm text-left block" data-zone="{{ proposta.zona_id }}">
             
             {% if proposta.imatge %}
-                <div class="w-full aspect-video overflow-hidden bg-stone-100 relative">
+                <div class="w-full aspect-square md:aspect-[4/5] overflow-hidden bg-stone-200 relative border-b border-stone-200">
                     {% if proposta.imatge contains 'http' %}
-                        <img src="{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" alt="{{ proposta.titol }}" />
+                        <img src="{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500" alt="{{ proposta.titol }}" />
                     {% else %}
-                        <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" alt="{{ proposta.titol }}" />
+                        <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-500" alt="{{ proposta.titol }}" />
                     {% endif %}
                 </div>
             {% else %}
-                <div class="w-full aspect-video bg-stone-200 flex items-center justify-center">
+                <div class="w-full aspect-square md:aspect-[4/5] bg-stone-200 flex items-center justify-center border-b border-stone-200">
                     <span class="text-stone-400 font-bold uppercase text-xs tracking-widest">Sense imatge</span>
                 </div>
             {% endif %}
