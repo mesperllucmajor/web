@@ -41,29 +41,45 @@ title: Inici
 </header>
 
 <main>
-    <section id="highlight-banner" class="bg-mes-lime py-6 px-8 border-y-2 border-mes-dark/10">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <section id="highlight-banner" class="bg-mes-lime border-y-2 border-mes-dark/10">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2">
         
-        <div class="flex items-center gap-4 text-left">
-            <div class="bg-mes-dark text-mes-lime p-3 hidden md:block">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.297A2.45 2.45 0 0112 19.19c.408 0 .8.106 1.118.297V5.882L11 5.882zM15.5 14H19M15.5 11H19M15.5 17H19M5 14H8.5M5 11H8.5M5 17H8.5"></path></svg>
+        <div class="py-6 px-8 flex items-center justify-between gap-4 border-b md:border-b-0 md:border-r border-mes-dark/10 group">
+            <div class="flex items-center gap-4 text-left">
+                <div class="bg-mes-dark text-mes-lime p-2 hidden sm:block">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <div class="text-left">
+                    <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60 mb-1">Campanya</span>
+                    <h3 class="text-lg font-black uppercase text-mes-dark leading-tight group-hover:underline">Llei de Projectes Residencials</h3>
+                </div>
             </div>
-            
-            <div class="text-left">
-                <span class="block text-[10px] font-black uppercase tracking-[0.2em] text-mes-dark/60 mb-1">Destaquem</span>
-                <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark leading-tight">
-                    Llei de Projectes Residencials Estratègics: Com ens afecta?
-                </h3>
-            </div>
+            <a href="{{ site.baseurl }}/llei-projectes/" class="p-2 border-2 border-mes-dark text-mes-dark hover:bg-mes-dark hover:text-white transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
         </div>
 
-        <a href="{{ site.baseurl }}/llei-projectes/" class="bg-mes-dark text-white px-8 py-3 font-black uppercase text-xs tracking-widest hover:bg-black transition-all flex items-center gap-2 whitespace-nowrap">
-            Més informació
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-        </a>
+        {% assign darrera_noticia = site.posts.first %}
+        <div class="py-6 px-8 flex items-center justify-between gap-4 bg-white/30 group">
+            <div class="flex items-center gap-4 text-left">
+                <div class="bg-mes-dark text-white p-2 hidden sm:block">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v6h6"></path></svg>
+                </div>
+                <div class="text-left">
+                    <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60 mb-1">Darrera hora</span>
+                    <h3 class="text-lg font-black uppercase text-mes-dark leading-tight group-hover:underline">
+                        {{ darrera_noticia.title | truncate: 45 }}
+                    </h3>
+                </div>
+            </div>
+            <a href="{{ site.baseurl }}{{ darrera_noticia.url }}" class="p-2 border-2 border-mes-dark text-mes-dark hover:bg-mes-dark hover:text-white transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
+        </div>
 
     </div>
 </section>
+
     <section id="actualitat-home" class="py-24 bg-white px-8 text-left">
         <div class="max-w-7xl mx-auto">
             <div class="flex justify-between items-end mb-12">
