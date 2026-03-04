@@ -32,11 +32,15 @@ permalink: /propostes/
         <div class="proposal-card bg-white border-b-8 border-transparent hover:border-mes-lime transition-all group shadow-sm text-left block" data-zone="{{ proposta.zona_id }}">
             
             {% if proposta.imatge %}
-            <img src="{{ proposta.imatge }}" class="w-full h-56 object-cover text-left" alt="{{ proposta.titol }}" />
+                {% if proposta.imatge contains 'http' %}
+                    <img src="{{ proposta.imatge }}" class="w-full h-56 object-cover text-left" alt="{{ proposta.titol }}" />
+                {% else %}
+                    <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="w-full h-56 object-cover text-left" alt="{{ proposta.titol }}" />
+                {% endif %}
             {% else %}
-            <div class="w-full h-56 bg-stone-200 flex items-center justify-center">
-                <span class="text-stone-400 font-bold uppercase text-xs">Sense imatge</span>
-            </div>
+                <div class="w-full h-56 bg-stone-200 flex items-center justify-center">
+                    <span class="text-stone-400 font-bold uppercase text-xs">Sense imatge</span>
+                </div>
             {% endif %}
 
             <div class="p-8 text-left">
