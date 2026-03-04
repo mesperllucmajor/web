@@ -47,17 +47,7 @@ permalink: /propostes/
         </div>
         {% endfor %}
 
-    </div> ```
-
-
-
-### Què hi guanyem amb això?
-
-1.  **Zero errors d'HTML:** L'administrador ja no pot trencar un `<div>` o esborrar una classe de Tailwind per accident, perquè només toca text pla al YAML.
-2.  **Imatge de seguretat:** He afegit una petita lògica (`{% if proposta.imatge %}`) perquè si alguna vegada pugen una proposta sense foto, la web no es trenqui i mostri un quadrat gris net i endreçat.
-3.  **Filtres automàtics:** Com que el `data-zone` s'omple amb el que poses al YAML, el JavaScript que vam fer abans per filtrar per nuclis seguirà funcionant a la perfecció de forma automàtica.
-
-**T'agradaria que ara que domines aquest sistema de fitxers YAML l'apliquéssim a la pàgina de l'EQUIP per poder pujar les fotos i càrrecs de la gent de la mateixa manera?**
+    </div> 
 
 <script>
     const filterBtns = document.querySelectorAll('.filter-btn');
