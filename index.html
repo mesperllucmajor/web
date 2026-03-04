@@ -217,23 +217,37 @@ title: Inici
     Suma't al projecte
 </button>
 
-<div id="index-contact-modal" class="fixed inset-0 bg-mes-dark/90 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-    <div class="bg-white w-full max-w-lg relative shadow-2xl transform scale-95 transition-transform duration-300" id="index-modal-content">
-        <button id="close-index-contact" class="absolute top-4 right-4 text-stone-400 hover:text-mes-dark p-2">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-        <div class="p-8 md:p-10 text-left">
-            <h3 class="text-3xl font-black uppercase mb-2 text-mes-dark leading-none">Fes pinya amb noltros</h3>
-            <p class="text-stone-500 mb-6 text-sm italic">Suma't al projecte o envia'ns la teva consulta.</p>
-            <form id="index-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="space-y-4">
-                <input class="form-input text-left" type="text" name="nom" placeholder="Nom complet" required />
-                <input class="form-input text-left" type="email" name="email" placeholder="Correu electrònic" required />
-                <textarea class="form-input text-left" name="missatge" rows="4" placeholder="Com vols col·laborar?" required></textarea>
-                <button id="index-form-btn" type="submit" class="btn-primary w-full justify-center text-left">Enviar</button>
-                <div id="index-form-status" class="hidden mt-4 p-4 bg-green-50 text-green-700 border border-green-200 font-bold text-center text-xs uppercase tracking-widest">✅ Gràcies! Rebut.</div>
-            </form>
+<div class="p-8 md:p-12 text-left">
+    <h3 class="text-3xl md:text-4xl font-black uppercase mb-2 text-mes-dark leading-none">Fes pinya amb noltros</h3>
+    <p class="text-stone-500 mb-8 text-sm md:text-base italic">Vols sumar-te al projecte o fer-nos una consulta? T'escoltam.</p>
+
+    <form id="index-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="flex flex-col gap-6">
+        
+        <div class="flex flex-col gap-2">
+            <label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Nom i Llinatges</label>
+            <input class="form-input" type="text" name="nom" placeholder="Escriu el teu nom complet" required />
         </div>
-    </div>
+
+        <div class="flex flex-col gap-2">
+            <label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Correu Electrònic</label>
+            <input class="form-input" type="email" name="email" placeholder="Exemple: joan@correu.com" required />
+        </div>
+
+        <div class="flex flex-col gap-2">
+            <label class="text-[10px] font-black uppercase tracking-widest text-stone-400">En què penses?</label>
+            <textarea class="form-input" name="missatge" rows="4" placeholder="Explica'ns com vols col·laborar o quina és la teva proposta..." required></textarea>
+        </div>
+
+        <div class="pt-2">
+            <button id="index-form-btn" type="submit" class="btn-primary w-full justify-center py-5 text-base">
+                Enviar i sumar-m'hi
+            </button>
+        </div>
+
+        <div id="index-form-status" class="hidden p-4 bg-green-50 text-green-700 border border-green-200 font-bold text-center text-xs uppercase tracking-widest">
+            ✅ Missatge rebut! Ens posarem en contacte amb tu molt aviat.
+        </div>
+    </form>
 </div>
 
 <script>
