@@ -28,25 +28,36 @@ permalink: /propostes/
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left" id="proposals-grid">
         
-        <div class="proposal-card bg-white border-b-8 border-transparent hover:border-mes-lime transition-all group shadow-sm text-left block" data-zone="llucmajor">
-            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018" class="w-full h-56 object-cover text-left" alt="Poliesportiu" />
+        {% for proposta in site.data.propostes %}
+        <div class="proposal-card bg-white border-b-8 border-transparent hover:border-mes-lime transition-all group shadow-sm text-left block" data-zone="{{ proposta.zona_id }}">
+            
+            {% if proposta.imatge %}
+            <img src="{{ proposta.imatge }}" class="w-full h-56 object-cover text-left" alt="{{ proposta.titol }}" />
+            {% else %}
+            <div class="w-full h-56 bg-stone-200 flex items-center justify-center">
+                <span class="text-stone-400 font-bold uppercase text-xs">Sense imatge</span>
+            </div>
+            {% endif %}
+
             <div class="p-8 text-left">
-                <h3 class="text-2xl font-black uppercase mb-4 group-hover:text-mes-lime text-left">Nou accés al Poliesportiu</h3>
-                <p class="text-sm text-stone-500 mb-8 italic text-left">Projecte integral per millorar els accessos i garantir la seguretat viària al poliesportiu municipal.</p>
-                <span class="text-[10px] font-black uppercase border-b-2 border-mes-lime text-left">Llucmajor Poble</span>
+                <h3 class="text-2xl font-black uppercase mb-4 group-hover:text-mes-lime text-left">{{ proposta.titol }}</h3>
+                <p class="text-sm text-stone-500 mb-8 italic text-left">{{ proposta.descripcio }}</p>
+                <span class="text-[10px] font-black uppercase border-b-2 border-mes-lime text-left">{{ proposta.zona_nom }}</span>
             </div>
         </div>
+        {% endfor %}
 
-        <div class="proposal-card bg-white border-b-8 border-transparent hover:border-mes-lime transition-all group shadow-sm text-left block" data-zone="arenal">
-            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" class="w-full h-56 object-cover text-left" alt="Passeig Marítim" />
-            <div class="p-8 text-left">
-                <h3 class="text-2xl font-black uppercase mb-4 group-hover:text-mes-lime text-left">Reforma Passeig Marítim</h3>
-                <p class="text-sm text-stone-500 mb-8 italic text-left">Recuperar el front marítim per al gaudi dels veïnats de s'Arenal.</p>
-                <span class="text-[10px] font-black uppercase border-b-2 border-mes-lime text-left">s'Arenal</span>
-            </div>
-        </div>
+    </div> ```
 
-    </div> </div>
+
+
+### Què hi guanyem amb això?
+
+1.  **Zero errors d'HTML:** L'administrador ja no pot trencar un `<div>` o esborrar una classe de Tailwind per accident, perquè només toca text pla al YAML.
+2.  **Imatge de seguretat:** He afegit una petita lògica (`{% if proposta.imatge %}`) perquè si alguna vegada pugen una proposta sense foto, la web no es trenqui i mostri un quadrat gris net i endreçat.
+3.  **Filtres automàtics:** Com que el `data-zone` s'omple amb el que poses al YAML, el JavaScript que vam fer abans per filtrar per nuclis seguirà funcionant a la perfecció de forma automàtica.
+
+**T'agradaria que ara que domines aquest sistema de fitxers YAML l'apliquéssim a la pàgina de l'EQUIP per poder pujar les fotos i càrrecs de la gent de la mateixa manera?**
 
 <script>
     const filterBtns = document.querySelectorAll('.filter-btn');
