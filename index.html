@@ -41,44 +41,65 @@ title: Inici
 </header>
 
 <main>
-    <section id="highlight-banner" class="bg-mes-lime border-y-2 border-mes-dark/10">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2">
+    <section id="highlight-banner" class="bg-mes-lime border-y-2 border-mes-dark/10 relative h-20 md:h-24 overflow-hidden">
+    <div class="max-w-7xl mx-auto h-full px-8 relative">
         
-        <div class="py-6 px-8 flex items-center justify-between gap-4 border-b md:border-b-0 md:border-r border-mes-dark/10 group">
+        <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-100 translate-y-0 px-8" data-index="0">
             <div class="flex items-center gap-4 text-left">
                 <div class="bg-mes-dark text-mes-lime p-2 hidden sm:block">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                 </div>
                 <div class="text-left">
-                    <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60 mb-1">Campanya</span>
-                    <h3 class="text-lg font-black uppercase text-mes-dark leading-tight group-hover:underline">Llei de Projectes Residencials</h3>
+                    <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60">Campanya Especial</span>
+                    <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark leading-tight">Llei de Projectes Residencials Estratègics: L'anàlisi</h3>
                 </div>
             </div>
-            <a href="{{ site.baseurl }}/llei-projectes/" class="p-2 border-2 border-mes-dark text-mes-dark hover:bg-mes-dark hover:text-white transition-all">
+            <a href="{{ site.baseurl }}/llei-projectes/" class="bg-mes-dark text-white p-3 hover:bg-black transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </a>
         </div>
 
         {% assign darrera_noticia = site.posts.first %}
-        <div class="py-6 px-8 flex items-center justify-between gap-4 bg-white/30 group">
+        <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-0 translate-y-8 px-8 pointer-events-none" data-index="1">
             <div class="flex items-center gap-4 text-left">
                 <div class="bg-mes-dark text-white p-2 hidden sm:block">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v6h6"></path></svg>
                 </div>
                 <div class="text-left">
-                    <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60 mb-1">Darrera hora</span>
-                    <h3 class="text-lg font-black uppercase text-mes-dark leading-tight group-hover:underline">
-                        {{ darrera_noticia.title | truncate: 45 }}
-                    </h3>
+                    <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60">Darrera Notícia</span>
+                    <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark leading-tight">{{ darrera_noticia.title | truncate: 50 }}</h3>
                 </div>
             </div>
-            <a href="{{ site.baseurl }}{{ darrera_noticia.url }}" class="p-2 border-2 border-mes-dark text-mes-dark hover:bg-mes-dark hover:text-white transition-all">
+            <a href="{{ site.baseurl }}{{ darrera_noticia.url }}" class="bg-mes-dark text-white p-3 hover:bg-black transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </a>
         </div>
 
     </div>
 </section>
+
+<script>
+    // Lògica per a la rotació del Banner de Destacats
+    let currentHighlight = 0;
+    const highlightSlides = document.querySelectorAll('.highlight-slide');
+
+    function rotateHighlights() {
+        const nextHighlight = (currentHighlight + 1) % highlightSlides.length;
+        
+        // Amaga l'actual (surt cap amunt i desapareix)
+        highlightSlides[currentHighlight].classList.add('opacity-0', '-translate-y-8', 'pointer-events-none');
+        highlightSlides[currentHighlight].classList.remove('opacity-100', 'translate-y-0');
+
+        // Mostra el següent (ve de baix cap al centre)
+        highlightSlides[nextHighlight].classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none', '-translate-y-8');
+        highlightSlides[nextHighlight].classList.add('opacity-100', 'translate-y-0');
+
+        currentHighlight = nextHighlight;
+    }
+
+    // Cambia cada 5 segons (5000ms)
+    setInterval(rotateHighlights, 5000);
+</script>
 
     <section id="actualitat-home" class="py-24 bg-white px-8 text-left">
         <div class="max-w-7xl mx-auto">
