@@ -1,12 +1,12 @@
 - titol: "Vial d'accés a Son Noguera"
   descripcio: "Nou vial per bicicletes i vianants entre el poble i el polígon de Son Noguera."
-  imatge: "imatges/Vial.jpeg"
+  imatge: "mesperllucmajor/web/imatges/Vial.jpeg"
   zona_id: "llucmajor"
   zona_nom: "Llucmajor Poble"
 
 - titol: "Reforma Plaça de Les Palmeres"
   descripcio: "Recuperar el front marítim per al gaudi dels veïnats de s'Arenal."
-  imatge: "imatges/PlacaPalmeres.jpeg"
+  imatge: "/imatges/PlacaPalmeres.jpeg"
   zona_id: "urbanitzacions"
   zona_nom: "Urbanitzacions"
 
