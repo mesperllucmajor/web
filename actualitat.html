@@ -17,10 +17,19 @@ permalink: /actualitat/
 
 <div class="pt-12 pb-32 px-8 max-w-7xl mx-auto text-left">
     
-    <div class="flex flex-wrap gap-3 mb-12 justify-start border-b border-stone-200 pb-8" id="filters-actualitat">
-        <button class="filter-btn tag-pill active text-[11px] md:text-sm" data-filter="tots">Tot</button>
-        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="noticia">Notícies</button>
-        <button class="filter-btn tag-pill text-[11px] md:text-sm" data-filter="article">Articles d'Opinió</button>
+    <div class="flex flex-wrap gap-4 mb-12 justify-start border-b border-stone-200 pb-8" id="filters-actualitat">
+        
+        <button class="filter-btn bg-mes-dark text-mes-lime border-mes-dark border-2 px-6 py-2.5 text-[11px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="tots">
+            Tot
+        </button>
+        
+        <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-6 py-2.5 text-[11px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="noticia">
+            Notícies
+        </button>
+        
+        <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-6 py-2.5 text-[11px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="article">
+            Articles d'Opinió
+        </button>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left" id="news-grid">
@@ -64,14 +73,21 @@ permalink: /actualitat/
 
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Canviem l'estil del botó actiu
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            
+            // 1. LLEVEM EL COLOR A TOTS ELS BOTONS (Els tornem grisos/transparents)
+            filterBtns.forEach(b => {
+                b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+                b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200');
+            });
 
-            // Mirem quina pestanya s'ha clicat
+            // 2. PINTEM EL BOTÓ CLICAT (El fem fosc i amb text llima)
+            btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
+            btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+
+            // 3. Mirem quina pestanya s'ha clicat
             const filterValue = btn.getAttribute('data-filter');
 
-            // Filtrem les targetes
+            // 4. Filtrem les targetes
             newsCards.forEach(card => {
                 const cardCategory = card.getAttribute('data-category');
                 
