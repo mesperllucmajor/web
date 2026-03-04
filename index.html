@@ -27,7 +27,7 @@ title: Inici
         </div>
     </div>
 
-      <div class="hero-slide">
+    <div class="hero-slide">
         <img src="{{ site.baseurl }}/imatges/badies2.png" class="w-full h-full object-cover hero-zoom" alt="..." />
         <div class="absolute inset-0 bg-black/45"></div>
         <div class="absolute inset-0 flex items-center px-8 md:px-20 text-left pb-20">
@@ -70,69 +70,49 @@ title: Inici
     <div class="absolute bottom-6 left-0 w-full z-30 flex justify-center gap-3" id="hero-dots">
         <div class="hero-dot active" data-index="0"></div>
         <div class="hero-dot" data-index="1"></div>
+        <div class="hero-dot" data-index="2"></div>
+        <div class="hero-dot" data-index="3"></div>
+        <div class="hero-dot" data-index="4"></div>
     </div>
 </header>
 
 <main>
     <section id="highlight-banner" class="bg-mes-lime border-y-2 border-mes-dark/10 relative h-20 md:h-24 overflow-hidden">
-    <div class="max-w-7xl mx-auto h-full px-8 relative">
-        
-        <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-100 translate-y-0 px-8" data-index="0">
-            <div class="flex items-center gap-4 text-left">
-                <div class="bg-mes-dark text-mes-lime p-2 hidden sm:block">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        <div class="max-w-7xl mx-auto h-full px-8 relative">
+            
+            <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-100 translate-y-0 px-8" data-index="0">
+                <div class="flex items-center gap-4 text-left">
+                    <div class="bg-mes-dark text-mes-lime p-2 hidden sm:block">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    </div>
+                    <div class="text-left">
+                        <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60">Campanya Especial</span>
+                        <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark leading-tight">Llei de Projectes Residencials Estratègics: L'anàlisi</h3>
+                    </div>
                 </div>
-                <div class="text-left">
-                    <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60">Campanya Especial</span>
-                    <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark leading-tight">Llei de Projectes Residencials Estratègics: L'anàlisi</h3>
-                </div>
+                <a href="{{ site.baseurl }}/llei-projectes/" class="bg-mes-dark text-white p-3 hover:bg-black transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
             </div>
-            <a href="{{ site.baseurl }}/llei-projectes/" class="bg-mes-dark text-white p-3 hover:bg-black transition-all">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </a>
-        </div>
 
-        {% assign darrera_noticia = site.posts.first %}
-        <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-0 translate-y-8 px-8 pointer-events-none" data-index="1">
-            <div class="flex items-center gap-4 text-left">
-                <div class="bg-mes-dark text-white p-2 hidden sm:block">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v6h6"></path></svg>
+            {% assign darrera_noticia = site.posts.first %}
+            <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-0 translate-y-8 px-8 pointer-events-none" data-index="1">
+                <div class="flex items-center gap-4 text-left">
+                    <div class="bg-mes-dark text-white p-2 hidden sm:block">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v6h6"></path></svg>
+                    </div>
+                    <div class="text-left">
+                        <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60">Darrera Notícia</span>
+                        <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark leading-tight">{{ darrera_noticia.title | truncate: 50 }}</h3>
+                    </div>
                 </div>
-                <div class="text-left">
-                    <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60">Darrera Notícia</span>
-                    <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark leading-tight">{{ darrera_noticia.title | truncate: 50 }}</h3>
-                </div>
+                <a href="{{ site.baseurl }}{{ darrera_noticia.url }}" class="bg-mes-dark text-white p-3 hover:bg-black transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
             </div>
-            <a href="{{ site.baseurl }}{{ darrera_noticia.url }}" class="bg-mes-dark text-white p-3 hover:bg-black transition-all">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </a>
+
         </div>
-
-    </div>
-</section>
-
-<script>
-    // Lògica per a la rotació del Banner de Destacats
-    let currentHighlight = 0;
-    const highlightSlides = document.querySelectorAll('.highlight-slide');
-
-    function rotateHighlights() {
-        const nextHighlight = (currentHighlight + 1) % highlightSlides.length;
-        
-        // Amaga l'actual (surt cap amunt i desapareix)
-        highlightSlides[currentHighlight].classList.add('opacity-0', '-translate-y-8', 'pointer-events-none');
-        highlightSlides[currentHighlight].classList.remove('opacity-100', 'translate-y-0');
-
-        // Mostra el següent (ve de baix cap al centre)
-        highlightSlides[nextHighlight].classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none', '-translate-y-8');
-        highlightSlides[nextHighlight].classList.add('opacity-100', 'translate-y-0');
-
-        currentHighlight = nextHighlight;
-    }
-
-    // Cambia cada 5 segons (5000ms)
-    setInterval(rotateHighlights, 5000);
-</script>
+    </section>
 
     <section id="actualitat-home" class="py-24 bg-white px-8 text-left">
         <div class="max-w-7xl mx-auto">
@@ -224,23 +204,6 @@ title: Inici
             </div>
         </div>
     </section>
-{% comment %}
-    <section id="programa-home" class="py-24 bg-white px-8 text-left border-b border-stone-100">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 items-center">
-            <div class="md:w-1/3 w-full">
-                <div class="bg-mes-lime p-12 aspect-[3/4] flex flex-col justify-end shadow-2xl transform -rotate-2">
-                    <h4 class="text-4xl font-black uppercase leading-none text-mes-dark">Programa<br>Polític<br>2023-27</h4>
-                </div>
-            </div>
-            <div class="md:w-2/3 text-left">
-                <h2 class="section-title-box mb-6">EL CONTRACTE</h2>
-                <h3 class="text-4xl font-black uppercase mb-6 text-mes-dark">Compromís amb la ciutadania</h3>
-                <p class="text-lg text-stone-600 mb-8">Solucions reals per a cada racó del municipi.</p>
-                <a href="{{ site.baseurl }}/programa/" class="btn-primary">Llegir el Programa</a>
-            </div>
-        </div>
-    </section>
-    {% endcomment %}
 
 </main>
 
@@ -291,22 +254,65 @@ title: Inici
         </div>
     </div>
 </div>
-<script>
-    // 1. Slider
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.hero-dot');
-    function showSlide(index) {
-        slides.forEach(s => s.classList.remove('active'));
-        dots.forEach(d => d.classList.remove('active'));
-        slides[index].classList.add('active');
-        dots[index].classList.add('active');
-        currentSlide = index;
-    }
-    setInterval(() => { showSlide((currentSlide + 1) % slides.length); }, 8000);
-    dots.forEach((dot, i) => { dot.addEventListener('click', () => showSlide(i)); });
 
-    // 2. Modal Logic
+<script>
+    // 1. LÒGICA MILLORADA DEL HERO SLIDER (Imatges Grans)
+    let currentHeroSlide = 0;
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const heroDots = document.querySelectorAll('.hero-dot');
+    let heroInterval;
+
+    function showHeroSlide(index) {
+        // Amagar tots
+        heroSlides.forEach(s => s.classList.remove('active'));
+        heroDots.forEach(d => d.classList.remove('active'));
+        
+        // Mostrar el seleccionat
+        heroSlides[index].classList.add('active');
+        heroDots[index].classList.add('active');
+        currentHeroSlide = index;
+    }
+
+    // Funció per anar passant les imatges automàticament
+    function startHeroSlider() {
+        heroInterval = setInterval(() => { 
+            showHeroSlide((currentHeroSlide + 1) % heroSlides.length); 
+        }, 6000); // 6 segons entre canvis (abans estava a 8000)
+    }
+
+    // Quan fas clic a un dot: canvia la imatge i REINICIA el temporitzador automàtic
+    heroDots.forEach((dot, i) => { 
+        dot.addEventListener('click', () => {
+            clearInterval(heroInterval); // Aturar rotació automàtica
+            showHeroSlide(i);            // Mostrar la que toca
+            startHeroSlider();           // Tornar a arrencar
+        }); 
+    });
+
+    // Iniciar el carrusel en carregar
+    startHeroSlider();
+
+
+    // 2. LÒGICA DEL HIGHLIGHT BANNER ROTATIU (Banner llima de notícies)
+    let currentHighlight = 0;
+    const highlightSlides = document.querySelectorAll('.highlight-slide');
+
+    function rotateHighlights() {
+        if (highlightSlides.length < 2) return;
+        const nextHighlight = (currentHighlight + 1) % highlightSlides.length;
+        
+        highlightSlides[currentHighlight].classList.add('opacity-0', '-translate-y-8', 'pointer-events-none');
+        highlightSlides[currentHighlight].classList.remove('opacity-100', 'translate-y-0');
+
+        highlightSlides[nextHighlight].classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none', '-translate-y-8');
+        highlightSlides[nextHighlight].classList.add('opacity-100', 'translate-y-0');
+
+        currentHighlight = nextHighlight;
+    }
+    setInterval(rotateHighlights, 5000);
+
+
+    // 3. LÒGICA DEL MODAL DE CONTACTE (Formulari Emergent)
     const btnOpen = document.getElementById('open-index-contact');
     const btnClose = document.getElementById('close-index-contact');
     const modal = document.getElementById('index-contact-modal');
@@ -324,7 +330,8 @@ title: Inici
     btnClose.addEventListener('click', closeM);
     modal.addEventListener('click', (e) => { if(e.target === modal) closeM(); });
 
-    // 3. AJAX Formspree
+
+    // 4. LÒGICA FORMSPREE (Enviament correus)
     const form = document.getElementById("index-form");
     const status = document.getElementById("index-form-status");
     const fbtn = document.getElementById("index-form-btn");
