@@ -20,3 +20,13 @@
   descripcio: "Crearem una solució definitiva per pacificar el trànsit, millorar la circulació de vehicles i garantir noves places d'aparcament estratègic per als veïnats i veïnades de s'Arenal."
   zona_id: "arenal"
   zona_nom: "s'Arenal"
+
+- titol: "Més arbres"
+  descripcio: "Crearem més arbres i més verd a un s'Arenal que li sobra asfalt."
+  zona_id: "arenal"
+  zona_nom: "s'Arenal"
+
+- titol: "Reforma integral de la primera línia"
+  descripcio: "La platja per la gent de s'Arenal."
+  zona_id: "arenal"
+  zona_nom: "s'Arenal"
