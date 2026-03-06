@@ -102,11 +102,21 @@ title: Inici
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
                 {% for post in site.posts limit:3 %}
                 <a href="{{ site.baseurl }}{{ post.url }}" class="group block text-left">
-                    <div class="h-64 overflow-hidden mb-6 bg-stone-100 border-b-4 border-mes-dark group-hover:border-mes-lime transition-all">
-                        {% if post.image %}<img src="{{ site.baseurl }}{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">{% endif %}
+                    
+                    <div class="h-64 overflow-hidden mb-6 bg-stone-100 border-b-4 border-mes-dark group-hover:border-mes-lime transition-all relative">
+                        
+                        {% if post.image %}
+                            <img src="{{ site.baseurl }}{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        {% endif %}
+                        
+                        <div class="absolute top-4 left-4 bg-mes-dark text-mes-lime text-[10px] font-black uppercase px-3 py-1 shadow-md">
+                            {{ post.category | default: post.categories.first | default: 'Notícia' }}
+                        </div>
+                        
                     </div>
+                    
                     <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">{{ post.date | date: "%d/%m/%Y" }}</span>
-                    <h4 class="text-xl font-black uppercase mt-2 leading-tight group-hover:text-mes-lime transition-colors">{{ post.title }}</h4>
+                    <h4 class="text-xl font-black uppercase mt-2 leading-tight group-hover:text-mes-lime transition-colors text-mes-dark">{{ post.title }}</h4>
                 </a>
                 {% endfor %}
             </div>
