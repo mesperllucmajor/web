@@ -56,36 +56,65 @@ permalink: /propostes/
     </div> 
 
 <script>
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const proposalCards = document.querySelectorAll('.proposal-card');
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. LÒGICA DELS BOTONS DE FILTRE
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const proposalCards = document.querySelectorAll('.proposal-card');
 
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            
-            // 1. Canvi Visual: Tots els botons a gris (Inactius)
-            filterBtns.forEach(b => {
-                b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
-                b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200');
-            });
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                
+                // Netejar colors de tots els botons
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+                    b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200');
+                });
 
-            // 2. Canvi Visual: Botó clicat a negre/llima (Actiu)
-            btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
-            btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+                // Pintar el botó actiu
+                btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
+                btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
 
-            // 3. Lògica de filtratge
-            const filterValue = btn.getAttribute('data-filter');
-
-            proposalCards.forEach(card => {
-                if (filterValue === 'totes' || card.getAttribute('data-zone') === filterValue) {
-                    card.style.display = 'block'; // Mostra
-                } else {
-                    card.style.display = 'none';  // Amaga
-                }
+                // Filtrar targetes
+                const filterValue = btn.getAttribute('data-filter');
+                proposalCards.forEach(card => {
+                    if (filterValue === 'totes' || card.getAttribute('data-zone') === filterValue) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
             });
         });
+
+        // 2. RECEPCIÓ AUTOMÀTICA DES DE LA PORTADA
+        const urlParams = new URLSearchParams(window.location.search);
+        const zonaParam = urlParams.get('zona'); // Exemple: 'arenal'
+        
+        let targetBtn = null;
+
+        if (zonaParam) {
+            // Busquem el botó que coincideix amb la zona de la URL
+            targetBtn = document.querySelector(`.filter-btn[data-filter="${zonaParam}"]`);
+        }
+
+        // Si no venim de la portada, seleccionem "Totes les propostes" per defecte
+        if (!targetBtn) {
+            targetBtn = document.querySelector('.filter-btn[data-filter="totes"]');
+        }
+
+        // Fem el clic màgic
+        if (targetBtn) {
+            targetBtn.click();
+            
+            // Si veníem de l'índex, fem scroll suau fins a la graella
+            if (zonaParam) {
+                setTimeout(() => {
+                    document.getElementById('filters').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
+        }
     });
 </script>
-
 <button id="open-modal-btn" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-dark text-white px-6 py-4 font-black uppercase text-xs md:text-sm tracking-widest border-2 border-transparent hover:bg-mes-lime hover:text-mes-dark shadow-2xl z-40 flex items-center gap-2 transition-all transform hover:-translate-y-1">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
     Fes la teva proposta
