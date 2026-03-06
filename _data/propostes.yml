@@ -30,3 +30,9 @@
   descripcio: "La platja per la gent de s'Arenal."
   zona_id: "arenal"
   zona_nom: "s'Arenal"
+
+- titol: "Reforma de l'avinguda Europa"
+  descripcio: "L'avinguda Europa és una de les vies d'accés a s'Arenal. Reforma de les voreres, un carril bici i il·luminació i millor asfaltat."
+  imatge: "/imatges/AvEuropa.jpeg"
+  zona_id: "arenal"
+  zona_nom: "s'Arenal"
