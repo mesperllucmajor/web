@@ -67,83 +67,158 @@ title: Inici
     }
 </style>
 
-<header class="relative w-full bg-stone-50 flex flex-col pt-16">
+<style>
+    /* COMPONENT: Slice Navigation Bar */
+    .slice-container {
+        background-color: rgba(26, 26, 26, 0.85); /* Fons fosc corporatiu */
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        
+        /* DISSENY MÒBIL: Graella de 2 columnes */
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .slice-item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 85px; /* Mida ideal per clicar amb el dit en mòbil */
+        cursor: pointer;
+        overflow: hidden;
+        
+        /* Vores internes per a la graella mòbil */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
+    }
+
+    /* Neteja de vores en mòbil per no tenir línies innecessàries */
+    .slice-item:nth-child(2n) { border-right: none; } /* Columna dreta */
+    .slice-item:last-child { 
+        grid-column: span 2; /* L'últim ocupa tot l'ample a baix */
+        border-bottom: none; 
+        border-right: none;
+    }
+
+    /* DISSENY PC: Flex Accordion horitzontal */
+    @media (min-width: 1024px) {
+        .slice-container {
+            display: flex;
+            flex-direction: row;
+            background-color: rgba(26, 26, 26, 0.7);
+        }
+        .slice-item {
+            flex: 1;
+            height: 110px; /* Més alt en PC */
+            /* Reiniciem les vores per a format horitzontal */
+            border-bottom: none !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        .slice-item:last-child {
+            border-right: none !important;
+        }
+        
+        /* L'Efecte d'expansió només s'aplica en pantalles grans */
+        .slice-item:hover { 
+            flex: 2.5; 
+        }
+    }
+
+    /* Animació del subtítol */
+    .slice-subtitle {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+    }
     
-    <div class="relative w-full h-[65vh] lg:h-[75vh] overflow-hidden flex flex-col justify-between pb-8">
+    .slice-item:hover .slice-subtitle {
+        max-height: 24px;
+        opacity: 1;
+        margin-top: 6px;
+    }
+</style>
+
+<header class="relative w-full bg-stone-50 pt-16 flex flex-col">
+    
+    <div class="relative w-full h-[55vh] lg:h-[75vh] overflow-hidden flex flex-col justify-center">
         <img src="{{ site.baseurl }}/imatges/imatge1.jpeg" class="absolute inset-0 w-full h-full object-cover z-0" alt="MÉS per Llucmajor" />
         
         <div class="absolute inset-0 bg-black/40 z-0"></div>
         
-        <div class="relative z-10 w-full px-8 md:px-20 text-center md:text-left mt-12 md:mt-24">
+        <div class="relative z-10 w-full px-8 md:px-20 text-center md:text-left pb-16 lg:pb-24">
             <div class="max-w-5xl mx-auto md:mx-0">
-                <span class="block text-mes-lime font-black uppercase tracking-[0.2em] mb-4 text-xs md:text-sm" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
+                <span class="block text-mes-lime font-black uppercase tracking-[0.2em] mb-4 text-xs md:text-sm drop-shadow-md">
                     MÉS per Llucmajor
                 </span>
-                <h1 class="text-4xl md:text-6xl lg:text-[75px] font-black uppercase text-white leading-tight md:leading-none mb-6" style="text-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+                <h1 class="text-4xl md:text-6xl lg:text-[75px] font-black uppercase text-white leading-tight md:leading-none mb-6 drop-shadow-lg">
                     Política per a la gent
                 </h1>
-                <p class="text-lg md:text-2xl text-white/90 md:border-l-4 md:border-mes-lime md:pl-6 italic mb-0 mx-auto md:mx-0 max-w-2xl" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
+                <p class="text-lg md:text-2xl text-white/90 md:border-l-4 md:border-mes-lime md:pl-6 italic mb-0 mx-auto md:mx-0 max-w-2xl drop-shadow-md">
                     Un projecte compartit per a tots els nostres pobles.
                 </p>
             </div>
         </div>
+    </div>
 
-        <div class="relative z-20 w-[90%] max-w-7xl mx-auto slice-container mt-auto">
+    <div class="relative z-20 w-[95%] lg:w-[90%] max-w-7xl mx-auto slice-container -mt-16 lg:-mt-20 mb-12">
+        
+        <a href="{{ site.baseurl }}/propostes/?zona=llucmajor" class="slice-item group">
+            <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="Llucmajor">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
             
-            <a href="{{ site.baseurl }}/propostes/?zona=llucmajor" class="slice-item group">
-                <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 scale-105 group-hover:scale-100" alt="Llucmajor">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-                
-                <div class="relative z-20 flex flex-col items-center text-center px-4">
-                    <span class="font-black uppercase tracking-widest text-xs lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Llucmajor Poble</span>
-                    <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5">Mira quin Llucmajor volem</span>
-                </div>
-            </a>
+            <div class="relative z-20 flex flex-col items-center text-center px-2">
+                <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Llucmajor Poble</span>
+                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Mira la solució</span>
+            </div>
+        </a>
 
-            <a href="{{ site.baseurl }}/propostes/?zona=arenal" class="slice-item group">
-                <img src="{{ site.baseurl }}/imatges/sarenal2.jpeg" onerror="this.src='{{ site.baseurl }}/imatges/PlacaPalmeres.jpeg'" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 scale-105 group-hover:scale-100" alt="s'Arenal">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-                
-                <div class="relative z-20 flex flex-col items-center text-center px-4">
-                    <span class="font-black uppercase tracking-widest text-xs lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">s'Arenal</span>
-                    <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5">Consulta el s'Arenal pels s'Arenalers</span>
-                </div>
-            </a>
+        <a href="{{ site.baseurl }}/propostes/?zona=arenal" class="slice-item group">
+            <img src="{{ site.baseurl }}/imatges/arenal.jpeg" onerror="this.src='{{ site.baseurl }}/imatges/PlacaPalmeres.jpeg'" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="s'Arenal">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
+            
+            <div class="relative z-20 flex flex-col items-center text-center px-2">
+                <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">s'Arenal</span>
+                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Mira la solució</span>
+            </div>
+        </a>
 
-            <a href="{{ site.baseurl }}/propostes/?zona=urbanitzacions" class="slice-item group">
-                <img src="{{ site.baseurl }}/imatges/badies1.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 scale-105 group-hover:scale-100" alt="Urbanitzacions">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-                
-                <div class="relative z-20 flex flex-col items-center text-center px-4">
-                    <span class="font-black uppercase tracking-widest text-xs lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Urbanitzacions</span>
-                    <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5">Mira quines Urbanitzacions que mereixem</span>
-                </div>
-            </a>
+        <a href="{{ site.baseurl }}/propostes/?zona=urbanitzacions" class="slice-item group">
+            <img src="{{ site.baseurl }}/imatges/badies2.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="Urbanitzacions">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
+            
+            <div class="relative z-20 flex flex-col items-center text-center px-2">
+                <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Urbanitzacions</span>
+                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Mira la solució</span>
+            </div>
+        </a>
 
-            <a href="{{ site.baseurl }}/propostes/?zona=estanyol" class="slice-item group">
-                <img src="{{ site.baseurl }}/imatges/estanyol.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 scale-105 group-hover:scale-100" alt="s'Estanyol">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-                
-                <div class="relative z-20 flex flex-col items-center text-center px-4">
-                    <span class="font-black uppercase tracking-widest text-xs lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">s'Estanyol i Son Bieló</span>
-                    <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5">Entra a veure com els veiem</span>
-                </div>
-            </a>
+        <a href="{{ site.baseurl }}/propostes/?zona=estanyol" class="slice-item group">
+            <img src="{{ site.baseurl }}/imatges/sestanyol.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="s'Estanyol">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
+            
+            <div class="relative z-20 flex flex-col items-center text-center px-2">
+                <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">s'Estanyol / Son Bieló</span>
+                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Mira la solució</span>
+            </div>
+        </a>
 
-            <a href="{{ site.baseurl }}/propostes/?zona=foravila" class="slice-item group">
-                <img src="{{ site.baseurl }}/imatges/Foravila.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 scale-105 group-hover:scale-100" alt="Fora Vila">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-                
-                <div class="relative z-20 flex flex-col items-center text-center px-4">
-                    <span class="font-black uppercase tracking-widest text-xs lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Fora Vila</span>
-                    <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5">Consulta els serveis que volem per fora vila</span>
-                </div>
-            </a>
+        <a href="{{ site.baseurl }}/propostes/?zona=foravila" class="slice-item group">
+            <img src="{{ site.baseurl }}/imatges/Foravila.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="Fora Vila">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
+            
+            <div class="relative z-20 flex flex-col items-center text-center px-2">
+                <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Fora Vila</span>
+                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Mira la solució</span>
+            </div>
+        </a>
 
-        </div>
     </div>
 </header>
-
 <main>
     <section id="highlight-banner" class="bg-mes-lime border-y-2 border-mes-dark/10 relative h-20 md:h-24 overflow-hidden">
         <div class="max-w-7xl mx-auto h-full px-8 relative">
