@@ -36,3 +36,15 @@
   imatge: "/imatges/AvEuropa.jpeg"
   zona_id: "arenal"
   zona_nom: "s'Arenal"
+
+- titol: "Plaques solars als edificis municipals"
+  descripcio: "Instal·larem cobertes fotovoltaiques a totes les instal·lacions de l'Ajuntament per reduir la factura elèctrica i ser pioners en autoconsum."
+  zona_id: "general"
+  zona_nom: "Tot el municipi"
+  tema: "Transició Ecològica"
+
+- titol: "Pla de xoc de manteniment d'escoles"
+  descripcio: "Garantirem inversions anuals fixes per pintar, reparar i posar al dia els centres educatius de tots els nuclis abans de començar el curs."
+  zona_id: "general"
+  zona_nom: "Tot el municipi"
+  tema: "Educació"
