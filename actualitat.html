@@ -24,18 +24,19 @@ permalink: /actualitat/
 
     <div class="flex flex-wrap gap-2 md:gap-4 mb-12 justify-start border-b border-stone-200 pb-8">
         <button class="news-filter-btn bg-mes-dark text-mes-lime border-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="totes">Totes</button>
-        <button class="news-filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="notícia">Notícies</button>
-        <button class="news-filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="opinió">Opinió</button>
+        <button class="news-filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="noticia">Notícies</button>
+        <button class="news-filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="opinio">Opinió</button>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch" id="news-grid">
         
         {% for post in site.posts %}
         
-        {% assign post_cat = post.category | default: post.categories.first | default: 'Notícia' %}
-        {% assign cat_lower = post_cat | downcase %}
+        {% assign post_cat_raw = post.category | default: post.categories.first | default: 'Notícia' %}
         
-        <a href="{{ site.baseurl }}{{ post.url }}" class="news-card group flex flex-col bg-stone-50 hover:bg-mes-dark shadow-sm hover:shadow-xl transition-colors duration-500 border border-stone-100 relative overflow-hidden text-left" data-category="{{ cat_lower }}">
+        {% assign cat_clean = post_cat_raw | downcase | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'è', 'e' | replace: 'é', 'e' | replace: 'à', 'a' | replace: 'ï', 'i' %}
+        
+        <a href="{{ site.baseurl }}{{ post.url }}" class="news-card group flex flex-col bg-stone-50 hover:bg-mes-dark shadow-sm hover:shadow-xl transition-colors duration-500 border border-stone-100 relative overflow-hidden text-left" data-category="{{ cat_clean }}">
             
             <div class="w-full h-2 bg-mes-lime transition-all duration-300 group-hover:h-3"></div>
 
@@ -48,7 +49,7 @@ permalink: /actualitat/
                 {% endif %}
 
                 <div class="absolute top-4 left-4 bg-mes-dark text-mes-lime text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-md z-10">
-                    {{ post_cat }}
+                    {{ post_cat_raw }}
                 </div>
             </div>
 
@@ -87,12 +88,12 @@ permalink: /actualitat/
                 btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
 
                 // 3. Filtrar les targetes
-                const filterValue = btn.getAttribute('data-filter');
+                const filterValue = btn.getAttribute('data-filter'); // Ara serà 'totes', 'noticia' o 'opinio' sense accents
                 
                 newsCards.forEach(card => {
-                    const cardCategory = card.getAttribute('data-category');
+                    // Si el camp de la targeta està buit o dóna error, assumim 'noticia' per seguretat
+                    const cardCategory = card.getAttribute('data-category') || 'noticia'; 
                     
-                    // Si el filtre és "totes" o la categoria conté la paraula clau (ex: "opinió")
                     if (filterValue === 'totes' || cardCategory.includes(filterValue)) {
                         card.style.display = 'flex';
                     } else {
