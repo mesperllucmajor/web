@@ -26,12 +26,18 @@ layout: default
         </header>
 
         {% if page.image %}
-        <div class="w-full aspect-video bg-stone-200 relative overflow-hidden border border-stone-200 shadow-sm mb-12">
+        <div class="w-full md:w-4/5 lg:w-3/4 mx-auto aspect-video bg-stone-200 relative overflow-hidden border border-stone-100 shadow-md mb-12 rounded-sm group">
+            
             {% if page.image contains 'http' %}
                 <img src="{{ page.image }}" class="absolute inset-0 w-full h-full object-cover object-center" alt="{{ page.title }}">
             {% else %}
                 <img src="{{ site.baseurl }}{{ page.image }}" class="absolute inset-0 w-full h-full object-cover object-center" alt="{{ page.title }}">
             {% endif %}
+            
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent pt-12 pb-3 px-4 hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span class="text-white/80 text-[9px] uppercase tracking-widest">{{ post_cat }} · MÉS per Llucmajor</span>
+            </div>
+            
         </div>
         {% endif %}
 
