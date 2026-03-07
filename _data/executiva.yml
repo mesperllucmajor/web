@@ -1,31 +1,49 @@
+- nom: "Maria Barceló"
+  carrec: "Coordinadora"
+  foto: "/imatges/02.Maria.jpg"
+  cita: "..."
+
+- nom: "Oriol Gómez"
+  carrec: "Secretari d'Organització"
+  foto: "/imatges/Oriol2.jpg"
+  cita: "..."
+
 - nom: "Miquel Serra"
   carrec: "Tresorer"
   foto: "/imatges/01.Miquel.jpg"
+  cita: "..."
 
 - nom: "Marina Ferre"
   carrec: "Comunicació"
   foto: "/imatges/06.Marina.jpeg"
+  cita: "..."
 
 - nom: "Toni Tomàs"
   carrec: "Estratègia Digital"
   foto: "/imatges/Tuni.jpg"
+  cita: "..."
 
 - nom: "Tià Maimó"
   carrec: "Creativitat Visual"
   foto: "/imatges/05.Sebastia.jpg"
+  cita: "..."
 
 - nom: "Joana Catany"
   carrec: "Vocal"
-  foto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2"
+  foto: "imatges/JoanaCatany.png"
+  cita: "..."
 
 - nom: "Maria del Mar Vanrell"
   carrec: "Vocal"
   foto: "/imatges/04.MariadelMar.jpg"
+  cita: "..."
 
 - nom: "Francina Crespí"
   carrec: "Vocal"
   foto: "/imatges/Francina.jpg"
+  cita: "..."
 
 - nom: "Jaume Tomàs"
   carrec: "Vocal"
   foto: "/imatges/JaumeTomas.jpg"
+  cita: "..."
