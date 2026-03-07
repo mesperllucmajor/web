@@ -18,8 +18,8 @@ permalink: /propostes/
 <div class="pt-12 pb-32 px-4 md:px-8 max-w-7xl mx-auto text-left">
     
     <div class="flex flex-wrap gap-2 md:gap-4 mb-12 justify-start border-b border-stone-200 pb-8" id="filters">
-        <button class="filter-btn bg-mes-dark text-mes-lime border-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="totes">Totes</button>
-        <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="general">Tot el municipi</button>
+        <button class="filter-btn bg-mes-dark text-mes-lime border-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="general">Tot el municipi</button>
+        
         <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="llucmajor">Llucmajor</button>
         <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="arenal">s'Arenal</button>
         <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="urbanitzacions">Urbanitzacions</button>
@@ -158,7 +158,7 @@ permalink: /propostes/
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         
-        // --- 1. LÒGICA DELS FILTRES ---
+// --- 1. LÒGICA DELS FILTRES ---
         const filterBtns = document.querySelectorAll('.filter-btn');
         const proposalCards = document.querySelectorAll('.proposal-card');
 
@@ -175,11 +175,11 @@ permalink: /propostes/
                 btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
                 btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
 
-                // Filtrar targetes
+                // Filtrar targetes (ara la lògica és estricta, només mostra la zona seleccionada)
                 const filterValue = btn.getAttribute('data-filter');
                 proposalCards.forEach(card => {
-                    if (filterValue === 'totes' || card.getAttribute('data-zone') === filterValue) {
-                        card.style.display = 'flex'; // Usem flex en comptes de block per mantenir l'alçada
+                    if (card.getAttribute('data-zone') === filterValue) {
+                        card.style.display = 'flex';
                     } else {
                         card.style.display = 'none';
                     }
@@ -197,8 +197,9 @@ permalink: /propostes/
             targetBtn = document.querySelector(`.filter-btn[data-filter="${zonaParam}"]`);
         }
 
+        // Si no venim de cap enllaç específic, carreguem "Tot el municipi" (general)
         if (!targetBtn) {
-            targetBtn = document.querySelector('.filter-btn[data-filter="totes"]');
+            targetBtn = document.querySelector('.filter-btn[data-filter="general"]');
         }
 
         if (targetBtn) {
@@ -208,7 +209,7 @@ permalink: /propostes/
             if (zonaParam) {
                 setTimeout(() => {
                     document.getElementById('filters').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 400); // Temps suficient per permetre carregar les imatges previament
+                }, 400); 
             }
         }
 
