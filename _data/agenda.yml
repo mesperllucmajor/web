@@ -1,10 +1,16 @@
-- dia: "21 MAR"
+- titol: "Paradeta informativa a s'Arenal"
+  dia: "21"
+  mes: "MAR"
   hora: "10:30h"
-  titol: "Paradeta Informativa"
   lloc: "C/ Gran i General Consell (davant s'Arenal Park). s'Arenal"
+  descripcio: "Berenar obert per parlar de les propostes de mobilitat i recollir les vostres queixes."
+  enllac: ""
 
-- dia: "25 MAR"
+- titol: "Ple de l'Ajuntament"
+  dia: "25"
+  mes: "ABR"
   hora: "19:00h"
-  titol: "Plenari ordinari"
-  lloc: "Sala de plens de l'ajuntament"
+  lloc: "Sala de Plens de l'Ajuntament"
+  descripcio: "Defensarem les nostres propostes."
+  enllac: "" # Opcional, per si es retransmet
 
