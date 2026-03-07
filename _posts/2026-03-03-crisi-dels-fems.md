@@ -7,10 +7,6 @@ image: "/imatges/fems1.png"
 summary: "Com hem arribat fins aquí?"
 ---
 
-Aquí tens una proposta de text dissenyada específicament per ser publicada a la vostra pàgina web o xarxes socials. Està estructurada per ser de lectura àgil, clara i contundent.
-
----
-
 **La veritat sobre la crisi dels fems a Llucmajor: per què ens negam a ser còmplices d'una irregularitat**
 
 Llucmajor pateix una crisi mediambiental i laboral sense precedents en el servei de recollida de fems. Des de MÉS per Llucmajor volem explicar de manera transparent d'on ve el problema, per què els carrers estan plens de brutor i quin és el nostre posicionament. Aquesta situació no és casualitat, sinó el resultat directe de la incompetència i la inacció de l'equip de govern (PP, VOX i ASI).
