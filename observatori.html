@@ -1,0 +1,53 @@
+---
+layout: default
+title: Observatori Municipal
+permalink: /observatori/
+---
+
+<header class="relative h-[350px] flex items-center overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1555848962-6e79363ec58f?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover scale-105" alt="Observatori Municipal" />
+    <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-transparent"></div>
+    <div class="relative z-10 w-full px-8 md:px-16 text-left">
+        <div class="max-w-3xl text-left">
+            <h1 class="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter mb-4 leading-none" style="text-shadow: 0 4px 12px rgba(0,0,0,0.5);">Observatori</h1>
+            <p class="text-mes-lime text-lg md:text-xl font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-4 inline-block bg-black/40 pr-6 py-1" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">Fiscalitzam l'acció de govern pas a pas</p>
+        </div>
+    </div>
+</header>
+
+<div class="pt-16 pb-32 px-4 md:px-8 max-w-7xl mx-auto text-left">
+    
+    <div class="mb-12">
+        <h2 class="text-3xl md:text-4xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-4 mb-2">Tauler de Control</h2>
+        <p class="text-stone-500 italic pl-5">Aquí fem seguiment de totes les nostres propostes al Ple i denunciem què fa (o no fa) l'equip de govern amb elles.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+        
+        {% for item in site.data.observatori %}
+        <div class="bg-white border border-stone-200 shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col relative overflow-hidden group">
+            
+            <div class="p-6 md:p-8 flex flex-col flex-grow">
+                
+                <div class="flex justify-between items-start mb-4">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-mes-lime bg-mes-dark px-2 py-1">{{ item.tipus }}</span>
+                    <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">{{ item.data }}</span>
+                </div>
+                
+                <h3 class="text-xl font-black uppercase text-mes-dark leading-tight mb-3">{{ item.titol }}</h3>
+                <p class="text-sm text-stone-600 italic mb-8 flex-grow">{{ item.descripcio }}</p>
+
+                <div class="mt-auto pt-5 border-t border-stone-100">
+                    <p class="text-[9px] font-black uppercase tracking-widest text-stone-400 mb-2">Estat de la proposta:</p>
+                    
+                    <div class="inline-flex items-center px-4 py-2 border rounded-sm font-bold text-xs uppercase tracking-widest shadow-sm {{ item.color }}">
+                        {{ item.estat }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>

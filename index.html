@@ -290,6 +290,50 @@ title: Inici
         </div>
     </section>
 
+    <section class="py-24 px-4 md:px-8 bg-stone-100 border-y border-stone-200">
+    <div class="max-w-7xl mx-auto">
+        
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-stone-300 pb-8 gap-6">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-4 mb-2">Observatori Municipal</h2>
+                <p class="text-stone-500 italic pl-5">Fiscalitzam l'acció de govern pas a pas. Què s'aprova i què s'incompleix?</p>
+            </div>
+            
+            <a href="{{ site.baseurl }}/observatori/" class="group inline-flex items-center gap-3 bg-mes-dark text-mes-lime border-2 border-mes-dark hover:bg-mes-lime hover:text-mes-dark px-6 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all duration-300 shadow-md">
+                Veure tot el tauler
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+            
+            {% for item in site.data.observatori limit: 3 %}
+            <div class="bg-white border border-stone-200 shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col relative overflow-hidden group">
+                <div class="p-6 md:p-8 flex flex-col flex-grow">
+                    
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-[10px] font-black uppercase tracking-widest text-mes-lime bg-mes-dark px-2 py-1">{{ item.tipus }}</span>
+                        <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">{{ item.data }}</span>
+                    </div>
+                    
+                    <h3 class="text-xl font-black uppercase text-mes-dark leading-tight mb-3">{{ item.titol }}</h3>
+                    <p class="text-sm text-stone-600 italic mb-8 flex-grow">{{ item.descripcio }}</p>
+
+                    <div class="mt-auto pt-5 border-t border-stone-100">
+                        <p class="text-[9px] font-black uppercase tracking-widest text-stone-400 mb-2">Estat de la proposta:</p>
+                        <div class="inline-flex items-center px-4 py-2 border rounded-sm font-bold text-xs uppercase tracking-widest shadow-sm {{ item.color }}">
+                            {{ item.estat }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+    
     <section id="agenda-home" class="py-24 bg-stone-100 px-8 text-left border-y border-stone-200">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16">
             <div class="text-left">
@@ -315,35 +359,7 @@ title: Inici
         </div>
     </section>
 
-    <section id="observatori-home" class="py-24 bg-white px-8 text-left">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-12 text-left">
-                <h2 class="section-title-box">FISCALITZACIÓ</h2>
-                <h3 class="text-4xl md:text-5xl font-black uppercase tracking-tighter text-mes-dark leading-none">Observatori Municipal</h3>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b-4 border-mes-dark">
-                            <th class="py-4 font-black uppercase text-[10px] md:text-xs tracking-widest text-mes-dark">Tema / Moció</th>
-                            <th class="py-4 font-black uppercase text-[10px] md:text-xs tracking-widest text-mes-dark">Estat</th>
-                            <th class="py-4 font-black uppercase text-[10px] md:text-xs tracking-widest text-mes-dark hidden md:table-cell">Nota</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in site.data.observatori limit:5 %}
-                        <tr class="border-b border-stone-100 hover:bg-stone-50 transition-colors group">
-                            <td class="py-6 font-bold uppercase text-sm md:text-base pr-4 text-mes-dark group-hover:text-mes-lime transition-colors">{{ item.tema }}</td>
-                            <td class="py-6"><span class="text-[9px] md:text-[10px] font-black uppercase tracking-widest {{ item.color }} px-3 py-1.5 whitespace-nowrap">{{ item.estat }}</span></td>
-                            <td class="py-6 text-sm text-stone-500 italic hidden md:table-cell">{{ item.nota }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
+    
     <section id="model-home" class="py-24 bg-stone-50 text-mes-dark px-8 text-left border-y border-stone-100">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div class="text-left">
