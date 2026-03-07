@@ -2,39 +2,62 @@
 layout: default
 ---
 
-<a href="{{ site.baseurl }}/actualitat/" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-dark text-white px-6 py-4 font-black uppercase text-xs tracking-widest border-2 border-transparent hover:border-mes-lime hover:text-mes-lime shadow-2xl z-50 flex items-center gap-2 transition-all">
-    ← Tornar
-</a>
+<div class="bg-stone-50 min-h-screen pt-20 pb-32 px-4 md:px-8">
+    <div class="max-w-4xl mx-auto">
+        
+        <a href="{{ site.baseurl }}/actualitat/" class="inline-flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-stone-400 hover:text-mes-lime transition-colors mb-10">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            Tornar a l'actualitat
+        </a>
 
-<article class="max-w-4xl mx-auto px-8 pt-12 pb-32 animate-fade relative">
-    
-    <div class="mb-10">
-        <a href="{{ site.baseurl }}/actualitat/" class="text-xs font-bold text-stone-400 hover:text-mes-lime transition-colors uppercase tracking-widest border-b border-stone-300 pb-1">
-            ← Totes les notícies
-        </a>
-    </div>
+        <header class="mb-10 text-left">
+            {% assign post_cat = page.category | default: page.categories.first | default: 'Notícia' %}
+            <span class="inline-block bg-mes-dark text-mes-lime text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-sm mb-6">
+                {{ post_cat }}
+            </span>
+            
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black uppercase text-mes-dark leading-tight mb-6 border-l-4 border-mes-lime pl-4 md:pl-6">
+                {{ page.title }}
+            </h1>
+            
+            <div class="flex items-center gap-4 text-[10px] md:text-xs font-bold text-stone-400 uppercase tracking-widest">
+                <span>Publicat el {{ page.date | date: "%d/%m/%Y" }}</span>
+            </div>
+        </header>
 
-    <div class="mb-8">
-        <span class="section-title-box">{{ page.category }}</span>
-        <span class="text-sm font-black text-stone-300 ml-4">{{ page.date | date: "%d/%m/%Y" }}</span>
+        {% if page.image %}
+        <div class="w-full aspect-video bg-stone-200 relative overflow-hidden border border-stone-200 shadow-sm mb-12">
+            {% if page.image contains 'http' %}
+                <img src="{{ page.image }}" class="absolute inset-0 w-full h-full object-cover object-center" alt="{{ page.title }}">
+            {% else %}
+                <img src="{{ site.baseurl }}{{ page.image }}" class="absolute inset-0 w-full h-full object-cover object-center" alt="{{ page.title }}">
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <article class="max-w-none text-stone-700 text-lg md:text-xl leading-relaxed md:leading-loose
+                        prose prose-stone prose-headings:font-black prose-headings:uppercase prose-headings:text-mes-dark prose-headings:mt-10 prose-headings:mb-4
+                        prose-a:text-mes-dark prose-a:font-bold prose-a:underline hover:prose-a:text-mes-lime
+                        prose-p:mb-6 prose-li:mb-2 prose-ul:list-disc prose-ul:pl-6 
+                        prose-blockquote:border-l-4 prose-blockquote:border-mes-lime prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-stone-500">
+            {{ content }}
+        </article>
+
+        <div class="mt-20 pt-8 border-t border-stone-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <span class="text-[10px] md:text-xs font-black uppercase tracking-widest text-stone-400">Comparteix aquesta publicació:</span>
+            
+            <div class="flex gap-4">
+                <a href="https://api.whatsapp.com/send?text={{ page.title | uri_escape }}%20{{ site.url }}{{ site.baseurl }}{{ page.url }}" target="_blank" class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-[#25D366]/10 text-[#25D366] px-4 py-2 hover:bg-[#25D366] hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.398 0 .016 5.37.016 11.996c0 2.115.551 4.17 1.6 5.989L0 24l6.195-1.623c1.761.947 3.737 1.446 5.828 1.446 6.634 0 12.016-5.372 12.016-11.998C24.038 5.372 18.665 0 12.031 0zm0 21.82c-1.801 0-3.562-.485-5.111-1.4l-.366-.217-3.797.994.996-3.696-.237-.378c-1.002-1.597-1.53-3.442-1.53-5.347 0-5.526 4.498-10.026 10.038-10.026 5.538 0 10.033 4.499 10.033 10.026s-4.495 10.044-10.026 10.044zm5.503-7.518c-.302-.151-1.789-.882-2.066-.983-.277-.101-.479-.151-.68.151-.202.302-.782.983-.958 1.185-.176.202-.353.227-.655.076-1.776-.893-2.924-1.802-4.06-3.743-.205-.351.202-.323.782-1.481.076-.151.038-.277-.019-.378-.057-.101-.68-1.639-.932-2.244-.246-.591-.497-.511-.68-.521-.176-.01-.378-.01-.58-.01-.202 0-.529.076-.806.378-.277.302-1.058 1.033-1.058 2.519s1.083 2.923 1.234 3.125c.151.202 2.13 3.253 5.161 4.561 2.018.871 2.802.946 3.844.793.847-.123 2.592-1.059 2.956-2.079.364-1.02.364-1.892.256-2.079-.108-.187-.41-.288-.712-.439z"/></svg>
+                    WhatsApp
+                </a>
+                
+                <a href="https://twitter.com/intent/tweet?text={{ page.title | uri_escape }}&url={{ site.url }}{{ site.baseurl }}{{ page.url }}" target="_blank" class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-stone-200 text-stone-600 px-4 py-2 hover:bg-black hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    Post
+                </a>
+            </div>
+        </div>
+        
     </div>
-    
-    <h1 class="text-4xl md:text-5xl font-black uppercase leading-tight mb-8">{{ page.title }}</h1>
-    
-    {% if page.image %}
-    <img src="{{ site.baseurl }}{{ page.image }}" alt="{{ page.title }}" class="w-full h-96 object-cover mb-12 shadow-md">
-    {% endif %}
-    
-    <div class="text-lg text-stone-600 leading-relaxed whitespace-pre-wrap">
-        {{ content }}
-    </div>
-    
-    <div class="mt-16 pt-8 border-t border-stone-100 flex flex-col sm:flex-row gap-4 justify-between items-center text-left">
-        <a href="https://wa.me/?text=He llegit això a MÉS per Llucmajor: {{ page.title | cgi_escape }} - {{ site.url }}{{ site.baseurl }}{{ page.url }}" target="_blank" class="p-4 bg-green-50 text-green-700 border border-green-200 inline-block font-black uppercase text-xs tracking-widest hover:bg-green-100 transition-colors w-full sm:w-auto text-center">
-            Compartir per WhatsApp
-        </a>
-        <a href="{{ site.baseurl }}/actualitat/" class="btn-primary w-full sm:w-auto justify-center">
-            Més Actualitat
-        </a>
-    </div>
-</article>
+</div>
