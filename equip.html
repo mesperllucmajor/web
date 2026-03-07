@@ -79,7 +79,6 @@ permalink: /equip/
         <div class="group bg-white border border-stone-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden relative flex flex-col">
             
             <div class="w-full aspect-square md:aspect-[4/5] bg-stone-100 overflow-hidden relative flex-shrink-0">
-                
                 {% if membre.foto and membre.foto != "" %}
                     {% if membre.foto contains 'http' %}
                         <img src="{{ membre.foto }}" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" alt="{{ membre.nom }}">
@@ -89,12 +88,19 @@ permalink: /equip/
                 {% else %}
                     <img src="{{ site.baseurl }}/imatges/Logo.png" class="absolute inset-0 w-full h-full object-contain p-8 opacity-20 group-hover:scale-105 transition-transform duration-700" alt="Logo MÉS">
                 {% endif %}
-                
             </div>
             
-            <div class="p-4 md:p-6 text-center bg-stone-50 group-hover:bg-mes-dark transition-colors duration-500 border-t-2 border-mes-lime flex-grow flex flex-col justify-center">
+            <div class="p-4 md:p-6 text-center bg-stone-50 group-hover:bg-mes-dark transition-colors duration-500 border-t-2 border-mes-lime flex-grow flex flex-col items-center">
+                
                 <h3 class="text-sm md:text-base font-black uppercase text-mes-dark group-hover:text-white mb-1 transition-colors leading-tight">{{ membre.nom }}</h3>
                 <p class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-mes-lime">{{ membre.carrec }}</p>
+                
+                {% if membre.cita and membre.cita != "" %}
+                    <p class="text-xs text-stone-500 group-hover:text-stone-300 italic transition-colors leading-relaxed border-t border-stone-200 group-hover:border-stone-700 pt-3 mt-3 w-full">
+                        "{{ membre.cita }}"
+                    </p>
+                {% endif %}
+                
             </div>
             
         </div>
