@@ -79,11 +79,17 @@ permalink: /equip/
         <div class="group bg-white border border-stone-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden relative flex flex-col">
             
             <div class="w-full aspect-square md:aspect-[4/5] bg-stone-100 overflow-hidden relative flex-shrink-0">
-                {% if membre.imatge and membre.imatge != "" %}
-                    <img src="{{ site.baseurl }}{{ membre.imatge }}" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" alt="{{ membre.nom }}">
+                
+                {% if membre.foto and membre.foto != "" %}
+                    {% if membre.foto contains 'http' %}
+                        <img src="{{ membre.foto }}" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" alt="{{ membre.nom }}">
+                    {% else %}
+                        <img src="{{ site.baseurl }}{{ membre.foto }}" class="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" alt="{{ membre.nom }}">
+                    {% endif %}
                 {% else %}
                     <img src="{{ site.baseurl }}/imatges/Logo.png" class="absolute inset-0 w-full h-full object-contain p-8 opacity-20 group-hover:scale-105 transition-transform duration-700" alt="Logo MÉS">
                 {% endif %}
+                
             </div>
             
             <div class="p-4 md:p-6 text-center bg-stone-50 group-hover:bg-mes-dark transition-colors duration-500 border-t-2 border-mes-lime flex-grow flex flex-col justify-center">
