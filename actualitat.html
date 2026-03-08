@@ -18,99 +18,47 @@ permalink: /actualitat/
 <div class="pt-16 pb-32 px-4 md:px-8 max-w-7xl mx-auto text-left">
     
     <div class="mb-10">
-        <h2 class="text-3xl md:text-4xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-4 mb-2">Últimes Publicacions</h2>
-        <p class="text-stone-500 italic pl-5">Segueix el dia a dia de la política municipal i els nostres articles d'opinió.</p>
+        <h2 class="text-3xl md:text-4xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-4 mb-2">Hemeroteca</h2>
+        <p class="text-stone-500 italic pl-5">Segueix el dia a dia de la política municipal i els nostres articles d'opinió, ordenats cronològicament.</p>
     </div>
 
-    <<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 border-b border-stone-200 pb-8 gap-6">
-        
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 border-b border-stone-200 pb-8 gap-6">
         <div class="flex flex-wrap gap-2 md:gap-4">
             <button class="news-filter-btn bg-mes-dark text-mes-lime border-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="totes">Totes</button>
             <button class="news-filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="notic">Notícies</button>
             <button class="news-filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="article">Articles</button>
         </div>
-
-        <a href="{{ site.baseurl }}/actualitat/" class="group inline-flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-stone-500 hover:text-mes-dark transition-colors whitespace-nowrap">
-            Veure tota l'actualitat
-            <svg class="w-4 h-4 group-hover:translate-x-1 group-hover:text-mes-lime transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-        </a>
-
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch" id="news-grid">
+    <div id="news-container">
         
-        {% for post in site.posts %}
+        {% assign postsByMonth = site.posts | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
         
-        {% assign post_cat_raw = post.category | default: post.categories.first | default: 'Notícia' %}
-        
-        {% assign cat_clean = post_cat_raw | downcase | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'è', 'e' | replace: 'é', 'e' | replace: 'à', 'a' | replace: 'ï', 'i' | strip %}
-        
-        <a href="{{ site.baseurl }}{{ post.url }}" class="news-card group flex flex-col bg-stone-50 hover:bg-mes-dark shadow-sm hover:shadow-xl transition-colors duration-500 border border-stone-100 relative overflow-hidden text-left" data-category="{{ cat_clean }}">
+        {% for monthGroup in postsByMonth %}
             
-            <div class="w-full h-2 bg-mes-lime transition-all duration-300 group-hover:h-3"></div>
+            {% assign any_post = monthGroup.name | slice: 0, 4 %}
+            {% assign mes_num = monthGroup.name | slice: 5, 2 %}
+            {% assign mes_nom = "" %}
+            
+            {% if mes_num == '01' %}{% assign mes_nom = 'Gener' %}
+            {% elsif mes_num == '02' %}{% assign mes_nom = 'Febrer' %}
+            {% elsif mes_num == '03' %}{% assign mes_nom = 'Març' %}
+            {% elsif mes_num == '04' %}{% assign mes_nom = 'Abril' %}
+            {% elsif mes_num == '05' %}{% assign mes_nom = 'Maig' %}
+            {% elsif mes_num == '06' %}{% assign mes_nom = 'Juny' %}
+            {% elsif mes_num == '07' %}{% assign mes_nom = 'Juliol' %}
+            {% elsif mes_num == '08' %}{% assign mes_nom = 'Agost' %}
+            {% elsif mes_num == '09' %}{% assign mes_nom = 'Setembre' %}
+            {% elsif mes_num == '10' %}{% assign mes_nom = 'Octubre' %}
+            {% elsif mes_num == '11' %}{% assign mes_nom = 'Novembre' %}
+            {% elsif mes_num == '12' %}{% assign mes_nom = 'Desembre' %}
+            {% endif %}
 
-            <div class="w-full aspect-video bg-stone-200 relative overflow-hidden border-b border-stone-200 group-hover:border-stone-700 transition-colors duration-500 flex-shrink-0">
+            <div class="month-group mb-16">
                 
-                {% if post.image %}
-                    <img src="{{ site.baseurl }}{{ post.image }}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" alt="{{ post.title }}">
-                {% else %}
-                    <img src="{{ site.baseurl }}/imatges/Logo.png" class="absolute inset-0 w-full h-full object-contain p-8 opacity-20 group-hover:scale-105 transition-transform duration-700" alt="MÉS per Llucmajor">
-                {% endif %}
-
-                <div class="absolute top-4 left-4 bg-mes-dark text-mes-lime text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-md z-10">
-                    {{ post_cat_raw }}
+                <div class="flex items-center gap-4 mb-8">
+                    <h3 class="text-xl md:text-2xl font-black uppercase tracking-widest text-mes-dark">{{ mes_nom }} {{ any_post }}</h3>
+                    <div class="flex-grow h-px bg-stone-200"></div>
                 </div>
-            </div>
-
-            <div class="p-6 md:p-8 flex flex-col flex-grow">
-                <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3 block group-hover:text-mes-lime transition-colors">{{ post.date | date: "%d/%m/%Y" }}</span>
-                <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark group-hover:text-white transition-colors leading-tight mb-4">{{ post.title }}</h3>
-                <p class="text-sm text-stone-600 group-hover:text-stone-300 italic flex-grow mb-6">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
-                <span class="text-[10px] font-black uppercase tracking-widest text-mes-lime border-t border-stone-200 group-hover:border-stone-700 pt-4 mt-auto transition-colors flex items-center gap-2">
-                    Llegir més
-                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </span>
-            </div>
-            
-        </a>
-        {% endfor %}
-
-    </div>
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const filterBtns = document.querySelectorAll('.news-filter-btn');
-        const newsCards = document.querySelectorAll('.news-card');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
                 
-                // 1. Netejar colors de tots els botons
-                filterBtns.forEach(b => {
-                    b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
-                    b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200');
-                });
-
-                // 2. Pintar el botó actiu
-                btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
-                btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
-
-                // 3. Filtrar
-                const filterValue = btn.getAttribute('data-filter'); 
-                
-                newsCards.forEach(card => {
-                    // Agafem la categoria, forcem a text en minúscules per evitar qualsevol conflicte
-                    const cardCategory = (card.getAttribute('data-category') || 'notic').toLowerCase(); 
-                    
-                    // Comprovem si coincideix
-                    if (filterValue === 'totes' || cardCategory.includes(filterValue)) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        });
-    });
-</script>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
