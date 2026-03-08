@@ -1,7 +1,7 @@
 - titol: "Pla manteniment escoles"
   data: "Febrer 2026"
   tipus: "Proposta"
-  descripcio: "Pla específic per solucionar les deficiències estructurals dels centres educatius (ex. CEIP Badies)."
+  descripcio: "Pla específic per solucionar les deficiències estructurals dels centres educatius."
   estat: "🔴 REBUTJADA"
   color: "bg-red-50 text-red-700 border-red-200"
 
