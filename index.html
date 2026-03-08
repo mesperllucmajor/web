@@ -293,11 +293,20 @@ title: Inici
     <section class="py-24 px-4 md:px-8 bg-stone-100 border-y border-stone-200">
     <div class="max-w-7xl mx-auto">
         
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-stone-300 pb-8 gap-6">
-            <div>
-                <h2 class="text-3xl md:text-4xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-4 mb-2">Observatori Municipal</h2>
-                <p class="text-stone-500 italic pl-5">Fiscalitzam l'acció de govern pas a pas. Què s'aprova i què s'incompleix?</p>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-stone-300 pb-8 gap-8">
+            <div class="max-w-3xl">
+                <h2 class="text-3xl md:text-4xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-4 mb-3">Observatori Municipal</h2>
+                <p class="text-mes-dark font-bold uppercase tracking-widest text-xs md:text-sm pl-5 mb-3">Fiscalitzam l'acció de govern pas a pas.</p>
+                <p class="text-stone-600 text-sm md:text-base leading-relaxed pl-5">
+                    Aquest és el nostre tauler de transparència. Aquí pots fer un seguiment directe de la nostra feina a l'oposició i comprovar què fa l'equip de govern amb les propostes que portem al Ple: descobreix quines s'aproven, quines ens tomben i, sobretot, quines s'incompleixen un cop aprovades.
+                </p>
             </div>
+            
+            <a href="{{ site.baseurl }}/observatori/" class="group inline-flex items-center gap-3 bg-mes-dark text-mes-lime border-2 border-mes-dark hover:bg-mes-lime hover:text-mes-dark px-6 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all duration-300 shadow-md whitespace-nowrap">
+                Veure tot el tauler
+                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            </a>
+        </div>
             
             <a href="{{ site.baseurl }}/observatori/" class="group inline-flex items-center gap-3 bg-mes-dark text-mes-lime border-2 border-mes-dark hover:bg-mes-lime hover:text-mes-dark px-6 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all duration-300 shadow-md">
                 Veure tot el tauler
@@ -341,7 +350,7 @@ title: Inici
             
             <div class="lg:col-span-4 sticky top-24">
                 <span class="inline-block bg-mes-dark text-mes-lime text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-sm mb-4">
-                    Proximitat
+                    Agenda
                 </span>
                 <h2 class="text-4xl md:text-5xl font-black uppercase text-mes-dark leading-tight mb-4" style="letter-spacing: -0.05em;">
                     Pròximes<br>Cites

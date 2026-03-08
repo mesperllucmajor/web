@@ -2,7 +2,7 @@
   data: "Maig 2024"
   tipus: "Proposta"
   descripcio: "Proposta per instal·lar tendals als centres educatius abans de l'onada de calor."
-  estat: "🟡 PENDENT"
+  estat: "🟡 APROVADA I PENDENT"
   color: "bg-yellow-50 text-yellow-700 border-yellow-200"
 
 - titol: "Pacificació del trànsit al centre"
