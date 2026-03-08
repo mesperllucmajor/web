@@ -10,12 +10,6 @@
   zona_id: "urbanitzacions"
   zona_nom: "Urbanitzacions"
 
-- titol: "Asfaltat i enllumenat"
-  descripcio: "Pla de xoc per posar al dia els carrers principals de les urbanitzacions."
-  imatge: "https://images.unsplash.com/photo-1517400508447-f8dd518b86db"
-  zona_id: "arenal"
-  zona_nom: "s'Arenal"
-
 - titol: "Pla integral de mobilitat i aparcament"
   descripcio: "Crearem una solució definitiva per pacificar el trànsit, millorar la circulació de vehicles i garantir noves places d'aparcament estratègic per als veïnats i veïnades de s'Arenal."
   zona_id: "arenal"
