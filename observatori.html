@@ -17,11 +17,13 @@ permalink: /observatori/
 
 <div class="pt-16 pb-32 px-4 md:px-8 max-w-7xl mx-auto text-left">
     
-    <div class="mb-12">
-        <h2 class="text-3xl md:text-4xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-4 mb-2">Tauler de Control</h2>
-        <p class="text-stone-500 italic pl-5">Aquí fem seguiment de totes les nostres propostes al Ple i denunciem què fa (o no fa) l'equip de govern amb elles.</p>
+    <div class="mb-12 max-w-4xl">
+        <h2 class="text-3xl md:text-4xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-4 mb-3">Tauler de Control</h2>
+        <p class="text-mes-dark font-bold uppercase tracking-widest text-xs md:text-sm pl-5 mb-3">Fiscalitzam l'acció de govern pas a pas.</p>
+        <p class="text-stone-600 text-sm md:text-base leading-relaxed pl-5">
+            Aquest és el nostre tauler de transparència. Aquí pots fer un seguiment directe de la nostra feina a l'oposició i comprovar què fa l'equip de govern amb les propostes que portem al Ple: descobreix quines s'aproven, quines ens tomben i, sobretot, quines s'incompleixen un cop aprovades.
+        </p>
     </div>
-
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
         
         {% for item in site.data.observatori %}
