@@ -16,14 +16,14 @@
   data: "Febrer 2026"
   tipus: "Proposta"
   descripcio: "Proposta perquè cap pensió estigui per davall del Salari Mínim Interprofessional"
-  estat: "🟢 APROVADA"
+  estat: "🔴 REBUTJADA"
   color: "bg-red-50 text-red-700 border-red-200"
 
 - titol: "Rebuig al projecte d'instal·lació d'un circuit de motos d'aigua a la costa de s'Arenal"
   data: "Desembre 2025"
   tipus: "Proposta"
   descripcio: "Proposta evitar les molèsties que genera un circuit de motos aquàtiques a s'Arenal"
-  estat: "🔴 REBUTJADA"
+  estat: "🟢 APROVADA"
   color: "bg-green-50 text-green-700 border-green-200"
 
 
