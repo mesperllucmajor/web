@@ -6,70 +6,6 @@ title: Inici
 <style>
     /* COMPONENT: Slice Navigation Bar */
     .slice-container {
-        display: flex;
-        background-color: rgba(26, 26, 26, 0.7); /* Negre MÉS amb 70% d'opacitat */
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-    
-    /* En mòbil es fa vertical, en PC horitzontal */
-    @media (max-width: 1024px) {
-        .slice-container { flex-direction: column; }
-    }
-
-    .slice-item {
-        flex: 1;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 80px; 
-        cursor: pointer;
-        overflow: hidden;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        transition: flex 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
-    }
-    
-    @media (min-width: 1024px) {
-        .slice-item { height: 110px; }
-    }
-
-    .slice-item:last-child { 
-        border-right: none; 
-        border-bottom: none; 
-    }
-    
-    @media (max-width: 1024px) {
-        .slice-item { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-    }
-
-    /* ESTAT HOVER: L'expansió */
-    @media (min-width: 1024px) {
-        .slice-item:hover { 
-            flex: 2.2; /* El segment creix més del doble */
-        }
-    }
-
-    /* Animació del subtítol */
-    .slice-subtitle {
-        max-height: 0;
-        opacity: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
-    }
-    
-    .slice-item:hover .slice-subtitle {
-        max-height: 24px;
-        opacity: 1;
-        margin-top: 6px;
-    }
-</style>
-
-<style>
-    /* COMPONENT: Slice Navigation Bar */
-    .slice-container {
         background-color: rgba(26, 26, 26, 0.85); /* Fons fosc corporatiu */
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -258,145 +194,7 @@ title: Inici
         </div>
     </section>
 
-    
-
-    <section class="py-24 px-4 md:px-8 bg-stone-100 border-y border-stone-200">
-    <div class="max-w-7xl mx-auto">
-        
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-stone-300 pb-8 gap-8">
-            
-            <div class="max-w-3xl">
-                <span class="inline-block bg-mes-dark text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 mb-4">
-                    Fiscalització
-                </span>
-                
-                <h2 class="text-3xl md:text-5xl font-black uppercase text-mes-dark leading-tight mb-4">
-                    Observatori Municipal
-                </h2>
-                <p class="text-stone-600 text-sm md:text-base leading-relaxed">
-                    Aquest és el nostre tauler de transparència. Aquí pots fer un seguiment directe de la nostra feina a l'oposició i comprovar què fa l'equip de govern amb les propostes que portem al Ple: descobreix quines s'aproven, quines ens tomben i, sobretot, quines s'incompleixen un cop aprovades.
-                </p>
-            </div>
-            
-            <a href="{{ site.baseurl }}/observatori/" class="text-[11px] md:text-xs font-black uppercase tracking-widest text-mes-dark border-b-4 border-mes-lime pb-1 hover:text-stone-500 transition-colors whitespace-nowrap mb-1">
-                Veure tot el tauler
-            </a>
-            
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            
-            {% for item in site.data.observatori limit: 3 %}
-            <div class="bg-white border border-stone-200 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col relative overflow-hidden group">
-                
-                <div class="p-5 md:p-6 flex flex-col flex-grow">
-                    
-                    <div class="flex justify-between items-start mb-3">
-                        <span class="text-[9px] font-black uppercase tracking-widest text-mes-lime bg-mes-dark px-2 py-1">{{ item.tipus }}</span>
-                        <span class="text-[9px] font-bold text-stone-400 uppercase tracking-widest">{{ item.data }}</span>
-                    </div>
-                    
-                    <h3 class="text-lg font-black uppercase text-mes-dark leading-tight mb-2 group-hover:text-mes-lime transition-colors">{{ item.titol }}</h3>
-                    <p class="text-xs text-stone-600 mb-5 flex-grow line-clamp-3">{{ item.descripcio }}</p>
-
-                    <div class="mt-auto pt-4 border-t border-stone-100 flex flex-col gap-3">
-                        <div>
-                            <p class="text-[8px] font-black uppercase tracking-widest text-stone-400 mb-2">Estat actual:</p>
-                            <div class="inline-flex items-center px-3 py-1.5 border rounded-sm font-bold text-[10px] uppercase tracking-widest shadow-sm {{ item.color }}">
-                                {{ item.estat }}
-                            </div>
-                        </div>
-                        
-                        {% if item.comentari %}
-                        <div class="bg-stone-50 border border-stone-200 p-3 mt-1 relative">
-                            <div class="absolute -left-[1px] top-0 bottom-0 w-1 bg-mes-dark"></div>
-                            <p class="text-[8px] font-black uppercase tracking-widest text-mes-dark mb-1">Resposta / Seguiment:</p>
-                            <p class="text-[11px] text-stone-600 italic leading-snug">{{ item.comentari }}</p>
-                        </div>
-                        {% endif %}
-                    </div>
-
-                </div>
-            </div>
-            {% endfor %}
-
-        </div>
-    </div>
-</section>
-    
-<section class="py-24 px-4 md:px-8 bg-white">
-    <div class="max-w-7xl mx-auto">
-        
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            
-            <div class="lg:col-span-4 sticky top-24">
-                <span class="inline-block bg-mes-dark text-mes-lime text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-sm mb-4">
-                    Agenda
-                </span>
-                <h2 class="text-4xl md:text-5xl font-black uppercase text-mes-dark leading-tight mb-4" style="letter-spacing: -0.05em;">
-                    Pròximes<br>Cites
-                </h2>
-                <p class="text-stone-500 italic text-sm md:text-base border-l-4 border-mes-lime pl-4">
-                    Vine a conèixer el nostre projecte, participa i fes sentir la teva veu als carrers i places del municipi.
-                </p>
-            </div>
-
-            <div class="lg:col-span-8 flex flex-col gap-4">
-                
-                {% if site.data.agenda and site.data.agenda.size > 0 %}
-                    
-                    {% for acte in site.data.agenda limit: 4 %}
-                    <div class="group flex flex-row bg-white border border-stone-200 hover:border-mes-lime shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden relative">
-                        
-                        <div class="absolute left-0 top-0 bottom-0 w-1 bg-mes-lime transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
-
-                        <div class="flex flex-col items-center justify-center w-24 md:w-32 bg-stone-50 border-r border-stone-200 group-hover:bg-mes-dark transition-colors duration-300 flex-shrink-0">
-                            <span class="text-[10px] md:text-xs font-black uppercase tracking-widest text-stone-500 group-hover:text-mes-lime transition-colors block">{{ acte.mes }}</span>
-                            <span class="text-3xl md:text-4xl font-black text-mes-dark group-hover:text-white transition-colors leading-none mt-1">{{ acte.dia }}</span>
-                        </div>
-                        
-                        <div class="p-5 md:p-6 flex flex-col justify-center flex-grow">
-                            <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark mb-1 group-hover:text-mes-lime transition-colors">{{ acte.titol }}</h3>
-                            <p class="text-xs md:text-sm text-stone-500 mb-4 line-clamp-2">{{ acte.descripcio }}</p>
-                            
-                            <div class="flex flex-wrap items-center gap-4 text-[9px] md:text-[10px] font-bold text-stone-400 uppercase tracking-widest">
-                                <span class="flex items-center gap-1">
-                                    <svg class="w-3 h-3 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    {{ acte.hora }}
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <svg class="w-3 h-3 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                    {{ acte.lloc }}
-                                </span>
-                            </div>
-                        </div>
-
-                    </div>
-                    {% endfor %}
-
-                {% else %}
-                    
-                    <div class="bg-stone-50 border-2 border-dashed border-stone-200 p-8 md:p-12 text-center flex flex-col items-center justify-center w-full">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm mb-4 text-stone-300">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        </div>
-                        <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark mb-2">Estem preparant noves trobades</h3>
-                        <p class="text-stone-500 text-sm max-w-md mx-auto mb-6">De moment no tenim actes públics programats, ja que estem centrats en la feina municipal interna. Avisarem ben aviat!</p>
-                        <a href="https://twitter.com/mesperllucmajor" target="_blank" class="inline-flex items-center gap-2 bg-mes-dark text-mes-lime px-6 py-3 text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-mes-lime hover:text-mes-dark transition-colors shadow-sm">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                            Segueix-nos a xarxes
-                        </a>
-                    </div>
-
-                {% endif %}
-
-            </div>
-        </div>
-        
-    </div>
-</section>
-
-<section id="actualitat-home" class="py-24 bg-white px-8 text-left">
+    <section id="actualitat-home" class="py-24 bg-white px-4 md:px-8 text-left">
         <div class="max-w-7xl mx-auto">
             <div class="flex justify-between items-end mb-12">
                 <div class="text-left">
@@ -428,8 +226,144 @@ title: Inici
             </div>
         </div>
     </section>
-    
-    <section id="model-home" class="py-24 bg-stone-50 text-mes-dark px-8 text-left border-y border-stone-100">
+
+    <section id="observatori-home" class="py-24 px-4 md:px-8 bg-stone-50 border-y border-stone-200">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-stone-300 pb-8 gap-8">
+                
+                <div class="max-w-3xl">
+                    <span class="inline-block bg-mes-dark text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 mb-4">
+                        Fiscalització
+                    </span>
+                    
+                    <h2 class="text-3xl md:text-5xl font-black uppercase text-mes-dark leading-tight mb-4">
+                        Observatori Municipal
+                    </h2>
+                    <p class="text-stone-600 text-sm md:text-base leading-relaxed">
+                        Aquest és el nostre tauler de transparència. Aquí pots fer un seguiment directe de la nostra feina a l'oposició i comprovar què fa l'equip de govern amb les propostes que portem al Ple: descobreix quines s'aproven, quines ens tomben i, sobretot, quines s'incompleixen un cop aprovades.
+                    </p>
+                </div>
+                
+                <a href="{{ site.baseurl }}/observatori/" class="text-[11px] md:text-xs font-black uppercase tracking-widest text-mes-dark border-b-4 border-mes-lime pb-1 hover:text-stone-500 transition-colors whitespace-nowrap mb-1">
+                    Veure tot el tauler
+                </a>
+                
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+                
+                {% for item in site.data.observatori limit: 3 %}
+                <div class="bg-white border border-stone-200 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col relative overflow-hidden group">
+                    
+                    <div class="p-5 md:p-6 flex flex-col flex-grow">
+                        
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-[9px] font-black uppercase tracking-widest text-mes-lime bg-mes-dark px-2 py-1">{{ item.tipus }}</span>
+                            <span class="text-[9px] font-bold text-stone-400 uppercase tracking-widest">{{ item.data }}</span>
+                        </div>
+                        
+                        <h3 class="text-lg font-black uppercase text-mes-dark leading-tight mb-2 group-hover:text-mes-lime transition-colors">{{ item.titol }}</h3>
+                        <p class="text-xs text-stone-600 mb-5 flex-grow line-clamp-3">{{ item.descripcio }}</p>
+
+                        <div class="mt-auto pt-4 border-t border-stone-100 flex flex-col gap-3">
+                            <div>
+                                <p class="text-[8px] font-black uppercase tracking-widest text-stone-400 mb-2">Estat actual:</p>
+                                <div class="inline-flex items-center px-3 py-1.5 border rounded-sm font-bold text-[10px] uppercase tracking-widest shadow-sm {{ item.color }}">
+                                    {{ item.estat }}
+                                </div>
+                            </div>
+                            
+                            {% if item.comentari %}
+                            <div class="bg-stone-50 border border-stone-200 p-3 mt-1 relative">
+                                <div class="absolute -left-[1px] top-0 bottom-0 w-1 bg-mes-dark"></div>
+                                <p class="text-[8px] font-black uppercase tracking-widest text-mes-dark mb-1">Resposta / Seguiment:</p>
+                                <p class="text-[11px] text-stone-600 italic leading-snug">{{ item.comentari }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+        
+    <section id="agenda-home" class="py-24 px-4 md:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <div class="lg:col-span-4 sticky top-24">
+                    <span class="inline-block bg-mes-dark text-mes-lime text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-sm mb-4">
+                        Agenda
+                    </span>
+                    <h2 class="text-4xl md:text-5xl font-black uppercase text-mes-dark leading-tight mb-4" style="letter-spacing: -0.05em;">
+                        Pròximes<br>Cites
+                    </h2>
+                    <p class="text-stone-500 italic text-sm md:text-base border-l-4 border-mes-lime pl-4">
+                        Vine a conèixer el nostre projecte, participa i fes sentir la teva veu als carrers i places del municipi.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-8 flex flex-col gap-4">
+                    
+                    {% if site.data.agenda and site.data.agenda.size > 0 %}
+                        
+                        {% for acte in site.data.agenda limit: 4 %}
+                        <div class="group flex flex-row bg-white border border-stone-200 hover:border-mes-lime shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden relative">
+                            
+                            <div class="absolute left-0 top-0 bottom-0 w-1 bg-mes-lime transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+
+                            <div class="flex flex-col items-center justify-center w-24 md:w-32 bg-stone-50 border-r border-stone-200 group-hover:bg-mes-dark transition-colors duration-300 flex-shrink-0">
+                                <span class="text-[10px] md:text-xs font-black uppercase tracking-widest text-stone-500 group-hover:text-mes-lime transition-colors block">{{ acte.mes }}</span>
+                                <span class="text-3xl md:text-4xl font-black text-mes-dark group-hover:text-white transition-colors leading-none mt-1">{{ acte.dia }}</span>
+                            </div>
+                            
+                            <div class="p-5 md:p-6 flex flex-col justify-center flex-grow">
+                                <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark mb-1 group-hover:text-mes-lime transition-colors">{{ acte.titol }}</h3>
+                                <p class="text-xs md:text-sm text-stone-500 mb-4 line-clamp-2">{{ acte.descripcio }}</p>
+                                
+                                <div class="flex flex-wrap items-center gap-4 text-[9px] md:text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+                                    <span class="flex items-center gap-1">
+                                        <svg class="w-3 h-3 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        {{ acte.hora }}
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <svg class="w-3 h-3 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                        {{ acte.lloc }}
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        {% endfor %}
+
+                    {% else %}
+                        
+                        <div class="bg-stone-50 border-2 border-dashed border-stone-200 p-8 md:p-12 text-center flex flex-col items-center justify-center w-full">
+                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm mb-4 text-stone-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark mb-2">Estem preparant noves trobades</h3>
+                            <p class="text-stone-500 text-sm max-w-md mx-auto mb-6">De moment no tenim actes públics programats, ja que estem centrats en la feina municipal interna. Avisarem ben aviat!</p>
+                            <a href="https://twitter.com/mesperllucmajor" target="_blank" class="inline-flex items-center gap-2 bg-mes-dark text-mes-lime px-6 py-3 text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-mes-lime hover:text-mes-dark transition-colors shadow-sm">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                Segueix-nos a xarxes
+                            </a>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <section id="model-home" class="py-24 px-4 md:px-8 bg-stone-100 border-y border-stone-200 text-mes-dark text-left">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div class="text-left">
                 <h2 class="section-title-box mb-6">EL NOSTRE MODEL</h2>
@@ -501,33 +435,30 @@ title: Inici
     let heroInterval;
 
     function showHeroSlide(index) {
-        // Amagar tots
+        if (!heroSlides.length) return;
         heroSlides.forEach(s => s.classList.remove('active'));
         heroDots.forEach(d => d.classList.remove('active'));
         
-        // Mostrar el seleccionat
         heroSlides[index].classList.add('active');
         heroDots[index].classList.add('active');
         currentHeroSlide = index;
     }
 
-    // Funció per anar passant les imatges automàticament
     function startHeroSlider() {
+        if (!heroSlides.length) return;
         heroInterval = setInterval(() => { 
             showHeroSlide((currentHeroSlide + 1) % heroSlides.length); 
-        }, 6000); // 6 segons entre canvis (abans estava a 8000)
+        }, 6000); 
     }
 
-    // Quan fas clic a un dot: canvia la imatge i REINICIA el temporitzador automàtic
     heroDots.forEach((dot, i) => { 
         dot.addEventListener('click', () => {
-            clearInterval(heroInterval); // Aturar rotació automàtica
-            showHeroSlide(i);            // Mostrar la que toca
-            startHeroSlider();           // Tornar a arrencar
+            clearInterval(heroInterval); 
+            showHeroSlide(i);            
+            startHeroSlider();           
         }); 
     });
 
-    // Iniciar el carrusel en carregar
     startHeroSlider();
 
 
@@ -574,18 +505,20 @@ title: Inici
     const status = document.getElementById("index-form-status");
     const fbtn = document.getElementById("index-form-btn");
 
-    form.addEventListener("submit", async function(e) {
-        e.preventDefault();
-        fbtn.innerHTML = "Enviant...";
-        const data = new FormData(e.target);
-        fetch(e.target.action, { method: form.method, body: data, headers: { 'Accept': 'application/json' } })
-        .then(response => {
-            if (response.ok) {
-                status.classList.remove("hidden");
-                form.reset();
-                fbtn.innerHTML = "Enviar";
-                setTimeout(() => { status.classList.add("hidden"); closeM(); }, 3000);
-            }
+    if (form) {
+        form.addEventListener("submit", async function(e) {
+            e.preventDefault();
+            fbtn.innerHTML = "Enviant...";
+            const data = new FormData(e.target);
+            fetch(e.target.action, { method: form.method, body: data, headers: { 'Accept': 'application/json' } })
+            .then(response => {
+                if (response.ok) {
+                    status.classList.remove("hidden");
+                    form.reset();
+                    fbtn.innerHTML = "Enviar i sumar-m'hi";
+                    setTimeout(() => { status.classList.add("hidden"); closeM(); }, 3000);
+                }
+            });
         });
-    });
+    }
 </script>
