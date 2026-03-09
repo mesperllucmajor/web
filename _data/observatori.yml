@@ -12,6 +12,7 @@
   descripcio: "Llucmajor no està en venda. Proposta per la protecció de les àrees de transició i evitar que s'incrementi la població que creixin els sense serveis"
   estat: "🔴 REBUTJADA"
   color: "bg-red-50 text-red-700 border-red-200"
+  comentari: "L'equip de govern segueix les ordres de Palma i deixa que en mans dels especuladors el futur urbanístic de Llucmajor"
 
 - titol: "Suport a la ILP per a la creació del Sistema Balear de Complement a les pensions inferiors al SMI"
   data: "Febrer 2026"
@@ -19,6 +20,7 @@
   descripcio: "Proposta perquè cap pensió estigui per davall del Salari Mínim Interprofessional"
   estat: "🔴 REBUTJADA"
   color: "bg-red-50 text-red-700 border-red-200"
+  comentari: "Amb l'excusa que no depèn de Llucmajor, l'equip de govern decideix no pressionar el govern balear per afavorir els més necessitats: els pensionistes que no arriben a cobrar el Sou Mínim Interprofessional."
 
 - titol: "Rebuig al projecte d'instal·lació d'un circuit de motos d'aigua a la costa de s'Arenal"
   data: "Desembre 2025"
@@ -26,5 +28,6 @@
   descripcio: "Proposta evitar les molèsties que genera un circuit de motos aquàtiques a s'Arenal"
   estat: "🟢 APROVADA"
   color: "bg-green-50 text-green-700 border-green-200"
+  comentari: "Hem aconseguit que Llucmajor es posicioni en contra d'una activitat per a pocs i que genera molèsties a tots els s'arenalers i totes les s'arenaleres.
 
 
