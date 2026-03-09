@@ -6,12 +6,10 @@ title: Inici
 <style>
     /* COMPONENT: Slice Navigation Bar */
     .slice-container {
-        background-color: rgba(26, 26, 26, 0.85); /* Fons fosc corporatiu */
+        background-color: rgba(26, 26, 26, 0.85);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        
-        /* DISSENY MÒBIL: Graella de 2 columnes */
         display: grid;
         grid-template-columns: repeat(2, 1fr);
     }
@@ -22,25 +20,21 @@ title: Inici
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 85px; /* Mida ideal per clicar amb el dit en mòbil */
+        height: 85px;
         cursor: pointer;
         overflow: hidden;
-        
-        /* Vores internes per a la graella mòbil */
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         border-right: 1px solid rgba(255, 255, 255, 0.1);
         transition: flex 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
     }
 
-    /* Neteja de vores en mòbil per no tenir línies innecessàries */
-    .slice-item:nth-child(2n) { border-right: none; } /* Columna dreta */
+    .slice-item:nth-child(2n) { border-right: none; }
     .slice-item:last-child { 
-        grid-column: span 2; /* L'últim ocupa tot l'ample a baix */
+        grid-column: span 2;
         border-bottom: none; 
         border-right: none;
     }
 
-    /* DISSENY PC: Flex Accordion horitzontal */
     @media (min-width: 1024px) {
         .slice-container {
             display: flex;
@@ -49,22 +43,14 @@ title: Inici
         }
         .slice-item {
             flex: 1;
-            height: 110px; /* Més alt en PC */
-            /* Reiniciem les vores per a format horitzontal */
+            height: 110px;
             border-bottom: none !important;
             border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
         }
-        .slice-item:last-child {
-            border-right: none !important;
-        }
-        
-        /* L'Efecte d'expansió només s'aplica en pantalles grans */
-        .slice-item:hover { 
-            flex: 2.5; 
-        }
+        .slice-item:last-child { border-right: none !important; }
+        .slice-item:hover { flex: 2.5; }
     }
 
-    /* Animació del subtítol */
     .slice-subtitle {
         max-height: 0;
         opacity: 0;
@@ -83,9 +69,7 @@ title: Inici
     
     <div class="relative w-full h-[55vh] lg:h-[75vh] overflow-hidden flex flex-col justify-center">
         <img src="{{ site.baseurl }}/imatges/imatge1.jpeg" class="absolute inset-0 w-full h-full object-cover z-0" alt="MÉS per Llucmajor" />
-        
         <div class="absolute inset-0 bg-black/40 z-0"></div>
-        
         <div class="relative z-10 w-full px-8 md:px-20 text-center md:text-left pb-16 lg:pb-24">
             <div class="max-w-5xl mx-auto md:mx-0">
                 <span class="block text-mes-lime font-black uppercase tracking-[0.2em] mb-4 text-xs md:text-sm" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
@@ -102,11 +86,9 @@ title: Inici
     </div>
 
     <div class="relative z-20 w-[95%] lg:w-[90%] max-w-7xl mx-auto slice-container -mt-16 lg:-mt-20 mb-12">
-        
         <a href="{{ site.baseurl }}/propostes/?zona=llucmajor" class="slice-item group">
             <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="Llucmajor">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
-            
             <div class="relative z-20 flex flex-col items-center text-center px-2">
                 <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Llucmajor Poble</span>
                 <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Aquest és el poble que tendrem</span>
@@ -116,50 +98,44 @@ title: Inici
         <a href="{{ site.baseurl }}/propostes/?zona=arenal" class="slice-item group">
             <img src="{{ site.baseurl }}/imatges/sarenal2.jpeg" onerror="this.src='{{ site.baseurl }}/imatges/PlacaPalmeres.jpeg'" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="s'Arenal">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
-            
             <div class="relative z-20 flex flex-col items-center text-center px-2">
                 <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">s'Arenal</span>
-                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Consulta com recuperarem s'Arenal pels s'arenalers i s'arenaleres.</span>
+                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Recuperarem s'Arenal pels s'arenalers i s'arenaleres.</span>
             </div>
         </a>
 
         <a href="{{ site.baseurl }}/propostes/?zona=urbanitzacions" class="slice-item group">
             <img src="{{ site.baseurl }}/imatges/badies2.jpeg" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="Urbanitzacions">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
-            
             <div class="relative z-20 flex flex-col items-center text-center px-2">
                 <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Urbanitzacions</span>
-                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Mira com seran les urbanitzacions amb nosaltres.</span>
+                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Com seran les urbanitzacions amb nosaltres.</span>
             </div>
         </a>
 
         <a href="{{ site.baseurl }}/propostes/?zona=estanyol" class="slice-item group">
             <img src="{{ site.baseurl }}/imatges/estanyol.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="s'Estanyol">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
-            
             <div class="relative z-20 flex flex-col items-center text-center px-2">
                 <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">s'Estanyol / Son Bieló</span>
-                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Entra i veuràs que s'Estanyol i Son Bieló també són Llucmajor.</span>
+                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">s'Estanyol i Son Bieló també són Llucmajor.</span>
             </div>
         </a>
 
         <a href="{{ site.baseurl }}/propostes/?zona=foravila" class="slice-item group">
             <img src="{{ site.baseurl }}/imatges/Foravila.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="Fora Vila">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
-            
             <div class="relative z-20 flex flex-col items-center text-center px-2">
                 <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Fora Vila</span>
-                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Mira la solució que proposam per fora vila</span>
+                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">La solució que proposam per fora vila</span>
             </div>
         </a>
-
     </div>
 </header>
 
 <main>
     <section id="highlight-banner" class="bg-mes-lime border-y-2 border-mes-dark/10 relative h-20 md:h-24 overflow-hidden">
         <div class="max-w-7xl mx-auto h-full px-8 relative">
-            
             <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-100 translate-y-0 px-8" data-index="0">
                 <div class="flex items-center gap-4 text-left">
                     <div class="bg-mes-dark text-mes-lime p-2 hidden sm:block">
@@ -174,7 +150,6 @@ title: Inici
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </a>
             </div>
-
             {% assign darrera_noticia = site.posts.first %}
             <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-0 translate-y-8 px-8 pointer-events-none" data-index="1">
                 <div class="flex items-center gap-4 text-left">
@@ -190,46 +165,56 @@ title: Inici
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </a>
             </div>
-
         </div>
     </section>
 
     <section id="observatori-home" class="py-24 px-4 md:px-8 bg-white">
         <div class="max-w-7xl mx-auto">
             
+            {% assign aprovades = 0 %}
+            {% assign rebutjades = 0 %}
+            {% for item in site.data.observatori %}
+                {% if item.estat contains "APROVADA" %}{% assign aprovades = aprovades | plus: 1 %}{% endif %}
+                {% if item.estat contains "REBUTJADA" %}{% assign rebutjades = rebutjades | plus: 1 %}{% endif %}
+            {% endfor %}
+
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-stone-300 pb-8 gap-8">
-                
                 <div class="max-w-3xl">
-                    <span class="inline-block bg-mes-dark text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 mb-4">
-                        Fiscalització
-                    </span>
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="bg-mes-dark text-white text-[10px] font-black uppercase tracking-widest px-3 py-1">
+                            Fiscalització
+                        </span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-black text-green-600 bg-green-50 px-2 py-1 rounded-full border border-green-100">
+                                {{ aprovades }} APROVADES
+                            </span>
+                            <span class="text-[10px] font-black text-red-600 bg-red-50 px-2 py-1 rounded-full border border-red-100">
+                                {{ rebutjades }} REBUTJADES
+                            </span>
+                        </div>
+                    </div>
                     
                     <h2 class="text-3xl md:text-5xl font-black uppercase text-mes-dark leading-tight mb-4">
                         Observatori Municipal
                     </h2>
                     <p class="text-stone-600 text-sm md:text-base leading-relaxed">
-                        Aquest és el nostre tauler de transparència. Aquí pots fer un seguiment directe de la nostra feina a l'oposició i comprovar què fa l'equip de govern amb les propostes que portem al Ple: descobreix quines s'aproven, quines ens tomben i, sobretot, quines s'incompleixen un cop aprovades.
+                        Fem un seguiment directe de la nostra feina a l'oposició. Comprova què fa l'equip de govern amb les solucions que portem al Ple: descobreix quines ens tomben i quines es neguen a complir.
                     </p>
                 </div>
                 
                 <a href="{{ site.baseurl }}/observatori/" class="text-[11px] md:text-xs font-black uppercase tracking-widest text-mes-dark border-b-4 border-mes-lime pb-1 hover:text-stone-500 transition-colors whitespace-nowrap mb-1">
                     Veure tot el tauler
                 </a>
-                
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-                
                 {% for item in site.data.observatori limit: 3 %}
                 <div class="bg-white border border-stone-200 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col relative overflow-hidden group">
-                    
                     <div class="p-5 md:p-6 flex flex-col flex-grow">
-                        
                         <div class="flex justify-between items-start mb-3">
                             <span class="text-[9px] font-black uppercase tracking-widest text-mes-lime bg-mes-dark px-2 py-1">{{ item.tipus }}</span>
                             <span class="text-[9px] font-bold text-stone-400 uppercase tracking-widest">{{ item.data }}</span>
                         </div>
-                        
                         <h3 class="text-lg font-black uppercase text-mes-dark leading-tight mb-2 group-hover:text-mes-lime transition-colors">{{ item.titol }}</h3>
                         <p class="text-xs text-stone-600 mb-5 flex-grow line-clamp-3">{{ item.descripcio }}</p>
 
@@ -240,7 +225,6 @@ title: Inici
                                     {{ item.estat }}
                                 </div>
                             </div>
-                            
                             {% if item.comentari %}
                             <div class="bg-stone-50 border border-stone-200 p-3 mt-1 relative">
                                 <div class="absolute -left-[1px] top-0 bottom-0 w-1 bg-mes-dark"></div>
@@ -249,84 +233,49 @@ title: Inici
                             </div>
                             {% endif %}
                         </div>
-
                     </div>
                 </div>
                 {% endfor %}
-
             </div>
         </div>
     </section>
 
     <section id="agenda-home" class="py-24 px-4 md:px-8 bg-stone-50 border-t border-stone-200">
         <div class="max-w-7xl mx-auto">
-            
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-                
                 <div class="lg:col-span-4 sticky top-24">
-                    <span class="inline-block bg-mes-dark text-mes-lime text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-sm mb-4">
-                        Agenda
-                    </span>
-                    <h2 class="text-4xl md:text-5xl font-black uppercase text-mes-dark leading-tight mb-4" style="letter-spacing: -0.05em;">
-                        Pròximes<br>Cites
-                    </h2>
-                    <p class="text-stone-500 italic text-sm md:text-base border-l-4 border-mes-lime pl-4">
-                        Vine a conèixer el nostre projecte, participa i fes sentir la teva veu als carrers i places del municipi.
-                    </p>
+                    <span class="inline-block bg-mes-dark text-mes-lime text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-sm mb-4">Agenda</span>
+                    <h2 class="text-4xl md:text-5xl font-black uppercase text-mes-dark leading-tight mb-4" style="letter-spacing: -0.05em;">Pròximes<br>Cites</h2>
+                    <p class="text-stone-500 italic text-sm md:text-base border-l-4 border-mes-lime pl-4">Participa i fes sentir la teva veu als carrers i places del municipi.</p>
                 </div>
-
                 <div class="lg:col-span-8 flex flex-col gap-4">
-                    
                     {% if site.data.agenda and site.data.agenda.size > 0 %}
-                        
                         {% for acte in site.data.agenda limit: 4 %}
                         <div class="group flex flex-row bg-white border border-stone-200 hover:border-mes-lime shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden relative">
-                            
                             <div class="absolute left-0 top-0 bottom-0 w-1 bg-mes-lime transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
-
                             <div class="flex flex-col items-center justify-center w-24 md:w-32 bg-stone-50 border-r border-stone-200 group-hover:bg-mes-dark transition-colors duration-300 flex-shrink-0">
                                 <span class="text-[10px] md:text-xs font-black uppercase tracking-widest text-stone-500 group-hover:text-mes-lime transition-colors block">{{ acte.mes }}</span>
                                 <span class="text-3xl md:text-4xl font-black text-mes-dark group-hover:text-white transition-colors leading-none mt-1">{{ acte.dia }}</span>
                             </div>
-                            
                             <div class="p-5 md:p-6 flex flex-col justify-center flex-grow">
                                 <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark mb-1 group-hover:text-mes-lime transition-colors">{{ acte.titol }}</h3>
                                 <p class="text-xs md:text-sm text-stone-500 mb-4 line-clamp-2">{{ acte.descripcio }}</p>
-                                
                                 <div class="flex flex-wrap items-center gap-4 text-[9px] md:text-[10px] font-bold text-stone-400 uppercase tracking-widest">
-                                    <span class="flex items-center gap-1">
-                                        <svg class="w-3 h-3 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        {{ acte.hora }}
-                                    </span>
-                                    <span class="flex items-center gap-1">
-                                        <svg class="w-3 h-3 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                        {{ acte.lloc }}
-                                    </span>
+                                    <span class="flex items-center gap-1"><svg class="w-3 h-3 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>{{ acte.hora }}</span>
+                                    <span class="flex items-center gap-1"><svg class="w-3 h-3 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>{{ acte.lloc }}</span>
                                 </div>
                             </div>
-
                         </div>
                         {% endfor %}
-
                     {% else %}
-                        
                         <div class="bg-stone-50 border-2 border-dashed border-stone-200 p-8 md:p-12 text-center flex flex-col items-center justify-center w-full">
-                            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm mb-4 text-stone-300">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                            </div>
                             <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark mb-2">Estem preparant noves trobades</h3>
-                            <p class="text-stone-500 text-sm max-w-md mx-auto mb-6">De moment no tenim actes públics programats, ja que estem centrats en la feina municipal interna. Avisarem ben aviat!</p>
-                            <a href="https://twitter.com/mesperllucmajor" target="_blank" class="inline-flex items-center gap-2 bg-mes-dark text-mes-lime px-6 py-3 text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-mes-lime hover:text-mes-dark transition-colors shadow-sm">
-                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                Segueix-nos a xarxes
-                            </a>
+                            <p class="text-stone-500 text-sm max-w-md mx-auto mb-6">De moment no tenim actes públics programats. Avisarem ben aviat!</p>
+                            <a href="https://twitter.com/mesperllucmajor" target="_blank" class="inline-flex items-center gap-2 bg-mes-dark text-mes-lime px-6 py-3 text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-mes-lime hover:text-mes-dark transition-colors shadow-sm">Seguiex-nos a xarxes</a>
                         </div>
-
                     {% endif %}
-
                 </div>
             </div>
-            
         </div>
     </section>
 
@@ -342,19 +291,12 @@ title: Inici
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
                 {% for post in site.posts limit:3 %}
                 <a href="{{ site.baseurl }}{{ post.url }}" class="group block text-left">
-                    
                     <div class="h-64 overflow-hidden mb-6 bg-stone-100 border-b-4 border-mes-dark group-hover:border-mes-lime transition-all relative">
-                        
-                        {% if post.image %}
-                            <img src="{{ site.baseurl }}{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        {% endif %}
-                        
+                        {% if post.image %}<img src="{{ site.baseurl }}{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">{% endif %}
                         <div class="absolute top-4 left-4 bg-mes-dark text-mes-lime text-[10px] font-black uppercase px-3 py-1 shadow-md">
                             {{ post.category | default: post.categories.first | default: 'Notícia' }}
                         </div>
-                        
                     </div>
-                    
                     <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">{{ post.date | date: "%d/%m/%Y" }}</span>
                     <h4 class="text-xl font-black uppercase mt-2 leading-tight group-hover:text-mes-lime transition-colors text-mes-dark">{{ post.title }}</h4>
                 </a>
@@ -376,149 +318,48 @@ title: Inici
             </div>
         </div>
     </section>
-
 </main>
 
-<button id="open-index-contact" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-lime text-mes-dark px-6 py-4 font-black uppercase text-xs md:text-sm tracking-widest shadow-2xl z-40 flex items-center gap-2 hover:bg-mes-dark hover:text-white transition-all transform hover:-translate-y-1">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-    Connecta
-</button>
+<button id="open-index-contact" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-lime text-mes-dark px-6 py-4 font-black uppercase text-xs md:text-sm tracking-widest shadow-2xl z-40 flex items-center gap-2 hover:bg-mes-dark hover:text-white transition-all transform hover:-translate-y-1">Connecta</button>
 
 <div id="index-contact-modal" class="fixed inset-0 bg-mes-dark/90 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-    
     <div class="bg-white w-full max-w-lg relative shadow-2xl transform scale-95 transition-transform duration-300" id="index-modal-content">
-        
-        <button id="close-index-contact" class="absolute top-4 right-4 text-stone-400 hover:text-mes-dark p-2 z-10">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-
+        <button id="close-index-contact" class="absolute top-4 right-4 text-stone-400 hover:text-mes-dark p-2 z-10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
         <div class="p-8 md:p-12 text-left">
             <h3 class="text-3xl md:text-4xl font-black uppercase mb-2 text-mes-dark leading-none">Fes pinya amb noltros</h3>
-            <p class="text-stone-500 mb-8 text-sm md:text-base italic">Vols sumar-te al projecte o fer-nos una consulta? T'escoltam.</p>
-
+            <p class="text-stone-500 mb-8 text-sm md:text-base italic">Vols sumar-te al projecte? T'escoltam.</p>
             <form id="index-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="flex flex-col gap-6">
-                
-                <div class="flex flex-col gap-2 text-left">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400 text-left">Nom i Llinatges</label>
-                    <input class="form-input text-left" type="text" name="nom" placeholder="Escriu el teu nom complet" required />
-                </div>
-
-                <div class="flex flex-col gap-2 text-left">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400 text-left">Correu Electrònic</label>
-                    <input class="form-input text-left" type="email" name="email" placeholder="Exemple: joan@correu.com" required />
-                </div>
-
-                <div class="flex flex-col gap-2 text-left">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400 text-left">En què penses?</label>
-                    <textarea class="form-input text-left" name="missatge" rows="4" placeholder="Explica'ns com vols col·laborar..." required></textarea>
-                </div>
-
-                <div class="pt-2">
-                    <button id="index-form-btn" type="submit" class="btn-primary w-full justify-center py-5 text-base">
-                        Enviar i sumar-m'hi
-                    </button>
-                </div>
-
-                <div id="index-form-status" class="hidden p-4 bg-green-50 text-green-700 border border-green-200 font-bold text-center text-xs uppercase tracking-widest">
-                    ✅ Missatge rebut! Ens posarem en contacte amb tu molt aviat.
-                </div>
+                <div class="flex flex-col gap-2 text-left"><label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Nom i Llinatges</label><input class="form-input text-left" type="text" name="nom" required /></div>
+                <div class="flex flex-col gap-2 text-left"><label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Correu</label><input class="form-input text-left" type="email" name="email" required /></div>
+                <div class="flex flex-col gap-2 text-left"><label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Missatge</label><textarea class="form-input text-left" name="missatge" rows="4" required></textarea></div>
+                <button id="index-form-btn" type="submit" class="btn-primary w-full justify-center py-5 text-base">Enviar i sumar-m'hi</button>
             </form>
         </div>
     </div>
 </div>
 
 <script>
-    // 1. LÒGICA MILLORADA DEL HERO SLIDER (Imatges Grans)
-    let currentHeroSlide = 0;
-    const heroSlides = document.querySelectorAll('.hero-slide');
-    const heroDots = document.querySelectorAll('.hero-dot');
-    let heroInterval;
-
-    function showHeroSlide(index) {
-        if (!heroSlides.length) return;
-        heroSlides.forEach(s => s.classList.remove('active'));
-        heroDots.forEach(d => d.classList.remove('active'));
-        
-        heroSlides[index].classList.add('active');
-        heroDots[index].classList.add('active');
-        currentHeroSlide = index;
-    }
-
-    function startHeroSlider() {
-        if (!heroSlides.length) return;
-        heroInterval = setInterval(() => { 
-            showHeroSlide((currentHeroSlide + 1) % heroSlides.length); 
-        }, 6000); 
-    }
-
-    heroDots.forEach((dot, i) => { 
-        dot.addEventListener('click', () => {
-            clearInterval(heroInterval); 
-            showHeroSlide(i);            
-            startHeroSlider();           
-        }); 
-    });
-
-    startHeroSlider();
-
-
-    // 2. LÒGICA DEL HIGHLIGHT BANNER ROTATIU (Banner llima de notícies)
+    // LÒGICA DEL HIGHLIGHT BANNER ROTATIU
     let currentHighlight = 0;
     const highlightSlides = document.querySelectorAll('.highlight-slide');
-
     function rotateHighlights() {
         if (highlightSlides.length < 2) return;
         const nextHighlight = (currentHighlight + 1) % highlightSlides.length;
-        
         highlightSlides[currentHighlight].classList.add('opacity-0', '-translate-y-8', 'pointer-events-none');
         highlightSlides[currentHighlight].classList.remove('opacity-100', 'translate-y-0');
-
         highlightSlides[nextHighlight].classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none', '-translate-y-8');
         highlightSlides[nextHighlight].classList.add('opacity-100', 'translate-y-0');
-
         currentHighlight = nextHighlight;
     }
     setInterval(rotateHighlights, 5000);
 
-
-    // 3. LÒGICA DEL MODAL DE CONTACTE (Formulari Emergent)
+    // MODAL CONTACTE
     const btnOpen = document.getElementById('open-index-contact');
     const btnClose = document.getElementById('close-index-contact');
     const modal = document.getElementById('index-contact-modal');
     const modalContent = document.getElementById('index-modal-content');
-
-    btnOpen.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        setTimeout(() => { modal.classList.remove('opacity-0'); modalContent.classList.remove('scale-95'); }, 10);
-    });
-
-    const closeM = () => {
-        modal.classList.add('opacity-0'); modalContent.classList.add('scale-95');
-        setTimeout(() => { modal.classList.add('hidden'); }, 300);
-    };
+    btnOpen.addEventListener('click', () => { modal.classList.remove('hidden'); setTimeout(() => { modal.classList.remove('opacity-0'); modalContent.classList.remove('scale-95'); }, 10); });
+    const closeM = () => { modal.classList.add('opacity-0'); modalContent.classList.add('scale-95'); setTimeout(() => { modal.classList.add('hidden'); }, 300); };
     btnClose.addEventListener('click', closeM);
     modal.addEventListener('click', (e) => { if(e.target === modal) closeM(); });
-
-
-    // 4. LÒGICA FORMSPREE (Enviament correus)
-    const form = document.getElementById("index-form");
-    const status = document.getElementById("index-form-status");
-    const fbtn = document.getElementById("index-form-btn");
-
-    if (form) {
-        form.addEventListener("submit", async function(e) {
-            e.preventDefault();
-            fbtn.innerHTML = "Enviant...";
-            const data = new FormData(e.target);
-            fetch(e.target.action, { method: form.method, body: data, headers: { 'Accept': 'application/json' } })
-            .then(response => {
-                if (response.ok) {
-                    status.classList.remove("hidden");
-                    form.reset();
-                    fbtn.innerHTML = "Enviar i sumar-m'hi";
-                    setTimeout(() => { status.classList.add("hidden"); closeM(); }, 3000);
-                }
-            });
-        });
-    }
 </script>
