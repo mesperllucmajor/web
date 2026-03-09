@@ -93,5 +93,50 @@ permalink: /actualitat/
 </div>
 
 <script>
-    // ... script de filtratge original ...
+    document.addEventListener("DOMContentLoaded", function() {
+        const filterBtns = document.querySelectorAll('.news-filter-btn');
+        const monthGroups = document.querySelectorAll('.month-group');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                
+                // 1. Netejar colors dels botons
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+                    b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200');
+                });
+
+                // 2. Pintar el botó actiu
+                btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
+                btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+
+                // 3. Obtenir el valor del filtre
+                const filterValue = btn.getAttribute('data-filter'); 
+                
+                // 4. Filtrar targetes i amagar els títols dels mesos si queden buits
+                monthGroups.forEach(group => {
+                    const cards = group.querySelectorAll('.news-card');
+                    let visibleCards = 0;
+
+                    cards.forEach(card => {
+                        const cardCategory = (card.getAttribute('data-category') || 'notic').toLowerCase(); 
+                        
+                        if (filterValue === 'totes' || cardCategory.includes(filterValue)) {
+                            card.style.display = 'flex';
+                            visibleCards++;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    // Si cap notícia d'aquest mes compleix el filtre, amaguem tot el mes
+                    if (visibleCards === 0) {
+                        group.style.display = 'none';
+                    } else {
+                        group.style.display = 'block';
+                    }
+                });
+            });
+        });
+    });
 </script>
