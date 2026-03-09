@@ -257,38 +257,7 @@ title: Inici
         </div>
     </section>
 
-    <section id="actualitat-home" class="py-24 bg-white px-8 text-left">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex justify-between items-end mb-12">
-                <div class="text-left">
-                     <h2 class="section-title-box">DIA A DIA</h2>
-                    <h3 class="text-4xl md:text-5xl font-black uppercase tracking-tighter text-mes-dark leading-none">Actualitat i Opinió</h3>
-                </div>
-                <a href="{{ site.baseurl }}/actualitat/" class="hidden md:block text-xs font-black uppercase border-b-2 border-mes-lime pb-1 hover:text-mes-lime transition-all">Anar a actualitat</a>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
-                {% for post in site.posts limit:3 %}
-                <a href="{{ site.baseurl }}{{ post.url }}" class="group block text-left">
-                    
-                    <div class="h-64 overflow-hidden mb-6 bg-stone-100 border-b-4 border-mes-dark group-hover:border-mes-lime transition-all relative">
-                        
-                        {% if post.image %}
-                            <img src="{{ site.baseurl }}{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        {% endif %}
-                        
-                        <div class="absolute top-4 left-4 bg-mes-dark text-mes-lime text-[10px] font-black uppercase px-3 py-1 shadow-md">
-                            {{ post.category | default: post.categories.first | default: 'Notícia' }}
-                        </div>
-                        
-                    </div>
-                    
-                    <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">{{ post.date | date: "%d/%m/%Y" }}</span>
-                    <h4 class="text-xl font-black uppercase mt-2 leading-tight group-hover:text-mes-lime transition-colors text-mes-dark">{{ post.title }}</h4>
-                </a>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
+    
 
     <section class="py-24 px-4 md:px-8 bg-stone-100 border-y border-stone-200">
     <div class="max-w-7xl mx-auto">
@@ -425,6 +394,39 @@ title: Inici
         
     </div>
 </section>
+
+<section id="actualitat-home" class="py-24 bg-white px-8 text-left">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-end mb-12">
+                <div class="text-left">
+                     <h2 class="section-title-box">DIA A DIA</h2>
+                    <h3 class="text-4xl md:text-5xl font-black uppercase tracking-tighter text-mes-dark leading-none">Actualitat i Opinió</h3>
+                </div>
+                <a href="{{ site.baseurl }}/actualitat/" class="hidden md:block text-xs font-black uppercase border-b-2 border-mes-lime pb-1 hover:text-mes-lime transition-all">Anar a actualitat</a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
+                {% for post in site.posts limit:3 %}
+                <a href="{{ site.baseurl }}{{ post.url }}" class="group block text-left">
+                    
+                    <div class="h-64 overflow-hidden mb-6 bg-stone-100 border-b-4 border-mes-dark group-hover:border-mes-lime transition-all relative">
+                        
+                        {% if post.image %}
+                            <img src="{{ site.baseurl }}{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        {% endif %}
+                        
+                        <div class="absolute top-4 left-4 bg-mes-dark text-mes-lime text-[10px] font-black uppercase px-3 py-1 shadow-md">
+                            {{ post.category | default: post.categories.first | default: 'Notícia' }}
+                        </div>
+                        
+                    </div>
+                    
+                    <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">{{ post.date | date: "%d/%m/%Y" }}</span>
+                    <h4 class="text-xl font-black uppercase mt-2 leading-tight group-hover:text-mes-lime transition-colors text-mes-dark">{{ post.title }}</h4>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
     
     <section id="model-home" class="py-24 bg-stone-50 text-mes-dark px-8 text-left border-y border-stone-100">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
