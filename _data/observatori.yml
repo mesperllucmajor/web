@@ -30,4 +30,30 @@
   color: "bg-green-50 text-green-700 border-green-200"
   comentari: "Hem aconseguit que Llucmajor es posicioni en contra d'una activitat per a pocs i que genera molèsties a tots els s'arenalers i totes les s'arenaleres."
 
+- titol: "Reprovació de la regidora d'urbanisme, Inmaculada Pérez, per les faltes de respecte i menyspreu a la ciutadania"
+  data: "Desembre 2025"
+  tipus: "Proposta"
+  descripcio: "Proposta per reprovar l'actitud de la regidora Pérez al plenari del mes de novembre quan, després de la participació de l'EMAE, va enviar a 'tomar por el culo' als ciutadans."
+  estat: "🔴 REBUTJADA"
+  color: "bg-red-50 text-red-700 border-red-200"
+  comentari: "La regidora rectifica tard i no dimiteix."
+
+- titol: "Impuls definitiu del projecte d'habitatages de protecció pública del carrer del Grup Escolar de Llucmajor"
+  data: "Novembre 2025"
+  tipus: "Proposta"
+  descripcio: "Proposta perquè l'ajuntament faci seguiment i acceleri els tràmits per tenir els habitatges públics promesos al carrer del Grup Escolar."
+  estat: "🟢 APROVADA"
+  color: "bg-green-50 text-green-700 border-green-200"
+  comentari: "S'aprova. L'equip de govern informa que hi estan fent feina amb l'ibavi."
+
+- titol: "Prohibició del lloguer vacacional al municipi de Llucmajor"
+  data: "Octubre 2025"
+  tipus: "Proposta"
+  descripcio: "Proposta perquè l'ajuntament protegeixi els veïnats del municipi dels problemes d'habitatge i renous amb la prohibició del creixement del lloguer vacacional."
+  estat: "🔴 REBUTJADA"
+  color: "bg-red-50 text-red-700 border-red-200"
+  comentari: "L'equip de govern considera que no es pot prohibir una activitat que genera beneficis a Llucmajor."
+
+
+
 
