@@ -54,6 +54,20 @@
   color: "bg-red-50 text-red-700 border-red-200"
   comentari: "L'equip de govern considera que no es pot prohibir una activitat que genera beneficis a Llucmajor."
 
+- titol: "Informació i compromís per als projectes municipals prioritaris"
+  data: "Setembre 2025"
+  tipus: "Proposta"
+  descripcio: "Llucmajor té molts projectes pendents. Demanam el compromís de l'equip de govern per tirar-los endavant."
+  estat: "🔴 REBUTJADA"
+  color: "bg-red-50 text-red-700 border-red-200"
+  comentari: "L'equip de govern no es vol comprometre a donar dates sobre la resolució dels projectes més importants que estan pendents: el manteniment de les escoles, el carrer de Pere Maimó, els centres de salut, el catàleg de patrimoni i el concurs d'idees de Cas Coix."
 
+- titol: "Prioritzar de forma immediata la signatura del conveni per a la reforma de la residència de Llucmajor"
+  data: "Setembre 2025"
+  tipus: "Proposta"
+  descripcio: "Fa ja un any que MÉS per Mallorca va presentar la PNL i encara no s'ha avançat en la signatura del conveni"
+  estat: "🔴 REBUTJADA"
+  color: "bg-red-50 text-red-700 border-red-200"
+  comentari: "Amb l'excusa del que 'hi estan fent feina' i que 'està en mans del Consell', el conveni de la residència de Llucmajor continua pendent de signar. Demanam accelerar els terminis."
 
 
