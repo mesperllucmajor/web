@@ -12,6 +12,13 @@
   zona_nom: "Urbanitzacions"
   tema: "Urbanisme"
 
+- titol: "Reforma del vial de Ses Escoles"
+  descripcio: "Reforma integral del carrer de Ses Escoles per integrar-lo amb la plaça Rufino Carpena."
+  imatge: "/imatges/rufinocarpena.jpg"
+  zona_id: "llucmajor"
+  zona_nom: "LLucmajor Poble"
+  tema: "Urbanisme"
+
 - titol: "Pla integral de mobilitat i aparcament"
   descripcio: "Crearem una solució definitiva per pacificar el trànsit, millorar la circulació de vehicles i garantir noves places d'aparcament estratègic per als veïnats i veïnades de s'Arenal."
   zona_id: "arenal"
