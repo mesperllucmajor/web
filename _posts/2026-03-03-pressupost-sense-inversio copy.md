@@ -1,24 +1,30 @@
 ---
 layout: post
-title: "Llucmajor té pressupost però no té inversió"
+title: "El nou contracte de fems de Llucmajor: Responsabilitat davant la irresponsabilitat"
 category: Article
-tags: [Pressupostos, Opinió]
+tags: [Recollida de fems, Opinió]
 image: "/imatges/inversio.png"
-summary: "Els comptes que PP, VOX i ASI van aprovar demostren que la seva única prioritat és sobreviure uns mesos més a la cadira."
+summary: "facilita l'aprovació de l'urgent macrocontracte de residus per pura responsabilitat cívica, però adverteix que la imposició tecnològica del nou model sense consens polític ni informació prèvia als veïnats provocarà un caos als carrers."
 ---
 
-Els pressuposts municipals són la traducció directa de les intencions i les prioritats d'un govern. Els comptes que PP, VOX i ASI van aprovar el mes passat demostren que la seva única prioritat és sobreviure uns mesos més a la cadira i qui vengui ja s’ho trobarà. Han aprovat uns pressuposts on la inversió real és inexistent. 
+Qualsevol veïnat que passegi avui pels carrers de Llucmajor, s’Arenal o les nostres urbanitzacions sap perfectament de què parlam: el municipi està brut. El servei de recollida de fems actual està col·lapsat, els contenidors fan llàstima i la imatge que projectam no és la que mereixem. Estam davant d'una emergència cívica i sanitària que no admet més demores.
 
-Aquesta manca de projecte és el símptoma clar d'un equip que governa mirant cap a dins i, per tant, d'esquena als ciutadans. La sensació de desemparament és tal que els ciutadans es veuen obligats a fer sentir la seva veu a la Sala de Plens. Han de venir, mes rere mes, per pregar per unes solucions que són bàsiques i que els corresponen.
+És justament per aquesta urgència que des de MÉS per Llucmajor hem pres la decisió de facilitar, amb la nostra abstenció, l’aprovació del nou macrocontracte de residus. Per pura i dura responsabilitat política. No serem nosaltres qui bloquegi que arribin nous camions i es comenci a netejar el poble. Ara bé, facilitar que la maquinària es posi en marxa no significa, ni de bon tros, que donem un xec en blanc al despropòsit de gestió que està fent l'equip de govern (PP, VOX i ASI).
 
-I quina és la resposta dels partits que governen Llucmajor? El buit absolut. L'empatia és nul·la i les solucions no existeixen.
+El que es va aprovar al darrer plenari no és un contracte qualsevol. Parlem de 53 milions d'euros que hipotecaran el dia a dia de Llucmajor durant els propers 8 anys. Un contracte d'aquesta envergadura, que supera àmpliament l'actual mandat, demanava a crits un gran pacte de poble. Exigia asseure's, dialogar amb l'oposició i arribar a un consens sòlid. Què ha fet l'equip de govern? Tancar-se un any sencer als despatxos i aprovar-ho tot sols.
 
-Els ciutadans demanen solucions immediates a problemes urgents que fa massa temps que s'arrosseguen. En canvi, l'equip de govern es limita a llançar pilotes fora i mirar de guanyar temps. Davant de cada necessitat, proposen una licitació que donaria solucions en uns terminis tan llargs que hi ha una certesa absoluta: se'ls acabarà la legislatura abans que posin cap pedra.
+Però el menyspreu a l'oposició no és el més greu; el veritable perill és el menyspreu a la ciutadania.
 
-Així, el pressupost del 2026, sense inversió, ens condemna a un any més de paràlisi. Els únics doblers que es mouen són per mantenir inèrcies internes, però ni un euro per millorar la vida de la gent. I això és preocupant perquè l’immobilisme actual ens durà a les eleccions, el maig de 2027, amb un Llucmajor que necessitarà molta feina perquè arribi a ser el municipi que tots desitjam. 
+El nou contracte capgira per complet la manera com tiram els fems. S'implanta el Porta a Porta massiu a moltes zones i es tanquen els contenidors de s'Arenal amb panys que només s'obriran amb una targeta electrònica. Des de MÉS per Llucmajor creiem en el reciclatge i en el pagament per generació (qui recicla bé, paga menys), però sabem que la tecnologia, sense pedagogia, acaba en desastre.
 
-Un Ajuntament ha de ser la referència dels ciutadans per a resoldre els seus problemes, no un mur de contenció dissenyat per avorrir-los. Ha de ser qui construeixi les inversions d’avui i no, com passa ara, que es quedi tot en titulars de premsa pagats i promeses buides.
+No han fet ni una sola reunió informativa amb les entitats veïnals. Pretenen imposar un canvi radical d'hàbits a desenes de milers de ciutadans de la nit al dia, sense haver trepitjat el carrer per explicar-ho. Ja els ho hem advertit: el xoc ciutadà serà majúscul.
 
-Llucmajor necessita un canvi de rumb, necessita projecte i transformació. Nosaltres estam disposats a estirar d’aquest carro. Sabem què volem per a Llucmajor i sabem com ho volem. Sabem que Llucmajor necessita MÉS.
+Ens preocupa especialment el risc de s'Arenal. Posar contenidors tancats exclusivament amb targeta en una zona d'alta pressió turística i població flotant és una temeritat si no es flexibilitza el sistema. El resultat més previsible, com s'ha vist a altres municipis, és l'efecte "bolseig": muntanyes de bosses de fems abandonades a la vorera per turistes o llogaters que no tenen la targeta, empitjorant encara més la imatge del nucli.
+
+I a tot això cal sumar-hi les trampes tècniques del plec: un sistema de multes tecnològiques draconianes per a l'empresa si falla un xip, i la decisió incomprensible d'aprofitar contenidors vells i oxidats per instal·lar-hi lectors electrònics d'alta generació. Un nyap anunciat.
+
+La pilota, ara, és a la teulada del batle i del seu equip. Nosaltres no hem volgut ser el pal a la roda per netejar Llucmajor, però serem l'ombra que fiscalitzarà cada passa que facin. Exigim transparència immediata en la licitació i una campanya d'informació veïnal massiva abans que els carrers es converteixin en un caos de targetes i cubells que ningú entén.
+
+Llucmajor no es pot permetre fracassar en això. Farem un seguiment mil·limètric, apuntarem cada error, i quan tinguem la responsabilitat de governar, ja tocarem aquest contracte per posar-hi el sentit comú i el consens ciutadà que la dreta li ha negat.
 
 **Oriol Gómez** *Regidor de MÉS per Llucmajor*
