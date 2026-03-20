@@ -17,9 +17,8 @@ permalink: /propostes/
 
 <div class="pt-12 pb-32 px-4 md:px-8 max-w-7xl mx-auto text-left">
     
-    <div class="flex flex-wrap gap-2 md:gap-4 mb-12 justify-start border-b border-stone- stone-200 pb-8" id="filters">
+    <div class="flex flex-wrap gap-2 md:gap-4 mb-12 justify-start border-b border-stone-200 pb-8" id="filters">
         <button class="filter-btn bg-mes-dark text-mes-lime border-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="general">Tot el municipi</button>
-        
         <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="llucmajor">Llucmajor</button>
         <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="arenal">s'Arenal</button>
         <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="urbanitzacions">Urbanitzacions</button>
@@ -27,28 +26,19 @@ permalink: /propostes/
         <button class="filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="foravila">Foravila</button>
     </div>
 
-    <div id="container-destacats" class="mb-16">
-        <h2 class="text-2xl md:text-3xl font-black uppercase text-mes-dark mb-8 border-l-4 border-mes-lime pl-4">Projectes Destacats</h2>
-        
+    <div id="section-destacats" class="mb-16">
+        <h2 class="text-2xl md:text-3xl font-black uppercase text-mes-dark mb-8 border-l-4 border-mes-lime pl-4">Projectes per a la zona</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {% for proposta in site.data.propostes %}
                 {% if proposta.imatge and proposta.imatge != "" %}
-                <div class="proposal-card flex flex-col bg-stone-50 hover:bg-mes-dark shadow-sm hover:shadow-xl transition-colors duration-500 border border-stone-100 group" data-zone="{{ proposta.zona_id }}" data-type="destacat">
-                    
+                <div class="proposal-card flex flex-col bg-stone-50 hover:bg-mes-dark shadow-sm hover:shadow-xl transition-colors duration-500 border border-stone-100 group" data-zone="{{ proposta.zona_id }}">
                     <div class="w-full h-2 bg-mes-lime"></div>
-                    
                     <div class="p-6 pb-4">
                         <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark group-hover:text-white transition-colors leading-tight">{{ proposta.titol }}</h3>
                     </div>
-
-                    <div class="w-full aspect-[4/5] bg-white relative border-y border-stone-200 group-hover:border-stone-700 flex-shrink-0 transition-colors duration-500">
-                        {% if proposta.imatge contains 'http' %}
-                            <img src="{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-contain object-center p-2" alt="{{ proposta.titol }}" />
-                        {% else %}
-                            <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-contain object-center p-2" alt="{{ proposta.titol }}" />
-                        {% endif %}
+                    <div class="w-full aspect-video bg-white relative border-y border-stone-200 group-hover:border-stone-700 flex-shrink-0 transition-colors duration-500">
+                        <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-cover object-center" alt="{{ proposta.titol }}" />
                     </div>
-                    
                     <div class="p-6 flex flex-col flex-grow">
                         <p class="text-sm text-stone-600 group-hover:text-stone-300 italic flex-grow">{{ proposta.descripcio }}</p>
                         <span class="text-[10px] font-black uppercase tracking-widest text-mes-lime border-t border-stone-200 group-hover:border-stone-700 pt-4 mt-6 transition-colors">{{ proposta.zona_nom }}</span>
@@ -59,32 +49,22 @@ permalink: /propostes/
         </div>
     </div>
 
-    <div id="container-mesures" class="mb-16">
-        <h2 class="text-2xl md:text-3xl font-black uppercase text-mes-dark mb-8 border-l-4 border-mes-lime pl-4">Mesures de programa</h2>
-        
+    <div id="section-programa" class="mb-16">
+        <h2 id="title-programa" class="text-2xl md:text-3xl font-black uppercase text-mes-dark mb-8 border-l-4 border-mes-lime pl-4">Propostes de programa</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
             {% for proposta in site.data.propostes %}
                 {% if proposta.imatge == nil or proposta.imatge == "" %}
-                
-                <div class="proposal-card flex items-start p-6 bg-white hover:bg-mes-dark shadow-sm hover:shadow-md transition-colors duration-500 border border-stone-100 group relative" data-zone="{{ proposta.zona_id }}" data-type="mesura">
-                    
+                <div class="proposal-card flex items-start p-6 bg-white hover:bg-mes-dark shadow-sm hover:shadow-md transition-colors duration-500 border border-stone-100 group relative" data-zone="{{ proposta.zona_id }}">
                     <div class="text-mes-lime bg-stone-50 group-hover:bg-mes-dark/50 p-2 rounded-full mr-4 flex-shrink-0 transition-colors mt-1">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
-                    
                     <div class="flex flex-col flex-grow">
                         {% if proposta.tema and proposta.tema != "" %}
-                            <span class="inline-block self-start text-[9px] font-bold uppercase tracking-widest bg-mes-lime text-mes-dark px-2 py-0.5 mb-3 rounded-sm shadow-sm">
-                                {{ proposta.tema }}
-                            </span>
+                            <span class="inline-block self-start text-[9px] font-bold uppercase tracking-widest bg-mes-lime text-mes-dark px-2 py-0.5 mb-3 rounded-sm shadow-sm">{{ proposta.tema }}</span>
                         {% endif %}
-
                         <h3 class="text-lg font-black uppercase text-mes-dark group-hover:text-white transition-colors leading-tight mb-2">{{ proposta.titol }}</h3>
                         <p class="text-sm text-stone-600 group-hover:text-stone-300 mb-4">{{ proposta.descripcio }}</p>
-                        
-                        <span class="text-[9px] font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 group-hover:border-stone-700 pt-2 mt-auto transition-colors">
-                            {{ proposta.zona_nom }}
-                        </span>
+                        <span class="text-[9px] font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 group-hover:border-stone-700 pt-2 mt-auto transition-colors">{{ proposta.zona_nom }}</span>
                     </div>
                 </div>
                 {% endif %}
@@ -93,67 +73,45 @@ permalink: /propostes/
     </div>
 </div>
 
-<button id="open-modal-btn" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-dark text-white px-5 py-4 font-black uppercase text-xs tracking-widest border border-mes-dark/20 hover:bg-mes-lime hover:text-mes-dark shadow-2xl z-40 flex items-center gap-2 transition-all transform hover:-translate-y-1">
+<button id="open-modal-btn" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-dark text-white px-5 py-4 font-black uppercase text-xs tracking-widest shadow-2xl z-40 flex items-center gap-2 transition-all transform hover:-translate-y-1">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
     <span class="hidden md:inline">Fes la teva proposta</span>
-    <span class="inline md:hidden">Proposa</span>
 </button>
 
-<div id="proposal-modal" class="fixed inset-0 bg-mes-dark/95 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-    <div class="bg-white w-full max-w-lg relative shadow-2xl transform scale-95 transition-transform duration-300" id="proposal-modal-content">
-        <button id="close-modal-btn" class="absolute top-4 right-4 text-stone-400 hover:text-mes-dark p-2 z-10">
+<div id="proposal-modal" class="fixed inset-0 bg-mes-dark/95 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white w-full max-w-lg relative p-8 md:p-12 text-left">
+        <button id="close-modal-btn" class="absolute top-4 right-4 text-stone-400">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
-        <div class="p-8 md:p-12 text-left">
-            <h3 class="text-3xl font-black uppercase mb-2 text-mes-dark leading-tight">Tens una idea?</h3>
-            <p class="text-stone-500 mb-8 text-sm italic">Envia'ns la teva proposta. L'estudiarem per incorporar-la al nostre programa municipal.</p>
-            <form id="proposta-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="flex flex-col gap-5">
-                <div class="flex flex-col gap-1 text-left">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Nom i Llinatges</label>
-                    <input class="form-input text-left" type="text" name="nom" required />
-                </div>
-                <div class="flex flex-col gap-1 text-left">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Correu Electrònic</label>
-                    <input class="form-input text-left" type="email" name="email" required />
-                </div>
-                <div class="flex flex-col gap-1 text-left">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Selecciona el nucli</label>
-                    <select name="zona" class="form-input text-left bg-transparent" required>
-                        <option value="" disabled selected>De quin nucli és la proposta?</option>
-                        <option value="Llucmajor">Llucmajor Poble</option>
-                        <option value="s'Arenal">s'Arenal</option>
-                        <option value="Urbanitzacions">Les Urbanitzacions</option>
-                        <option value="s'Estanyol/Son Bieló">s'Estanyol i Son Bieló</option>
-                        <option value="Foravila">Foravila</option>
-                        <option value="General">És general (Tot el municipi)</option>
-                    </select>
-                </div>
-                <div class="flex flex-col gap-1 text-left">
-                    <label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Desenvolupa la teva idea</label>
-                    <textarea class="form-input text-left" name="proposta" rows="4" required></textarea>
-                </div>
-                <div class="pt-2">
-                    <button id="proposta-btn" type="submit" class="btn-primary w-full justify-center py-4 text-sm">Enviar Proposta</button>
-                </div>
-                <div id="proposta-status" class="hidden mt-4 p-4 bg-green-50 text-green-700 border border-green-200 font-bold text-center text-xs uppercase tracking-widest">
-                    ✅ Proposta rebuda!
-                </div>
-            </form>
-        </div>
+        <h3 class="text-3xl font-black uppercase mb-2">Tens una idea?</h3>
+        <p class="text-stone-500 mb-8 italic">Envia'ns la teva proposta per al municipi.</p>
+        <form id="proposta-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="flex flex-col gap-5">
+            <input class="form-input" type="text" name="nom" placeholder="Nom complet" required />
+            <input class="form-input" type="email" name="email" placeholder="Correu" required />
+            <select name="zona" class="form-input bg-transparent" required>
+                <option value="General">Tot el municipi</option>
+                <option value="Llucmajor">Llucmajor Poble</option>
+                <option value="s'Arenal">s'Arenal</option>
+                <option value="Urbanitzacions">Urbanitzacions</option>
+            </select>
+            <textarea class="form-input" name="proposta" rows="4" placeholder="La teva proposta..." required></textarea>
+            <button id="proposta-btn" type="submit" class="btn-primary w-full py-4">Enviar</button>
+        </form>
     </div>
 </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        
         const filterBtns = document.querySelectorAll('.filter-btn');
         const proposalCards = document.querySelectorAll('.proposal-card');
-        const containerDestacats = document.getElementById('container-destacats');
+        const sectionDestacats = document.getElementById('section-destacats');
+        const titlePrograma = document.getElementById('title-programa');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                
-                // 1. Gestionar estètica dels botons
+                const filterValue = btn.getAttribute('data-filter');
+
+                // 1. Estètica de botons
                 filterBtns.forEach(b => {
                     b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
                     b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200');
@@ -161,15 +119,30 @@ permalink: /propostes/
                 btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
                 btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
 
-                const filterValue = btn.getAttribute('data-filter');
-
-                // 2. LÒGICA ESPECÍFICA: Si és "general", amaguem la secció de destacats sencer
+                // 2. LÒGICA DE SECCIONS: "Tot el municipi" amaga els destacats
                 if (filterValue === 'general') {
-                    containerDestacats.style.display = 'none';
+                    sectionDestacats.style.display = 'none';
+                    titlePrograma.innerText = "Programa Municipal";
                 } else {
-                    containerDestacats.style.display = 'block';
+                    sectionDestacats.style.display = 'block';
+                    titlePrograma.innerText = "Mesures per a " + btn.innerText;
                 }
 
-                // 3. Filtrar les targetes individuals
+                // 3. Filtrar les targetes
                 proposalCards.forEach(card => {
-                    if (card.getAttribute
+                    if (card.getAttribute('data-zone') === filterValue) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Click inicial segons URL o per defecte 'general'
+        const urlParams = new URLSearchParams(window.location.search);
+        const zonaParam = urlParams.get('zona');
+        const initialBtn = zonaParam ? document.querySelector(`.filter-btn[data-filter="${zonaParam}"]`) : document.querySelector('.filter-btn[data-filter="general"]');
+        if (initialBtn) initialBtn.click();
+    });
+</script>
