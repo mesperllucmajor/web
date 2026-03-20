@@ -3,8 +3,8 @@ layout: post
 title: "El nou contracte de fems de Llucmajor: Responsabilitat davant la irresponsabilitat"
 category: Article
 tags: [Recollida de fems, Opinió]
-image: "/imatges/inversio.png"
-summary: "facilita l'aprovació de l'urgent macrocontracte de residus per pura responsabilitat cívica, però adverteix que la imposició tecnològica del nou model sense consens polític ni informació prèvia als veïnats provocarà un caos als carrers."
+image: "/imatges/fems_maioris.jpeg"
+summary: "Facilitam l'aprovació de l'urgent macrocontracte de residus per pura responsabilitat cívica, però adverteix que la imposició tecnològica del nou model sense consens polític ni informació prèvia als veïnats provocarà un caos als carrers."
 ---
 
 Qualsevol veïnat que passegi avui pels carrers de Llucmajor, s’Arenal o les nostres urbanitzacions sap perfectament de què parlam: el municipi està brut. El servei de recollida de fems actual està col·lapsat, els contenidors fan llàstima i la imatge que projectam no és la que mereixem. Estam davant d'una emergència cívica i sanitària que no admet més demores.
