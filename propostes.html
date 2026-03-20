@@ -27,7 +27,7 @@ permalink: /propostes/
     </div>
 
     <div id="section-destacats" class="mb-16">
-        <h2 class="text-2xl md:text-3xl font-black uppercase text-mes-dark mb-8 border-l-4 border-mes-lime pl-4">Projectes per a la zona</h2>
+        <h2 class="text-2xl md:text-3xl font-black uppercase text-mes-dark mb-8 border-l-4 border-mes-lime pl-4">Projectes Destacats</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {% for proposta in site.data.propostes %}
                 {% if proposta.imatge and proposta.imatge != "" %}
@@ -36,8 +36,8 @@ permalink: /propostes/
                     <div class="p-6 pb-4">
                         <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark group-hover:text-white transition-colors leading-tight">{{ proposta.titol }}</h3>
                     </div>
-                    <div class="w-full aspect-video bg-white relative border-y border-stone-200 group-hover:border-stone-700 flex-shrink-0 transition-colors duration-500">
-                        <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-cover object-center" alt="{{ proposta.titol }}" />
+                    <div class="w-full aspect-[4/5] bg-white relative border-y border-stone-200 group-hover:border-stone-700 flex-shrink-0 transition-colors duration-500">
+                        <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-contain object-center p-2" alt="{{ proposta.titol }}" />
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
                         <p class="text-sm text-stone-600 group-hover:text-stone-300 italic flex-grow">{{ proposta.descripcio }}</p>
@@ -50,7 +50,7 @@ permalink: /propostes/
     </div>
 
     <div id="section-programa" class="mb-16">
-        <h2 id="title-programa" class="text-2xl md:text-3xl font-black uppercase text-mes-dark mb-8 border-l-4 border-mes-lime pl-4">Propostes de programa</h2>
+        <h2 id="title-programa" class="text-2xl md:text-3xl font-black uppercase text-mes-dark mb-8 border-l-4 border-mes-lime pl-4">Mesures de programa</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
             {% for proposta in site.data.propostes %}
                 {% if proposta.imatge == nil or proposta.imatge == "" %}
@@ -58,7 +58,7 @@ permalink: /propostes/
                     <div class="text-mes-lime bg-stone-50 group-hover:bg-mes-dark/50 p-2 rounded-full mr-4 flex-shrink-0 transition-colors mt-1">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
-                    <div class="flex flex-col flex-grow">
+                    <div class="flex flex-col flex-grow text-left">
                         {% if proposta.tema and proposta.tema != "" %}
                             <span class="inline-block self-start text-[9px] font-bold uppercase tracking-widest bg-mes-lime text-mes-dark px-2 py-0.5 mb-3 rounded-sm shadow-sm">{{ proposta.tema }}</span>
                         {% endif %}
@@ -78,28 +78,6 @@ permalink: /propostes/
     <span class="hidden md:inline">Fes la teva proposta</span>
 </button>
 
-<div id="proposal-modal" class="fixed inset-0 bg-mes-dark/95 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-lg relative p-8 md:p-12 text-left">
-        <button id="close-modal-btn" class="absolute top-4 right-4 text-stone-400">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-        <h3 class="text-3xl font-black uppercase mb-2">Tens una idea?</h3>
-        <p class="text-stone-500 mb-8 italic">Envia'ns la teva proposta per al municipi.</p>
-        <form id="proposta-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="flex flex-col gap-5">
-            <input class="form-input" type="text" name="nom" placeholder="Nom complet" required />
-            <input class="form-input" type="email" name="email" placeholder="Correu" required />
-            <select name="zona" class="form-input bg-transparent" required>
-                <option value="General">Tot el municipi</option>
-                <option value="Llucmajor">Llucmajor Poble</option>
-                <option value="s'Arenal">s'Arenal</option>
-                <option value="Urbanitzacions">Urbanitzacions</option>
-            </select>
-            <textarea class="form-input" name="proposta" rows="4" placeholder="La teva proposta..." required></textarea>
-            <button id="proposta-btn" type="submit" class="btn-primary w-full py-4">Enviar</button>
-        </form>
-    </div>
-</div>
-
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const filterBtns = document.querySelectorAll('.filter-btn');
@@ -111,7 +89,7 @@ permalink: /propostes/
             btn.addEventListener('click', () => {
                 const filterValue = btn.getAttribute('data-filter');
 
-                // 1. Estètica de botons
+                // Estètica de botons
                 filterBtns.forEach(b => {
                     b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
                     b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200');
@@ -119,7 +97,7 @@ permalink: /propostes/
                 btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
                 btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
 
-                // 2. LÒGICA DE SECCIONS: "Tot el municipi" amaga els destacats
+                // LÒGICA: Si és "general", amaguem els projectes visuals
                 if (filterValue === 'general') {
                     sectionDestacats.style.display = 'none';
                     titlePrograma.innerText = "Programa Municipal";
@@ -128,7 +106,7 @@ permalink: /propostes/
                     titlePrograma.innerText = "Mesures per a " + btn.innerText;
                 }
 
-                // 3. Filtrar les targetes
+                // Filtrar les targetes
                 proposalCards.forEach(card => {
                     if (card.getAttribute('data-zone') === filterValue) {
                         card.style.display = 'flex';
@@ -139,7 +117,7 @@ permalink: /propostes/
             });
         });
 
-        // Click inicial segons URL o per defecte 'general'
+        // Click inicial per defecte o per URL
         const urlParams = new URLSearchParams(window.location.search);
         const zonaParam = urlParams.get('zona');
         const initialBtn = zonaParam ? document.querySelector(`.filter-btn[data-filter="${zonaParam}"]`) : document.querySelector('.filter-btn[data-filter="general"]');
