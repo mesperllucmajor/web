@@ -85,3 +85,9 @@
   zona_id: "general"
   zona_nom: "Tot el municipi" 
   tema: "Llengua"
+
+- titol: "Pla d'infraestructures municipals" 
+  descripcio: "Farem un pla d'infraestructures municipals per dignificar la feina dels funcionaris de l'ajuntament." 
+  zona_id: "general"
+  zona_nom: "Tot el municipi" 
+  tema: "Infraestructures"
