@@ -97,3 +97,9 @@
   zona_id: "general"
   zona_nom: "Tot el municipi" 
   tema: "Infraestructures"
+
+- titol: "Plaques solars per la distribució als veïnats"
+  descripcio: "Instal·larem cobertes fotovoltaiques per proveïr els veïants em l'autoconsum."
+  zona_id: "general"
+  zona_nom: "Tot el municipi"
+  tema: "Transició Ecològica"
