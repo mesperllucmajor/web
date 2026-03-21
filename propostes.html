@@ -97,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const sectionDestacats = document.getElementById('section-destacats');
 
     function filterContent(zone, theme = 'all') {
-        // Amaga/Mostra Destacats (General no té fotos)
         if (sectionDestacats) sectionDestacats.style.display = (zone === 'general') ? 'none' : 'block';
 
         themeBlocks.forEach(block => {
@@ -118,7 +117,6 @@ document.addEventListener("DOMContentLoaded", function() {
             block.style.display = (visibleInBlock > 0) ? 'block' : 'none';
         });
 
-        // Filtrar cards de la secció destacats
         if (sectionDestacats && zone !== 'general') {
             sectionDestacats.querySelectorAll('.proposal-card').forEach(card => {
                 const matchesZone = card.getAttribute('data-zone') === zone;
@@ -150,25 +148,47 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function createThemeBtn(label, slug, active) {
         const btn = document.createElement('button');
-        btn.className = `px-3 py-1.5 text-[10px] font-black uppercase tracking-widest border-2 transition-all cursor-pointer ${active ? 'bg-mes-lime text-mes-dark border-mes-lime' : 'bg-transparent text-stone-400 border-stone-200'}`;
-        btn.innerText = label;
-        btn.onclick = () => {
-            document.querySelectorAll('.filter-btn-theme').forEach(b => {
-                b.classList.replace('bg-mes-lime', 'bg-transparent');
-                b.classList.replace('text-mes-dark', 'text-stone-400');
-                b.classList.replace('border-mes-lime', 'border-stone-200');
-            });
+        
+        // Classes base comunes
+        btn.className = 'filter-btn-theme px-3 py-1.5 text-[10px] font-black uppercase tracking-widest border-2 transition-all cursor-pointer shadow-sm ';
+        
+        // Apliquem estils segons si neix actiu o inactiu
+        if (active) {
             btn.classList.add('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
+        } else {
+            btn.classList.add('bg-transparent', 'text-stone-400', 'border-stone-200', 'hover:border-mes-lime');
+        }
+        
+        btn.innerText = label;
+        btn.setAttribute('data-theme-filter', slug);
+        
+        btn.onclick = () => {
+            // 1. Netejem TOTS els botons de tema (els tornem inactius)
+            document.querySelectorAll('.filter-btn-theme').forEach(b => {
+                b.classList.remove('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
+                b.classList.add('bg-transparent', 'text-stone-400', 'border-stone-200', 'hover:border-mes-lime');
+            });
+            
+            // 2. Marquem NOMÉS el botó clicat com a actiu
+            btn.classList.remove('bg-transparent', 'text-stone-400', 'border-stone-200', 'hover:border-mes-lime');
+            btn.classList.add('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
+            
             filterContent(window.currentZone, slug);
         };
-        btn.classList.add('filter-btn-theme');
         themeFilterContainer.appendChild(btn);
     }
 
     zoneBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            zoneBtns.forEach(b => b.classList.replace('bg-mes-dark', 'bg-transparent'));
-            btn.classList.replace('bg-transparent', 'bg-mes-dark');
+            // 1. Netejem TOTS els botons de zona (els tornem inactius)
+            zoneBtns.forEach(b => {
+                b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+                b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200');
+            });
+            
+            // 2. Marquem NOMÉS el botó clicat com a actiu
+            btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
+            btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
             
             window.currentZone = btn.getAttribute('data-filter');
             updateThemeFilters(window.currentZone);
@@ -176,10 +196,16 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Boot
+    // Boot inicial
     const urlParams = new URLSearchParams(window.location.search);
     const z = urlParams.get('zona') || 'general';
-    const startBtn = document.querySelector(`[data-filter="${z}"]`);
-    if (startBtn) startBtn.click();
+    const startBtn = document.querySelector(`.filter-btn-zone[data-filter="${z}"]`);
+    
+    if (startBtn) {
+        startBtn.click();
+    } else {
+        // Fallback per si de cas
+        document.querySelector('.filter-btn-zone[data-filter="general"]').click();
+    }
 });
 </script>
