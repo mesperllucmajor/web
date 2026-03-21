@@ -8,7 +8,7 @@ permalink: /propostes/
     <img src="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover scale-105" alt="Propostes MÉS" />
     <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
     <div class="relative z-10 w-full px-8 md:px-16 text-left">
-        <div class="max-w-3xl text-left">
+        <div class="max-w-3xl">
             <h1 class="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter mb-4 leading-none">Propostes</h1>
             <p class="text-mes-lime text-lg md:text-xl font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-4 inline-block bg-black/40 pr-6 py-1">Projectes nucli a nucli per un municipi viu</p>
         </div>
@@ -19,19 +19,18 @@ permalink: /propostes/
     
     <div class="flex flex-wrap gap-2 md:gap-4 mb-6 justify-start" id="filters-zone">
         <button class="filter-btn-zone bg-mes-dark text-mes-lime border-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="general">Tot el municipi</button>
-        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="llucmajor">Llucmajor</button>
-        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="arenal">s'Arenal</button>
-        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="urbanitzacions">Urbanitzacions</button>
-        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="estanyol">s'Estanyol/Son Bieló</button>
-        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="foravila">Foravila</button>
+        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="llucmajor">Llucmajor</button>
+        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="arenal">s'Arenal</button>
+        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="urbanitzacions">Urbanitzacions</button>
+        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="estanyol">s'Estanyol/Son Bieló</button>
+        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime border-2 px-4 md:px-6 py-2.5 text-[10px] md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer" data-filter="foravila">Foravila</button>
     </div>
 
-    <div class="flex flex-wrap gap-2 mb-12 justify-start border-b border-stone-200 pb-8 min-h-[50px]" id="filters-theme">
-        </div>
+    <div class="flex flex-wrap gap-2 mb-12 justify-start border-b border-stone-200 pb-8 min-h-[50px]" id="filters-theme"></div>
 
     <div id="section-destacats" class="mb-16">
         <h2 class="text-2xl md:text-3xl font-black uppercase text-mes-dark mb-8 border-l-4 border-mes-lime pl-4">Projectes Destacats</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch" id="grid-destacats">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {% for proposta in site.data.propostes %}
                 {% if proposta.imatge and proposta.imatge != "" %}
                 <div class="proposal-card flex flex-col bg-stone-50 hover:bg-mes-dark shadow-sm hover:shadow-xl transition-colors duration-500 border border-stone-100 group" 
@@ -46,7 +45,9 @@ permalink: /propostes/
                     </div>
                     <div class="p-6 flex flex-col flex-grow text-left">
                         <p class="text-sm text-stone-600 group-hover:text-stone-300 italic flex-grow line-clamp-3">{{ proposta.descripcio }}</p>
-                        <span class="text-[10px] font-black uppercase tracking-widest text-mes-lime border-t border-stone-200 group-hover:border-stone-700 pt-4 mt-6 transition-colors">{{ proposta.tema }} | {{ proposta.zona_nom }}</span>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-mes-lime border-t border-stone-200 group-hover:border-stone-700 pt-4 mt-6 transition-colors">
+                            {{ proposta.tema }} | {{ proposta.zona_nom }}
+                        </span>
                     </div>
                 </div>
                 {% endif %}
@@ -54,29 +55,29 @@ permalink: /propostes/
         </div>
     </div>
 
-    <div id="section-programa" class="mb-16 text-left">
+    <div id="section-programa">
         {% assign mesures = site.data.propostes | where_exp: "item", "item.imatge == nil or item.imatge == ''" %}
         {% assign temes_agrupats = mesures | group_by: "tema" %}
 
         {% for grup_tema in temes_agrupats %}
         <div class="theme-block mb-16" data-theme-slug="{{ grup_tema.name | slugify }}">
-            <div class="flex items-center gap-4 mb-8 theme-header">
+            <div class="flex items-center gap-4 mb-8">
                 <h2 class="text-xl md:text-2xl font-black uppercase tracking-widest text-mes-dark whitespace-nowrap">{{ grup_tema.name | default: "Altres" }}</h2>
                 <div class="flex-grow h-px bg-stone-200"></div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
                 {% for proposta in grup_tema.items %}
-                <div class="proposal-card flex items-start p-6 bg-white hover:bg-mes-dark shadow-sm hover:shadow-md transition-colors duration-500 border border-stone-100 group relative" 
+                <div class="proposal-card flex items-start p-6 bg-white hover:bg-mes-dark shadow-sm border border-stone-100 group" 
                      data-zone="{{ proposta.zona_id }}" 
                      data-theme="{{ grup_tema.name | slugify }}">
-                    <div class="text-mes-lime bg-stone-50 group-hover:bg-mes-dark/50 p-2 rounded-full mr-4 flex-shrink-0 transition-colors mt-1">
+                    <div class="text-mes-lime bg-stone-50 group-hover:bg-mes-dark/50 p-2 rounded-full mr-4 flex-shrink-0 mt-1">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
-                    <div class="flex flex-col flex-grow text-left">
-                        <h3 class="text-lg font-black uppercase text-mes-dark group-hover:text-white transition-colors leading-tight mb-2">{{ proposta.titol }}</h3>
+                    <div class="flex flex-col text-left">
+                        <h3 class="text-lg font-black uppercase text-mes-dark group-hover:text-white transition-colors mb-2">{{ proposta.titol }}</h3>
                         <p class="text-sm text-stone-600 group-hover:text-stone-300 mb-4">{{ proposta.descripcio }}</p>
-                        <span class="text-[9px] font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 group-hover:border-stone-700 pt-2 mt-auto transition-colors">{{ proposta.zona_nom }}</span>
+                        <span class="text-[9px] font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 group-hover:border-stone-700 pt-2">{{ proposta.zona_nom }}</span>
                     </div>
                 </div>
                 {% endfor %}
@@ -87,109 +88,97 @@ permalink: /propostes/
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const zoneBtns = document.querySelectorAll('.filter-btn-zone');
-        const themeFilterContainer = document.getElementById('filters-theme');
-        const proposalCards = document.querySelectorAll('.proposal-card');
-        const themeBlocks = document.querySelectorAll('.theme-block');
-        const sectionDestacats = document.getElementById('section-destacats');
+document.addEventListener("DOMContentLoaded", function() {
+    const zoneBtns = document.querySelectorAll('.filter-btn-zone');
+    const themeFilterContainer = document.getElementById('filters-theme');
+    const proposalCards = document.querySelectorAll('.proposal-card');
+    const themeBlocks = document.querySelectorAll('.theme-block');
+    const sectionDestacats = document.getElementById('section-destacats');
 
-        let currentZone = 'general';
+    function filterContent(zone, theme = 'all') {
+        // Amaga/Mostra Destacats (General no té fotos)
+        if (sectionDestacats) sectionDestacats.style.display = (zone === 'general') ? 'none' : 'block';
 
-        function updateThemeFilters(zone) {
-            themeFilterContainer.innerHTML = '';
-            
-            // Trobar temes únics que tenen propostes en aquesta zona
-            const availableThemes = new Set();
-            proposalCards.forEach(card => {
-                if (card.getAttribute('data-zone') === zone) {
-                    availableThemes.add(card.getAttribute('data-theme'));
+        themeBlocks.forEach(block => {
+            const cardsInBlock = block.querySelectorAll('.proposal-card');
+            let visibleInBlock = 0;
+
+            cardsInBlock.forEach(card => {
+                const matchesZone = card.getAttribute('data-zone') === zone;
+                const matchesTheme = (theme === 'all' || card.getAttribute('data-theme') === theme);
+                
+                if (matchesZone && matchesTheme) {
+                    card.style.display = 'flex';
+                    visibleInBlock++;
+                } else {
+                    card.style.display = 'none';
                 }
             });
-
-            if (availableThemes.size > 0) {
-                // Botó "Tots els temes"
-                createThemeBtn('Tots els temes', 'all', true);
-                
-                // Botons per cada tema trobat
-                availableThemes.forEach(theme => {
-                    if(theme) createThemeBtn(theme.charAt(0).toUpperCase() + theme.slice(1), theme, false);
-                });
-            }
-        }
-
-        function createThemeBtn(label, slug, isActive) {
-            const btn = document.createElement('button');
-            btn.className = `filter-btn-theme border-2 px-3 py-1.5 text-[9px] md:text-xs font-black uppercase tracking-widest transition-all cursor-pointer ${isActive ? 'bg-mes-lime text-mes-dark border-mes-lime' : 'bg-transparent text-stone-400 border-stone-200 hover:border-mes-lime'}`;
-            btn.innerText = label;
-            btn.setAttribute('data-theme-filter', slug);
-            
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn-theme').forEach(b => {
-                    b.classList.remove('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
-                    b.classList.add('bg-transparent', 'text-stone-400', 'border-stone-200');
-                });
-                btn.classList.add('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
-                btn.classList.remove('bg-transparent', 'text-stone-400', 'border-stone-200');
-                
-                filterContent(currentZone, slug);
-            });
-            
-            themeFilterContainer.appendChild(btn);
-        }
-
-        function filterContent(zone, theme) {
-            sectionDestacats.style.display = (zone === 'general') ? 'none' : 'block';
-
-            themeBlocks.forEach(block => {
-                const blockTheme = block.getAttribute('data-theme-slug');
-                const cardsInBlock = block.querySelectorAll('.proposal-card');
-                let visibleInBlock = 0;
-
-                cardsInBlock.forEach(card => {
-                    const matchesZone = card.getAttribute('data-zone') === zone;
-                    const matchesTheme = (theme === 'all' || card.getAttribute('data-theme') === theme);
-                    
-                    if (matchesZone && matchesTheme) {
-                        card.style.display = 'flex';
-                        visibleInBlock++;
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-
-                block.style.display = (visibleInBlock > 0) ? 'block' : 'none';
-            });
-
-            // Filtrar destacats
-            if (zone !== 'general') {
-                sectionDestacats.querySelectorAll('.proposal-card').forEach(card => {
-                    const matchesZone = card.getAttribute('data-zone') === zone;
-                    const matchesTheme = (theme === 'all' || card.getAttribute('data-theme') === theme);
-                    card.style.display = (matchesZone && matchesTheme) ? 'flex' : 'none';
-                });
-            }
-        }
-
-        zoneBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                zoneBtns.forEach(b => {
-                    b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
-                    b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200');
-                });
-                btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
-                btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
-
-                currentZone = btn.getAttribute('data-filter');
-                updateThemeFilters(currentZone);
-                filterContent(currentZone, 'all');
-            });
+            block.style.display = (visibleInBlock > 0) ? 'block' : 'none';
         });
 
-        // Inicialització per URL o General
-        const urlParams = new URLSearchParams(window.location.search);
-        const zonaParam = urlParams.get('zona');
-        const initialBtn = zonaParam ? document.querySelector(`.filter-btn-zone[data-filter="${zonaParam}"]`) : document.querySelector('.filter-btn-zone[data-filter="general"]');
-        if (initialBtn) initialBtn.click();
+        // Filtrar cards de la secció destacats
+        if (sectionDestacats && zone !== 'general') {
+            sectionDestacats.querySelectorAll('.proposal-card').forEach(card => {
+                const matchesZone = card.getAttribute('data-zone') === zone;
+                const matchesTheme = (theme === 'all' || card.getAttribute('data-theme') === theme);
+                card.style.display = (matchesZone && matchesTheme) ? 'flex' : 'none';
+            });
+        }
+    }
+
+    function updateThemeFilters(zone) {
+        themeFilterContainer.innerHTML = '';
+        const themesFound = new Set();
+        
+        proposalCards.forEach(card => {
+            if (card.getAttribute('data-zone') === zone) {
+                const t = card.getAttribute('data-theme');
+                if(t) themesFound.add(t);
+            }
+        });
+
+        if (themesFound.size > 0) {
+            createThemeBtn('Tots els temes', 'all', true);
+            themesFound.forEach(t => {
+                const label = t.replace(/-/g, ' ');
+                createThemeBtn(label, t, false);
+            });
+        }
+    }
+
+    function createThemeBtn(label, slug, active) {
+        const btn = document.createElement('button');
+        btn.className = `px-3 py-1.5 text-[10px] font-black uppercase tracking-widest border-2 transition-all cursor-pointer ${active ? 'bg-mes-lime text-mes-dark border-mes-lime' : 'bg-transparent text-stone-400 border-stone-200'}`;
+        btn.innerText = label;
+        btn.onclick = () => {
+            document.querySelectorAll('.filter-btn-theme').forEach(b => {
+                b.classList.replace('bg-mes-lime', 'bg-transparent');
+                b.classList.replace('text-mes-dark', 'text-stone-400');
+                b.classList.replace('border-mes-lime', 'border-stone-200');
+            });
+            btn.classList.add('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
+            filterContent(window.currentZone, slug);
+        };
+        btn.classList.add('filter-btn-theme');
+        themeFilterContainer.appendChild(btn);
+    }
+
+    zoneBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            zoneBtns.forEach(b => b.classList.replace('bg-mes-dark', 'bg-transparent'));
+            btn.classList.replace('bg-transparent', 'bg-mes-dark');
+            
+            window.currentZone = btn.getAttribute('data-filter');
+            updateThemeFilters(window.currentZone);
+            filterContent(window.currentZone, 'all');
+        });
     });
+
+    // Boot
+    const urlParams = new URLSearchParams(window.location.search);
+    const z = urlParams.get('zona') || 'general';
+    const startBtn = document.querySelector(`[data-filter="${z}"]`);
+    if (startBtn) startBtn.click();
+});
 </script>
