@@ -91,3 +91,9 @@
   zona_id: "general"
   zona_nom: "Tot el municipi" 
   tema: "Infraestructures"
+
+- titol: "Camins escolars segurs" 
+  descripcio: "Totes les escoles del municipi tendran un camí escolar segur i un protocol d'ús." 
+  zona_id: "general"
+  zona_nom: "Tot el municipi" 
+  tema: "Infraestructures"
