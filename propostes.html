@@ -88,6 +88,66 @@ permalink: /propostes/
     </div>
 </div>
 
+<button id="open-modal-btn" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-dark text-mes-lime px-5 py-4 text-xs font-black uppercase tracking-widest shadow-2xl z-40 flex items-center gap-3 border-2 border-mes-dark hover:bg-mes-lime hover:text-mes-dark transition-all transform hover:-translate-y-1 cursor-pointer group">
+    <svg class="w-5 h-5 text-mes-lime group-hover:text-mes-dark transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+    <span class="hidden md:inline">Fes la teva proposta</span>
+</button>
+
+<div id="proposta-modal" class="fixed inset-0 z-50 hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" id="modal-backdrop"></div>
+    
+    <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+        <div class="bg-white w-full max-w-lg shadow-2xl pointer-events-auto transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="modal-content">
+            
+            <div class="bg-mes-dark p-6 flex justify-between items-center flex-shrink-0">
+                <h3 class="text-xl font-black uppercase tracking-widest text-white">Què proposes?</h3>
+                <button id="close-modal-btn" class="text-stone-400 hover:text-mes-lime transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <form action="https://formspree.io/f/EL_TEU_CODI_AQUI" method="POST" class="p-6 md:p-8 space-y-6 overflow-y-auto">
+                
+                <p class="text-sm text-stone-600 mb-6 italic">A MÉS per Llucmajor construïm el municipi escoltant. Escriu la teva idea i la valorarem per incorporar-la al nostre pla d'acció.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="nom" class="block text-[10px] font-black uppercase tracking-widest text-stone-500 mb-2">Nom i Llinatges</label>
+                        <input type="text" id="nom" name="nom" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-4 py-3 text-sm focus:outline-none focus:border-mes-lime focus:bg-white transition-colors" placeholder="Ex: Maria Font">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-[10px] font-black uppercase tracking-widest text-stone-500 mb-2">Correu electrònic</label>
+                        <input type="email" id="email" name="email" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-4 py-3 text-sm focus:outline-none focus:border-mes-lime focus:bg-white transition-colors" placeholder="Per poder-te respondre">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="zona" class="block text-[10px] font-black uppercase tracking-widest text-stone-500 mb-2">De quin nucli és la proposta?</label>
+                    <select id="zona" name="zona" class="w-full border-b-2 border-stone-200 bg-stone-50 px-4 py-3 text-sm focus:outline-none focus:border-mes-lime focus:bg-white transition-colors appearance-none cursor-pointer">
+                        <option value="General">Tot el municipi</option>
+                        <option value="Llucmajor">Llucmajor Poble</option>
+                        <option value="s'Arenal">s'Arenal</option>
+                        <option value="Urbanitzacions">Urbanitzacions</option>
+                        <option value="s'Estanyol">s'Estanyol / Son Bieló</option>
+                        <option value="Foravila">Foravila</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="missatge" class="block text-[10px] font-black uppercase tracking-widest text-stone-500 mb-2">La teva proposta</label>
+                    <textarea id="missatge" name="missatge" rows="4" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-4 py-3 text-sm focus:outline-none focus:border-mes-lime focus:bg-white transition-colors resize-none" placeholder="Explica'ns la teva idea per millorar Llucmajor..."></textarea>
+                </div>
+
+                <div class="pt-4 border-t border-stone-100 flex justify-end">
+                    <button type="submit" class="bg-mes-lime text-mes-dark border-2 border-mes-lime px-6 py-3 text-xs font-black uppercase tracking-widest shadow-md hover:bg-transparent hover:text-mes-dark transition-all cursor-pointer w-full md:w-auto text-center">
+                        Enviar Proposta
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const zoneBtns = document.querySelectorAll('.filter-btn-zone');
@@ -195,6 +255,48 @@ document.addEventListener("DOMContentLoaded", function() {
             filterContent(window.currentZone, 'all');
         });
     });
+
+    // --- LÒGICA DEL MODAL DE PROPOSTES ---
+    const openModalBtn = document.getElementById('open-modal-btn');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modal = document.getElementById('proposta-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const modalContent = document.getElementById('modal-content');
+
+    function openModal() {
+        modal.classList.remove('hidden');
+        // Petit retard per permetre que el display:block s'apliqui abans de l'opacitat
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+        }, 10);
+        document.body.style.overflow = 'hidden'; // Evita l'scroll de fons
+    }
+
+    function closeModal() {
+        modal.classList.add('opacity-0');
+        modalContent.classList.remove('scale-100');
+        modalContent.classList.add('scale-95');
+        
+        // Esperem que acabi la transició abans d'amagar l'element HTML
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // Retorna l'scroll de fons
+        }, 300);
+    }
+
+    if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+
+    // Tancar amb la tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+    // --- FI LÒGICA DEL MODAL ---
 
     // Boot inicial
     const urlParams = new URLSearchParams(window.location.search);
