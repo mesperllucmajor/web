@@ -56,11 +56,10 @@ permalink: /propostes/
     </div>
 
     <div id="section-programa">
-        {% assign mesures = site.data.propostes | where_exp: "item", "item.imatge == nil or item.imatge == ''" %}
-        {% assign temes_agrupats = mesures | group_by: "tema" %}
+        {% assign temes_agrupats = site.data.propostes | group_by: "tema" %}
 
         {% for grup_tema in temes_agrupats %}
-        <div class="theme-block mb-16" data-theme-slug="{{ grup_tema.name | slugify }}">
+        <div class="theme-block mb-16" data-theme-slug="{{ grup_tema.name | default: 'general' | slugify }}">
             <div class="flex items-center gap-4 mb-8">
                 <h2 class="text-xl md:text-2xl font-black uppercase tracking-widest text-mes-dark whitespace-nowrap">{{ grup_tema.name | default: "Altres" }}</h2>
                 <div class="flex-grow h-px bg-stone-200"></div>
@@ -68,18 +67,20 @@ permalink: /propostes/
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
                 {% for proposta in grup_tema.items %}
-                <div class="proposal-card flex items-start p-6 bg-white hover:bg-mes-dark shadow-sm border border-stone-100 group" 
-                     data-zone="{{ proposta.zona_id }}" 
-                     data-theme="{{ grup_tema.name | slugify }}">
-                    <div class="text-mes-lime bg-stone-50 group-hover:bg-mes-dark/50 p-2 rounded-full mr-4 flex-shrink-0 mt-1">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    {% if proposta.imatge == nil or proposta.imatge == "" %}
+                    <div class="proposal-card flex items-start p-6 bg-white hover:bg-mes-dark shadow-sm border border-stone-100 group" 
+                         data-zone="{{ proposta.zona_id }}" 
+                         data-theme="{{ grup_tema.name | default: 'general' | slugify }}">
+                        <div class="text-mes-lime bg-stone-50 group-hover:bg-mes-dark/50 p-2 rounded-full mr-4 flex-shrink-0 mt-1">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <h3 class="text-lg font-black uppercase text-mes-dark group-hover:text-white transition-colors mb-2">{{ proposta.titol }}</h3>
+                            <p class="text-sm text-stone-600 group-hover:text-stone-300 mb-4">{{ proposta.descripcio }}</p>
+                            <span class="text-[9px] font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 group-hover:border-stone-700 pt-2">{{ proposta.zona_nom }}</span>
+                        </div>
                     </div>
-                    <div class="flex flex-col text-left">
-                        <h3 class="text-lg font-black uppercase text-mes-dark group-hover:text-white transition-colors mb-2">{{ proposta.titol }}</h3>
-                        <p class="text-sm text-stone-600 group-hover:text-stone-300 mb-4">{{ proposta.descripcio }}</p>
-                        <span class="text-[9px] font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 group-hover:border-stone-700 pt-2">{{ proposta.zona_nom }}</span>
-                    </div>
-                </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
