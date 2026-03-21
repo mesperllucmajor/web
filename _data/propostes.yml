@@ -103,3 +103,9 @@
   zona_id: "general"
   zona_nom: "Tot el municipi"
   tema: "Transició Ecològica"
+
+- titol: "Inici del projecte per la reparació i posada en marxa del SITT"
+  descripcio: "El SITT tornarà a ser dels veïnats."
+  zona_id: "urbanitzacions"
+  zona_nom: "Urbanitzacions"
+  tema: "Infraestructures"
