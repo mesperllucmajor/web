@@ -109,3 +109,15 @@
   zona_id: "urbanitzacions"
   zona_nom: "Urbanitzacions"
   tema: "Infraestructures"
+
+- titol: "Recuperació de l'aturada del 508 a s'Arenal"
+  descripcio: "Millorarem la connexió de s'Arenal i les Urbanitzacions amb Son Llàtzer."
+  zona_id: "general"
+  zona_nom: "Tot el municipi"
+  tema: "Transport"
+  
+- titol: "Millora de la connectivitat amb el TIB"
+  descripcio: "Llucmajor, s'Arenal i Son Llàtzer estaran més a prop amb la recuperació de l'aturada de la línia 508."
+  zona_id: "estanyol"
+  zona_nom: "S'Estanyol i Son Bieló"
+  tema: "Transport"
