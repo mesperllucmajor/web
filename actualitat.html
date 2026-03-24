@@ -15,7 +15,7 @@ permalink: /actualitat/
     </div>
 </header>
 
-<div class="pt-16 pb-32 px-4 md:px-8 max-w-7xl mx-auto text-left">
+<div class="pt-16 pb-32 px-4 md:px-8 w-full max-w-[1400px] mx-auto text-left">
     
     <div class="mb-10">
         <h2 class="text-3xl md:text-4xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-4 mb-2">El nostre compromís</h2>
@@ -58,7 +58,7 @@ permalink: /actualitat/
                     <div class="flex-grow h-px bg-stone-200"></div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch">
                     {% for post in monthGroup.items %}
                         {% assign post_cat_raw = post.category | default: post.categories.first | default: 'Notícia' %}
                         {% assign cat_clean = post_cat_raw | downcase | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'è', 'e' | replace: 'é', 'e' | replace: 'à', 'a' | replace: 'ï', 'i' | strip %}
