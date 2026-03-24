@@ -148,6 +148,20 @@ permalink: /propostes/
     </div>
 </div>
 
+<div id="success-modal" class="fixed inset-0 z-[60] hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+        <div class="bg-white p-8 max-w-sm w-full shadow-2xl text-center transform scale-95 transition-transform duration-300" id="success-content">
+            <div class="w-16 h-16 bg-mes-lime rounded-full flex items-center justify-center mx-auto mb-6 text-mes-dark shadow-inner">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h3 class="text-2xl font-black uppercase text-mes-dark mb-2 tracking-tighter">Proposta enviada!</h3>
+            <p class="text-stone-600 text-sm mb-8">Gràcies per ajudar-nos a construir un Llucmajor millor. Hem rebut el teu missatge i el valorarem ben aviat.</p>
+            <button id="close-success-btn" class="bg-mes-dark text-mes-lime px-6 py-3 text-xs font-black uppercase tracking-widest hover:bg-mes-lime hover:text-mes-dark border-2 border-mes-dark transition-colors w-full shadow-md cursor-pointer">D'acord</button>
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const zoneBtns = document.querySelectorAll('.filter-btn-zone');
