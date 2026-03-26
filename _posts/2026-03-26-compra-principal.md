@@ -7,12 +7,6 @@ image: "/imatges/principal.jpg"
 summary: "El Ple Municipal dona llum verda a la iniciativa presentada per Oriol Gómez per aturar l'especulació i convertir aquest espai emblemàtic de 1938 en habitatge protegit per als veïnats i veïnades."
 ---
 
-# HISTÒRIC: L’Ajuntament de Llucmajor aprova per unanimitat la proposta de MÉS per comprar l'antic cinema Principal
-
-**El plenari ordinari de març ha donat llum verda a la iniciativa MÉS per Llucmajor per aturar l'especulació i convertir aquest espai emblemàtic en habitatge assequible per als llucmajorers.**
-
----
-
 Llucmajor ha viscut avui una jornada històrica per a la defensa del patrimoni i el dret a l’habitatge. El plenari ordinari de març ha aprovat, amb el **vot favorable de tots els grups polítics**, la proposta de resolució presentada  **MÉS per Llucmajor**. L’acord compromet l’Ajuntament a iniciar immediatament els tràmits per adquirir l’antic cinema Principal i rescatar-lo del mercat immobiliari privat.
 
 ### D’oportunitat per a inversors a dret per al poble
