@@ -121,3 +121,9 @@
   zona_id: "estanyol"
   zona_nom: "S'Estanyol i Son Bieló"
   tema: "Transport"
+
+- titol: "Aposta per l'Habitatge de Protecció Oficial"
+  descripcio: "L'habitatge no és per especular. És per viure-hi. Treballarem amb l'IBAVI per trobar fórmules per l'habitatge públic a tot el municipi."
+  zona_id: "general"
+  zona_nom: "Tot el municipi"
+  tema: "Habitatge"
