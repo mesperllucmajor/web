@@ -33,23 +33,25 @@
     </script>
 
     <style>
-        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        html { scroll-behavior: smooth; scroll-padding-top: 100px; }
         body { font-family: 'Barlow', sans-serif; overflow-x: hidden; color: #1a1a1a; background-color: #ffffff; text-align: left; }
         * { border-radius: 0 !important; }
         .bg-mes-lime { background-color: #c6d100; }
-        .btn-primary { background-color: #c6d100; color: #1a1a1a; font-weight: 800; text-transform: uppercase; padding: 1rem 2.5rem; transition: all 0.3s ease; display: inline-flex; align-items: center; letter-spacing: 0.1em; font-size: 0.8rem; }
+        
+        /* He llevat el font-size fix del botó perquè pugui créixer amb les classes de Tailwind */
+        .btn-primary { background-color: #c6d100; color: #1a1a1a; font-weight: 800; text-transform: uppercase; padding: 1rem 2.5rem; transition: all 0.3s ease; display: inline-flex; align-items: center; letter-spacing: 0.1em; }
         .btn-primary:hover { background-color: #1a1a1a; color: #c6d100; }
+        
         .section-title-box { 
-    background-color: #1a1a1a; 
-    color: white; 
-    padding: 0.3rem 0.8rem; /* Una mica més compacta */
-    display: inline-block; 
-    font-weight: 900; 
-    text-transform: uppercase; 
-    letter-spacing: 0.2em; 
-    margin-bottom: 0.75rem; 
-    font-size: 0.7rem; /* Mida equilibrada */
-}
+            background-color: #1a1a1a; 
+            color: white; 
+            padding: 0.3rem 0.8rem; 
+            display: inline-block; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            letter-spacing: 0.2em; 
+            margin-bottom: 0.75rem; 
+        }
         
         /* Classes del Slider */
         .hero-slide { position: absolute; inset: 0; transition: opacity 1.5s ease-in-out; opacity: 0; z-index: 0; }
@@ -63,35 +65,37 @@
 
 <body class="min-h-screen flex flex-col">
 
-    <nav class="fixed w-full bg-white/95 backdrop-blur-sm z-50 border-b-[6px] border-mes-lime transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center text-left">
+    <nav class="fixed w-full bg-white/95 backdrop-blur-sm z-50 border-b-[8px] border-mes-lime transition-all duration-300" id="navbar">
+        <div class="max-w-[1400px] mx-auto px-8 py-5 md:py-6 flex justify-between items-center text-left">
             
             <a href="{{ site.baseurl }}/" class="flex items-center cursor-pointer hover:opacity-80 transition-opacity">
-                <img src="{{ site.baseurl }}/imatges/LogoMES.png" alt="MÉS per Llucmajor" class="h-14 w-auto" />
+                <img src="{{ site.baseurl }}/imatges/LogoMES.png" alt="MÉS per Llucmajor" class="h-16 md:h-20 w-auto" />
             </a>
             
-            <div class="hidden md:flex gap-8 items-center font-black uppercase text-sm tracking-widest text-left">
+            <div class="hidden lg:flex gap-10 items-center font-black uppercase text-base tracking-widest text-left">
                 <a href="{{ site.baseurl }}/" class="hover:text-mes-lime transition-colors">Inici</a>
                 <a href="{{ site.baseurl }}/actualitat/" class="hover:text-mes-lime transition-colors">Acció Municipal</a>
                 <a href="{{ site.baseurl }}/propostes/" class="hover:text-mes-lime transition-colors">Solucions</a>
-                <a href="{{ site.baseurl }}/llei-de-projectes-residencials-estrategics/" class="hover:text-mes-lime transition-colors">Llei Pelotasso</a>
+                <a href="{{ site.baseurl }}/llei-projectes/" class="hover:text-mes-lime transition-colors">Llei Pelotasso</a>
                 <a href="{{ site.baseurl }}/equip/" class="hover:text-mes-lime transition-colors">L'equip</a>
-                <a href="{{ site.baseurl }}/contacte/" class="btn-primary !px-6 !py-2 text-[10px]">Contacte</a>
+                <a href="{{ site.baseurl }}/contacte/" class="btn-primary !px-8 !py-3 text-sm shadow-md hover:shadow-lg">Contacte</a>
             </div>
 
-            <button id="mobile-menu-btn" class="md:hidden text-mes-dark hover:text-mes-lime focus:outline-none">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <button id="mobile-menu-btn" class="lg:hidden text-mes-dark hover:text-mes-lime focus:outline-none p-2">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-stone-100 absolute w-full left-0 shadow-2xl text-left">
-            <div class="flex flex-col px-8 py-6 gap-6 font-black uppercase text-lg tracking-widest text-left">
-                <a href="{{ site.baseurl }}/actualitat/" class="hover:text-mes-lime transition-colors block">Actualitat</a>
-                <a href="{{ site.baseurl }}/propostes/" class="hover:text-mes-lime transition-colors block">El nostre model</a>
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t-2 border-stone-100 absolute w-full left-0 shadow-2xl text-left">
+            <div class="flex flex-col px-10 py-8 gap-8 font-black uppercase text-xl md:text-2xl tracking-widest text-left">
+                <a href="{{ site.baseurl }}/" class="hover:text-mes-lime transition-colors block">Inici</a>
+                <a href="{{ site.baseurl }}/actualitat/" class="hover:text-mes-lime transition-colors block">Acció Municipal</a>
+                <a href="{{ site.baseurl }}/propostes/" class="hover:text-mes-lime transition-colors block">Solucions pel Municipi</a>
+                <a href="{{ site.baseurl }}/llei-projectes/" class="hover:text-mes-lime transition-colors block">Llei Pelotasso</a>
                 <a href="{{ site.baseurl }}/equip/" class="hover:text-mes-lime transition-colors block">L'equip</a>
-                <a href="{{ site.baseurl }}/contacte/" class="text-mes-lime border-b-2 border-mes-lime self-start pb-1 block">Contacte</a>
+                <a href="{{ site.baseurl }}/contacte/" class="text-mes-lime border-b-4 border-mes-lime self-start pb-2 mt-4 block">Contacte</a>
             </div>
         </div>
     </nav>
@@ -100,34 +104,58 @@
         {{ content }}
     </main>
 
-    <footer class="bg-mes-dark text-white pt-24 pb-12 px-8 border-t-8 border-mes-lime text-left">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16 text-left">
-            <div class="md:col-span-1 text-left">
-                <img src="{{ site.baseurl }}/imatges/Logo.png" alt="MÉS per Llucmajor" class="h-14 w-auto mb-6" />
-                <p class="text-stone-400 font-bold uppercase text-xs tracking-widest mb-4">Llucmajor · s'Arenal · Urbanitzacions · s'Estanyol i Son Bieló · Fora vila</p>
-                <p class="text-stone-500 text-sm leading-relaxed italic">"Treballem des de la proximitat per un futur més just per a tota la ciutadania."</p>
+    <footer class="bg-mes-dark text-white pt-24 pb-16 px-8 border-t-8 border-mes-lime text-left">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-4 gap-16 text-left">
+            <div class="lg:col-span-1 text-left">
+                <img src="{{ site.baseurl }}/imatges/Logo.png" alt="MÉS per Llucmajor" class="h-16 md:h-20 w-auto mb-8" />
+                <p class="text-stone-400 font-bold uppercase text-sm tracking-widest mb-5">Llucmajor · s'Arenal · Urbanitzacions · s'Estanyol i Son Bieló · Fora vila</p>
+                <p class="text-stone-500 text-base md:text-lg leading-relaxed italic">"Treballem des de la proximitat per un futur més just per a tota la ciutadania."</p>
             </div>
+            
             <div class="text-left">
-                <h4 class="text-white font-black uppercase text-sm mb-8 border-b border-white/10 pb-2">Seccions</h4>
-                <ul class="space-y-4 text-xs font-bold uppercase tracking-widest text-stone-400 text-left">
+                <h4 class="text-white font-black uppercase text-base md:text-lg mb-8 border-b border-white/10 pb-3">Seccions</h4>
+                <ul class="space-y-5 text-sm md:text-base font-bold uppercase tracking-widest text-stone-400 text-left">
                     <li><a href="{{ site.baseurl }}/" class="hover:text-mes-lime transition-colors">Inici</a></li>
                     <li><a href="{{ site.baseurl }}/actualitat/" class="hover:text-mes-lime transition-colors">Actualitat</a></li>
                     <li><a href="{{ site.baseurl }}/propostes/" class="hover:text-mes-lime transition-colors">El nostre model</a></li>
-                    <li><a href="{{ site.baseurl }}/llei-de-projectes-residencials-estrategics.html/" class="hover:text-mes-lime transition-colors">Llei del Pelotasso</a></li>
+                    <li><a href="{{ site.baseurl }}/llei-projectes/" class="hover:text-mes-lime transition-colors">Llei del Pelotasso</a></li>
                     <li><a href="{{ site.baseurl }}/equip/" class="hover:text-mes-lime transition-colors">L'Equip</a></li>
                 </ul>
             </div>
+            
             <div class="text-left">
-                <h4 class="text-white font-black uppercase text-sm mb-8 border-b border-white/10 pb-2">Contacte</h4>
+                <h4 class="text-white font-black uppercase text-base md:text-lg mb-8 border-b border-white/10 pb-3">Contacte</h4>
                 <ul class="space-y-6 text-left">
-                    <li><a href="https://www.instagram.com/mesperllucmajor" target="_blank" class="flex items-center gap-4 hover:text-mes-lime transition-all group text-left"><span class="p-2 bg-white/5 group-hover:bg-mes-lime group-hover:text-black transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></span><span class="text-xs font-bold text-left">@mesperllucmajor</span></a></li>
-                    <li><a href="https://www.facebook.com/mesperllucmajor" target="_blank" class="flex items-center gap-4 hover:text-mes-lime transition-all group text-left"><span class="p-2 bg-white/5 group-hover:bg-mes-lime group-hover:text-black transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span><span class="text-xs font-bold text-left">/mesperllucmajor</span></a></li>
-                    <li><a href="mailto:mesperllucmajor@gmail.com" class="flex items-center gap-4 hover:text-mes-lime transition-all group text-left"><span class="p-2 bg-white/5 group-hover:bg-mes-lime group-hover:text-black transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span><span class="text-xs font-bold text-left">mesperllucmajor@gmail.com</span></a></li>
+                    <li>
+                        <a href="https://www.instagram.com/mesperllucmajor" target="_blank" class="flex items-center gap-5 hover:text-mes-lime transition-all group text-left">
+                            <span class="p-3 bg-white/5 group-hover:bg-mes-lime group-hover:text-black transition-all">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                            </span>
+                            <span class="text-sm md:text-base font-bold tracking-widest text-left">@mesperllucmajor</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/mesperllucmajor" target="_blank" class="flex items-center gap-5 hover:text-mes-lime transition-all group text-left">
+                            <span class="p-3 bg-white/5 group-hover:bg-mes-lime group-hover:text-black transition-all">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                            </span>
+                            <span class="text-sm md:text-base font-bold tracking-widest text-left">/mesperllucmajor</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:mesperllucmajor@gmail.com" class="flex items-center gap-5 hover:text-mes-lime transition-all group text-left">
+                            <span class="p-3 bg-white/5 group-hover:bg-mes-lime group-hover:text-black transition-all">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </span>
+                            <span class="text-sm md:text-base font-bold tracking-widest text-left">mesperllucmajor@gmail.com</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
+            
             <div class="text-left">
-                <h4 class="text-white font-black uppercase text-sm mb-8 border-b border-white/10 pb-2">Informació</h4>
-                <ul class="space-y-4 text-[10px] font-black uppercase tracking-[0.2em] text-stone-500 text-left">
+                <h4 class="text-white font-black uppercase text-base md:text-lg mb-8 border-b border-white/10 pb-3">Informació</h4>
+                <ul class="space-y-5 text-xs font-black uppercase tracking-[0.2em] text-stone-500 text-left">
                     <li><a href="#" class="hover:text-white transition-colors">Avís Legal</a></li>
                     <li><a href="#" class="hover:text-white transition-colors">Política de Privacitat</a></li>
                     <li class="pt-8 text-white/20">© 2026 MÉS PER LLUCMAJOR</li>
@@ -141,13 +169,13 @@
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 10) {
-                navbar.classList.add('shadow-md');
+                navbar.classList.add('shadow-lg');
             } else {
-                navbar.classList.remove('shadow-md');
+                navbar.classList.remove('shadow-lg');
             }
         });
 
-        // 2. Lògica per obrir/tancar el menú mòbil (Això és el que faltava)
+        // 2. Lògica per obrir/tancar el menú mòbil
         const menuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
