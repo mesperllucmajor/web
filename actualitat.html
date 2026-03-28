@@ -121,10 +121,11 @@ permalink: /actualitat/
                                 </div>
                             </div>
 
-                            <div class="p-8 flex flex-col flex-grow">
-                                <span class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-4 block group-hover:text-mes-lime transition-colors">{{ post.date | date: "%d/%m/%Y" }}</span>
-                                <h3 class="text-2xl md:text-3xl font-black uppercase text-mes-dark group-hover:text-white transition-colors leading-tight mb-5">{{ post.title }}</h3>
-                                <p class="text-base text-stone-600 group-hover:text-stone-300 italic flex-grow mb-8 leading-relaxed">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                            <div class="p-6 md:p-8 flex flex-col flex-grow">
+                                <span class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-3 block group-hover:text-mes-lime transition-colors">{{ post.date | date: "%d/%m/%Y" }}</span>
+                                
+                                <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark group-hover:text-white transition-colors leading-tight mb-6">{{ post.title }}</h3>
+                                
                                 <span class="text-xs font-black uppercase tracking-widest text-mes-lime border-t border-stone-200 group-hover:border-stone-700 pt-5 mt-auto transition-colors flex items-center gap-2">
                                     Llegir més
                                     <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
