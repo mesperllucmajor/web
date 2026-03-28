@@ -4,53 +4,70 @@ title: Propostes per transformar Llucmajor
 permalink: /propostes/
 ---
 
-<header class="relative h-[350px] flex items-center overflow-hidden">
-    <img src="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover scale-105" alt="Propostes MÉS" />
-    <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
-    <div class="relative z-10 w-full px-8 md:px-16 text-left">
-        <div class="max-w-4xl">
-            <h1 class="text-6xl md:text-8xl font-black uppercase text-white tracking-tighter mb-5 leading-none">Propostes</h1>
-            <p class="text-mes-lime text-xl md:text-2xl font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-5 inline-block bg-black/40 pr-8 py-2">Projectes nucli a nucli per un municipi viu</p>
-        </div>
+<header class="relative h-[450px] md:h-[550px] flex items-center justify-center overflow-hidden bg-mes-dark text-center">
+    <img src="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?auto=format&fit=crop&q=80&w=2000" class="absolute inset-0 w-full h-full object-cover opacity-30 scale-105" alt="Propostes MÉS" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30"></div>
+    
+    <div class="relative z-10 w-full px-8 flex flex-col items-center">
+        <h1 class="text-7xl md:text-9xl lg:text-[120px] font-black uppercase text-white tracking-tighter leading-none mb-6 animate-fade" style="text-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            Propostes
+        </h1>
+        <p class="text-mes-lime text-xl md:text-2xl font-bold uppercase tracking-[0.2em] border-l-4 border-mes-lime pl-6 inline-block bg-black/50 pr-8 py-2.5" style="text-shadow: 0 4px 6px rgba(0,0,0,0.8);">
+            Projectes nucli a nucli per un municipi viu
+        </p>
     </div>
 </header>
 
-<div class="pt-16 pb-32 px-4 md:px-8 w-full max-w-[1400px] mx-auto text-left">
+<div class="pt-20 pb-32 px-4 md:px-10 w-full max-w-[1400px] mx-auto text-left">
     
-    <div class="flex flex-wrap gap-3 md:gap-5 mb-8 justify-start" id="filters-zone">
-        <button class="filter-btn-zone bg-mes-dark text-mes-lime border-mes-dark border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="general">Tot el municipi</button>
-        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="llucmajor">Llucmajor</button>
-        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="arenal">s'Arenal</button>
-        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="urbanitzacions">Urbanitzacions</button>
-        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="estanyol">s'Estanyol/Son Bieló</button>
-        <button class="filter-btn-zone bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="foravila">Foravila</button>
+    <div class="mb-20 border-b-4 border-stone-200 pb-12 flex flex-col gap-12">
+        
+        <div>
+            <p class="text-sm font-black uppercase tracking-widest text-stone-400 mb-6 text-left">Filtra per zona del municipi</p>
+            <div class="flex flex-wrap gap-x-12 gap-y-6 justify-start -mb-[12px]" id="filters-zone">
+                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-mes-dark border-b-4 border-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="general">Tot el municipi</button>
+                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="llucmajor">Llucmajor Poble</button>
+                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="arenal">s'Arenal</button>
+                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="urbanitzacions">Urbanitzacions</button>
+                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="estanyol">s'Estanyol</button>
+                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="foravila">Foravila</button>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-4 min-h-[50px] text-left" id="filters-theme"></div>
+
     </div>
 
-    <div class="flex flex-wrap gap-3 mb-16 justify-start border-b border-stone-200 pb-10 min-h-[60px]" id="filters-theme"></div>
+    <div id="section-destacats" class="mb-32">
+        
+        <div class="flex items-center gap-6 mb-16">
+            <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-mes-dark whitespace-nowrap">Projectes Destacats</h2>
+            <div class="flex-grow h-1 bg-mes-lime rounded-full"></div>
+        </div>
 
-    <div id="section-destacats" class="mb-24">
-        <h2 class="text-3xl md:text-4xl font-black uppercase text-mes-dark mb-10 border-l-4 border-mes-lime pl-5">Projectes Destacats</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 items-stretch">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 xl:gap-12 items-stretch">
             {% for proposta in site.data.propostes %}
                 {% if proposta.imatge and proposta.imatge != "" %}
-                <div class="proposal-card flex flex-col bg-stone-50 hover:bg-mes-dark shadow-sm hover:shadow-2xl transition-colors duration-500 border border-stone-100 group" 
+                
+                <div class="proposal-card relative group flex flex-col bg-stone-900 border-4 border-mes-dark/10 shadow-xl overflow-hidden h-[550px] transition-all duration-500 hover:shadow-2xl" 
                      data-zone="{{ proposta.zona_id }}" 
                      data-theme="{{ proposta.tema | slugify }}">
                     
-                    <div class="w-full h-2 bg-mes-lime transition-all duration-300 group-hover:h-3"></div>
+                    <div class="absolute top-0 left-0 right-0 h-3 bg-mes-lime z-30 transition-all duration-300 group-hover:h-4"></div>
                     
-                    <div class="p-8 pb-6">
-                        <h3 class="text-2xl md:text-3xl font-black uppercase text-mes-dark group-hover:text-white transition-colors leading-tight">{{ proposta.titol }}</h3>
-                    </div>
+                    <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="{{ proposta.titol }}" />
                     
-                    <div class="w-full aspect-[4/3] bg-white relative border-y border-stone-200 group-hover:border-stone-700 flex-shrink-0 transition-colors duration-500">
-                        <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-contain object-center p-4" alt="{{ proposta.titol }}" />
-                    </div>
+                    <div class="absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-black via-black/90 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-100"></div>
                     
-                    <div class="p-8 flex flex-col flex-grow text-left">
-                        <p class="text-base text-stone-600 group-hover:text-stone-300 italic flex-grow leading-relaxed">{{ proposta.descripcio }}</p>
+                    <div class="relative z-20 mt-auto p-10 flex flex-col text-left">
+                        <h3 class="text-3xl md:text-4xl font-black uppercase text-mes-lime group-hover:text-white transition-colors leading-tight mb-6" style="text-shadow: 0 4px 6px rgba(0,0,0,0.5);">
+                            {{ proposta.titol }}
+                        </h3>
+                        <p class="text-lg text-white font-medium leading-relaxed group-hover:text-stone-100 italic transition-colors leading-relaxed line-clamp-4">
+                            "{{ proposta.descripcio }}"
+                        </p>
                         
-                        <span class="text-xs font-black uppercase tracking-widest text-mes-lime border-t border-stone-200 group-hover:border-stone-700 pt-5 mt-8 transition-colors">
+                        <span class="text-xs font-black uppercase tracking-widest text-stone-400 pt-6 mt-8 border-t border-stone-800 transition-colors">
                             {{ proposta.tema }} | {{ proposta.zona_nom }}
                         </span>
                     </div>
@@ -64,29 +81,29 @@ permalink: /propostes/
         {% assign temes_agrupats = site.data.propostes | group_by: "tema" %}
 
         {% for grup_tema in temes_agrupats %}
-        <div class="theme-block mb-20" data-theme-slug="{{ grup_tema.name | default: 'general' | slugify }}">
+        <div class="theme-block mb-24" data-theme-slug="{{ grup_tema.name | default: 'general' | slugify }}">
             
-            <div class="flex items-center gap-6 mb-10">
-                <h2 class="text-2xl md:text-3xl font-black uppercase tracking-widest text-mes-dark whitespace-nowrap">{{ grup_tema.name | default: "Altres" }}</h2>
+            <div class="flex items-center gap-6 mb-12">
+                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-widest text-mes-dark whitespace-nowrap">{{ grup_tema.name | default: "Altres" }}</h2>
                 <div class="flex-grow h-[2px] bg-stone-200"></div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                 {% for proposta in grup_tema.items %}
                     {% if proposta.imatge == nil or proposta.imatge == "" %}
-                    <div class="proposal-card flex items-start p-8 bg-white hover:bg-mes-dark shadow-sm border border-stone-100 group transition-colors duration-300" 
+                    <div class="proposal-card flex items-start p-10 bg-white hover:bg-mes-dark shadow-sm border border-stone-100 group transition-all duration-300 hover:shadow-2xl text-left" 
                          data-zone="{{ proposta.zona_id }}" 
                          data-theme="{{ grup_tema.name | default: 'general' | slugify }}">
                         
-                        <div class="text-mes-lime bg-stone-50 group-hover:bg-mes-dark/50 p-3 rounded-full mr-5 flex-shrink-0 mt-1 transition-colors">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <div class="text-mes-lime bg-stone-50 group-hover:bg-black/50 p-4 rounded-full mr-6 flex-shrink-0 mt-2 transition-colors">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                         </div>
                         
                         <div class="flex flex-col text-left w-full">
-                            <h3 class="text-xl font-black uppercase text-mes-dark group-hover:text-white transition-colors mb-3 leading-tight">{{ proposta.titol }}</h3>
-                            <p class="text-base text-stone-600 group-hover:text-stone-300 mb-6 leading-relaxed">{{ proposta.descripcio }}</p>
+                            <h3 class="text-2xl font-black uppercase text-mes-dark group-hover:text-white transition-colors mb-4 leading-tight">{{ proposta.titol }}</h3>
+                            <p class="text-lg text-stone-600 group-hover:text-stone-300 mb-8 leading-relaxed">{{ proposta.descripcio }}</p>
                             
-                            <span class="text-xs font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 group-hover:border-stone-700 pt-4 mt-auto transition-colors">{{ proposta.zona_nom }}</span>
+                            <span class="text-sm font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 group-hover:border-stone-700 pt-5 mt-auto transition-colors">{{ proposta.zona_nom }}</span>
                         </div>
                     </div>
                     {% endif %}
@@ -98,8 +115,8 @@ permalink: /propostes/
     </div>
 </div>
 
-<button id="open-modal-btn" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-dark text-mes-lime px-8 py-5 text-sm font-black uppercase tracking-widest shadow-2xl z-40 flex items-center gap-3 border-2 border-mes-dark hover:bg-mes-lime hover:text-mes-dark transition-all transform hover:-translate-y-1 cursor-pointer group">
-    <svg class="w-6 h-6 text-mes-lime group-hover:text-mes-dark transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+<button id="open-modal-btn" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-lime text-mes-dark px-10 py-5 text-sm font-black uppercase tracking-widest shadow-2xl z-40 flex items-center gap-3 border-4 border-mes-dark/10 hover:bg-mes-dark hover:text-white transition-all transform hover:-translate-y-1 cursor-pointer group">
+    <svg class="w-6 h-6 text-mes-dark group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
     <span class="hidden md:inline">Fes la teva proposta</span>
 </button>
 
@@ -107,33 +124,33 @@ permalink: /propostes/
     <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="modal-backdrop"></div>
     
     <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
-        <div class="bg-white w-full max-w-2xl shadow-2xl pointer-events-auto transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="modal-content">
+        <div class="bg-white w-full max-w-3xl shadow-2xl pointer-events-auto transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="modal-content">
             
-            <div class="bg-mes-dark p-8 flex justify-between items-center flex-shrink-0">
-                <h3 class="text-3xl font-black uppercase tracking-widest text-white">Què proposes?</h3>
+            <div class="bg-mes-dark p-8 md:p-10 flex justify-between items-center flex-shrink-0">
+                <h3 class="text-4xl font-black uppercase tracking-widest text-white">Què proposes?</h3>
                 <button id="close-modal-btn" class="text-stone-400 hover:text-mes-lime transition-colors">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
 
-            <form action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="p-8 md:p-12 space-y-8 overflow-y-auto">
+            <form action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="p-10 md:p-14 space-y-10 overflow-y-auto">
                 
-                <p class="text-base text-stone-600 mb-6 italic leading-relaxed">A MÉS per Llucmajor construïm el municipi escoltant. Escriu la teva idea i la valorarem per incorporar-la al nostre pla d'acció.</p>
+                <p class="text-xl text-stone-600 mb-8 italic leading-relaxed text-left border-l-4 border-mes-lime pl-6">A MÉS per Llucmajor construïm el municipi escoltant. Escriu la teva idea i la valorarem per incorporar-la al nostre pla d'acció.</p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div>
-                        <label for="nom" class="block text-xs font-black uppercase tracking-widest text-stone-500 mb-2">Nom i Llinatges</label>
-                        <input type="text" id="nom" name="name" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-5 py-4 text-base focus:outline-none focus:border-mes-lime focus:bg-white transition-colors" placeholder="Ex: Maria Font">
+                        <label for="nom" class="block text-sm font-black uppercase tracking-widest text-stone-500 mb-3 text-left">Nom i Llinatges</label>
+                        <input type="text" id="nom" name="name" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-6 py-4 text-lg focus:outline-none focus:border-mes-lime focus:bg-white transition-colors" placeholder="Ex: Maria Font">
                     </div>
                     <div>
-                        <label for="email" class="block text-xs font-black uppercase tracking-widest text-stone-500 mb-2">Correu electrònic</label>
-                        <input type="email" id="email" name="email" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-5 py-4 text-base focus:outline-none focus:border-mes-lime focus:bg-white transition-colors" placeholder="Per poder-te respondre">
+                        <label for="email" class="block text-sm font-black uppercase tracking-widest text-stone-500 mb-3 text-left">Correu electrònic</label>
+                        <input type="email" id="email" name="email" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-6 py-4 text-lg focus:outline-none focus:border-mes-lime focus:bg-white transition-colors" placeholder="Per poder-te respondre">
                     </div>
                 </div>
 
                 <div>
-                    <label for="zona" class="block text-xs font-black uppercase tracking-widest text-stone-500 mb-2">De quin nucli és la proposta?</label>
-                    <select id="zona" name="zona" class="w-full border-b-2 border-stone-200 bg-stone-50 px-5 py-4 text-base focus:outline-none focus:border-mes-lime focus:bg-white transition-colors appearance-none cursor-pointer">
+                    <label for="zona" class="block text-sm font-black uppercase tracking-widest text-stone-500 mb-3 text-left">De quin nucli és la proposta?</label>
+                    <select id="zona" name="zona" class="w-full border-b-2 border-stone-200 bg-stone-50 px-6 py-4 text-lg focus:outline-none focus:border-mes-lime focus:bg-white transition-colors appearance-none cursor-pointer">
                         <option value="General">Tot el municipi</option>
                         <option value="Llucmajor">Llucmajor Poble</option>
                         <option value="s'Arenal">s'Arenal</option>
@@ -144,11 +161,11 @@ permalink: /propostes/
                 </div>
 
                 <div>
-                    <label for="missatge" class="block text-xs font-black uppercase tracking-widest text-stone-500 mb-2">La teva proposta</label>
-                    <textarea id="missatge" name="message" rows="5" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-5 py-4 text-base focus:outline-none focus:border-mes-lime focus:bg-white transition-colors resize-none" placeholder="Explica'ns la teva idea per millorar Llucmajor..."></textarea>
+                    <label for="missatge" class="block text-sm font-black uppercase tracking-widest text-stone-500 mb-3 text-left">La teva proposta</label>
+                    <textarea id="missatge" name="message" rows="6" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-6 py-4 text-lg focus:outline-none focus:border-mes-lime focus:bg-white transition-colors resize-none leading-relaxed" placeholder="Explica'ns la teva idea per millorar Llucmajor..."></textarea>
                 </div>
 
-                <div class="pt-6 border-t border-stone-100 flex justify-end">
+                <div class="pt-8 border-t border-stone-100 flex justify-end">
                     <button type="submit" class="bg-mes-lime text-mes-dark border-2 border-mes-lime px-10 py-5 text-sm font-black uppercase tracking-widest shadow-md hover:bg-transparent hover:text-mes-dark transition-all cursor-pointer w-full md:w-auto text-center">
                         Enviar Proposta
                     </button>
@@ -161,13 +178,13 @@ permalink: /propostes/
 <div id="success-modal" class="fixed inset-0 z-[70] hidden opacity-0 transition-opacity duration-300">
     <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
     <div class="absolute inset-0 flex items-center justify-center p-4">
-        <div class="bg-white p-10 md:p-14 max-w-lg w-full shadow-2xl text-center transform scale-95 transition-transform duration-300" id="success-content">
-            <div class="w-20 h-20 bg-mes-lime rounded-full flex items-center justify-center mx-auto mb-8 text-mes-dark shadow-inner">
-                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+        <div class="bg-white p-12 md:p-16 max-w-xl w-full shadow-2xl text-center transform scale-95 transition-transform duration-300" id="success-content">
+            <div class="w-24 h-24 bg-mes-lime rounded-full flex items-center justify-center mx-auto mb-10 text-mes-dark shadow-inner">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
             </div>
-            <h3 class="text-3xl md:text-4xl font-black uppercase text-mes-dark mb-4 tracking-tighter leading-none">Proposta enviada!</h3>
-            <p class="text-stone-600 text-base md:text-lg mb-10 leading-relaxed">Gràcies per ajudar-nos a construir un Llucmajor millor. Hem rebut el teu missatge i el valorarem ben aviat.</p>
-            <button id="close-success-btn" class="bg-mes-dark text-mes-lime px-8 py-4 text-sm font-black uppercase tracking-widest hover:bg-black transition-colors w-full shadow-md cursor-pointer">D'acord</button>
+            <h3 class="text-4xl md:text-5xl font-black uppercase text-mes-dark mb-5 tracking-tighter leading-none">Proposta enviada!</h3>
+            <p class="text-lg md:text-xl text-stone-600 mb-12 leading-relaxed italic">Gràcies per ajudar-nos a construir un Llucmajor millor. Hem rebut el teu missatge i el valorarem ben aviat.</p>
+            <button id="close-success-btn" class="bg-mes-dark text-mes-lime px-10 py-5 text-sm font-black uppercase tracking-widest hover:bg-black transition-colors w-full shadow-md cursor-pointer">D'acord</button>
         </div>
     </div>
 </div>
@@ -228,21 +245,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function createThemeBtn(label, slug, active) {
         const btn = document.createElement('button');
-        // Hem fet la lletra dels filtres secundaris més llegible (text-xs)
-        btn.className = 'filter-btn-theme px-5 py-2.5 text-xs font-black uppercase tracking-widest border-2 transition-all cursor-pointer shadow-sm ';
+        // Hem fet la lletra dels filtres secundaris més llegible i el botó més gran
+        btn.className = 'filter-btn-theme px-6 py-2.5 text-xs font-black uppercase tracking-widest border-2 transition-all cursor-pointer shadow-sm text-left ';
         if (active) {
             btn.classList.add('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
         } else {
-            btn.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200', 'hover:border-mes-lime');
+            btn.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200', 'hover:border-mes-lime', 'hover:text-mes-dark');
         }
         btn.innerText = label;
         btn.setAttribute('data-theme-filter', slug);
         btn.onclick = () => {
             document.querySelectorAll('.filter-btn-theme').forEach(b => {
                 b.classList.remove('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
-                b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200', 'hover:border-mes-lime');
+                b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200', 'hover:border-mes-lime', 'hover:text-mes-dark');
             });
-            btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200', 'hover:border-mes-lime');
+            btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200', 'hover:border-mes-lime', 'hover:text-mes-dark');
             btn.classList.add('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
             filterContent(window.currentZone, slug);
         };
@@ -251,12 +268,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     zoneBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            // Reiniciar colors estils premium
             zoneBtns.forEach(b => {
-                b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
-                b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200');
+                b.classList.remove('text-mes-dark', 'border-mes-dark');
+                b.classList.add('text-stone-400', 'border-transparent');
             });
-            btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200');
-            btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+            btn.classList.remove('text-stone-400', 'border-transparent');
+            btn.classList.add('text-mes-dark', 'border-mes-dark');
+            
             window.currentZone = btn.getAttribute('data-filter');
             updateThemeFilters(window.currentZone);
             filterContent(window.currentZone, 'all');
