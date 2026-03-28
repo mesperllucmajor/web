@@ -43,7 +43,7 @@ title: Inici
         }
         .slice-item {
             flex: 1;
-            height: 110px;
+            height: 120px; /* Una mica més alt per encabir lletra més grossa */
             border-bottom: none !important;
             border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
         }
@@ -59,7 +59,7 @@ title: Inici
     }
     
     .slice-item:hover .slice-subtitle {
-        max-height: 24px;
+        max-height: 28px;
         opacity: 1;
         margin-top: 6px;
     }
@@ -71,105 +71,105 @@ title: Inici
         <img src="{{ site.baseurl }}/imatges/imatge1.jpg" class="absolute inset-0 w-full h-full object-cover z-0" alt="MÉS per Llucmajor" />
         <div class="absolute inset-0 bg-black/40 z-0"></div>
         <div class="relative z-10 w-full px-8 md:px-20 text-center md:text-left pb-16 lg:pb-24">
-            <div class="max-w-5xl mx-auto md:mx-0">
-                <span class="block text-mes-lime font-black uppercase tracking-[0.2em] mb-4 text-xs md:text-sm" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
+            <div class="max-w-6xl mx-auto md:mx-0">
+                <span class="block text-mes-lime font-black uppercase tracking-[0.2em] mb-4 text-sm md:text-base" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
                     MÉS per Llucmajor
                 </span>
-                <h1 class="text-4xl md:text-6xl lg:text-[75px] font-black uppercase text-white leading-tight md:leading-none mb-6" style="text-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+                <h1 class="text-5xl md:text-7xl lg:text-[85px] font-black uppercase text-white leading-tight md:leading-none mb-6" style="text-shadow: 0 4px 12px rgba(0,0,0,0.5);">
                     Llucmajor necessita MÉS
                 </h1>
-                <p class="text-lg md:text-2xl text-white/90 md:border-l-4 md:border-mes-lime md:pl-6 italic mb-0 mx-auto md:mx-0 max-w-2xl" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
+                <p class="text-xl md:text-3xl text-white/90 md:border-l-4 md:border-mes-lime md:pl-6 italic mb-0 mx-auto md:mx-0 max-w-3xl" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">
                     Comptam amb tu per a la transformació de Llucmajor.
                 </p>
             </div>
         </div>
     </div>
 
-    <div class="relative z-20 w-[95%] lg:w-[90%] max-w-7xl mx-auto slice-container -mt-16 lg:-mt-20 mb-12">
+    <div class="relative z-20 w-[95%] lg:w-[90%] max-w-[1400px] mx-auto slice-container -mt-16 lg:-mt-20 mb-12">
         <a href="{{ site.baseurl }}/propostes/?zona=llucmajor" class="slice-item group">
             <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="Llucmajor">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
-            <div class="relative z-20 flex flex-col items-center text-center px-2">
-                <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Llucmajor Poble</span>
-                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Aquest és el poble que tendrem</span>
+            <div class="relative z-20 flex flex-col items-center text-center px-4">
+                <span class="font-black uppercase tracking-widest text-xs lg:text-base text-white group-hover:text-mes-lime transition-colors duration-300">Llucmajor Poble</span>
+                <span class="slice-subtitle text-[11px] lg:text-xs text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Aquest és el poble que tendrem</span>
             </div>
         </a>
 
         <a href="{{ site.baseurl }}/propostes/?zona=arenal" class="slice-item group">
             <img src="{{ site.baseurl }}/imatges/sarenal2.jpeg" onerror="this.src='{{ site.baseurl }}/imatges/PlacaPalmeres.jpeg'" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="s'Arenal">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
-            <div class="relative z-20 flex flex-col items-center text-center px-2">
-                <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">s'Arenal</span>
-                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Recuperarem s'Arenal pels s'arenalers i s'arenaleres.</span>
+            <div class="relative z-20 flex flex-col items-center text-center px-4">
+                <span class="font-black uppercase tracking-widest text-xs lg:text-base text-white group-hover:text-mes-lime transition-colors duration-300">s'Arenal</span>
+                <span class="slice-subtitle text-[11px] lg:text-xs text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Recuperarem s'Arenal pels s'arenalers.</span>
             </div>
         </a>
 
         <a href="{{ site.baseurl }}/propostes/?zona=urbanitzacions" class="slice-item group">
             <img src="{{ site.baseurl }}/imatges/badies2.jpeg" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="Urbanitzacions">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
-            <div class="relative z-20 flex flex-col items-center text-center px-2">
-                <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Urbanitzacions</span>
-                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Com seran les urbanitzacions amb nosaltres.</span>
+            <div class="relative z-20 flex flex-col items-center text-center px-4">
+                <span class="font-black uppercase tracking-widest text-xs lg:text-base text-white group-hover:text-mes-lime transition-colors duration-300">Urbanitzacions</span>
+                <span class="slice-subtitle text-[11px] lg:text-xs text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">Com seran les urbanitzacions amb nosaltres.</span>
             </div>
         </a>
 
         <a href="{{ site.baseurl }}/propostes/?zona=estanyol" class="slice-item group">
             <img src="{{ site.baseurl }}/imatges/estanyol.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="s'Estanyol">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
-            <div class="relative z-20 flex flex-col items-center text-center px-2">
-                <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">s'Estanyol / Son Bieló</span>
-                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">s'Estanyol i Son Bieló també són Llucmajor.</span>
+            <div class="relative z-20 flex flex-col items-center text-center px-4">
+                <span class="font-black uppercase tracking-widest text-xs lg:text-base text-white group-hover:text-mes-lime transition-colors duration-300">s'Estanyol / Son Bieló</span>
+                <span class="slice-subtitle text-[11px] lg:text-xs text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">s'Estanyol i Son Bieló també són Llucmajor.</span>
             </div>
         </a>
 
         <a href="{{ site.baseurl }}/propostes/?zona=foravila" class="slice-item group">
             <img src="{{ site.baseurl }}/imatges/Foravila.png" class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0 lg:scale-105 group-hover:scale-100 hidden lg:block" alt="Fora Vila">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden lg:block"></div>
-            <div class="relative z-20 flex flex-col items-center text-center px-2">
-                <span class="font-black uppercase tracking-widest text-[11px] lg:text-sm text-white group-hover:text-mes-lime transition-colors duration-300">Fora Vila</span>
-                <span class="slice-subtitle text-[10px] text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">La solució que proposam per fora vila</span>
+            <div class="relative z-20 flex flex-col items-center text-center px-4">
+                <span class="font-black uppercase tracking-widest text-xs lg:text-base text-white group-hover:text-mes-lime transition-colors duration-300">Fora Vila</span>
+                <span class="slice-subtitle text-[11px] lg:text-xs text-white uppercase tracking-widest font-bold border-b border-mes-lime pb-0.5 hidden lg:block">La solució que proposam per fora vila</span>
             </div>
         </a>
     </div>
 </header>
 
 <main>
-    <section id="highlight-banner" class="bg-mes-lime border-y-2 border-mes-dark/10 relative h-20 md:h-24 overflow-hidden">
-        <div class="max-w-7xl mx-auto h-full px-8 relative">
+    <section id="highlight-banner" class="bg-mes-lime border-y-2 border-mes-dark/10 relative h-24 md:h-28 overflow-hidden">
+        <div class="max-w-[1400px] mx-auto h-full px-8 relative">
             <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-100 translate-y-0 px-8" data-index="0">
-                <div class="flex items-center gap-4 text-left">
-                    <div class="bg-mes-dark text-mes-lime p-2 hidden sm:block">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <div class="flex items-center gap-5 text-left">
+                    <div class="bg-mes-dark text-mes-lime p-3 hidden sm:block">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                     </div>
                     <div class="text-left">
-                        <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60">Campanya Especial</span>
-                        <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark leading-tight">Llei de Projectes Residencials Estratègics: L'anàlisi</h3>
+                        <span class="block text-[11px] md:text-xs font-black uppercase tracking-widest text-mes-dark/60">Campanya Especial</span>
+                        <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark leading-tight">Llei de Projectes Residencials Estratègics: L'anàlisi</h3>
                     </div>
                 </div>
-                <a href="{{ site.baseurl }}/llei-projectes/" class="bg-mes-dark text-white p-3 hover:bg-black transition-all">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                <a href="{{ site.baseurl }}/llei-projectes/" class="bg-mes-dark text-white p-4 hover:bg-black transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </a>
             </div>
             {% assign darrera_noticia = site.posts.first %}
             <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-0 translate-y-8 px-8 pointer-events-none" data-index="1">
-                <div class="flex items-center gap-4 text-left">
-                    <div class="bg-mes-dark text-white p-2 hidden sm:block">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v6h6"></path></svg>
+                <div class="flex items-center gap-5 text-left">
+                    <div class="bg-mes-dark text-white p-3 hidden sm:block">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v6h6"></path></svg>
                     </div>
                     <div class="text-left">
-                        <span class="block text-[9px] font-black uppercase tracking-widest text-mes-dark/60">Darrera Notícia</span>
-                        <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark leading-tight">{{ darrera_noticia.title | truncate: 50 }}</h3>
+                        <span class="block text-[11px] md:text-xs font-black uppercase tracking-widest text-mes-dark/60">Darrera Notícia</span>
+                        <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark leading-tight">{{ darrera_noticia.title | truncate: 50 }}</h3>
                     </div>
                 </div>
-                <a href="{{ site.baseurl }}{{ darrera_noticia.url }}" class="bg-mes-dark text-white p-3 hover:bg-black transition-all">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                <a href="{{ site.baseurl }}{{ darrera_noticia.url }}" class="bg-mes-dark text-white p-4 hover:bg-black transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </a>
             </div>
         </div>
     </section>
 
     <section id="observatori-home" class="py-24 px-4 md:px-8 bg-white">
-        <div class="max-w-7xl mx-auto">
+        <div class="max-w-[1400px] mx-auto">
             
             {% assign total = site.data.observatori.size %}
             {% assign aprovades = 0 %}
@@ -179,60 +179,60 @@ title: Inici
                 {% if item.estat contains "REBUTJADA" %}{% assign rebutjades = rebutjades | plus: 1 %}{% endif %}
             {% endfor %}
 
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 border-b border-stone-300 pb-8 gap-8">
-                <div class="max-w-3xl text-left">
-                    <div class="flex flex-wrap items-center gap-3 mb-4">
-                        <span class="bg-mes-dark text-white text-[10px] font-black uppercase tracking-widest px-3 py-1">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 border-b border-stone-300 pb-10 gap-10">
+                <div class="max-w-4xl text-left">
+                    <div class="flex flex-wrap items-center gap-4 mb-5">
+                        <span class="bg-mes-dark text-white text-xs font-black uppercase tracking-widest px-4 py-1.5">
                             Fiscalització
                         </span>
                         
-                        <div class="flex flex-wrap items-center gap-2 mb-6">
-                         <span class="text-[10px] font-black text-stone-600 bg-stone-100 px-3 py-1 rounded-full border border-stone-200">
+                        <div class="flex flex-wrap items-center gap-3 mb-6">
+                         <span class="text-xs font-black text-stone-600 bg-stone-100 px-4 py-1.5 rounded-full border border-stone-200">
                             {{ total }} INICIATIVES PRESENTADES
                         </span>
-                            {% assign frens_govern = rebutjades | plus: aprovades_calatx %}
-                        <span class="text-[10px] font-black text-red-600 bg-red-50 px-3 py-1 rounded-full border border-red-100">
+                            {% assign frens_govern = rebutjades %}
+                        <span class="text-xs font-black text-red-600 bg-red-50 px-4 py-1.5 rounded-full border border-red-100">
                             {{ frens_govern }} OPORTUNITATS PERDUDES PEL GOVERN
                         </span>
                         </div>
                     </div>
                     
-                    <h2 class="text-3xl md:text-5xl font-black uppercase text-mes-dark leading-tight mb-4">
+                    <h2 class="text-4xl md:text-6xl font-black uppercase text-mes-dark leading-tight mb-6">
                         Observatori Municipal
                     </h2>
-                    <p class="text-stone-600 text-sm md:text-base leading-relaxed">
+                    <p class="text-stone-600 text-base md:text-xl leading-relaxed">
                         Fem un seguiment directe de la nostra feina a l'oposició. Comprova què fa l'equip de govern amb les solucions que duim al Ple.
                     </p>
                 </div>
                 
-                <a href="{{ site.baseurl }}/observatori/" class="text-[11px] md:text-xs font-black uppercase tracking-widest text-mes-dark border-b-4 border-mes-lime pb-1 hover:text-stone-500 transition-colors whitespace-nowrap mb-1">
+                <a href="{{ site.baseurl }}/observatori/" class="text-xs md:text-sm font-black uppercase tracking-widest text-mes-dark border-b-4 border-mes-lime pb-1.5 hover:text-stone-500 transition-colors whitespace-nowrap mb-2">
                     Veure tot el tauler
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                 {% for item in site.data.observatori limit: 3 %}
                 <div class="bg-white border border-stone-200 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col relative overflow-hidden group">
-                    <div class="p-5 md:p-6 flex flex-col flex-grow text-left">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-[9px] font-black uppercase tracking-widest text-mes-lime bg-mes-dark px-2 py-1">{{ item.tipus }}</span>
-                            <span class="text-[9px] font-bold text-stone-400 uppercase tracking-widest">{{ item.data }}</span>
+                    <div class="p-6 md:p-8 flex flex-col flex-grow text-left">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[11px] font-black uppercase tracking-widest text-mes-lime bg-mes-dark px-2.5 py-1">{{ item.tipus }}</span>
+                            <span class="text-[11px] font-bold text-stone-400 uppercase tracking-widest">{{ item.data }}</span>
                         </div>
-                        <h3 class="text-lg font-black uppercase text-mes-dark leading-tight mb-2 group-hover:text-mes-lime transition-colors">{{ item.titol }}</h3>
-                        <p class="text-xs text-stone-600 mb-5 flex-grow line-clamp-3 italic">"{{ item.descripcio }}"</p>
+                        <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark leading-tight mb-3 group-hover:text-mes-lime transition-colors">{{ item.titol }}</h3>
+                        <p class="text-sm md:text-base text-stone-600 mb-6 flex-grow line-clamp-4 italic leading-relaxed">"{{ item.descripcio }}"</p>
 
-                        <div class="mt-auto pt-4 border-t border-stone-100 flex flex-col gap-3">
+                        <div class="mt-auto pt-5 border-t border-stone-100 flex flex-col gap-4">
                             <div>
-                                <p class="text-[8px] font-black uppercase tracking-widest text-stone-400 mb-2">Estat actual:</p>
-                                <div class="inline-flex items-center px-3 py-1.5 border rounded-sm font-bold text-[10px] uppercase tracking-widest shadow-sm {{ item.color }}">
+                                <p class="text-[10px] font-black uppercase tracking-widest text-stone-400 mb-2.5">Estat actual:</p>
+                                <div class="inline-flex items-center px-4 py-2 border rounded-sm font-bold text-xs uppercase tracking-widest shadow-sm {{ item.color }}">
                                     {{ item.estat }}
                                 </div>
                             </div>
                             {% if item.comentari %}
-                            <div class="bg-stone-50 border border-stone-200 p-3 mt-1 relative">
+                            <div class="bg-stone-50 border border-stone-200 p-4 mt-2 relative">
                                 <div class="absolute -left-[1px] top-0 bottom-0 w-1 bg-mes-dark"></div>
-                                <p class="text-[8px] font-black uppercase tracking-widest text-mes-dark mb-1 text-left">Anàlisi de MÉS:</p>
-                                <p class="text-[11px] text-stone-600 italic leading-snug text-left">{{ item.comentari }}</p>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-mes-dark mb-1.5 text-left">Anàlisi de MÉS:</p>
+                                <p class="text-sm text-stone-600 italic leading-relaxed text-left">{{ item.comentari }}</p>
                             </div>
                             {% endif %}
                         </div>
@@ -244,37 +244,37 @@ title: Inici
     </section>
 
     <section id="agenda-home" class="py-24 px-4 md:px-8 bg-stone-50 border-t border-stone-200">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
                 <div class="lg:col-span-4 sticky top-24 text-left">
-                    <span class="inline-block bg-mes-dark text-mes-lime text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-sm mb-4">Agenda</span>
-                    <h2 class="text-4xl md:text-5xl font-black uppercase text-mes-dark leading-tight mb-4" style="letter-spacing: -0.05em;">Pròximes<br>Cites</h2>
-                    <p class="text-stone-500 italic text-sm md:text-base border-l-4 border-mes-lime pl-4">Participa i fes sentir la teva veu als carrers i places del municipi.</p>
+                    <span class="inline-block bg-mes-dark text-mes-lime text-xs font-black uppercase tracking-widest px-4 py-1.5 shadow-sm mb-5">Agenda</span>
+                    <h2 class="text-5xl md:text-6xl font-black uppercase text-mes-dark leading-tight mb-5" style="letter-spacing: -0.05em;">Pròximes<br>Cites</h2>
+                    <p class="text-stone-500 italic text-base md:text-xl border-l-4 border-mes-lime pl-5 leading-relaxed">Participa i fes sentir la teva veu als carrers i places del municipi.</p>
                 </div>
-                <div class="lg:col-span-8 flex flex-col gap-4">
+                <div class="lg:col-span-8 flex flex-col gap-6">
                     {% if site.data.agenda and site.data.agenda.size > 0 %}
                         {% for acte in site.data.agenda limit: 4 %}
                         <div class="group flex flex-row bg-white border border-stone-200 hover:border-mes-lime shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden relative">
                             <div class="absolute left-0 top-0 bottom-0 w-1 bg-mes-lime transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
-                            <div class="flex flex-col items-center justify-center w-24 md:w-32 bg-stone-50 border-r border-stone-200 group-hover:bg-mes-dark transition-colors duration-300 flex-shrink-0">
-                                <span class="text-[10px] md:text-xs font-black uppercase tracking-widest text-stone-500 group-hover:text-mes-lime transition-colors block">{{ acte.mes }}</span>
-                                <span class="text-3xl md:text-4xl font-black text-mes-dark group-hover:text-white transition-colors leading-none mt-1">{{ acte.dia }}</span>
+                            <div class="flex flex-col items-center justify-center w-28 md:w-40 bg-stone-50 border-r border-stone-200 group-hover:bg-mes-dark transition-colors duration-300 flex-shrink-0">
+                                <span class="text-xs md:text-sm font-black uppercase tracking-widest text-stone-500 group-hover:text-mes-lime transition-colors block">{{ acte.mes }}</span>
+                                <span class="text-4xl md:text-5xl font-black text-mes-dark group-hover:text-white transition-colors leading-none mt-2">{{ acte.dia }}</span>
                             </div>
-                            <div class="p-5 md:p-6 flex flex-col justify-center flex-grow text-left">
-                                <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark mb-1 group-hover:text-mes-lime transition-colors">{{ acte.titol }}</h3>
-                                <p class="text-xs md:text-sm text-stone-500 mb-4 line-clamp-2">{{ acte.descripcio }}</p>
-                                <div class="flex flex-wrap items-center gap-4 text-[9px] md:text-[10px] font-bold text-stone-400 uppercase tracking-widest">
-                                    <span class="flex items-center gap-1"><svg class="w-3 h-3 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>{{ acte.hora }}</span>
-                                    <span class="flex items-center gap-1"><svg class="w-3 h-3 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>{{ acte.lloc }}</span>
+                            <div class="p-6 md:p-8 flex flex-col justify-center flex-grow text-left">
+                                <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark mb-2 group-hover:text-mes-lime transition-colors">{{ acte.titol }}</h3>
+                                <p class="text-sm md:text-base text-stone-500 mb-5 line-clamp-2 leading-relaxed">{{ acte.descripcio }}</p>
+                                <div class="flex flex-wrap items-center gap-5 text-[11px] md:text-xs font-bold text-stone-400 uppercase tracking-widest">
+                                    <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>{{ acte.hora }}</span>
+                                    <span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>{{ acte.lloc }}</span>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
                     {% else %}
-                        <div class="bg-stone-50 border-2 border-dashed border-stone-200 p-8 md:p-12 text-center flex flex-col items-center justify-center w-full">
-                            <h3 class="text-lg md:text-xl font-black uppercase text-mes-dark mb-2">Estem preparant noves trobades</h3>
-                            <p class="text-stone-500 text-sm max-w-md mx-auto mb-6">Avisarem ben aviat!</p>
-                            <a href="https://twitter.com/mesperllucmajor" target="_blank" class="inline-flex items-center gap-2 bg-mes-dark text-mes-lime px-6 py-3 text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-mes-lime hover:text-mes-dark transition-colors shadow-sm">Seguiex-nos a xarxes</a>
+                        <div class="bg-stone-50 border-2 border-dashed border-stone-200 p-10 md:p-16 text-center flex flex-col items-center justify-center w-full">
+                            <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark mb-3">Estem preparant noves trobades</h3>
+                            <p class="text-stone-500 text-base max-w-lg mx-auto mb-8">Avisarem ben aviat!</p>
+                            <a href="https://twitter.com/mesperllucmajor" target="_blank" class="inline-flex items-center gap-2 bg-mes-dark text-mes-lime px-8 py-4 text-xs font-black uppercase tracking-widest hover:bg-mes-lime hover:text-mes-dark transition-colors shadow-sm">Seguiex-nos a xarxes</a>
                         </div>
                     {% endif %}
                 </div>
@@ -283,25 +283,25 @@ title: Inici
     </section>
 
     <section id="actualitat-home" class="py-24 bg-white px-4 md:px-8 text-left border-t border-stone-200">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex justify-between items-end mb-12">
+        <div class="max-w-[1400px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
                 <div class="text-left">
-                     <h2 class="section-title-box mb-4">DIA A DIA</h2>
-                    <h3 class="text-4xl md:text-5xl font-black uppercase tracking-tighter text-mes-dark leading-none">Actualitat i Opinió</h3>
+                     <h2 class="inline-block bg-mes-dark text-white text-xs font-black uppercase tracking-widest px-4 py-1.5 mb-5">DIA A DIA</h2>
+                    <h3 class="text-5xl md:text-6xl font-black uppercase tracking-tighter text-mes-dark leading-none">Actualitat i Opinió</h3>
                 </div>
-                <a href="{{ site.baseurl }}/actualitat/" class="hidden md:block text-xs font-black uppercase border-b-2 border-mes-lime pb-1 hover:text-mes-lime transition-all">Anar a actualitat</a>
+                <a href="{{ site.baseurl }}/actualitat/" class="text-xs md:text-sm font-black uppercase border-b-4 border-mes-lime pb-1.5 hover:text-stone-500 transition-colors">Anar a actualitat</a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
                 {% for post in site.posts limit:3 %}
                 <a href="{{ site.baseurl }}{{ post.url }}" class="group block text-left">
-                    <div class="h-64 overflow-hidden mb-6 bg-stone-100 border-b-4 border-mes-dark group-hover:border-mes-lime transition-all relative">
+                    <div class="h-72 overflow-hidden mb-6 bg-stone-100 border-b-4 border-mes-dark group-hover:border-mes-lime transition-all relative">
                         {% if post.image %}<img src="{{ site.baseurl }}{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">{% endif %}
-                        <div class="absolute top-4 left-4 bg-mes-dark text-mes-lime text-[10px] font-black uppercase px-3 py-1 shadow-md">
+                        <div class="absolute top-5 left-5 bg-mes-dark text-mes-lime text-xs font-black uppercase px-4 py-1.5 shadow-md">
                             {{ post.category | default: post.categories.first | default: 'Notícia' }}
                         </div>
                     </div>
-                    <span class="text-[10px] font-bold text-stone-400 uppercase tracking-widest">{{ post.date | date: "%d/%m/%Y" }}</span>
-                    <h4 class="text-xl font-black uppercase mt-2 leading-tight group-hover:text-mes-lime transition-colors text-mes-dark">{{ post.title }}</h4>
+                    <span class="text-xs font-bold text-stone-400 uppercase tracking-widest">{{ post.date | date: "%d/%m/%Y" }}</span>
+                    <h4 class="text-2xl font-black uppercase mt-3 leading-tight group-hover:text-mes-lime transition-colors text-mes-dark">{{ post.title }}</h4>
                 </a>
                 {% endfor %}
             </div>
@@ -309,33 +309,33 @@ title: Inici
     </section>
 
     <section id="model-home" class="py-24 px-4 md:px-8 bg-stone-100 border-y border-stone-200 text-mes-dark text-left">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div class="text-left">
-                <h2 class="section-title-box mb-6">EL NOSTRE MODEL</h2>
-                <h3 class="text-5xl font-black uppercase leading-none mb-8 tracking-tighter">La transformació que volem</h3>
-                <p class="text-xl text-stone-500 mb-8 italic border-l-2 border-mes-lime pl-6">Un municipi viu es construeix amb projectes valents.</p>
-                <a href="{{ site.baseurl }}/propostes/" class="btn-primary">Visualitza els canvis</a>
+                <h2 class="inline-block bg-mes-dark text-white text-xs font-black uppercase tracking-widest px-4 py-1.5 mb-6">EL NOSTRE MODEL</h2>
+                <h3 class="text-6xl md:text-7xl font-black uppercase leading-none mb-10 tracking-tighter">La transformació que volem</h3>
+                <p class="text-2xl text-stone-500 mb-10 italic border-l-4 border-mes-lime pl-6 leading-relaxed">Un municipi viu es construeix amb projectes valents.</p>
+                <a href="{{ site.baseurl }}/propostes/" class="inline-block bg-mes-lime text-mes-dark font-black uppercase tracking-widest text-sm px-8 py-4 hover:bg-mes-dark hover:text-white transition-colors shadow-lg">Visualitza els canvis</a>
             </div>
-            <div class="bg-white p-4 shadow-xl transform rotate-1">
+            <div class="bg-white p-5 shadow-2xl transform rotate-1">
                 <img src="{{ site.baseurl }}/imatges/Llucmajor2.png" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
             </div>
         </div>
     </section>
 </main>
 
-<button id="open-index-contact" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-lime text-mes-dark px-6 py-4 font-black uppercase text-xs md:text-sm tracking-widest shadow-2xl z-40 flex items-center gap-2 hover:bg-mes-dark hover:text-white transition-all transform hover:-translate-y-1">Connecta</button>
+<button id="open-index-contact" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-lime text-mes-dark px-8 py-5 font-black uppercase text-sm md:text-base tracking-widest shadow-2xl z-40 flex items-center gap-3 hover:bg-mes-dark hover:text-white transition-all transform hover:-translate-y-1">Connecta</button>
 
 <div id="index-contact-modal" class="fixed inset-0 bg-mes-dark/90 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
-    <div class="bg-white w-full max-w-lg relative shadow-2xl transform scale-95 transition-transform duration-300" id="index-modal-content">
-        <button id="close-index-contact" class="absolute top-4 right-4 text-stone-400 hover:text-mes-dark p-2 z-10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-        <div class="p-8 md:p-12 text-left">
-            <h3 class="text-3xl md:text-4xl font-black uppercase mb-2 text-mes-dark leading-none">Fes pinya amb noltros</h3>
-            <p class="text-stone-500 mb-8 text-sm md:text-base italic">Vols sumar-te al projecte? T'escoltam.</p>
-            <form id="index-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="flex flex-col gap-6">
-                <div class="flex flex-col gap-2 text-left"><label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Nom i Llinatges</label><input class="form-input text-left" type="text" name="nom" required /></div>
-                <div class="flex flex-col gap-2 text-left"><label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Correu</label><input class="form-input text-left" type="email" name="email" required /></div>
-                <div class="flex flex-col gap-2 text-left"><label class="text-[10px] font-black uppercase tracking-widest text-stone-400">Missatge</label><textarea class="form-input text-left" name="missatge" rows="4" required></textarea></div>
-                <button id="index-form-btn" type="submit" class="btn-primary w-full justify-center py-5 text-base">Enviar i sumar-m'hi</button>
+    <div class="bg-white w-full max-w-2xl relative shadow-2xl transform scale-95 transition-transform duration-300" id="index-modal-content">
+        <button id="close-index-contact" class="absolute top-5 right-5 text-stone-400 hover:text-mes-dark p-2 z-10"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        <div class="p-10 md:p-16 text-left">
+            <h3 class="text-4xl md:text-5xl font-black uppercase mb-3 text-mes-dark leading-none">Fes pinya amb noltros</h3>
+            <p class="text-stone-500 mb-10 text-base md:text-lg italic">Vols sumar-te al projecte? T'escoltam.</p>
+            <form id="index-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="flex flex-col gap-8">
+                <div class="flex flex-col gap-2 text-left"><label class="text-xs font-black uppercase tracking-widest text-stone-400">Nom i Llinatges</label><input class="bg-stone-50 border border-stone-200 px-5 py-4 text-base focus:outline-none focus:border-mes-lime transition-colors w-full" type="text" name="nom" required /></div>
+                <div class="flex flex-col gap-2 text-left"><label class="text-xs font-black uppercase tracking-widest text-stone-400">Correu</label><input class="bg-stone-50 border border-stone-200 px-5 py-4 text-base focus:outline-none focus:border-mes-lime transition-colors w-full" type="email" name="email" required /></div>
+                <div class="flex flex-col gap-2 text-left"><label class="text-xs font-black uppercase tracking-widest text-stone-400">Missatge</label><textarea class="bg-stone-50 border border-stone-200 px-5 py-4 text-base focus:outline-none focus:border-mes-lime transition-colors w-full" name="missatge" rows="5" required></textarea></div>
+                <button id="index-form-btn" type="submit" class="bg-mes-dark text-mes-lime font-black uppercase tracking-widest text-base py-5 hover:bg-black transition-colors w-full mt-2">Enviar i sumar-m'hi</button>
             </form>
         </div>
     </div>
