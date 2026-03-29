@@ -49,26 +49,31 @@ permalink: /propostes/
             {% for proposta in site.data.propostes %}
                 {% if proposta.imatge and proposta.imatge != "" %}
                 
-                <div class="proposal-card flex flex-col bg-stone-50 hover:bg-mes-dark shadow-md hover:shadow-2xl transition-colors duration-500 border border-stone-100 group" 
+                <div class="proposal-card flex flex-col bg-white shadow-md hover:shadow-2xl transition-all duration-500 border border-stone-200 group transform hover:-translate-y-2 overflow-hidden" 
                      data-zone="{{ proposta.zona_id }}" 
                      data-theme="{{ proposta.tema | slugify }}">
                     
-                    <div class="w-full h-3 bg-mes-lime transition-all duration-300"></div>
-                    
-                    <div class="p-8 pb-6">
-                        <h3 class="text-2xl md:text-3xl font-black uppercase text-mes-dark group-hover:text-white transition-colors leading-tight">{{ proposta.titol }}</h3>
-                    </div>
-                    
-                    <div class="w-full aspect-[4/3] bg-white relative border-y border-stone-200 group-hover:border-stone-700 flex-shrink-0 transition-colors duration-500 overflow-hidden">
-                        <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-contain object-center p-4 group-hover:scale-105 transition-transform duration-700" alt="{{ proposta.titol }}" />
-                    </div>
-                    
-                    <div class="p-8 flex flex-col flex-grow text-left">
-                        <p class="text-lg text-stone-600 group-hover:text-stone-300 italic flex-grow leading-relaxed">{{ proposta.descripcio }}</p>
+                    <div class="w-full aspect-[4/3] bg-stone-50 relative overflow-hidden border-b border-stone-200 flex-shrink-0">
+                        <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-contain p-4 transition-transform duration-700 group-hover:scale-105" alt="{{ proposta.titol }}" />
                         
-                        <span class="text-xs font-black uppercase tracking-widest text-mes-lime border-t border-stone-200 group-hover:border-stone-700 pt-6 mt-8 transition-colors">
-                            {{ proposta.tema }} | {{ proposta.zona_nom }}
-                        </span>
+                        <div class="absolute top-4 left-4">
+                            <span class="text-xs font-black uppercase tracking-widest text-mes-dark bg-mes-lime px-4 py-1.5 shadow-sm">{{ proposta.zona_nom }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8 md:p-10 flex flex-col flex-grow text-left">
+                        <h3 class="text-2xl md:text-3xl font-black uppercase text-mes-dark group-hover:text-mes-lime transition-colors duration-300 leading-tight mb-5">{{ proposta.titol }}</h3>
+                        
+                        <p class="text-lg text-stone-600 italic flex-grow leading-relaxed">{{ proposta.descripcio }}</p>
+                        
+                        <div class="mt-8 pt-6 border-t border-stone-100 flex justify-between items-center">
+                            <span class="text-xs font-black uppercase tracking-widest text-stone-400">
+                                {{ proposta.tema }}
+                            </span>
+                            <span class="text-stone-300 group-hover:text-mes-lime group-hover:translate-x-2 transition-all duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 {% endif %}
@@ -90,19 +95,22 @@ permalink: /propostes/
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
                 {% for proposta in grup_tema.items %}
                     {% if proposta.imatge == nil or proposta.imatge == "" %}
-                    <div class="proposal-card flex items-start p-10 bg-white hover:bg-mes-dark shadow-sm border border-stone-100 group transition-all duration-300 hover:shadow-2xl text-left" 
+                    
+                    <div class="proposal-card flex items-start p-10 bg-white shadow-sm border border-stone-200 group transition-all duration-300 hover:shadow-xl hover:-translate-y-1 text-left relative overflow-hidden" 
                          data-zone="{{ proposta.zona_id }}" 
                          data-theme="{{ grup_tema.name | default: 'general' | slugify }}">
                         
-                        <div class="text-mes-lime bg-stone-50 group-hover:bg-black/50 p-4 rounded-full mr-6 flex-shrink-0 mt-2 transition-colors">
+                        <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-transparent group-hover:bg-mes-lime transition-colors duration-300"></div>
+
+                        <div class="text-mes-lime bg-stone-50 group-hover:bg-mes-lime group-hover:text-mes-dark p-4 rounded-full mr-6 flex-shrink-0 mt-1 transition-all duration-300">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                         </div>
                         
                         <div class="flex flex-col text-left w-full">
-                            <h3 class="text-2xl font-black uppercase text-mes-dark group-hover:text-white transition-colors mb-4 leading-tight">{{ proposta.titol }}</h3>
-                            <p class="text-lg text-stone-600 group-hover:text-stone-300 mb-8 leading-relaxed">{{ proposta.descripcio }}</p>
+                            <h3 class="text-2xl font-black uppercase text-mes-dark group-hover:text-mes-lime transition-colors mb-4 leading-tight">{{ proposta.titol }}</h3>
+                            <p class="text-lg text-stone-600 mb-8 leading-relaxed">{{ proposta.descripcio }}</p>
                             
-                            <span class="text-sm font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 group-hover:border-stone-700 pt-5 mt-auto transition-colors">{{ proposta.zona_nom }}</span>
+                            <span class="text-sm font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 pt-5 mt-auto">{{ proposta.zona_nom }}</span>
                         </div>
                     </div>
                     {% endif %}
@@ -266,6 +274,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     zoneBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            // Reiniciar colors estils premium
             zoneBtns.forEach(b => {
                 b.classList.remove('text-mes-dark', 'border-mes-dark');
                 b.classList.add('text-stone-400', 'border-transparent');
