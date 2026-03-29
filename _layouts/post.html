@@ -2,31 +2,37 @@
 layout: default
 ---
 
-<div class="bg-stone-50 min-h-screen pt-20 pb-32 px-4 md:px-8">
-    <div class="max-w-4xl mx-auto">
+<div class="bg-white min-h-screen pt-28 pb-32 px-4 md:px-8">
+    <div class="max-w-[1000px] mx-auto">
         
-        <a href="{{ site.baseurl }}/actualitat/" class="inline-flex items-center gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-stone-400 hover:text-mes-lime transition-colors mb-10">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            Tornar a l'actualitat
-        </a>
+        <div class="mb-12">
+            <a href="{{ site.baseurl }}/actualitat/" class="group inline-flex items-center gap-3 text-xs md:text-sm font-black uppercase tracking-widest text-stone-500 hover:text-mes-dark transition-colors border-2 border-stone-200 hover:border-mes-lime px-5 py-2.5 rounded-full shadow-sm">
+                <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Tornar a l'Hemeroteca
+            </a>
+        </div>
 
-        <header class="mb-10 text-left">
+        <header class="mb-12 text-left">
             {% assign post_cat = page.category | default: page.categories.first | default: 'Notícia' %}
-            <span class="inline-block bg-mes-dark text-mes-lime text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-sm mb-6">
+            
+            <span class="inline-block bg-mes-dark text-mes-lime text-xs font-black uppercase tracking-widest px-4 py-1.5 shadow-md mb-6">
                 {{ post_cat }}
             </span>
             
-            <h1 class="text-3xl md:text-5xl lg:text-6xl font-black uppercase text-mes-dark leading-tight mb-6 border-l-4 border-mes-lime pl-4 md:pl-6">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black uppercase text-mes-dark leading-none tracking-tight mb-8">
                 {{ page.title }}
             </h1>
             
-            <div class="flex items-center gap-4 text-[10px] md:text-xs font-bold text-stone-400 uppercase tracking-widest">
-                <span>Publicat el {{ page.date | date: "%d/%m/%Y" }}</span>
+            <div class="flex items-center gap-4 text-xs md:text-sm font-bold text-stone-400 uppercase tracking-widest border-t border-stone-200 pt-6">
+                <span class="flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    Publicat el {{ page.date | date: "%d/%m/%Y" }}
+                </span>
             </div>
         </header>
 
         {% if page.image %}
-        <div class="w-full md:w-4/5 lg:w-3/4 mx-auto aspect-video bg-stone-200 relative overflow-hidden border border-stone-100 shadow-md mb-12 rounded-sm group">
+        <div class="w-full mx-auto aspect-[16/9] md:aspect-[21/9] bg-stone-100 relative overflow-hidden shadow-lg mb-16 border-y-8 border-mes-lime">
             
             {% if page.image contains 'http' %}
                 <img src="{{ page.image }}" class="absolute inset-0 w-full h-full object-cover object-center" alt="{{ page.title }}">
@@ -34,32 +40,31 @@ layout: default
                 <img src="{{ site.baseurl }}{{ page.image }}" class="absolute inset-0 w-full h-full object-cover object-center" alt="{{ page.title }}">
             {% endif %}
             
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent pt-12 pb-3 px-4 hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span class="text-white/80 text-[9px] uppercase tracking-widest">{{ post_cat }} · MÉS per Llucmajor</span>
-            </div>
-            
         </div>
         {% endif %}
 
-        <article class="max-w-none text-stone-700 text-lg md:text-xl leading-relaxed md:leading-loose
-                        [&>p]:mb-6 [&>h2]:mt-10 [&>h2]:mb-4 [&>h2]:font-black [&>h2]:text-2xl [&>h2]:uppercase [&>h2]:text-mes-dark
-                        [&>h3]:mt-8 [&>h3]:mb-3 [&>h3]:font-black [&>h3]:text-xl [&>h3]:uppercase [&>h3]:text-mes-dark
-                        [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:mb-6 [&>ul>li]:mb-2
-                        [&>blockquote]:border-l-4 [&>blockquote]:border-mes-lime [&>blockquote]:pl-6 [&>blockquote]:italic [&>blockquote]:text-stone-500 [&>blockquote]:mb-6
-                        [&>a]:text-mes-dark [&>a]:font-bold [&>a]:underline hover:[&>a]:text-mes-lime">
+        <article class="max-w-none text-stone-800 text-lg md:text-xl lg:text-2xl leading-relaxed md:leading-[1.8] lg:leading-[1.8] font-medium
+                        [&>p]:mb-8 
+                        [&>h2]:mt-16 [&>h2]:mb-6 [&>h2]:font-black [&>h2]:text-3xl md:[&>h2]:text-4xl [&>h2]:uppercase [&>h2]:text-mes-dark [&>h2]:leading-tight [&>h2]:tracking-tighter
+                        [&>h3]:mt-10 [&>h3]:mb-4 [&>h3]:font-black [&>h3]:text-2xl [&>h3]:uppercase [&>h3]:text-mes-dark
+                        [&>ul]:list-disc [&>ul]:pl-8 [&>ul]:mb-8 [&>ul>li]:mb-3
+                        [&>ol]:list-decimal [&>ol]:pl-8 [&>ol]:mb-8 [&>ol>li]:mb-3
+                        [&>blockquote]:border-l-[6px] [&>blockquote]:border-mes-lime [&>blockquote]:bg-stone-50 [&>blockquote]:p-8 [&>blockquote]:italic [&>blockquote]:text-stone-600 [&>blockquote]:mb-8 [&>blockquote]:shadow-sm
+                        [&>a]:text-mes-dark [&>a]:font-bold [&>a]:border-b-[3px] [&>a]:border-mes-lime hover:[&>a]:bg-mes-lime hover:[&>a]:text-mes-dark transition-all
+                        [&>img]:w-full [&>img]:shadow-md [&>img]:mb-8">
             {{ content }}
         </article>
 
-        <div class="mt-20 pt-8 border-t border-stone-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <span class="text-[10px] md:text-xs font-black uppercase tracking-widest text-stone-400">Comparteix aquesta publicació:</span>
+        <div class="mt-24 pt-10 border-t-2 border-stone-200 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 bg-stone-50 p-8">
+            <span class="text-xs md:text-sm font-black uppercase tracking-widest text-stone-500">Comparteix aquesta publicació:</span>
             
-            <div class="flex gap-4">
-                <a href="https://api.whatsapp.com/send?text={{ page.title | uri_escape }}%20{{ site.url }}{{ site.baseurl }}{{ page.url }}" target="_blank" class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-[#25D366]/10 text-[#25D366] px-4 py-2 hover:bg-[#25D366] hover:text-white transition-colors">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.398 0 .016 5.37.016 11.996c0 2.115.551 4.17 1.6 5.989L0 24l6.195-1.623c1.761.947 3.737 1.446 5.828 1.446 6.634 0 12.016-5.372 12.016-11.998C24.038 5.372 18.665 0 12.031 0zm0 21.82c-1.801 0-3.562-.485-5.111-1.4l-.366-.217-3.797.994.996-3.696-.237-.378c-1.002-1.597-1.53-3.442-1.53-5.347 0-5.526 4.498-10.026 10.038-10.026 5.538 0 10.033 4.499 10.033 10.026s-4.495 10.044-10.026 10.044zm5.503-7.518c-.302-.151-1.789-.882-2.066-.983-.277-.101-.479-.151-.68.151-.202.302-.782.983-.958 1.185-.176.202-.353.227-.655.076-1.776-.893-2.924-1.802-4.06-3.743-.205-.351.202-.323.782-1.481.076-.151.038-.277-.019-.378-.057-.101-.68-1.639-.932-2.244-.246-.591-.497-.511-.68-.521-.176-.01-.378-.01-.58-.01-.202 0-.529.076-.806.378-.277.302-1.058 1.033-1.058 2.519s1.083 2.923 1.234 3.125c.151.202 2.13 3.253 5.161 4.561 2.018.871 2.802.946 3.844.793.847-.123 2.592-1.059 2.956-2.079.364-1.02.364-1.892.256-2.079-.108-.187-.41-.288-.712-.439z"/></svg>
+            <div class="flex flex-wrap gap-4">
+                <a href="https://api.whatsapp.com/send?text={{ page.title | uri_escape }}%20{{ site.url }}{{ site.baseurl }}{{ page.url }}" target="_blank" class="flex items-center gap-3 text-xs font-black uppercase tracking-widest bg-[#25D366]/10 text-[#25D366] px-5 py-3 hover:bg-[#25D366] hover:text-white transition-colors shadow-sm">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.398 0 .016 5.37.016 11.996c0 2.115.551 4.17 1.6 5.989L0 24l6.195-1.623c1.761.947 3.737 1.446 5.828 1.446 6.634 0 12.016-5.372 12.016-11.998C24.038 5.372 18.665 0 12.031 0zm0 21.82c-1.801 0-3.562-.485-5.111-1.4l-.366-.217-3.797.994.996-3.696-.237-.378c-1.002-1.597-1.53-3.442-1.53-5.347 0-5.526 4.498-10.026 10.038-10.026 5.538 0 10.033 4.499 10.033 10.026s-4.495 10.044-10.026 10.044zm5.503-7.518c-.302-.151-1.789-.882-2.066-.983-.277-.101-.479-.151-.68.151-.202.302-.782.983-.958 1.185-.176.202-.353.227-.655.076-1.776-.893-2.924-1.802-4.06-3.743-.205-.351.202-.323.782-1.481.076-.151.038-.277-.019-.378-.057-.101-.68-1.639-.932-2.244-.246-.591-.497-.511-.68-.521-.176-.01-.378-.01-.58-.01-.202 0-.529.076-.806.378-.277.302-1.058 1.033-1.058 2.519s1.083 2.923 1.234 3.125c.151.202 2.13 3.253 5.161 4.561 2.018.871 2.802.946 3.844.793.847-.123 2.592-1.059 2.956-2.079.364-1.02.364-1.892.256-2.079-.108-.187-.41-.288-.712-.439z"/></svg>
                     WhatsApp
                 </a>
                 
-                <a href="https://twitter.com/intent/tweet?text={{ page.title | uri_escape }}&url={{ site.url }}{{ site.baseurl }}{{ page.url }}" target="_blank" class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-stone-200 text-stone-600 px-4 py-2 hover:bg-black hover:text-white transition-colors">
+                <a href="https://twitter.com/intent/tweet?text={{ page.title | uri_escape }}&url={{ site.url }}{{ site.baseurl }}{{ page.url }}" target="_blank" class="flex items-center gap-3 text-xs font-black uppercase tracking-widest bg-stone-200 text-stone-700 px-5 py-3 hover:bg-black hover:text-white transition-colors shadow-sm">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     Post
                 </a>
