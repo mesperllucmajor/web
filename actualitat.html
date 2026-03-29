@@ -10,132 +10,134 @@ permalink: /actualitat/
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 
-<header class="relative h-[350px] flex items-center overflow-hidden">
-    <img src="{{ site.baseurl }}/imatges/imatge1.jpeg" class="absolute inset-0 w-full h-full object-cover shadow-inner" alt="Feina per Llucmajor" />
-    <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
-    <div class="relative z-10 w-full px-8 md:px-16 text-left">
-        <div class="max-w-4xl text-left">
-            <h1 class="text-6xl md:text-8xl font-black uppercase text-white tracking-tighter mb-5 leading-none" style="text-shadow: 0 4px 12px rgba(0,0,0,0.5);">Feina per Llucmajor</h1>
-            <p class="text-mes-lime text-xl md:text-2xl font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-5 inline-block bg-black/40 pr-8 py-2" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">Acció municipal dia a dia</p>
-        </div>
-    </div>
-</header>
-
-<div class="pt-20 pb-32 px-4 md:px-8 w-full max-w-[1400px] mx-auto text-left">
-    
-    <div class="mb-12">
-        <h2 class="text-4xl md:text-5xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-5 mb-4">El nostre compromís</h2>
-        <p class="text-stone-500 italic text-lg md:text-xl pl-6">Crònica de la nostra feina al carrer i a l'Ajuntament: totes les mocions, denúncies i accions per millorar el nostre municipi.</p>
-    </div>
-
-    {% assign postsByMonth = site.posts | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
-
-    <div class="mb-20 border-b border-stone-200 pb-10 flex flex-col gap-10">
-        
-        <div>
-            <p class="text-xs font-black uppercase tracking-widest text-stone-400 mb-4">Tipus de contingut</p>
-            <div class="flex flex-wrap gap-3 md:gap-5">
-                <button class="news-filter-btn bg-mes-dark text-mes-lime border-mes-dark border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="totes">Totes</button>
-                <button class="news-filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="notic">Notícies</button>
-                <button class="news-filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="article">Articles</button>
+<div class="animate-fade">
+    <header class="relative h-[350px] flex items-center overflow-hidden">
+        <img src="{{ site.baseurl }}/imatges/imatge1.jpeg" class="absolute inset-0 w-full h-full object-cover shadow-inner" alt="Feina per Llucmajor" />
+        <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
+        <div class="relative z-10 w-full px-8 md:px-16 text-left">
+            <div class="max-w-4xl text-left">
+                <h1 class="text-6xl md:text-8xl font-black uppercase text-white tracking-tighter mb-5 leading-none" style="text-shadow: 0 4px 12px rgba(0,0,0,0.5);">Feina per Llucmajor</h1>
+                <p class="text-mes-lime text-xl md:text-2xl font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-5 inline-block bg-black/40 pr-8 py-2" style="text-shadow: 0 2px 4px rgba(0,0,0,0.8);">Acció municipal dia a dia</p>
             </div>
         </div>
+    </header>
 
-        <div class="w-full overflow-hidden">
-            <p class="text-xs font-black uppercase tracking-widest text-stone-400 mb-4">Línia de temps</p>
-            <div class="flex overflow-x-auto pb-5 gap-4 hide-scrollbar items-center">
-                <button class="month-filter-btn whitespace-nowrap bg-mes-dark text-mes-lime border-2 border-mes-dark px-6 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all shadow-sm" data-month="tots">
-                    Tots els mesos
-                </button>
-                
-                {% for monthGroup in postsByMonth %}
-                    {% assign any_post = monthGroup.name | slice: 0, 4 %}
-                    {% assign mes_num = monthGroup.name | slice: 5, 2 %}
-                    {% assign mes_nom_curt = "" %}
-                    
-                    {% if mes_num == '01' %}{% assign mes_nom_curt = 'Gen' %}
-                    {% elsif mes_num == '02' %}{% assign mes_nom_curt = 'Feb' %}
-                    {% elsif mes_num == '03' %}{% assign mes_nom_curt = 'Març' %}
-                    {% elsif mes_num == '04' %}{% assign mes_nom_curt = 'Abr' %}
-                    {% elsif mes_num == '05' %}{% assign mes_nom_curt = 'Maig' %}
-                    {% elsif mes_num == '06' %}{% assign mes_nom_curt = 'Juny' %}
-                    {% elsif mes_num == '07' %}{% assign mes_nom_curt = 'Jul' %}
-                    {% elsif mes_num == '08' %}{% assign mes_nom_curt = 'Ago' %}
-                    {% elsif mes_num == '09' %}{% assign mes_nom_curt = 'Set' %}
-                    {% elsif mes_num == '10' %}{% assign mes_nom_curt = 'Oct' %}
-                    {% elsif mes_num == '11' %}{% assign mes_nom_curt = 'Nov' %}
-                    {% elsif mes_num == '12' %}{% assign mes_nom_curt = 'Des' %}
-                    {% endif %}
-
-                    <button class="month-filter-btn whitespace-nowrap bg-white text-stone-500 border-2 border-stone-200 hover:border-mes-lime hover:text-mes-dark px-6 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all shadow-sm" data-month="{{ monthGroup.name }}">
-                        {{ mes_nom_curt }} {{ any_post }}
-                    </button>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-    <div id="news-container">
+    <div class="pt-20 pb-32 px-4 md:px-8 w-full max-w-[1400px] mx-auto text-left">
         
-        {% for monthGroup in postsByMonth %}
-            {% assign any_post = monthGroup.name | slice: 0, 4 %}
-            {% assign mes_num = monthGroup.name | slice: 5, 2 %}
-            {% assign mes_nom = "" %}
+        <div class="mb-12">
+            <h2 class="text-4xl md:text-5xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-5 mb-4">El nostre compromís</h2>
+            <p class="text-stone-500 italic text-lg md:text-xl pl-6">Crònica de la nostra feina al carrer i a l'Ajuntament: totes les mocions, denúncies i accions per millorar el nostre municipi.</p>
+        </div>
+
+        {% assign postsByMonth = site.posts | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
+
+        <div class="mb-20 border-b border-stone-200 pb-10 flex flex-col gap-10">
             
-            {% if mes_num == '01' %}{% assign mes_nom = 'Gener' %}
-            {% elsif mes_num == '02' %}{% assign mes_nom = 'Febrer' %}
-            {% elsif mes_num == '03' %}{% assign mes_nom = 'Març' %}
-            {% elsif mes_num == '04' %}{% assign mes_nom = 'Abril' %}
-            {% elsif mes_num == '05' %}{% assign mes_nom = 'Maig' %}
-            {% elsif mes_num == '06' %}{% assign mes_nom = 'Juny' %}
-            {% elsif mes_num == '07' %}{% assign mes_nom = 'Juliol' %}
-            {% elsif mes_num == '08' %}{% assign mes_nom = 'Agost' %}
-            {% elsif mes_num == '09' %}{% assign mes_nom = 'Setembre' %}
-            {% elsif mes_num == '10' %}{% assign mes_nom = 'Octubre' %}
-            {% elsif mes_num == '11' %}{% assign mes_nom = 'Novembre' %}
-            {% elsif mes_num == '12' %}{% assign mes_nom = 'Desembre' %}
-            {% endif %}
-
-            <div class="month-group mb-20" data-month="{{ monthGroup.name }}">
-                <div class="flex items-center gap-6 mb-10">
-                    <h3 class="text-2xl md:text-3xl font-black uppercase tracking-widest text-mes-dark">{{ mes_nom }} {{ any_post }}</h3>
-                    <div class="flex-grow h-[2px] bg-stone-200"></div>
+            <div>
+                <p class="text-xs font-black uppercase tracking-widest text-stone-400 mb-4">Tipus de contingut</p>
+                <div class="flex flex-wrap gap-3 md:gap-5">
+                    <button class="news-filter-btn bg-mes-dark text-mes-lime border-mes-dark border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="totes">Totes</button>
+                    <button class="news-filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="notic">Notícies</button>
+                    <button class="news-filter-btn bg-transparent text-stone-500 border-stone-200 hover:border-mes-lime hover:text-mes-dark border-2 px-6 md:px-8 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all cursor-pointer shadow-sm" data-filter="article">Articles</button>
                 </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch">
-                    {% for post in monthGroup.items %}
-                        {% assign post_cat_raw = post.category | default: post.categories.first | default: 'Notícia' %}
-                        {% assign cat_clean = post_cat_raw | downcase | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'è', 'e' | replace: 'é', 'e' | replace: 'à', 'a' | replace: 'ï', 'i' | strip %}
-                        
-                        <a href="{{ site.baseurl }}{{ post.url }}" class="news-card group flex flex-col bg-stone-50 hover:bg-mes-dark shadow-sm hover:shadow-xl transition-colors duration-500 border border-stone-100 relative overflow-hidden text-left" data-category="{{ cat_clean }}">
-                            <div class="w-full h-2 bg-mes-lime transition-all duration-300 group-hover:h-3"></div>
-                            
-                            <div class="w-full aspect-video bg-stone-200 relative overflow-hidden border-b border-stone-200 group-hover:border-stone-700 transition-colors duration-500 flex-shrink-0">
-                                {% if post.image %}
-                                    <img src="{{ site.baseurl }}{{ post.image }}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" alt="{{ post.title }}">
-                                {% else %}
-                                    <img src="{{ site.baseurl }}/imatges/Logo.png" class="absolute inset-0 w-full h-full object-contain p-8 opacity-20 group-hover:scale-105 transition-transform duration-700" alt="MÉS per Llucmajor">
-                                {% endif %}
-                                <div class="absolute top-5 left-5 bg-mes-dark text-mes-lime text-xs font-black uppercase tracking-widest px-4 py-1.5 shadow-md z-10">
-                                    {{ post_cat_raw }}
-                                </div>
-                            </div>
+            </div>
 
-                            <div class="p-6 md:p-8 flex flex-col flex-grow">
-                                <span class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-3 block group-hover:text-mes-lime transition-colors">{{ post.date | date: "%d/%m/%Y" }}</span>
-                                
-                                <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark group-hover:text-white transition-colors leading-tight mb-6">{{ post.title }}</h3>
-                                
-                                <span class="text-xs font-black uppercase tracking-widest text-mes-lime border-t border-stone-200 group-hover:border-stone-700 pt-5 mt-auto transition-colors flex items-center gap-2">
-                                    Llegir més
-                                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                </span>
-                            </div>
-                        </a>
+            <div class="w-full overflow-hidden">
+                <p class="text-xs font-black uppercase tracking-widest text-stone-400 mb-4">Línia de temps</p>
+                <div class="flex overflow-x-auto pb-5 gap-4 hide-scrollbar items-center">
+                    <button class="month-filter-btn whitespace-nowrap bg-mes-dark text-mes-lime border-2 border-mes-dark px-6 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all shadow-sm" data-month="tots">
+                        Tots els mesos
+                    </button>
+                    
+                    {% for monthGroup in postsByMonth %}
+                        {% assign any_post = monthGroup.name | slice: 0, 4 %}
+                        {% assign mes_num = monthGroup.name | slice: 5, 2 %}
+                        {% assign mes_nom_curt = "" %}
+                        
+                        {% if mes_num == '01' %}{% assign mes_nom_curt = 'Gen' %}
+                        {% elsif mes_num == '02' %}{% assign mes_nom_curt = 'Feb' %}
+                        {% elsif mes_num == '03' %}{% assign mes_nom_curt = 'Març' %}
+                        {% elsif mes_num == '04' %}{% assign mes_nom_curt = 'Abr' %}
+                        {% elsif mes_num == '05' %}{% assign mes_nom_curt = 'Maig' %}
+                        {% elsif mes_num == '06' %}{% assign mes_nom_curt = 'Juny' %}
+                        {% elsif mes_num == '07' %}{% assign mes_nom_curt = 'Jul' %}
+                        {% elsif mes_num == '08' %}{% assign mes_nom_curt = 'Ago' %}
+                        {% elsif mes_num == '09' %}{% assign mes_nom_curt = 'Set' %}
+                        {% elsif mes_num == '10' %}{% assign mes_nom_curt = 'Oct' %}
+                        {% elsif mes_num == '11' %}{% assign mes_nom_curt = 'Nov' %}
+                        {% elsif mes_num == '12' %}{% assign mes_nom_curt = 'Des' %}
+                        {% endif %}
+
+                        <button class="month-filter-btn whitespace-nowrap bg-white text-stone-500 border-2 border-stone-200 hover:border-mes-lime hover:text-mes-dark px-6 py-3 text-xs md:text-sm font-black uppercase tracking-widest transition-all shadow-sm" data-month="{{ monthGroup.name }}">
+                            {{ mes_nom_curt }} {{ any_post }}
+                        </button>
                     {% endfor %}
                 </div>
             </div>
-        {% endfor %}
+        </div>
+
+        <div id="news-container">
+            
+            {% for monthGroup in postsByMonth %}
+                {% assign any_post = monthGroup.name | slice: 0, 4 %}
+                {% assign mes_num = monthGroup.name | slice: 5, 2 %}
+                {% assign mes_nom = "" %}
+                
+                {% if mes_num == '01' %}{% assign mes_nom = 'Gener' %}
+                {% elsif mes_num == '02' %}{% assign mes_nom = 'Febrer' %}
+                {% elsif mes_num == '03' %}{% assign mes_nom = 'Març' %}
+                {% elsif mes_num == '04' %}{% assign mes_nom = 'Abril' %}
+                {% elsif mes_num == '05' %}{% assign mes_nom = 'Maig' %}
+                {% elsif mes_num == '06' %}{% assign mes_nom = 'Juny' %}
+                {% elsif mes_num == '07' %}{% assign mes_nom = 'Juliol' %}
+                {% elsif mes_num == '08' %}{% assign mes_nom = 'Agost' %}
+                {% elsif mes_num == '09' %}{% assign mes_nom = 'Setembre' %}
+                {% elsif mes_num == '10' %}{% assign mes_nom = 'Octubre' %}
+                {% elsif mes_num == '11' %}{% assign mes_nom = 'Novembre' %}
+                {% elsif mes_num == '12' %}{% assign mes_nom = 'Desembre' %}
+                {% endif %}
+
+                <div class="month-group mb-20" data-month="{{ monthGroup.name }}">
+                    <div class="flex items-center gap-6 mb-10">
+                        <h3 class="text-2xl md:text-3xl font-black uppercase tracking-widest text-mes-dark">{{ mes_nom }} {{ any_post }}</h3>
+                        <div class="flex-grow h-[2px] bg-stone-200"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch">
+                        {% for post in monthGroup.items %}
+                            {% assign post_cat_raw = post.category | default: post.categories.first | default: 'Notícia' %}
+                            {% assign cat_clean = post_cat_raw | downcase | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'è', 'e' | replace: 'é', 'e' | replace: 'à', 'a' | replace: 'ï', 'i' | strip %}
+                            
+                            <a href="{{ site.baseurl }}{{ post.url }}" class="news-card group flex flex-col bg-stone-50 hover:bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 border border-stone-100 relative overflow-hidden text-left" data-category="{{ cat_clean }}">
+                                <div class="w-full h-2 bg-mes-lime transition-all duration-300 group-hover:h-3"></div>
+                                
+                                <div class="w-full aspect-video bg-stone-200 relative overflow-hidden border-b border-stone-200 group-hover:border-stone-400 transition-colors duration-500 flex-shrink-0">
+                                    {% if post.image %}
+                                        <img src="{{ site.baseurl }}{{ post.image }}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" alt="{{ post.title }}">
+                                    {% else %}
+                                        <img src="{{ site.baseurl }}/imatges/Logo.png" class="absolute inset-0 w-full h-full object-contain p-8 opacity-20 group-hover:scale-105 transition-transform duration-700" alt="MÉS per Llucmajor">
+                                    {% endif %}
+                                    <div class="absolute top-5 left-5 bg-mes-dark text-mes-lime text-xs font-black uppercase tracking-widest px-4 py-1.5 shadow-md z-10">
+                                        {{ post_cat_raw }}
+                                    </div>
+                                </div>
+
+                                <div class="p-6 md:p-8 flex flex-col flex-grow">
+                                    <span class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-3 block group-hover:text-mes-lime transition-colors">{{ post.date | date: "%d/%m/%Y" }}</span>
+                                    
+                                    <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark group-hover:text-mes-lime transition-colors leading-tight mb-6">{{ post.title }}</h3>
+                                    
+                                    <span class="text-xs font-black uppercase tracking-widest text-mes-lime border-t border-stone-200 pt-5 mt-auto flex items-center gap-2 group-hover:translate-x-2 transition-all">
+                                        Llegir més
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                    </span>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
