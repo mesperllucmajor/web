@@ -110,10 +110,16 @@
   zona_nom: "Urbanitzacions"
   tema: "Infraestructures"
 
-- titol: "Recuperació de l'aturada del 508 a s'Arenal"
-  descripcio: "Millorarem la connexió de s'Arenal i les Urbanitzacions amb Son Llàtzer."
+- titol: "Treballarem amb transports de Mallorca per la millora de totes les línies de Llucmajor"
+  descripcio: "Millorarem la connexió entre els nuclis."
   zona_id: "general"
   zona_nom: "Tot el municipi"
+  tema: "Transport"
+
+- titol: "Recuperació de l'aturada del 508 a s'Arenal"
+  descripcio: "Millorarem la connexió de s'Arenal i les Urbanitzacions amb Son Llàtzer."
+  zona_id: "arenal"
+  zona_nom: "S'Arenal"
   tema: "Transport"
   
 - titol: "Millora de la connectivitat amb el TIB"
