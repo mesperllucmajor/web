@@ -4,7 +4,7 @@ title: Propostes per transformar Llucmajor
 permalink: /propostes/
 ---
 
-<header class="relative h-[350px] md:h-[450px] flex items-center justify-center overflow-hidden bg-mes-dark text-center border-b-8 border-mes-lime">
+<header class="relative h-[450px] md:h-[550px] flex items-center justify-center overflow-hidden bg-mes-dark text-center border-b-8 border-mes-lime">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-stone-800 via-mes-dark to-black opacity-80"></div>
     
     <div class="relative z-10 w-full px-8 flex flex-col items-center mt-12 md:mt-16">
@@ -211,15 +211,21 @@ document.addEventListener("DOMContentLoaded", function() {
     const sectionDestacats = document.getElementById('section-destacats');
 
     function filterContent(zone, theme = 'all') {
-        if (sectionDestacats) sectionDestacats.style.display = (zone === 'general') ? 'none' : 'block';
+        
         themeBlocks.forEach(block => {
             const cardsInBlock = block.querySelectorAll('.proposal-card');
             let visibleInBlock = 0;
             cardsInBlock.forEach(card => {
-                const matchesZone = card.getAttribute('data-zone') === zone;
+                const cardZone = card.getAttribute('data-zone');
+                
+                // El truc màgic: si filtrem per un nucli específic, afegim també les "general"
+                const matchesZone = (cardZone === zone || cardZone === 'general');
                 const matchesTheme = (theme === 'all' || card.getAttribute('data-theme') === theme);
+                
                 if (matchesZone && matchesTheme) {
                     card.style.display = 'flex';
+                    // Si estem en un nucli específic i la proposta és general, l'enviem al final amb CSS order
+                    card.style.order = (zone !== 'general' && cardZone === 'general') ? '999' : '0';
                     visibleInBlock++;
                 } else {
                     card.style.display = 'none';
@@ -227,12 +233,26 @@ document.addEventListener("DOMContentLoaded", function() {
             });
             block.style.display = (visibleInBlock > 0) ? 'block' : 'none';
         });
+
         if (sectionDestacats && zone !== 'general') {
+            let visibleDestacats = 0;
             sectionDestacats.querySelectorAll('.proposal-card').forEach(card => {
-                const matchesZone = card.getAttribute('data-zone') === zone;
+                const cardZone = card.getAttribute('data-zone');
+                const matchesZone = (cardZone === zone || cardZone === 'general');
                 const matchesTheme = (theme === 'all' || card.getAttribute('data-theme') === theme);
-                card.style.display = (matchesZone && matchesTheme) ? 'flex' : 'none';
+                
+                if (matchesZone && matchesTheme) {
+                    card.style.display = 'flex';
+                    card.style.order = (zone !== 'general' && cardZone === 'general') ? '999' : '0';
+                    visibleDestacats++;
+                } else {
+                    card.style.display = 'none';
+                }
             });
+            sectionDestacats.style.display = (visibleDestacats > 0) ? 'block' : 'none';
+        } else if (sectionDestacats) {
+            // Si estem a "Tot el municipi", amaguem la secció de destacats (ja que originalment era així per evitar duplicitats)
+            sectionDestacats.style.display = 'none';
         }
     }
 
@@ -240,7 +260,9 @@ document.addEventListener("DOMContentLoaded", function() {
         themeFilterContainer.innerHTML = '';
         const themesFound = new Set();
         proposalCards.forEach(card => {
-            if (card.getAttribute('data-zone') === zone) {
+            const cardZone = card.getAttribute('data-zone');
+            // Afegim als subfiltres els temes de la zona triada + els temes generals
+            if (cardZone === zone || cardZone === 'general') {
                 const t = card.getAttribute('data-theme');
                 if(t) themesFound.add(t);
             }
