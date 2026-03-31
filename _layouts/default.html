@@ -95,15 +95,21 @@
             </button>
         </div>
 
-        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t-2 border-stone-100 absolute w-full left-0 shadow-2xl text-left">
-            <div class="flex flex-col px-10 py-8 gap-8 font-black uppercase text-xl md:text-2xl tracking-widest text-left">
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white border-t-2 border-stone-100 shadow-2xl z-10 text-left">
+            <div class="flex flex-col px-10 py-10 gap-8 font-black uppercase text-xl md:text-2xl tracking-widest text-left">
                 <a href="{{ site.baseurl }}/" class="hover:text-mes-lime transition-colors block">Inici</a>
                 <a href="{{ site.baseurl }}/propostes/" class="hover:text-mes-lime transition-colors block">El Nostre Model</a>
                 <a href="{{ site.baseurl }}/actualitat/" class="hover:text-mes-lime transition-colors block">Feina Feta</a>
-                <a href="{{ site.baseurl }}/videos/" class="hover:text-mes-lime transition-colors">Vídeos</a>
+                <a href="{{ site.baseurl }}/videos/" class="hover:text-mes-lime transition-colors block">Vídeos</a>
                 <a href="{{ site.baseurl }}/llei-de-projectes-residencials-estrategics/" class="hover:text-mes-lime transition-colors block">Llei Pelotasso</a>
                 <a href="{{ site.baseurl }}/equip/" class="hover:text-mes-lime transition-colors block">L'equip</a>
                 <a href="{{ site.baseurl }}/contacte/" class="text-mes-lime border-b-4 border-mes-lime self-start pb-2 mt-4 block">Contacte</a>
+                
+                <div class="flex items-center gap-4 mt-4 pt-8 border-t-2 border-stone-100 text-2xl">
+                    <a href="{{ site.baseurl }}/" class="text-mes-lime transition-colors">CA</a>
+                    <span class="text-stone-300">|</span>
+                    <a href="{{ site.baseurl }}/es/" class="text-stone-400 hover:text-mes-dark transition-colors">ES</a>
+                </div>
             </div>
         </div>
     </nav>
