@@ -72,14 +72,20 @@
                 <img src="{{ site.baseurl }}/imatges/LogoMES.png" alt="MÉS per Llucmajor" class="h-16 md:h-20 w-auto" />
             </a>
             
-            <div class="hidden lg:flex gap-10 items-center font-black uppercase text-base tracking-widest text-left">
+            <div class="hidden xl:flex gap-8 items-center font-black uppercase text-sm tracking-widest text-left">
                 <a href="{{ site.baseurl }}/" class="hover:text-mes-lime transition-colors">Inici</a>
-                <a href="{{ site.baseurl }}/propostes/" class="hover:text-mes-lime transition-colors">El Nostre Model</a>
-                <a href="{{ site.baseurl }}/actualitat/" class="hover:text-mes-lime transition-colors">Feina Feta</a>
+                <a href="{{ site.baseurl }}/propostes/" class="hover:text-mes-lime transition-colors">Model</a>
+                <a href="{{ site.baseurl }}/actualitat/" class="hover:text-mes-lime transition-colors">Feina</a>
                 <a href="{{ site.baseurl }}/videos/" class="hover:text-mes-lime transition-colors">Vídeos</a>
-                <a href="{{ site.baseurl }}/llei-de-projectes-residencials-estrategics/" class="hover:text-mes-lime transition-colors">Llei Pelotasso</a>
+                <a href="{{ site.baseurl }}/llei-de-projectes-residencials-estrategics/" class="hover:text-mes-lime transition-colors">Pelotasso</a>
                 <a href="{{ site.baseurl }}/equip/" class="hover:text-mes-lime transition-colors">L'equip</a>
-                <a href="{{ site.baseurl }}/contacte/" class="btn-primary !px-8 !py-3 text-sm shadow-md hover:shadow-lg">Contacte</a>
+                <a href="{{ site.baseurl }}/contacte/" class="btn-primary !px-6 !py-3 text-[11px] shadow-md hover:shadow-lg">Contacte</a>
+                
+                <div class="flex items-center gap-2 border-l-2 border-stone-200 pl-6 ml-2">
+                    <a href="{{ site.baseurl }}/" class="{% unless page.url contains '/es/' %}text-mes-lime{% else %}text-stone-400 hover:text-mes-dark{% endunless %} transition-colors">CA</a>
+                    <span class="text-stone-300">|</span>
+                    <a href="{{ site.baseurl }}/es/" class="{% if page.url contains '/es/' %}text-mes-lime{% else %}text-stone-400 hover:text-mes-dark{% endif %} transition-colors">ES</a>
+                </div>
             </div>
 
             <button id="mobile-menu-btn" class="lg:hidden text-mes-dark hover:text-mes-lime focus:outline-none p-2">
