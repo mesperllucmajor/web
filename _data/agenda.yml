@@ -1,3 +1,11 @@
+- titol: "Paradeta informativa a s'Arenal"
+  dia: "18"
+  mes: "ABR"
+  hora: "10:30h"
+  lloc: "C/ Gran i General Consell (davant s'Arenal Park). s'Arenal"
+  descripcio: "Berenar obert per parlar de les propostes de mobilitat i recollir les vostres queixes."
+  enllac: ""
+
 - titol: "Ple de l'Ajuntament"
   dia: "29"
   mes: "ABR"
@@ -6,10 +14,3 @@
   descripcio: ""
   enllac: "" # Opcional, per si es retransmet
 
-- titol: "Paradeta informativa a s'Arenal"
-  dia: "18"
-  mes: "ABR"
-  hora: "10:30h"
-  lloc: "C/ Gran i General Consell (davant s'Arenal Park). s'Arenal"
-  descripcio: "Berenar obert per parlar de les propostes de mobilitat i recollir les vostres queixes."
-  enllac: ""
