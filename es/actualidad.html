@@ -1,0 +1,212 @@
+---
+layout: default_es
+title: Acción Municipal | MÉS per Llucmajor
+permalink: /es/actualidad/
+---
+
+<style>
+    /* Ocultar la barra de desplazamiento horizontal */
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+
+<div class="animate-fade">
+    
+    <header class="relative h-[350px] md:h-[450px] flex items-center justify-center overflow-hidden bg-mes-dark text-center border-b-8 border-mes-lime">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-stone-800 via-mes-dark to-black opacity-80"></div>
+        <img src="{{ site.baseurl }}/imatges/imatge1.jpeg" class="absolute inset-0 w-full h-full object-cover opacity-20 scale-105 mix-blend-overlay" alt="Trabajo por Llucmajor" />
+        
+        <div class="relative z-10 w-full px-8 flex flex-col items-center mt-12 md:mt-16">
+            <h1 class="text-6xl md:text-8xl lg:text-[100px] font-black uppercase text-white tracking-tighter leading-none mb-6 animate-fade" style="text-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+                Trabajo Hecho
+            </h1>
+            <p class="text-mes-dark text-sm md:text-lg font-black uppercase tracking-widest bg-mes-lime px-6 py-2 shadow-lg">
+                Acción municipal día a día
+            </p>
+        </div>
+    </header>
+
+    <div class="pt-20 pb-32 px-4 md:px-8 w-full max-w-[1400px] mx-auto text-left">
+        
+        <div class="mb-12">
+            <h2 class="text-4xl md:text-5xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-5 mb-4 tracking-tighter">Hemeroteca</h2>
+            <p class="text-stone-500 italic text-lg md:text-xl pl-6">Crónica de nuestro trabajo en la calle y en el Ayuntamiento: todas las mociones, denuncias y acciones para mejorar el municipio.</p>
+        </div>
+
+        {% assign posts_es = site.posts | where: "categories", "es" %}
+        {% assign postsByMonth = posts_es | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
+
+        <div class="mb-20 flex flex-col gap-8">
+            
+            <div class="flex flex-wrap gap-8 items-center border-b-2 border-stone-100 pb-4">
+                <span class="text-sm font-black uppercase tracking-widest text-stone-300">Mostrar:</span>
+                
+                <button class="news-filter-btn text-base font-black uppercase tracking-widest text-mes-dark border-b-4 border-mes-lime pb-2 px-2 transition-all cursor-pointer" data-filter="todas">Todo</button>
+                <button class="news-filter-btn text-base font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:text-mes-dark hover:border-mes-lime pb-2 px-2 transition-all cursor-pointer" data-filter="noticia">Noticias</button>
+                <button class="news-filter-btn text-base font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:text-mes-dark hover:border-mes-lime pb-2 px-2 transition-all cursor-pointer" data-filter="articulo">Artículos</button>
+            </div>
+
+            <div class="w-full overflow-hidden">
+                <div class="flex overflow-x-auto pb-4 gap-4 hide-scrollbar items-center">
+                    
+                    <button class="month-filter-btn whitespace-nowrap bg-stone-200 text-mes-dark px-5 py-2 text-xs font-black uppercase tracking-widest rounded-full transition-all cursor-pointer" data-month="todos">
+                        Siempre
+                    </button>
+                    
+                    {% for monthGroup in postsByMonth %}
+                        {% assign any_post = monthGroup.name | slice: 0, 4 %}
+                        {% assign mes_num = monthGroup.name | slice: 5, 2 %}
+                        {% assign mes_nom_curt = "" %}
+                        
+                        {% if mes_num == '01' %}{% assign mes_nom_curt = 'Ene' %}
+                        {% elsif mes_num == '02' %}{% assign mes_nom_curt = 'Feb' %}
+                        {% elsif mes_num == '03' %}{% assign mes_nom_curt = 'Mar' %}
+                        {% elsif mes_num == '04' %}{% assign mes_nom_curt = 'Abr' %}
+                        {% elsif mes_num == '05' %}{% assign mes_nom_curt = 'May' %}
+                        {% elsif mes_num == '06' %}{% assign mes_nom_curt = 'Jun' %}
+                        {% elsif mes_num == '07' %}{% assign mes_nom_curt = 'Jul' %}
+                        {% elsif mes_num == '08' %}{% assign mes_nom_curt = 'Ago' %}
+                        {% elsif mes_num == '09' %}{% assign mes_nom_curt = 'Sep' %}
+                        {% elsif mes_num == '10' %}{% assign mes_nom_curt = 'Oct' %}
+                        {% elsif mes_num == '11' %}{% assign mes_nom_curt = 'Nov' %}
+                        {% elsif mes_num == '12' %}{% assign mes_nom_curt = 'Dic' %}
+                        {% endif %}
+
+                        <button class="month-filter-btn whitespace-nowrap bg-white text-stone-400 border border-stone-200 hover:bg-stone-100 hover:text-mes-dark px-5 py-2 text-xs font-black uppercase tracking-widest rounded-full transition-all cursor-pointer" data-month="{{ monthGroup.name }}">
+                            {{ mes_nom_curt }} {{ any_post }}
+                        </button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div id="news-container">
+            
+            {% for monthGroup in postsByMonth %}
+                {% assign any_post = monthGroup.name | slice: 0, 4 %}
+                {% assign mes_num = monthGroup.name | slice: 5, 2 %}
+                {% assign mes_nom = "" %}
+                
+                {% if mes_num == '01' %}{% assign mes_nom = 'Enero' %}
+                {% elsif mes_num == '02' %}{% assign mes_nom = 'Febrero' %}
+                {% elsif mes_num == '03' %}{% assign mes_nom = 'Marzo' %}
+                {% elsif mes_num == '04' %}{% assign mes_nom = 'Abril' %}
+                {% elsif mes_num == '05' %}{% assign mes_nom = 'Mayo' %}
+                {% elsif mes_num == '06' %}{% assign mes_nom = 'Junio' %}
+                {% elsif mes_num == '07' %}{% assign mes_nom = 'Julio' %}
+                {% elsif mes_num == '08' %}{% assign mes_nom = 'Agosto' %}
+                {% elsif mes_num == '09' %}{% assign mes_nom = 'Septiembre' %}
+                {% elsif mes_num == '10' %}{% assign mes_nom = 'Octubre' %}
+                {% elsif mes_num == '11' %}{% assign mes_nom = 'Noviembre' %}
+                {% elsif mes_num == '12' %}{% assign mes_nom = 'Diciembre' %}
+                {% endif %}
+
+                <div class="month-group mb-24" data-month="{{ monthGroup.name }}">
+                    <div class="flex items-center gap-6 mb-12">
+                        <h3 class="text-3xl md:text-4xl font-black uppercase tracking-widest text-mes-dark">{{ mes_nom }} {{ any_post }}</h3>
+                        <div class="flex-grow h-[2px] bg-stone-200"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 items-stretch">
+                        {% for post in monthGroup.items %}
+                            {% assign post_cat_raw = post.tags.first | default: 'Noticia' %}
+                            {% assign cat_clean = post_cat_raw | downcase | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'è', 'e' | replace: 'é', 'e' | replace: 'à', 'a' | replace: 'ï', 'i' | strip %}
+                            
+                            <a href="{{ site.baseurl }}{{ post.url }}" class="news-card group flex flex-col bg-white shadow-sm hover:shadow-2xl transition-all duration-500 border border-stone-200 transform hover:-translate-y-2 overflow-hidden text-left" data-category="{{ cat_clean }}">
+                                
+                                <div class="w-full aspect-[4/3] bg-stone-100 relative overflow-hidden border-b border-stone-200 flex-shrink-0">
+                                    {% if post.image %}
+                                        <img src="{{ site.baseurl }}{{ post.image }}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" alt="{{ post.title }}">
+                                    {% else %}
+                                        <img src="{{ site.baseurl }}/imatges/Logo.png" class="absolute inset-0 w-full h-full object-contain p-8 opacity-20 group-hover:scale-105 transition-transform duration-700" alt="MÉS per Llucmajor">
+                                    {% endif %}
+                                    <div class="absolute top-4 left-4 bg-mes-lime text-mes-dark text-[10px] font-black uppercase tracking-widest px-4 py-1.5 shadow-sm z-10">
+                                        {{ post_cat_raw }}
+                                    </div>
+                                </div>
+
+                                <div class="p-8 flex flex-col flex-grow">
+                                    <span class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-3 block group-hover:text-mes-lime transition-colors">{{ post.date | date: "%d/%m/%Y" }}</span>
+                                    
+                                    <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark group-hover:text-mes-lime transition-colors leading-tight mb-6">{{ post.title }}</h3>
+                                    
+                                    <span class="text-[10px] font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 pt-5 mt-auto flex items-center justify-between group-hover:text-mes-lime transition-all">
+                                        Leer más
+                                        <svg class="w-5 h-5 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                    </span>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const catBtns = document.querySelectorAll('.news-filter-btn');
+        const monthBtns = document.querySelectorAll('.month-filter-btn');
+        const monthGroups = document.querySelectorAll('.month-group');
+
+        let currentCat = 'todas';
+        let currentMonth = 'todos';
+
+        function applyFilters() {
+            monthGroups.forEach(group => {
+                const groupMonth = group.getAttribute('data-month');
+                const cards = group.querySelectorAll('.news-card');
+                let visibleCards = 0;
+
+                if (currentMonth !== 'todos' && groupMonth !== currentMonth) {
+                    group.style.display = 'none';
+                    return; 
+                }
+
+                cards.forEach(card => {
+                    const cardCategory = (card.getAttribute('data-category') || 'noticia').toLowerCase(); 
+                    if (currentCat === 'todas' || cardCategory.includes(currentCat)) {
+                        card.style.display = 'flex';
+                        visibleCards++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (visibleCards === 0) {
+                    group.style.display = 'none';
+                } else {
+                    group.style.display = 'block';
+                }
+            });
+        }
+
+        catBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                catBtns.forEach(b => {
+                    b.classList.remove('text-mes-dark', 'border-mes-lime');
+                    b.classList.add('text-stone-400', 'border-transparent');
+                });
+                btn.classList.remove('text-stone-400', 'border-transparent');
+                btn.classList.add('text-mes-dark', 'border-mes-lime');
+                currentCat = btn.getAttribute('data-filter');
+                applyFilters();
+            });
+        });
+
+        monthBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                monthBtns.forEach(b => {
+                    b.classList.remove('bg-stone-200', 'text-mes-dark');
+                    b.classList.add('bg-white', 'text-stone-400', 'border-stone-200');
+                    b.classList.add('border'); 
+                });
+                btn.classList.remove('bg-white', 'text-stone-400', 'border-stone-200', 'border');
+                btn.classList.add('bg-stone-200', 'text-mes-dark');
+                currentMonth = btn.getAttribute('data-month');
+                applyFilters();
+            });
+        });
+    });
+</script>
