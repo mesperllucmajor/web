@@ -150,7 +150,8 @@ title: Inici
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </a>
             </div>
-            {% assign darrera_noticia = site.posts.first %}
+            {% assign posts_ca = site.posts | where: "layout", "post" %}
+            {% assign darrera_noticia = posts_ca.first %}
             <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-0 translate-y-8 px-8 pointer-events-none" data-index="1">
                 <div class="flex items-center gap-5 text-left">
                     <div class="bg-mes-dark text-white p-3 hidden sm:block">
@@ -292,7 +293,8 @@ title: Inici
                 <a href="{{ site.baseurl }}/actualitat/" class="text-sm md:text-base font-black uppercase border-b-4 border-mes-lime pb-1.5 hover:text-stone-500 transition-colors">Anar a actualitat</a>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-left">
-                {% for post in site.posts limit:3 %}
+                {% assign posts_ca = site.posts | where: "layout", "post" %}
+                {% for post in posts_ca limit:3 %}
                 <a href="{{ site.baseurl }}{{ post.url }}" class="group block text-left">
                     <div class="h-72 overflow-hidden mb-6 bg-stone-100 border-b-4 border-mes-dark group-hover:border-mes-lime transition-all relative">
                         {% if post.image %}<img src="{{ site.baseurl }}{{ post.image }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">{% endif %}
