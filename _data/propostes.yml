@@ -19,8 +19,14 @@
   zona_nom: "Llucmajor Poble"
   tema: "Urbanisme"
 
-- titol: "Pla integral de mobilitat i aparcament"
+- titol: "Pla integral de mobilitat"
   descripcio: "Crearem una solució definitiva per pacificar el trànsit, millorar la circulació de vehicles i garantir noves places d'aparcament estratègic per als veïnats i veïnades de s'Arenal."
+  zona_id: "arenal"
+  zona_nom: "s'Arenal"
+  tema: "Mobilitat"
+
+- titol: "Pla d'aparcament"
+  descripcio: "Crearem una solució definitiva per garantir noves places d'aparcament amb prioritat per als veïnats."
   zona_id: "arenal"
   zona_nom: "s'Arenal"
   tema: "Mobilitat"
@@ -104,13 +110,13 @@
   zona_nom: "Tot el municipi"
   tema: "Transició Ecològica"
 
-- titol: "Inici del projecte per la reparació i posada en marxa del SITT"
+- titol: "Inici del projecte per la reforma del SITT"
   descripcio: "El SITT tornarà a ser dels veïnats."
   zona_id: "urbanitzacions"
   zona_nom: "Urbanitzacions"
   tema: "Infraestructures"
 
-- titol: "Treballarem amb transports de Mallorca per la millora de totes les línies de Llucmajor"
+- titol: "Millora de totes les línies de transport públic de Llucmajor"
   descripcio: "Millorarem la connexió entre els nuclis."
   zona_id: "general"
   zona_nom: "Tot el municipi"
