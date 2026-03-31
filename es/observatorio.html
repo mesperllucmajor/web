@@ -1,0 +1,109 @@
+---
+layout: default_es
+title: Observatorio Municipal | MÉS per Llucmajor
+permalink: /es/observatorio/
+---
+
+<style>
+    /* Ocultar la barra de desplazamiento horizontal */
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+
+<header class="relative h-[300px] flex items-center overflow-hidden bg-mes-dark">
+    <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent z-10"></div>
+    <div class="relative z-20 w-full px-8 md:px-16">
+        <h1 class="text-4xl md:text-6xl font-black uppercase text-white tracking-tighter mb-2">Observatorio Municipal</h1>
+        <p class="text-mes-lime font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-4">Transparencia y seguimiento de nuestras propuestas</p>
+    </div>
+</header>
+
+<div class="w-[95%] max-w-[1400px] mx-auto px-4 md:px-8 py-16 text-left">
+
+    <div class="mb-12 border-b border-stone-200 pb-8 overflow-hidden">
+        <p class="text-[9px] font-black uppercase tracking-widest text-stone-400 mb-3 text-left">Filtra por fecha de presentación</p>
+        <div class="flex overflow-x-auto pb-4 gap-3 hide-scrollbar items-center">
+            
+            <button class="obs-filter-btn whitespace-nowrap bg-mes-dark text-mes-lime border-2 border-mes-dark px-5 py-2 text-[10px] md:text-xs font-black uppercase tracking-widest transition-all shadow-sm cursor-pointer" data-date="todas">
+                Todas las fechas
+            </button>
+
+            {% assign dates_uniques = site.data.observatori_es | map: "data" | uniq %}
+            {% for data_str in dates_uniques %}
+                <button class="obs-filter-btn whitespace-nowrap bg-white text-stone-500 border-2 border-stone-200 hover:border-mes-lime hover:text-mes-dark px-5 py-2 text-[10px] md:text-xs font-black uppercase tracking-widest transition-all shadow-sm cursor-pointer" data-date="{{ data_str }}">
+                    {{ data_str }}
+                </button>
+            {% endfor %}
+            
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8 text-left">
+        {% for prop in site.data.observatori_es %}
+        
+        <div class="obs-card bg-white border border-stone-100 shadow-md overflow-hidden flex flex-col md:flex-row transition-opacity duration-300" data-date="{{ prop.data }}">
+            
+            <div class="w-full md:w-2 {{ prop.color }} flex-shrink-0"></div>
+            
+            <div class="p-8 flex-grow flex flex-col">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+                    <div>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-stone-400 block mb-1">{{ prop.data }} • {{ prop.tipus }}</span>
+                        <h3 class="text-2xl font-black uppercase text-mes-dark">{{ prop.titol }}</h3>
+                    </div>
+                    <div class="px-4 py-2 rounded text-xs font-black uppercase tracking-widest {{ prop.color }} border whitespace-nowrap shadow-sm">
+                        {{ prop.estat }}
+                    </div>
+                </div>
+                
+                <p class="text-stone-600 mb-6 italic leading-relaxed">"{{ prop.descripcio }}"</p>
+                
+                {% if prop.comentari %}
+                <div class="bg-stone-50 p-6 border-l-4 border-mes-dark relative mt-auto">
+                    <span class="absolute -top-3 left-6 bg-mes-dark text-mes-lime text-[9px] font-black uppercase tracking-widest px-3 py-1 shadow-sm">El análisis de MÉS</span>
+                    <p class="text-sm text-stone-700 font-medium italic mt-2">{{ prop.comentari }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const filterBtns = document.querySelectorAll('.obs-filter-btn');
+        const obsCards = document.querySelectorAll('.obs-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                
+                // 1. Treure l'estat actiu de tots els botons
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+                    b.classList.add('bg-white', 'text-stone-500', 'border-stone-200');
+                });
+
+                // 2. Pintar el botó clicat
+                btn.classList.remove('bg-white', 'text-stone-500', 'border-stone-200');
+                btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+
+                // 3. Llegir la data
+                const filterValue = btn.getAttribute('data-date');
+
+                // 4. Filtrar targetes
+                obsCards.forEach(card => {
+                    const cardDate = card.getAttribute('data-date');
+                    
+                    if (filterValue === 'todas' || cardDate === filterValue) {
+                        card.style.display = 'flex'; 
+                        setTimeout(() => { card.style.opacity = '1'; }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        setTimeout(() => { card.style.display = 'none'; }, 300);
+                    }
+                });
+            });
+        });
+    });
+</script>
