@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: post_es
 title: "MÉS per Llucmajor exige renaturalizar el municipio para combatir las olas de calor"
 category: noticia
 categories: [es]
