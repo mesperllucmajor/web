@@ -1,36 +1,17 @@
 ---
 layout: post
-title: "MÉS per Llucmajor exigeix renaturalitzar el municipi per combatre les onades de calor"
+title: "Aprovada la nostra proposta per declarar l'alerta sanitària per la crisi dels fems a Llucmajor"
 category: noticia
-tags: [Medi Ambient, Urbanisme, Canvi Climàtic]
-image: "/imatges/arbrat.png"
-summary: "Hem presentat una proposta per crear corredors verds i posar arbrat a l'aparcament del Passeig Jaume III. L'equip de govern diu que 'ja hi fan feina', n'hem demanat les proves i ens comprometem a fer-ho realitat el 2027."
+tags: [Recollida de fems, Salut pública, Gestió municipal]
+image: "/imatges/oriol_fems.jpeg"
+summary: "L'equip de govern es veu forçat a aprovar la proposta de xoc exigida per MÉS per Llucmajor i la resta de l'oposició."
 ---
 
-El municipi de Llucmajor afronta, com la resta de les Illes Balears, els efectes cada vegada més evidents del canvi climàtic i de les altes temperatures. Per fer-hi front, reduir l'efecte "illa de calor" urbana i millorar la qualitat de vida de la ciutadania, des de MÉS per Llucmajor hem defensat una proposta de resolució per a la renaturalització i millora climàtica del municipi.
-
-### Més arbres, menys asfalt
-
-L'arbrat urbà és una de les eines més eficaces per disminuir la temperatura de l'aire i del paviment, i millorar el confort dels vianants. Per això, la nostra iniciativa, defensada per la portaveu Maria Barceló Calviño, planteja els següents acords fonamentals:
-
-**Pla Director d'Arbrat Urbà:** Elaborar un pla que defineixi objectius de cobertura arbòria, prioritats d’actuació i criteris per seleccionar les espècies més adequades per al nostre espai públic.
-
-**Transformació de l'aparcament del Passeig Jaume III:** Volem posar remei a la gran illa de calor que suposa l'esplanada asfaltada darrera el monument al rei Jaume III. Proposam plantar arbres d'ombra i permeabilitzar el sòl sense perdre places d'aparcament ni superfície pel mercat.
-
-
-**Creació d'un Corredor Verd:** Connectar el Passeig Jaume III, la Plaça d’Espanya i la Plaça Rufino Carpena mitjançant la plantació progressiva d’arbres als carrers de la Hispanitat, Francesc Aulet, Bisbe Roig i Marina.
-
-
-**Finançament extern:** Sol·licitar fons al Govern de les Illes Balears, a l’Institut per a la Diversificació i Estalvi de l’Energia (IDAE) i a la Unió Europea per finançar aquestes actuacions sense que suposi un cost excessiu per a les arques municipals.
-
-
-
-### Moltes paraules i poques proves
-
-Durant el debat de la proposta, la regidora Inma Pérez va intentar restar importància a la nostra iniciativa assegurant que des de l'Ajuntament "ja hi feien feina". Des de MÉS per Llucmajor no ens conformam amb respostes buides per sortir del pas: ja hem sol·licitat formalment tota la informació i els expedients que acreditin quina feina real s'està fent sobre aquesta qüestió. Volem proves, no més excuses.
-
-### El nostre compromís per al 2027
-
-L'actual equip de govern segueix demostrant que no té un model de poble preparat per als reptes del futur. Aquesta renaturalització no és un caprici, sinó una necessitat de salut pública i de confort urbà.
-
-El que ells són incapaços de planificar i executar, ho farem nosaltres quan governem el 2027. Fer de Llucmajor un poble més verd, habitable i preparat per al canvi climàtic serà una prioritat absoluta del nostre projecte municipal.
+ Amb la pressió veïnal al Ple, hem aconseguit que s'activin mesures d'emergència, però vigilarem de prop que compleixin el que han votat."L'acumulació generalitzada de residus sòlids urbans a Llucmajor, especialment al nucli de s'Arenal i a les urbanitzacions, ha arribat a una situació límit, generant males olors, proliferació de plagues i un risc cert per a la salut pública. 
+ 
+ Davant d'aquest escenari de deixadesa per part de l'equip de govern (PP) i del caos generat pel final del contracte de recollida, MÉS per Llucmajor, juntament amb la resta de grups de l’oposició (PSIB-PSOE, Llibertat Llucmajor i S’ULL), hem liderat una proposta de resolució conjunta per posar-hi fre d'immediat.  Aquest dimecres, durant el Ple municipal, la nostra iniciativa ha estat aprovada en un plenari marcat per la forta indignació i la presència de nombrosos veïnats i veïnades que exigien solucions reals i no més pedaços.  
+ 
+ **Què hem aconseguit amb aquesta proposta?** 
+ Gràcies a la nostra iniciativa política i a la pressió ciutadana, hem forçat la batlessa Xisca Lascolas i el seu equip a acceptar les següents mesures d'emergència, a les quals ara estan obligats a donar compliment:  Declaració de risc sanitari: S'ha de declarar oficialment l'existència d'una situació de greu risc per a la salubritat pública a causa de l'acumulació de fems.  Contractació d'emergència: L'Ajuntament ha de tramitar de manera immediata la contractació d'un servei extraordinari de reforç de recollida de fems i neteja (maquinària i personal) emparant-se en la Llei de Contractes del Sector Públic.  Solució contínua, no un pegat d'un dia: Aquest servei extraordinari s'haurà de mantenir plenament operatiu fins que entri en funcionament el nou contracte definitiu de recollida de residus (fet que pot trigar fins a un any).  
+ 
+ **Terminis** L'equip de govern té un termini màxim de dos mesos per donar compte al Ple de l'estat d'aquestes actuacions i del procés del nou contracte.  A més, exigim la posada en marxa d’un pla de xoc de neteja, desinfecció i control de plagues, així com l'ampliació dels horaris dels punts verds per evitar que s'agreugi la brutor als carrers.  Vigilarem que no quedi en paper mullatDurant el debat al Ple, l'equip de govern va acabar votant a favor de la nostra proposta després d'haver estat incapaços d'actuar a temps per ells mateixos. La batlessa va justificar el seu vot afirmant que ells "també pateixen la crisi".Tot i celebrar que el text hagi tirat endavant, des de MÉS per Llucmajor ens mostram escèptics. Aquest equip de govern ja ens té acostumats a aprovar mocions i propostes de l'oposició per després amagar-les dins un calaix i no aplicar-les mai. Aquesta vegada, però, estam parlant d'una emergència sanitària i del benestar bàsic dels veïnats.No tolerarem que s'ignori aquest acord. Ens mantindrem vigilants i exigirem dia a dia que la declaració d'alerta sanitària i la contractació del servei d'emergència es facin efectives de manera immediata. La gestió d'un servei essencial de neteja ha de ser una prioritat; allò que no siguin capaços de garantir ells ara, ho garantirem nosaltres l'any 2027.
