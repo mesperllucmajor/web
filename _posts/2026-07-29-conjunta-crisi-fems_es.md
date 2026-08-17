@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: post_es
 title: "Aprobada nuestra propuesta para declarar la alerta sanitaria por la crisis de las basuras en Llucmajor"
 category: noticia
 categories: [es]
