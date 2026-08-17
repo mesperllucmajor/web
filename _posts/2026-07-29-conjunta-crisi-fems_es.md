@@ -1,0 +1,18 @@
+---
+layout: post
+title: "Aprobada nuestra propuesta para declarar la alerta sanitaria por la crisis de las basuras en Llucmajor"
+category: noticia
+categories: [es]
+tags: [Recogida de basuras, Salud pública, Gestión municipal]
+image: "/imatges/oriol_fems.jpeg"
+summary: "El equipo de gobierno se ve forzado a aprobar la propuesta de choque exigida por MÉS per Llucmajor y el resto de la oposición."
+---
+
+ Con la presión vecinal en el Pleno, hemos conseguido que se activen medidas de emergencia, pero vigilaremos de cerca que cumplan lo que han votado."La acumulación generalizada de residuos sólidos urbanos en Llucmajor, especialmente en el núcleo de s'Arenal y en las urbanizaciones, ha llegado a una situación límite, generando malos olores, proliferación de plagas y un riesgo cierto para la salud pública.
+
+Ante este escenario de dejadez por parte del equipo de gobierno (PP) y del caos generado por el final del contrato de recogida, MÉS per Llucmajor, junto con el resto de grupos de la oposición (PSIB-PSOE, Llibertat Llucmajor y S’ULL), hemos liderado una propuesta de resolución conjunta para ponerle freno de inmediato. Este miércoles, durante el Pleno municipal, nuestra iniciativa ha sido aprobada en un plenario marcado por la fuerte indignación y la presencia de numerosos vecinos y vecinas que exigían soluciones reales y no más parches.
+
+¿Qué hemos conseguido con esta propuesta?
+Gracias a nuestra iniciativa política y a la presión ciudadana, hemos forzado a la alcaldesa Xisca Lascolas y a su equipo a aceptar las siguientes medidas de emergencia, a las cuales ahora están obligados a dar cumplimiento: Declaración de riesgo sanitario: Se debe declarar oficialmente la existencia de una situación de grave riesgo para la salubridad pública a causa de la acumulación de basuras. Contratación de emergencia: El Ayuntamiento debe tramitar de manera inmediata la contratación de un servicio extraordinario de refuerzo de recogida de basuras y limpieza (maquinaria y personal) amparándose en la Ley de Contratos del Sector Público. Solución continua, no un parche de un día: Este servicio extraordinario se deberá mantener plenamente operativo hasta que entre en funcionamiento el nuevo contrato definitivo de recogida de residuos (hecho que puede tardar hasta un año).
+
+Plazos El equipo de gobierno tiene un plazo máximo de dos meses para dar cuenta al Pleno del estado de estas actuaciones y del proceso del nuevo contrato. Además, exigimos la puesta en marcha de un plan de choque de limpieza, desinfección y control de plagas, así como la ampliación de los horarios de los puntos verdes para evitar que se agrave la suciedad en las calles. Vigilaremos que no quede en papel mojadoDurante el debate en el Pleno, el equipo de gobierno acabó votando a favor de nuestra propuesta después de haber sido incapaces de actuar a tiempo por ellos mismos. La alcaldesa justificó su voto afirmando que ellos "también padecen la crisis".A pesar de celebrar que el texto haya salido adelante, desde MÉS per Llucmajor nos mostramos escépticos. Este equipo de gobierno ya nos tiene acostumbrados a aprobar mociones y propuestas de la oposición para después esconderlas en un cajón y no aplicarlas nunca. Esta vez, sin embargo, estamos hablando de una emergencia sanitaria y del bienestar básico de los vecinos.No toleraremos que se ignore este acuerdo. Nos mantendremos vigilantes y exigiremos día a día que la declaración de alerta sanitaria y la contratación del servicio de emergencia se hagan efectivas de manera inmediata. La gestión de un servicio esencial de limpieza debe ser una prioridad; aquello que no sean capaces de garantizar ellos ahora, lo garantizaremos nosotros en el año 2027.
