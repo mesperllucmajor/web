@@ -4,7 +4,7 @@ title: "Aprobada nuestra propuesta para declarar la alerta sanitaria por la cris
 category: noticia
 categories: [es]
 tags: [Recogida de basuras, Salud pública, Gestión municipal]
-image: "/imatges/oriol_fems.jpeg"
+image: "/imatges/oriol_fems.png"
 summary: "El equipo de gobierno se ve forzado a aprobar la propuesta de choque exigida por MÉS per Llucmajor y el resto de la oposición."
 ---
 

@@ -3,7 +3,7 @@ layout: post
 title: "Aprovada la nostra proposta per declarar l'alerta sanitària per la crisi dels fems a Llucmajor"
 category: noticia
 tags: [Recollida de fems, Salut pública, Gestió municipal]
-image: "/imatges/oriol_fems.jpeg"
+image: "/imatges/oriol_fems.png"
 summary: "L'equip de govern es veu forçat a aprovar la proposta de xoc exigida per MÉS per Llucmajor i la resta de l'oposició."
 ---
 
