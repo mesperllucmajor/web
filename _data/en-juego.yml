@@ -1,7 +1,7 @@
 - id: "ley-pelotazo"
   titol: "La Ley del 'Pelotazo'"
   subtitol: "Proyectos Residenciales Estratégicos"
-  imatge: "/imatges/imatge1.jpg"
+  imatge: "/imatges/pelotasso.png"
   data: "Mayo 2026"
   estat: "ALERTA MÁXIMA"
   color_estat: "bg-red-600 text-white"
