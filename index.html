@@ -189,8 +189,7 @@ title: Inici
                         <h3 class="text-xl md:text-2xl lg:text-3xl font-black uppercase text-mes-dark leading-tight mt-1">{{ propera_cita.titol }}</h3>
                     </div>
                 </div>
-                <!-- Com que l'agenda no té pàgina pròpia en el json d'exemple, he posat un anchor que et porti a la secció d'agenda de la home,
-                si a on ha d'anar és diferent ho pots modificar fàcilment. -->
+                <!-- Anchor a la secció d'agenda -->
                 <a href="#agenda-home" class="bg-mes-dark text-white p-4 hover:bg-black transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </a>
@@ -203,30 +202,12 @@ title: Inici
     <section id="observatori-home" class="py-24 px-4 md:px-8 bg-white">
         <div class="max-w-[1400px] mx-auto">
             
-            {% assign total = site.data.observatori.size %}
-            {% assign aprovades = 0 %}
-            {% assign rebutjades = 0 %}
-            {% for item in site.data.observatori %}
-                {% if item.estat contains "APROVADA" %}{% assign aprovades = aprovades | plus: 1 %}{% endif %}
-                {% if item.estat contains "REBUTJADA" %}{% assign rebutjades = rebutjades | plus: 1 %}{% endif %}
-            {% endfor %}
-
             <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 border-b border-stone-300 pb-10 gap-10">
                 <div class="max-w-4xl text-left">
                     <div class="flex flex-wrap items-center gap-4 mb-5">
                         <span class="bg-mes-dark text-white text-sm font-black uppercase tracking-widest px-4 py-1.5">
                             Fiscalització
                         </span>
-                        
-                        <div class="flex flex-wrap items-center gap-3 mb-6">
-                         <span class="text-sm font-black text-stone-600 bg-stone-100 px-4 py-1.5 rounded-full border border-stone-200">
-                            {{ total }} INICIATIVES PRESENTADES
-                        </span>
-                            {% assign frens_govern = rebutjades %}
-                        <span class="text-sm font-black text-red-600 bg-red-50 px-4 py-1.5 rounded-full border border-red-100">
-                            {{ frens_govern }} OPORTUNITATS PERDUDES PEL GOVERN
-                        </span>
-                        </div>
                     </div>
                     
                     <h2 class="text-4xl md:text-6xl font-black uppercase text-mes-dark leading-tight mb-6">
@@ -377,7 +358,6 @@ title: Inici
 <script>
     // LÒGICA DEL HIGHLIGHT BANNER ROTATIU
     let currentHighlight = 0;
-    // Ara agafem directament tots els nodes que siguin '.highlight-slide' de forma genèrica
     const highlightSlides = document.querySelectorAll('.highlight-slide');
     
     function rotateHighlights() {
@@ -394,7 +374,6 @@ title: Inici
         currentHighlight = nextHighlight;
     }
     
-    // Assegura't de començar la rotació
     if (highlightSlides.length > 1) {
         setInterval(rotateHighlights, 5000);
     }
