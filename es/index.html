@@ -1,6 +1,7 @@
 ---
 layout: default_es
 title: Inicio
+permalink: /es/
 ---
 
 <style>
@@ -136,33 +137,21 @@ title: Inicio
 <main>
     <section id="highlight-banner" class="bg-mes-lime border-y-2 border-mes-dark/10 relative h-28 overflow-hidden">
         <div class="max-w-[1400px] mx-auto h-full px-8 relative">
-            <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-100 translate-y-0 px-8" data-index="0">
-                <div class="flex items-center gap-5 text-left">
-                    <div class="bg-mes-dark text-mes-lime p-3 hidden sm:block">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                    </div>
-                    <div class="text-left">
-                        <span class="block text-sm md:text-sm font-black uppercase tracking-widest text-mes-dark/70">Campaña Especial</span>
-                        <h3 class="text-xl md:text-3xl font-black uppercase text-mes-dark leading-tight mt-1">Ley de Proyectos Residenciales Estratégicos: El análisis</h3>
-                    </div>
-                </div>
-                <a href="{{ site.baseurl }}/es/ley-proyectos/" class="bg-mes-dark text-white p-4 hover:bg-black transition-all">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </a>
-            </div>
             
+            <!-- 1. Última Noticia -->
             {% assign posts_es = site.posts | where: "categories", "es" %}
-            {% assign darrera_noticia = posts_es.first %}
+            {% assign noticies = posts_es | where: "category", "Noticia" %}
+            {% assign darrera_noticia = noticies.first | default: posts_es.first %}
             
             {% if darrera_noticia %}
-            <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-0 translate-y-8 px-8 pointer-events-none" data-index="1">
+            <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-100 translate-y-0 px-8">
                 <div class="flex items-center gap-5 text-left">
-                    <div class="bg-mes-dark text-white p-3 hidden sm:block">
+                    <div class="bg-mes-dark text-mes-lime p-3 hidden sm:block">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l4 4v10a2 2 0 01-2 2z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 2v6h6"></path></svg>
                     </div>
                     <div class="text-left">
                         <span class="block text-sm md:text-sm font-black uppercase tracking-widest text-mes-dark/70">Última Noticia</span>
-                        <h3 class="text-xl md:text-2xl font-black uppercase text-mes-dark leading-tight mt-1">{{ darrera_noticia.title }}</h3>
+                        <h3 class="text-xl md:text-2xl lg:text-3xl font-black uppercase text-mes-dark leading-tight mt-1">{{ darrera_noticia.title }}</h3>
                     </div>
                 </div>
                 <a href="{{ site.baseurl }}{{ darrera_noticia.url }}" class="bg-mes-dark text-white p-4 hover:bg-black transition-all">
@@ -170,19 +159,53 @@ title: Inicio
                 </a>
             </div>
             {% endif %}
+            
+            <!-- 2. Último Artículo de Opinión -->
+            {% assign articles = posts_es | where: "category", "Artículo" %}
+            {% assign darrer_article = articles.first %}
+            
+            {% if darrer_article %}
+            <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-0 translate-y-8 px-8 pointer-events-none">
+                <div class="flex items-center gap-5 text-left">
+                    <div class="bg-mes-dark text-white p-3 hidden sm:block">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    </div>
+                    <div class="text-left">
+                        <span class="block text-sm md:text-sm font-black uppercase tracking-widest text-mes-dark/70">Opinión</span>
+                        <h3 class="text-xl md:text-2xl lg:text-3xl font-black uppercase text-mes-dark leading-tight mt-1">{{ darrer_article.title }}</h3>
+                    </div>
+                </div>
+                <a href="{{ site.baseurl }}{{ darrer_article.url }}" class="bg-mes-dark text-white p-4 hover:bg-black transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+            {% endif %}
+
+            <!-- 3. Próxima cita de la agenda -->
+            {% assign propera_cita = site.data.agenda_es.first %}
+            
+            {% if propera_cita %}
+            <div class="highlight-slide absolute inset-0 flex items-center justify-between transition-all duration-1000 opacity-0 translate-y-8 px-8 pointer-events-none">
+                <div class="flex items-center gap-5 text-left">
+                    <div class="bg-mes-dark text-mes-lime p-3 hidden sm:block">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div class="text-left">
+                        <span class="block text-sm md:text-sm font-black uppercase tracking-widest text-mes-dark/70">Próxima cita: {{ propera_cita.dia }} {{ propera_cita.mes }} a las {{ propera_cita.hora }}</span>
+                        <h3 class="text-xl md:text-2xl lg:text-3xl font-black uppercase text-mes-dark leading-tight mt-1">{{ propera_cita.titol }}</h3>
+                    </div>
+                </div>
+                <a href="#agenda-home" class="bg-mes-dark text-white p-4 hover:bg-black transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+            {% endif %}
+
         </div>
     </section>
 
     <section id="observatori-home" class="py-24 px-4 md:px-8 bg-white">
         <div class="max-w-[1400px] mx-auto">
-            
-            {% assign total = site.data.observatori_es.size %}
-            {% assign aprovades = 0 %}
-            {% assign rebutjades = 0 %}
-            {% for item in site.data.observatori_es %}
-                {% if item.estat contains "APROBADA" %}{% assign aprovades = aprovades | plus: 1 %}{% endif %}
-                {% if item.estat contains "RECHAZADA" %}{% assign rebutjades = rebutjades | plus: 1 %}{% endif %}
-            {% endfor %}
 
             <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 border-b border-stone-300 pb-10 gap-10">
                 <div class="max-w-4xl text-left">
@@ -190,16 +213,6 @@ title: Inicio
                         <span class="bg-mes-dark text-white text-sm font-black uppercase tracking-widest px-4 py-1.5">
                             Fiscalización
                         </span>
-                        
-                        <div class="flex flex-wrap items-center gap-3 mb-6">
-                         <span class="text-sm font-black text-stone-600 bg-stone-100 px-4 py-1.5 rounded-full border border-stone-200">
-                            {{ total }} INICIATIVAS PRESENTADAS
-                        </span>
-                            {% assign frens_govern = rebutjades %}
-                        <span class="text-sm font-black text-red-600 bg-red-50 px-4 py-1.5 rounded-full border border-red-100">
-                            {{ frens_govern }} OPORTUNIDADES PERDIDAS POR EL GOBIERNO
-                        </span>
-                        </div>
                     </div>
                     
                     <h2 class="text-4xl md:text-6xl font-black uppercase text-mes-dark leading-tight mb-6">
@@ -342,28 +355,38 @@ title: Inicio
                 <div class="flex flex-col gap-2 text-left"><label class="text-sm font-black uppercase tracking-widest text-stone-400">Nombre y Apellidos</label><input class="bg-stone-50 border border-stone-200 px-5 py-4 text-lg focus:outline-none focus:border-mes-lime transition-colors w-full" type="text" name="nom" required /></div>
                 <div class="flex flex-col gap-2 text-left"><label class="text-sm font-black uppercase tracking-widest text-stone-400">Correo electrónico</label><input class="bg-stone-50 border border-stone-200 px-5 py-4 text-lg focus:outline-none focus:border-mes-lime transition-colors w-full" type="email" name="email" required /></div>
                 <div class="flex flex-col gap-2 text-left"><label class="text-sm font-black uppercase tracking-widest text-stone-400">Mensaje</label><textarea class="bg-stone-50 border border-stone-200 px-5 py-4 text-lg focus:outline-none focus:border-mes-lime transition-colors w-full" name="missatge" rows="5" required></textarea></div>
-                <button id="index-form-btn" type="submit" class="bg-mes-dark text-mes-lime font-black uppercase tracking-widest text-lg py-5 hover:bg-black transition-colors w-full mt-2">Enviar y sumarme</button>
+                <button id="index-form-btn" type="submit" class="bg-mes-dark text-mes-lime font-black uppercase tracking-widest text-lg py-5 hover:bg-black transition-colors w-full mt-2">Enviar y unirme</button>
             </form>
         </div>
     </div>
 </div>
 
 <script>
-    // LÒGICA DEL HIGHLIGHT BANNER ROTATIU
+    // LÓGICA DEL HIGHLIGHT BANNER ROTATIVO
     let currentHighlight = 0;
+    
+    // Obtenim només els slides generats dinàmicament al DOM per evitar errors si algun no existeix
     const highlightSlides = document.querySelectorAll('.highlight-slide');
+    
     function rotateHighlights() {
         if (highlightSlides.length < 2) return;
+        
         const nextHighlight = (currentHighlight + 1) % highlightSlides.length;
+        
         highlightSlides[currentHighlight].classList.add('opacity-0', '-translate-y-8', 'pointer-events-none');
         highlightSlides[currentHighlight].classList.remove('opacity-100', 'translate-y-0');
+        
         highlightSlides[nextHighlight].classList.remove('opacity-0', 'translate-y-8', 'pointer-events-none', '-translate-y-8');
         highlightSlides[nextHighlight].classList.add('opacity-100', 'translate-y-0');
+        
         currentHighlight = nextHighlight;
     }
-    setInterval(rotateHighlights, 5000);
+    
+    if (highlightSlides.length > 1) {
+        setInterval(rotateHighlights, 5000);
+    }
 
-    // MODAL CONTACTE
+    // MODAL CONTACTO
     const btnOpen = document.getElementById('open-index-contact');
     const btnClose = document.getElementById('close-index-contact');
     const modal = document.getElementById('index-contact-modal');
