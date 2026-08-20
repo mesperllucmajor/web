@@ -5,32 +5,52 @@ permalink: /observatori/
 ---
 
 <style>
-    /* Amagar la barra de desplaçament de la línia de temps horitzontal per fer-ho més elegant */
+    /* Amagar la barra de desplaçament de la línia de temps horitzontal */
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 
-<header class="relative h-[300px] flex items-center overflow-hidden bg-mes-dark">
-    <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent z-10"></div>
-    <div class="relative z-20 w-full px-8 md:px-16">
-        <h1 class="text-4xl md:text-6xl font-black uppercase text-white tracking-tighter mb-2">Observatori Municipal</h1>
-        <p class="text-mes-lime font-bold uppercase tracking-widest border-l-4 border-mes-lime pl-4">Transparència i seguiment de les nostres propostes</p>
+<!-- CAPÇALERA FOSCA I CONTUNDENT -->
+<header class="relative h-[350px] md:h-[450px] flex items-center justify-center overflow-hidden bg-mes-dark text-center border-b-8 border-mes-lime">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-stone-800 via-mes-dark to-black opacity-90"></div>
+    
+    <div class="relative z-10 w-full px-8 flex flex-col items-center mt-12 md:mt-16">
+        <h1 class="text-6xl md:text-8xl lg:text-[100px] font-black uppercase text-white tracking-tighter leading-none mb-6 animate-fade" style="text-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+            Observatori
+        </h1>
+        <p class="text-mes-dark text-base md:text-xl font-black uppercase tracking-widest bg-mes-lime px-8 py-3 shadow-lg">
+            Transparència i seguiment al Ple
+        </p>
     </div>
 </header>
 
-<div class="max-w-7xl mx-auto px-4 md:px-8 py-16">
+<!-- CONTENIDOR PRINCIPAL A 1400px -->
+<div class="pt-20 pb-32 px-4 md:px-10 w-full max-w-[1400px] mx-auto text-left">
 
-    <div class="mb-12 border-b border-stone-200 pb-8 overflow-hidden">
-        <p class="text-[9px] font-black uppercase tracking-widest text-stone-400 mb-3">Filtra per data de presentació</p>
-        <div class="flex overflow-x-auto pb-4 gap-3 hide-scrollbar items-center">
+    <!-- Explicació de la secció -->
+    <div class="mb-16 max-w-5xl">
+        <h2 class="text-5xl md:text-6xl font-black uppercase text-mes-dark border-l-4 border-mes-lime pl-6 mb-6 tracking-tighter">Fiscalització</h2>
+        <p class="text-stone-500 italic text-xl md:text-2xl pl-8 leading-relaxed">
+            Aquí pots fer un seguiment directe de la nostra feina a l'oposició i comprovar què fa l'equip de govern amb les propostes que portem al Ple: descobreix quines s'aproven, quines ens tomben i quines s'incompleixen.
+        </p>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- FILTRE PER DATA INTEL·LIGENT (Píndoles)    -->
+    <!-- ========================================== -->
+    <div class="mb-16 border-b-2 border-stone-100 pb-10 overflow-hidden">
+        <p class="text-sm font-black uppercase tracking-widest text-stone-400 mb-6">Filtra per Ple / Data de presentació</p>
+        <div class="flex overflow-x-auto pb-4 gap-4 hide-scrollbar items-center">
             
-            <button class="obs-filter-btn whitespace-nowrap bg-mes-dark text-mes-lime border-2 border-mes-dark px-5 py-2 text-[10px] md:text-xs font-black uppercase tracking-widest transition-all shadow-sm" data-date="totes">
-                Totes les dates
+            <!-- Botó "Totes" -->
+            <button class="obs-filter-btn whitespace-nowrap bg-stone-200 text-mes-dark px-6 py-3 text-sm md:text-base font-black uppercase tracking-widest rounded-full transition-all shadow-sm" data-date="totes">
+                Tots els Plens
             </button>
 
+            <!-- Llegeix l'YAML i crea un botó per cada data única trobada -->
             {% assign dates_uniques = site.data.observatori | map: "data" | uniq %}
             {% for data_str in dates_uniques %}
-                <button class="obs-filter-btn whitespace-nowrap bg-white text-stone-500 border-2 border-stone-200 hover:border-mes-lime hover:text-mes-dark px-5 py-2 text-[10px] md:text-xs font-black uppercase tracking-widest transition-all shadow-sm" data-date="{{ data_str }}">
+                <button class="obs-filter-btn whitespace-nowrap bg-white text-stone-500 border border-stone-200 hover:bg-stone-50 hover:text-mes-dark px-6 py-3 text-sm md:text-base font-black uppercase tracking-widest rounded-full transition-all shadow-sm" data-date="{{ data_str }}">
                     {{ data_str }}
                 </button>
             {% endfor %}
@@ -38,38 +58,52 @@ permalink: /observatori/
         </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-8">
+    <!-- ========================================== -->
+    <!-- LLISTAT DE PROPOSTES (TARGETES XL)         -->
+    <!-- ========================================== -->
+    <div class="grid grid-cols-1 gap-12">
         {% for prop in site.data.observatori %}
         
-        <div class="obs-card bg-white border border-stone-100 shadow-md overflow-hidden flex flex-col md:flex-row transition-opacity duration-300" data-date="{{ prop.data }}">
+        <div class="obs-card bg-white border border-stone-200 shadow-md hover:shadow-xl hover:-translate-y-1 overflow-hidden flex flex-col md:flex-row transition-all duration-300 group" data-date="{{ prop.data }}">
             
-            <div class="w-full md:w-2 {{ prop.color }} flex-shrink-0"></div>
+            <!-- Línia de color segons l'estat (verd, vermell...) -->
+            <div class="w-full md:w-3 {{ prop.color }} flex-shrink-0 transition-colors"></div>
             
-            <div class="p-8 flex-grow">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+            <div class="p-8 md:p-12 flex-grow flex flex-col">
+                
+                <!-- Metadades superiors -->
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-6">
                     <div>
-                        <span class="text-[10px] font-black uppercase tracking-widest text-stone-400 block mb-1">{{ prop.data }} • {{ prop.tipus }}</span>
-                        <h3 class="text-2xl font-black uppercase text-mes-dark">{{ prop.titol }}</h3>
+                        <span class="text-sm md:text-base font-black uppercase tracking-widest text-stone-400 block mb-3 group-hover:text-mes-dark transition-colors">{{ prop.data }} • {{ prop.tipus }}</span>
+                        <h3 class="text-4xl md:text-5xl font-black uppercase text-mes-dark leading-tight tracking-tighter">{{ prop.titol }}</h3>
                     </div>
-                    <div class="px-4 py-2 rounded text-xs font-black uppercase tracking-widest {{ prop.color }} border whitespace-nowrap">
+                    
+                    <!-- Etiqueta de l'Estat (Aprovada/Rebutjada) -->
+                    <div class="px-8 py-3 rounded-sm text-base md:text-lg font-black uppercase tracking-widest {{ prop.color }} border whitespace-nowrap shadow-sm">
                         {{ prop.estat }}
                     </div>
                 </div>
                 
-                <p class="text-stone-600 mb-6 italic leading-relaxed">"{{ prop.descripcio }}"</p>
+                <!-- Descripció de la proposta -->
+                <p class="text-xl md:text-2xl text-stone-600 mb-10 italic leading-relaxed">"{{ prop.descripcio }}"</p>
                 
+                <!-- Anàlisi Polític de MÉS -->
                 {% if prop.comentari %}
-                <div class="bg-stone-50 p-6 border-l-4 border-mes-lime relative mt-auto">
-                    <span class="absolute -top-3 left-6 bg-mes-lime text-mes-dark text-[9px] font-black uppercase px-2 py-1 shadow-sm">L'anàlisi de MÉS</span>
-                    <p class="text-sm text-mes-dark font-medium">{{ prop.comentari }}</p>
+                <div class="bg-stone-50 p-8 md:p-10 border-l-[6px] border-mes-lime relative mt-auto shadow-inner">
+                    <span class="absolute -top-4 left-8 bg-mes-lime text-mes-dark text-xs md:text-sm font-black uppercase tracking-widest px-4 py-1.5 shadow-sm">
+                        L'anàlisi de MÉS
+                    </span>
+                    <p class="text-lg md:text-xl text-mes-dark font-medium leading-relaxed mt-2">{{ prop.comentari }}</p>
                 </div>
                 {% endif %}
+                
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
 
+<!-- Script del filtre -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const filterBtns = document.querySelectorAll('.obs-filter-btn');
@@ -78,26 +112,25 @@ permalink: /observatori/
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 
-                // 1. Treure l'estat actiu (fosc) de tots els botons i posar-los en gris
+                // 1. Treure l'estat actiu de tots els botons
                 filterBtns.forEach(b => {
-                    b.classList.remove('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+                    b.classList.remove('bg-stone-200', 'text-mes-dark');
                     b.classList.add('bg-white', 'text-stone-500', 'border-stone-200');
+                    b.classList.add('border'); 
                 });
 
-                // 2. Pintar només el botó que s'ha clicat amb els colors corporatius
-                btn.classList.remove('bg-white', 'text-stone-500', 'border-stone-200');
-                btn.classList.add('bg-mes-dark', 'text-mes-lime', 'border-mes-dark');
+                // 2. Pintar només el botó actiu
+                btn.classList.remove('bg-white', 'text-stone-500', 'border-stone-200', 'border');
+                btn.classList.add('bg-stone-200', 'text-mes-dark');
 
-                // 3. Llegir la data que s'ha de cercar
+                // 3. Filtrar
                 const filterValue = btn.getAttribute('data-date');
 
-                // 4. Amagar o mostrar les targetes segons la data
                 obsCards.forEach(card => {
                     const cardDate = card.getAttribute('data-date');
                     
                     if (filterValue === 'totes' || cardDate === filterValue) {
-                        card.style.display = 'flex'; // Torna a mostrar-ho mantenint el flex-row/col
-                        // Petit truc visual per suavitzar l'aparició
+                        card.style.display = 'flex'; 
                         setTimeout(() => { card.style.opacity = '1'; }, 50);
                     } else {
                         card.style.opacity = '0';
