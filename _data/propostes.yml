@@ -5,6 +5,13 @@
   zona_nom: "Llucmajor Poble"
   tema: "Mobilitat"
 
+- titol: "Més arbres"
+  descripcio: "Creació de refugis climàtics i corredors verds."
+  imatge: "/imatges/arbrat.png"
+  zona_id: "llucmajor"
+  zona_nom: "Llucmajor Poble"
+  tema: "Urbanisme"
+
 - titol: "Reforma de la plaça de Les Palmeres"
   descripcio: "Reforma integral de la plaça de Les Palmeres."
   imatge: "/imatges/PlacaPalmeres.jpeg"
@@ -23,6 +30,12 @@
   descripcio: "Crearem una solució definitiva per pacificar el trànsit, millorar la circulació de vehicles i garantir noves places d'aparcament estratègic per als veïnats i veïnades de s'Arenal."
   zona_id: "arenal"
   zona_nom: "s'Arenal"
+  tema: "Mobilitat"
+
+- titol: "Més arbres"
+  descripcio: "Creació de refugis climàtics i corredors verds."
+  zona_id: "general"
+  zona_nom: "Tot el municipi"
   tema: "Mobilitat"
 
 - titol: "Pla d'aparcament"
