@@ -6,22 +6,23 @@ permalink: /es/propuestas/
 
 <header class="relative h-[450px] md:h-[550px] flex items-center justify-center overflow-hidden bg-mes-dark text-center border-b-8 border-mes-lime">
     
-    <!-- IMATGE DE FONS -->
-    <img src="{{ site.baseurl }}/imatges/Llucmajor_aeria.jpg" class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-overlay z-0" alt="Llucmajor aèria" />
+    <!-- 1. IMATGE DE FONS (Sense filtres estranys, només una opacitat del 40%) -->
+    <img src="{{ site.baseurl }}/imatges/Llucmajor_aeria.jpg" class="absolute inset-0 w-full h-full object-cover opacity-40 z-0" alt="Llucmajor aèria" />
 
-    <!-- DEGRADAT OSCUR PER AFAVORIR LA LECTURA -->
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-stone-800/80 via-mes-dark/90 to-black opacity-90 z-0"></div>
+    <!-- 2. DEGRADAT SUAU PER SOBRE (Assegura que el text ressalti, enfosquint més la part de sota) -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-mes-dark/40 to-mes-dark/90 z-0"></div>
     
-    <!-- TEXT DEL BANNER -->
+    <!-- 3. TEXT DEL BANNER (z-10 per estar per sobre de tot) -->
     <div class="relative z-10 w-full px-8 flex flex-col items-center mt-12 md:mt-16">
         <h1 class="text-6xl md:text-8xl lg:text-[100px] font-black uppercase text-white tracking-tighter leading-none mb-6 animate-fade" style="text-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-            Nuestro modelo
+            El nostre model
         </h1>
         <p class="text-mes-dark text-sm md:text-lg font-black uppercase tracking-widest bg-mes-lime px-6 py-2 shadow-lg">
-            Proyectos barrio a barrio para un municipio vivo
+            Projectes barri a barri per un municipi viu
         </p>
     </div>
 </header>
+
 <div class="pt-20 pb-32 px-4 md:px-10 w-full max-w-[1400px] mx-auto text-left">
     
     <div class="mb-20 border-b-4 border-stone-200 pb-12 flex flex-col gap-12">
