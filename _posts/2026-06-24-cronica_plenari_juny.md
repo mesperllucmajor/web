@@ -3,7 +3,7 @@ layout: post
 title: "Fiscalitzam els comptes municipals i les inversions al Ple de juny"
 category: noticia
 tags: [Economia, Ple Municipal, Llucmajor, Gestió]
-image: "/imatges/ple_juny.jpg"
+image: "/imatges/participacio.png"
 summary: "Al ple de juny ens hem centrat a fiscalitzar les modificacions de crèdit i l'allau de factures sense contracte de l'equip de govern. Explicam per què hem prioritzat aquesta rigorosa tasca econòmica."
 ---
 
