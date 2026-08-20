@@ -337,20 +337,39 @@ title: Inici
     </section>
 </main>
 
+<!-- BOTÓ FLOTANT -->
 <button id="open-index-contact" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-lime text-mes-dark px-8 py-5 font-black uppercase text-sm md:text-base tracking-widest shadow-2xl z-40 flex items-center gap-3 hover:bg-mes-dark hover:text-white transition-all transform hover:-translate-y-1">Connecta</button>
 
+<!-- MODAL DE CONTACTE (FORMULARI) -->
 <div id="index-contact-modal" class="fixed inset-0 bg-mes-dark/90 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
     <div class="bg-white w-full max-w-2xl relative shadow-2xl transform scale-95 transition-transform duration-300" id="index-modal-content">
         <button id="close-index-contact" class="absolute top-5 right-5 text-stone-400 hover:text-mes-dark p-2 z-10"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
         <div class="p-10 md:p-16 text-left">
             <h3 class="text-4xl md:text-5xl font-black uppercase mb-3 text-mes-dark leading-none">Fes pinya amb noltros</h3>
             <p class="text-stone-500 mb-10 text-lg md:text-xl italic">Vols sumar-te al projecte? T'escoltam.</p>
-            <form id="index-form" action="https://formspree.io/f/EL_TEU_CODI" method="POST" class="flex flex-col gap-8">
+            
+            <!-- EL TEU NOU ENDPOINT DE FORMSPREE ESTÀ AQUÍ -->
+            <form id="index-form" action="https://formspree.io/f/xlgwyklo" method="POST" class="flex flex-col gap-8">
                 <div class="flex flex-col gap-2 text-left"><label class="text-sm font-black uppercase tracking-widest text-stone-400">Nom i Llinatges</label><input class="bg-stone-50 border border-stone-200 px-5 py-4 text-lg focus:outline-none focus:border-mes-lime transition-colors w-full" type="text" name="nom" required /></div>
                 <div class="flex flex-col gap-2 text-left"><label class="text-sm font-black uppercase tracking-widest text-stone-400">Correu</label><input class="bg-stone-50 border border-stone-200 px-5 py-4 text-lg focus:outline-none focus:border-mes-lime transition-colors w-full" type="email" name="email" required /></div>
                 <div class="flex flex-col gap-2 text-left"><label class="text-sm font-black uppercase tracking-widest text-stone-400">Missatge</label><textarea class="bg-stone-50 border border-stone-200 px-5 py-4 text-lg focus:outline-none focus:border-mes-lime transition-colors w-full" name="missatge" rows="5" required></textarea></div>
-                <button id="index-form-btn" type="submit" class="bg-mes-dark text-mes-lime font-black uppercase tracking-widest text-lg py-5 hover:bg-black transition-colors w-full mt-2">Enviar i sumar-m'hi</button>
+                <button id="index-form-btn" type="submit" class="bg-mes-dark text-mes-lime font-black uppercase tracking-widest text-lg py-5 hover:bg-black transition-colors w-full mt-2 cursor-pointer">Enviar i sumar-m'hi</button>
             </form>
+        </div>
+    </div>
+</div>
+
+<!-- NOU MODAL: MISSATGE D'ÈXIT -->
+<div id="success-contact-modal" class="fixed inset-0 z-[60] hidden opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+        <div class="bg-white p-12 md:p-16 max-w-xl w-full shadow-2xl text-center transform scale-95 transition-transform duration-300" id="success-contact-content">
+            <div class="w-24 h-24 bg-mes-lime rounded-full flex items-center justify-center mx-auto mb-10 text-mes-dark shadow-inner">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h3 class="text-4xl md:text-5xl font-black uppercase text-mes-dark mb-5 tracking-tighter leading-none">Missatge enviat!</h3>
+            <p class="text-lg md:text-xl text-stone-600 mb-12 leading-relaxed italic">Gràcies per contactar amb nosaltres. Ens posarem en contacte amb tu ben aviat per sumar forces.</p>
+            <button id="close-success-contact-btn" class="bg-mes-dark text-mes-lime px-10 py-5 text-sm font-black uppercase tracking-widest hover:bg-black transition-colors w-full shadow-md cursor-pointer">D'acord</button>
         </div>
     </div>
 </div>
@@ -378,13 +397,83 @@ title: Inici
         setInterval(rotateHighlights, 5000);
     }
 
-    // MODAL CONTACTE
+    // MODALS DE CONTACTE I MISSATGE D'ÈXIT
     const btnOpen = document.getElementById('open-index-contact');
     const btnClose = document.getElementById('close-index-contact');
     const modal = document.getElementById('index-contact-modal');
     const modalContent = document.getElementById('index-modal-content');
-    btnOpen.addEventListener('click', () => { modal.classList.remove('hidden'); setTimeout(() => { modal.classList.remove('opacity-0'); modalContent.classList.remove('scale-95'); }, 10); });
-    const closeM = () => { modal.classList.add('opacity-0'); modalContent.classList.add('scale-95'); setTimeout(() => { modal.classList.add('hidden'); }, 300); };
+    
+    const successModal = document.getElementById('success-contact-modal');
+    const successContent = document.getElementById('success-contact-content');
+    const closeSuccessBtn = document.getElementById('close-success-contact-btn');
+    const form = document.getElementById('index-form');
+
+    // Funcions per obrir/tancar formulari
+    btnOpen.addEventListener('click', () => { 
+        modal.classList.remove('hidden'); 
+        setTimeout(() => { modal.classList.remove('opacity-0'); modalContent.classList.remove('scale-95'); }, 10); 
+    });
+    
+    const closeM = () => { 
+        modal.classList.add('opacity-0'); 
+        modalContent.classList.add('scale-95'); 
+        setTimeout(() => { modal.classList.add('hidden'); }, 300); 
+    };
+    
     btnClose.addEventListener('click', closeM);
     modal.addEventListener('click', (e) => { if(e.target === modal) closeM(); });
+
+    // Funcions per obrir/tancar finestra d'agraïment
+    function openSuccess() {
+        successModal.classList.remove('hidden');
+        setTimeout(() => {
+            successModal.classList.remove('opacity-0');
+            successContent.classList.remove('scale-95');
+        }, 10);
+    }
+
+    function closeSuccess() {
+        successModal.classList.add('opacity-0');
+        successContent.classList.add('scale-95');
+        setTimeout(() => {
+            successModal.classList.add('hidden');
+        }, 300);
+    }
+    
+    if(closeSuccessBtn) closeSuccessBtn.addEventListener('click', closeSuccess);
+
+    // ENVIAMENT AMB AJAX A FORMSPREE
+    if (form) {
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault(); 
+            
+            const submitBtn = document.getElementById('index-form-btn');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Enviant..."; 
+            submitBtn.disabled = true;
+
+            const data = new FormData(event.target);
+            
+            try {
+                const response = await fetch(event.target.action, {
+                    method: form.method,
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    form.reset(); 
+                    closeM(); // Tanca el modal del formulari
+                    openSuccess(); // Obre el modal d'èxit
+                } else {
+                    alert("Hi ha hagut un problema en enviar el missatge. Torna-ho a provar.");
+                }
+            } catch (error) {
+                alert("S'ha produït un error de connexió. Comprova la teva xarxa.");
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
 </script>
