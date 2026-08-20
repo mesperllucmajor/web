@@ -4,7 +4,7 @@ title: "El compte enrere per a la transformació de Llucmajor ja ha començat"
 category: Article
 tags: [Projecte, Opinió]
 image: "/imatges/Llucmajor2.png"
-summary: ""
+summary: "Denunciam la paràlisi i la manca de rumb de l'actual equip de govern, mentre reivindica que els únics avenços en habitatge, patrimoni i territori s'han aconseguit gràcies a la seva tasca d'oposició ferma."
 ---
 
 Entram al mes d’agost i és el moment de fer la pausa estiuenca. Inevitablement, també ens du a fer balanç d’aquest curs polític. Ja ho advertíem el mes de setembre passat en aquesta mateixa revista. Encetàvem un any amb la incertesa d’un govern que va viure unes setmanes en aparent minoria i l’acabam afirmant que els grans problemes del municipi no s'han resolt. Avui ja podem dir que Llucmajor ha perdut un altre any. Estam una mica pitjor, empantanats en una gestió on els problemes no només no se solucionen, sinó que creixen de manera preocupant, cosa que evidencia que no hi ha rumb ni projecte de govern al capdavant de l'Ajuntament.
