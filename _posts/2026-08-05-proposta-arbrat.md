@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "MÉS per Llucmajor exigeix renaturalitzar el municipi per combatre les onades de calor"
+title: "MÉS per Llucmajor proposa renaturalitzar el municipi per combatre les onades de calor"
 category: noticia
 tags: [Medi Ambient, Urbanisme, Canvi Climàtic]
 image: "/imatges/arbrat.png"
-summary: "Hem presentat una proposta per crear corredors verds i posar arbrat a l'aparcament del Passeig Jaume III. L'equip de govern diu que 'ja hi fan feina', n'hem demanat les proves i ens comprometem a fer-ho realitat el 2027."
+summary: "Hem presentat una proposta per crear corredors verds i posar arbrat a diferents carrers i places del municipi. L'equip de govern diu que 'ja hi fan feina'. Hem demanat la informació i ens comprometem a fer-ho realitat el 2027."
 ---
 
 El municipi de Llucmajor afronta, com la resta de les Illes Balears, els efectes cada vegada més evidents del canvi climàtic i de les altes temperatures. Per fer-hi front, reduir l'efecte "illa de calor" urbana i millorar la qualitat de vida de la ciutadania, des de MÉS per Llucmajor hem defensat una proposta de resolució per a la renaturalització i millora climàtica del municipi.
