@@ -1,0 +1,9 @@
+- id: "llei-pelotasso"
+  titol: "La Llei del 'Pelotasso'"
+  subtitol: "Projectes Residencials Estratègics"
+  imatge: "/imatges/imatge1.jpg" # Posa aquí una foto impactant de territori
+  data: "Maig 2026"
+  estat: "ALERTA MÀXIMA"
+  color_estat: "bg-red-600 text-white" # Pots usar "bg-amber-500 text-mes-dark" si és "EN VIGILÀNCIA" o verd si està "ATURAT"
+  descripcio_curta: "El Govern aprova un decret que permetrà construir macroprojectes residencials saltant-se la normativa municipal i posant en risc els nostres recursos bàsics."
+  enllac: "/en-joc/llei-pelotasso/"
