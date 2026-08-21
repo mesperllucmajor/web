@@ -1,190 +1,613 @@
 ---
 layout: default
-title: Propostes per transformar Llucmajor
+title: Propostes per transformar Llucmajor · Eleccions 2027
 permalink: /propostes/
 ---
 
-<header class="relative h-[450px] md:h-[550px] flex items-center justify-center overflow-hidden bg-mes-dark text-center border-b-8 border-mes-lime">
-    
-    <!-- 1. IMATGE DE FONS (Sense filtres estranys, només una opacitat del 40%) -->
-    <img src="{{ site.baseurl }}/imatges/Llucmajor_aeria.jpg" class="absolute inset-0 w-full h-full object-cover opacity-40 z-0" alt="Llucmajor aèria" />
+<style>
+  /* Utilitats d'interacció per al component interactiu Abans/Després */
+  .slider-container {
+    position: relative;
+    user-select: none;
+    touch-action: pan-y;
+  }
+  .slider-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow: hidden;
+    will-change: width;
+  }
+  .slider-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: #d8f800; /* mes-lime */
+    box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    cursor: ew-resize;
+    transform: translateX(-50%);
+  }
+  .slider-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    background-color: #1a1a1a;
+    border: 3px solid #d8f800;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+  }
+  .active-tab {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+    border-color: #1a1a1a !important;
+  }
+  .active-zone {
+    color: #1a1a1a !important;
+    border-color: #1a1a1a !important;
+  }
+  .active-theme {
+    background-color: #d8f800 !important;
+    color: #1a1a1a !important;
+    border-color: #d8f800 !important;
+  }
+  .card-highlight {
+    animation: pulseBorder 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseBorder {
+    0%, 100% { border-color: #d8f800; box-shadow: 0 0 0 3px rgba(216, 248, 0, 0.4); }
+    50% { border-color: #1a1a1a; box-shadow: 0 0 0 1px rgba(0,0,0,0.1); }
+  }
+</style>
 
-    <!-- 2. DEGRADAT SUAU PER SOBRE (Assegura que el text ressalti, enfosquint més la part de sota) -->
-    <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-mes-dark/40 to-mes-dark/90 z-0"></div>
-    
-    <!-- 3. TEXT DEL BANNER (z-10 per estar per sobre de tot) -->
-    <div class="relative z-10 w-full px-8 flex flex-col items-center mt-12 md:mt-16">
-        <h1 class="text-6xl md:text-8xl lg:text-[100px] font-black uppercase text-white tracking-tighter leading-none mb-6 animate-fade" style="text-shadow: 0 4px 10px rgba(0,0,0,0.5);">
-            El nostre model
+<!-- ==========================================
+     HERO SECTION AMB CERCA I ACCÉS TERRITORIAL
+     ========================================== -->
+<header class="relative bg-mes-dark text-white overflow-hidden border-b-8 border-mes-lime">
+    <div class="absolute inset-0 z-0">
+        <img src="{{ site.baseurl }}/imatges/Llucmajor_aeria.jpg" 
+             class="w-full h-full object-cover opacity-35 filter saturate-50" 
+             alt="Vista aèria de Llucmajor" />
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-mes-dark/80 to-mes-dark"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-[1300px] mx-auto px-4 md:px-8 pt-16 pb-20 md:pt-24 md:pb-28 text-center flex flex-col items-center">
+        <!-- Badge de compromís -->
+        <div class="inline-flex items-center gap-2 bg-mes-lime/20 border border-mes-lime text-mes-lime px-4 py-1.5 rounded-full text-xs md:text-sm font-black uppercase tracking-widest mb-6">
+            <span class="w-2.5 h-2.5 rounded-full bg-mes-lime animate-ping"></span>
+            Pla de Govern 2027 · MÉS per Llucmajor
+        </div>
+
+        <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tighter text-white leading-none mb-6">
+            El Llucmajor <br class="hidden sm:inline"/><span class="text-mes-lime">que farem créixer</span>
         </h1>
-        <p class="text-mes-dark text-sm md:text-lg font-black uppercase tracking-widest bg-mes-lime px-6 py-2 shadow-lg">
-            Projectes barri a barri per un municipi viu
+
+        <p class="text-stone-300 text-base sm:text-lg md:text-2xl max-w-3xl leading-relaxed mb-10 font-normal">
+            Projectes transformadors amb visió de futur i mesures concretes barri a barri per posar el nostre municipi on es mereix.
         </p>
+
+        <!-- Cercador Predictiu en Temps Real -->
+        <div class="w-full max-w-2xl relative shadow-2xl">
+            <div class="relative flex items-center bg-white rounded-xl overflow-hidden border-2 border-stone-200 focus-within:border-mes-lime transition-all">
+                <span class="pl-5 text-stone-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </span>
+                <input type="text" 
+                       id="live-search-input" 
+                       placeholder="Cerca per carrer, barri, paraula clau (ex: escoleta, tramvia, parc...)" 
+                       class="w-full py-4 px-4 text-base md:text-lg text-mes-dark placeholder-stone-400 focus:outline-none font-medium">
+                <button id="clear-search-btn" class="hidden pr-4 text-stone-400 hover:text-mes-dark transition-colors" title="Netejar cerca">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Indicadors de Transparència -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-12 w-full max-w-4xl text-left border-t border-stone-800 pt-8">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-mes-lime font-black">1</div>
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-stone-400 font-bold">Model de futur</p>
+                    <p class="text-sm md:text-base font-bold text-white">Projectes d'impacte</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-mes-lime font-black">5</div>
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-stone-400 font-bold">Territori</p>
+                    <p class="text-sm md:text-base font-bold text-white">Nuclis atesos</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-mes-lime font-black">100%</div>
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-stone-400 font-bold">Transparència</p>
+                    <p class="text-sm md:text-base font-bold text-white">Simulacions i costos</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-mes-lime font-black">
+                    <svg class="w-5 h-5 text-mes-lime" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-stone-400 font-bold">Participació</p>
+                    <p class="text-sm md:text-base font-bold text-white">Aportacions ciutadanes</p>
+                </div>
+            </div>
+        </div>
     </div>
 </header>
 
-<div class="pt-20 pb-32 px-4 md:px-10 w-full max-w-[1400px] mx-auto text-left">
-    
-    <div class="mb-20 border-b-4 border-stone-200 pb-12 flex flex-col gap-12">
+
+<!-- ==========================================
+     PANEL DE CONTROL, VISTES I FILTRATGE
+     ========================================== -->
+<div class="bg-stone-100 border-b border-stone-300 sticky top-0 z-30 shadow-md">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-10 py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         
-        <div>
-            <p class="text-sm font-black uppercase tracking-widest text-stone-400 mb-6 text-left">Filtra per zona del municipi</p>
-            <div class="flex flex-wrap gap-x-12 gap-y-6 justify-start -mb-[12px]" id="filters-zone">
-                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-mes-dark border-b-4 border-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="general">Tot el municipi</button>
-                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="llucmajor">Llucmajor Poble</button>
-                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="arenal">s'Arenal</button>
-                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="urbanitzacions">Urbanitzacions</button>
-                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="estanyol">s'Estanyol</button>
-                <button class="filter-btn-zone text-base md:text-xl font-black uppercase tracking-widest text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-3 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="foravila">Foravila</button>
-            </div>
+        <!-- Selector de Vistes Principals -->
+        <div class="flex items-center bg-white p-1 rounded-xl border border-stone-300 shadow-sm overflow-x-auto" id="view-mode-selector">
+            <button class="view-btn px-4 py-2 rounded-lg text-xs md:text-sm font-black uppercase tracking-wider transition-all whitespace-nowrap active-tab" data-view="all">
+                🌟 Totes les Propostes
+            </button>
+            <button class="view-btn px-4 py-2 rounded-lg text-xs md:text-sm font-black uppercase tracking-wider text-stone-600 hover:text-mes-dark transition-all whitespace-nowrap" data-view="transformadors">
+                ✨ Projectes IA (Visuals)
+            </button>
+            <button class="view-btn px-4 py-2 rounded-lg text-xs md:text-sm font-black uppercase tracking-wider text-stone-600 hover:text-mes-dark transition-all whitespace-nowrap" data-view="mesures">
+                📋 Mesures i Accions
+            </button>
         </div>
 
-        <div class="flex flex-wrap gap-4 min-h-[50px] text-left" id="filters-theme"></div>
+        <!-- Recompte Dinàmic de Propostes -->
+        <div class="flex items-center gap-2 text-stone-500 text-xs md:text-sm font-bold">
+            <span class="w-2.5 h-2.5 rounded-full bg-mes-lime"></span>
+            <span id="results-count-text">Mostrant totes les propostes</span>
+        </div>
+    </div>
+</div>
 
+<!-- ==========================================
+     CONTINGUT PRINCIPAL I FILTRES TERRITORIALS
+     ========================================== -->
+<main class="pt-12 pb-32 px-4 md:px-10 w-full max-w-[1400px] mx-auto">
+
+    <!-- Filtres per Zona / Nucli Territorial -->
+    <div class="mb-12">
+        <div class="flex items-center justify-between mb-4">
+            <p class="text-xs font-black uppercase tracking-widest text-stone-400">1. Selecciona la zona del municipi</p>
+            <button id="reset-filters-btn" class="text-xs font-bold text-stone-500 hover:text-mes-dark underline cursor-pointer hidden">
+                Restablir tots els filtres
+            </button>
+        </div>
+        
+        <div class="flex flex-wrap gap-x-8 gap-y-3 border-b-2 border-stone-200 pb-4 overflow-x-auto" id="filters-zone">
+            <button class="filter-btn-zone text-sm md:text-lg font-black uppercase tracking-wider text-mes-dark border-b-4 border-mes-dark pb-2 px-1 transition-all cursor-pointer whitespace-nowrap active-zone" data-filter="general">
+                Tot el municipi
+            </button>
+            <button class="filter-btn-zone text-sm md:text-lg font-black uppercase tracking-wider text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-2 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="llucmajor">
+                Llucmajor Poble
+            </button>
+            <button class="filter-btn-zone text-sm md:text-lg font-black uppercase tracking-wider text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-2 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="arenal">
+                s'Arenal
+            </button>
+            <button class="filter-btn-zone text-sm md:text-lg font-black uppercase tracking-wider text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-2 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="urbanitzacions">
+                Urbanitzacions
+            </button>
+            <button class="filter-btn-zone text-sm md:text-lg font-black uppercase tracking-wider text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-2 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="estanyol">
+                s'Estanyol i Son Bieló
+            </button>
+            <button class="filter-btn-zone text-sm md:text-lg font-black uppercase tracking-wider text-stone-400 border-b-4 border-transparent hover:border-mes-lime hover:text-mes-dark pb-2 px-1 transition-all cursor-pointer whitespace-nowrap" data-filter="foravila">
+                Foravila
+            </button>
+        </div>
     </div>
 
-    <div id="section-destacats" class="mb-32">
+    <!-- Filtres Temàtics / Àmbits (Pills dinàmics) -->
+    <div class="mb-16">
+        <p class="text-xs font-black uppercase tracking-widest text-stone-400 mb-3">2. Filtra per àmbit temàtic</p>
+        <div class="flex flex-wrap gap-2.5 min-h-[44px]" id="filters-theme"></div>
+    </div>
+
+    <!-- Missatge si no hi ha resultats -->
+    <div id="no-results-box" class="hidden bg-white border-2 border-dashed border-stone-300 rounded-2xl p-12 text-center my-12">
+        <div class="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4 text-stone-400">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <h3 class="text-2xl font-black uppercase text-mes-dark mb-2">No hem trobat propostes amb aquests criteris</h3>
+        <p class="text-stone-600 mb-6 max-w-md mx-auto">Prova de canviar el text de cerca o seleccionar una altra zona del municipi.</p>
+        <button onclick="resetAllFilters()" class="bg-mes-lime text-mes-dark px-6 py-3 font-black uppercase text-xs tracking-widest shadow hover:bg-mes-dark hover:text-white transition-all">
+            Mostra totes les propostes
+        </button>
+    </div>
+
+
+    <!-- =======================================================
+         BLOC A: PROJECTES TRANSFORMADORS AMB SIMULACIÓ IA
+         ======================================================= -->
+    <section id="section-transformadors" class="mb-32">
         
-        <div class="flex items-center gap-6 mb-16">
-            <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-mes-dark whitespace-nowrap">Projectes Destacats</h2>
-            <div class="flex-grow h-1 bg-mes-lime rounded-full"></div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12 border-b-2 border-mes-dark pb-4">
+            <div class="flex items-center gap-4">
+                <span class="w-4 h-4 bg-mes-lime rounded-full"></span>
+                <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-mes-dark">
+                    Projectes de Futur <span class="text-stone-400 font-light text-2xl md:text-3xl">· Simulacions 2027</span>
+                </h2>
+            </div>
+            <span class="text-xs font-black uppercase tracking-widest bg-stone-200 text-stone-700 px-3 py-1.5 rounded-full w-fit">
+                Impacte Urbanístic i Mobilitat
+            </span>
         </div>
 
-        <div class="flex flex-col gap-16 md:gap-24">
+        <div class="flex flex-col gap-20" id="transformadors-container">
             {% for proposta in site.data.propostes %}
-                {% if proposta.imatge and proposta.imatge != "" %}
+                {% if proposta.tipus == "ia" or (proposta.imatge and proposta.imatge != "") %}
                 
                 {% assign modulo = forloop.index | modulo: 2 %}
+                {% assign prop_id = proposta.titol | slugify %}
 
-                <div class="proposal-card flex flex-col bg-white shadow-xl hover:shadow-2xl transition-all duration-500 border border-stone-100 group transform hover:-translate-y-2 overflow-hidden {% if modulo == 0 %}md:flex-row-reverse{% else %}md:flex-row{% endif %}" 
-                     data-zone="{{ proposta.zona_id }}" 
-                     data-theme="{{ proposta.tema | slugify }}">
+                <article class="proposal-card proposal-type-a bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-stone-200 overflow-hidden flex flex-col {% if modulo == 0 %}lg:flex-row-reverse{% else %}lg:flex-row{% endif %}" 
+                         id="card-{{ prop_id }}"
+                         data-type="transformadors"
+                         data-zone="{{ proposta.zona_id | default: 'general' }}" 
+                         data-theme="{{ proposta.tema | default: 'Urbanisme' | slugify }}"
+                         data-search-text="{{ proposta.titol | downcase }} {{ proposta.descripcio | downcase }} {{ proposta.zona_nom | downcase }} {{ proposta.objectiu | downcase }}">
                     
-                    <div class="w-full md:w-3/5 aspect-[16/10] bg-stone-50 relative overflow-hidden flex-shrink-0 border-b md:border-b-0 {% if modulo == 0 %}md:border-l{% else %}md:border-r{% endif %} border-stone-200">
-                        <img src="{{ site.baseurl }}{{ proposta.imatge }}" class="absolute inset-0 w-full h-full object-contain p-6 transition-transform duration-1000 group-hover:scale-105" alt="{{ proposta.titol }}" />
+                    <!-- COMPONENT VISUAL: SLIDER ABANS / DESPRÉS (O RENDER IA) -->
+                    <div class="w-full lg:w-3/5 bg-stone-900 relative overflow-hidden flex flex-col justify-center min-h-[380px] md:min-h-[460px]">
                         
-                        <div class="absolute top-0 bottom-0 w-2 bg-mes-lime transition-all duration-300 {% if modulo == 0 %}right-0{% else %}left-0{% endif %}"></div>
-                        
-                        <div class="absolute top-6 {% if modulo == 0 %}left-6{% else %}right-6{% endif %}">
-                            <span class="text-xs font-black uppercase tracking-widest text-mes-dark bg-mes-lime px-5 py-2 shadow-md">{{ proposta.zona_nom }}</span>
+                        {% if proposta.imatge_abans and proposta.imatge_despres %}
+                        <!-- SLIDER INTERACTIU ABANS / DESPRÉS -->
+                        <div class="slider-container w-full h-full aspect-[16/10] relative group cursor-ew-resize" data-slider-id="{{ prop_id }}">
+                            <!-- Imatge Després (Proposta / Render IA) -->
+                            <img src="{{ site.baseurl }}{{ proposta.imatge_despres }}" 
+                                 class="absolute inset-0 w-full h-full object-cover" 
+                                 alt="{{ proposta.titol }} - Proposta 2027" />
+                            
+                            <!-- Màscara Abans (Estat Actual) -->
+                            <div class="slider-mask w-1/2 border-r-4 border-mes-lime">
+                                <img src="{{ site.baseurl }}{{ proposta.imatge_abans }}" 
+                                     class="absolute inset-0 w-full h-full object-cover max-w-none" 
+                                     style="width: 200%; max-width: 200%;" 
+                                     alt="{{ proposta.titol }} - Estat Actual" />
+                            </div>
+
+                            <!-- Línia lliscant i botó -->
+                            <div class="slider-handle left-1/2">
+                                <div class="slider-button">
+                                    <svg class="w-5 h-5 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path></svg>
+                                </div>
+                            </div>
+
+                            <!-- Etiquetes flotants -->
+                            <div class="absolute top-4 left-4 pointer-events-none">
+                                <span class="bg-stone-900/85 backdrop-blur-md text-white text-[11px] font-black uppercase tracking-wider px-3 py-1.5 rounded-lg border border-white/20 shadow">
+                                    Estat Actual
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4 pointer-events-none">
+                                <span class="bg-mes-lime text-mes-dark text-[11px] font-black uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-lg">
+                                    Visió 2027
+                                </span>
+                            </div>
+                        </div>
+                        {% else %}
+                        <!-- RENDER INDIVIDUAL -->
+                        <div class="relative w-full h-full aspect-[16/10] overflow-hidden group">
+                            <img src="{{ site.baseurl }}{{ proposta.imatge }}" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                                 alt="{{ proposta.titol }}" />
+                        </div>
+                        {% endif %}
+
+                        <!-- BADGE ÈTIC DE TRANSPARÈNCIA IA -->
+                        <div class="bg-stone-950 px-4 py-2.5 flex items-center justify-between text-[11px] text-stone-300 border-t border-stone-800">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-mes-lime"></span>
+                                <span class="font-medium text-stone-300">Simulació conceptual generada per IA basada en l'avantprojecte tècnic</span>
+                            </div>
+                            <span class="text-stone-500 font-bold uppercase tracking-wider text-[10px] hidden sm:inline">Visió Transformadora</span>
                         </div>
                     </div>
                     
-                    <div class="w-full md:w-2/5 p-10 md:p-16 flex flex-col text-left justify-center bg-white">
-                        
-                        <h3 class="text-3xl md:text-5xl font-black uppercase text-mes-dark group-hover:text-mes-lime transition-colors duration-300 leading-none mb-8 tracking-tighter">{{ proposta.titol }}</h3>
-                        
-                        <p class="text-lg md:text-xl text-stone-600 italic leading-relaxed">{{ proposta.descripcio }}</p>
-                        
-                        <div class="mt-12 pt-8 border-t border-stone-100 flex justify-between items-center">
-                            <span class="text-sm font-black uppercase tracking-widest text-stone-400 bg-stone-50 px-3 py-1">
-                                {{ proposta.tema }}
-                            </span>
-                            <span class="text-mes-lime group-hover:translate-x-2 transition-transform duration-300">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                            </span>
+                    <!-- DETALL DEL PROJECTE I METADADES -->
+                    <div class="w-full lg:w-2/5 p-8 md:p-12 flex flex-col justify-between text-left bg-white">
+                        <div>
+                            <!-- Capçalera -->
+                            <div class="flex items-center justify-between gap-3 mb-4">
+                                <span class="text-xs font-black uppercase tracking-widest text-mes-dark bg-mes-lime px-3.5 py-1.5 rounded-md shadow-sm">
+                                    {{ proposta.zona_nom | default: "Tot el municipi" }}
+                                </span>
+                                <span class="text-xs font-bold uppercase tracking-wider text-stone-500 bg-stone-100 px-3 py-1 rounded">
+                                    {{ proposta.tema | default: "Urbanisme" }}
+                                </span>
+                            </div>
+
+                            <h3 class="text-2xl md:text-4xl font-black uppercase text-mes-dark leading-tight tracking-tight mb-4">
+                                {{ proposta.titol }}
+                            </h3>
+
+                            <p class="text-stone-600 text-base md:text-lg leading-relaxed mb-6">
+                                {{ proposta.descripcio }}
+                            </p>
+
+                            <!-- Taula d'Execució Viable -->
+                            <div class="bg-stone-50 border border-stone-200 rounded-xl p-4 mb-6 space-y-3 text-sm">
+                                <div class="flex items-start gap-2">
+                                    <span class="font-black text-mes-dark uppercase tracking-wider text-xs min-w-[90px]">🎯 Objectiu:</span>
+                                    <span class="text-stone-700 font-medium">{{ proposta.objectiu | default: "Recuperació de l'espai veïnal i millora de la convivència urbana." }}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-black text-mes-dark uppercase tracking-wider text-xs min-w-[90px]">⏱️ Termini:</span>
+                                    <span class="text-stone-700 font-medium">{{ proposta.fases | default: "Fase 1 (2027 - 2028)" }}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-black text-mes-dark uppercase tracking-wider text-xs min-w-[90px]">🌳 Retorn:</span>
+                                    <span class="text-stone-700 font-medium">{{ proposta.impacte | default: "+ Confort climàtic i accessibilitat universal" }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- BARRA D'INTERACCIÓ CÍVICA -->
+                        <div class="pt-6 border-t border-stone-200 flex flex-wrap items-center justify-between gap-4">
+                            <!-- Botó Suport -->
+                            <button class="like-btn flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-stone-300 hover:border-mes-dark text-mes-dark font-black text-xs uppercase tracking-wider transition-all cursor-pointer bg-white"
+                                    data-proposal-id="{{ prop_id }}"
+                                    title="Dona suport a aquest projecte">
+                                <svg class="w-5 h-5 like-icon text-stone-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
+                                <span>Suport</span>
+                                <span class="like-count bg-stone-100 px-2 py-0.5 rounded-full text-xs font-bold text-stone-800">24</span>
+                            </button>
+
+                            <!-- Accions de compartir i opinar -->
+                            <div class="flex items-center gap-2">
+                                <button class="opinar-btn bg-stone-100 hover:bg-stone-200 text-mes-dark p-2.5 rounded-xl transition-all cursor-pointer" 
+                                        data-proposal-title="{{ proposta.titol }}" 
+                                        title="Fes una aportació a aquest projecte">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
+                                </button>
+                                
+                                <button class="share-whatsapp-btn bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 p-2.5 rounded-xl transition-all cursor-pointer" 
+                                        data-url="/propostes/#card-{{ prop_id }}" 
+                                        data-title="{{ proposta.titol }}" 
+                                        title="Comparteix per WhatsApp">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                                </button>
+
+                                <button class="share-copy-btn bg-stone-100 hover:bg-stone-200 text-stone-700 p-2.5 rounded-xl transition-all cursor-pointer" 
+                                        data-id="card-{{ prop_id }}" 
+                                        title="Copia l'enllaç directe">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </article>
                 {% endif %}
             {% endfor %}
         </div>
-    </div>
+    </section>
 
-    <div id="section-programa">
+
+    <!-- =======================================================
+         BLOC B: PROPOSTES TEMÀTIQUES I MESURES CLAU
+         ======================================================= -->
+    <section id="section-mesures">
+        
+        <div class="flex items-center gap-4 mb-12 border-b-2 border-stone-300 pb-4">
+            <span class="w-4 h-4 bg-mes-dark rounded-full"></span>
+            <h2 class="text-3xl md:text-4xl font-black uppercase tracking-widest text-mes-dark">
+                Mesures i Propostes per Àmbits
+            </h2>
+        </div>
+
         {% assign temes_agrupats = site.data.propostes | group_by: "tema" %}
 
         {% for grup_tema in temes_agrupats %}
-        <div class="theme-block mb-24" data-theme-slug="{{ grup_tema.name | default: 'general' | slugify }}">
+        <div class="theme-block mb-16" data-theme-slug="{{ grup_tema.name | default: 'general' | slugify }}">
             
-            <div class="flex items-center gap-6 mb-12">
-                <h2 class="text-3xl md:text-4xl font-black uppercase tracking-widest text-mes-dark whitespace-nowrap">{{ grup_tema.name | default: "Altres" }}</h2>
+            <div class="flex items-center gap-4 mb-8">
+                <h3 class="text-2xl md:text-3xl font-black uppercase tracking-wider text-mes-dark">
+                    {{ grup_tema.name | default: "Serveis i Ciutadania" }}
+                </h3>
                 <div class="flex-grow h-[2px] bg-stone-200"></div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
                 {% for proposta in grup_tema.items %}
-                    {% if proposta.imatge == nil or proposta.imatge == "" %}
+                    {% if proposta.tipus != "ia" and (proposta.imatge == nil or proposta.imatge == "") %}
                     
-                    <div class="proposal-card flex items-start p-10 bg-white shadow-sm border border-stone-200 group transition-all duration-300 hover:shadow-xl hover:-translate-y-1 text-left relative overflow-hidden" 
-                         data-zone="{{ proposta.zona_id }}" 
-                         data-theme="{{ grup_tema.name | default: 'general' | slugify }}">
-                        
-                        <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-transparent group-hover:bg-mes-lime transition-colors duration-300"></div>
+                    {% assign prop_id = proposta.titol | slugify %}
 
-                        <div class="text-mes-lime bg-stone-50 group-hover:bg-mes-lime group-hover:text-mes-dark p-4 rounded-full mr-6 flex-shrink-0 mt-1 transition-all duration-300">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        </div>
+                    <article class="proposal-card proposal-type-b flex flex-col justify-between p-8 bg-white rounded-2xl shadow-sm border border-stone-200 hover:shadow-xl hover:border-mes-lime transition-all duration-300 relative overflow-hidden group" 
+                             id="card-{{ prop_id }}"
+                             data-type="mesures"
+                             data-zone="{{ proposta.zona_id | default: 'general' }}" 
+                             data-theme="{{ grup_tema.name | default: 'general' | slugify }}"
+                             data-search-text="{{ proposta.titol | downcase }} {{ proposta.descripcio | downcase }} {{ proposta.problema | downcase }} {{ proposta.solucio | downcase }} {{ proposta.benefici | downcase }} {{ proposta.zona_nom | downcase }}">
                         
-                        <div class="flex flex-col text-left w-full">
-                            <h3 class="text-2xl font-black uppercase text-mes-dark group-hover:text-mes-lime transition-colors mb-4 leading-tight">{{ proposta.titol }}</h3>
-                            <p class="text-lg text-stone-600 mb-8 leading-relaxed">{{ proposta.descripcio }}</p>
-                            
-                            <span class="text-sm font-black uppercase tracking-widest text-stone-400 border-t border-stone-100 pt-5 mt-auto">{{ proposta.zona_nom }}</span>
+                        <div class="absolute top-0 left-0 right-0 h-1.5 bg-transparent group-hover:bg-mes-lime transition-colors"></div>
+
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-4">
+                                <span class="text-[11px] font-black uppercase tracking-wider bg-stone-100 text-stone-700 px-3 py-1 rounded-md">
+                                    {{ proposta.zona_nom | default: "Tot el municipi" }}
+                                </span>
+                                <span class="text-[11px] font-bold text-stone-400 uppercase tracking-wider">
+                                    {{ proposta.prioritat | default: "Pla 2027" }}
+                                </span>
+                            </div>
+
+                            <h4 class="text-xl font-black uppercase text-mes-dark group-hover:text-mes-dark transition-colors mb-4 leading-snug">
+                                {{ proposta.titol }}
+                            </h4>
+
+                            <!-- Format Sintètic: Problema -> Solució -> Benefici -->
+                            {% if proposta.problema or proposta.solucio %}
+                            <div class="space-y-3 text-sm mb-6 text-stone-600">
+                                {% if proposta.problema %}
+                                <div class="bg-red-50/70 border-l-2 border-red-400 p-2.5 rounded-r">
+                                    <strong class="text-red-900 text-xs uppercase block font-black">El problema:</strong>
+                                    <span class="text-stone-700 text-xs">{{ proposta.problema }}</span>
+                                </div>
+                                {% endif %}
+                                
+                                {% if proposta.solucio %}
+                                <div class="bg-stone-50 border-l-2 border-mes-lime p-2.5 rounded-r">
+                                    <strong class="text-mes-dark text-xs uppercase block font-black">La solució:</strong>
+                                    <span class="text-stone-700 text-xs">{{ proposta.solucio }}</span>
+                                </div>
+                                {% endif %}
+
+                                {% if proposta.benefici %}
+                                <div class="bg-emerald-50/70 border-l-2 border-emerald-500 p-2.5 rounded-r">
+                                    <strong class="text-emerald-900 text-xs uppercase block font-black">El benefici veïnal:</strong>
+                                    <span class="text-stone-700 text-xs">{{ proposta.benefici }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% else %}
+                            <p class="text-stone-600 text-sm leading-relaxed mb-6">
+                                {{ proposta.descripcio }}
+                            </p>
+                            {% endif %}
                         </div>
-                    </div>
+
+                        <!-- Micro-interaccions -->
+                        <div class="pt-4 border-t border-stone-100 flex items-center justify-between gap-2 mt-auto">
+                            <button class="like-btn flex items-center gap-1.5 text-xs font-bold text-stone-500 hover:text-mes-dark transition-colors cursor-pointer"
+                                    data-proposal-id="{{ prop_id }}">
+                                <svg class="w-4 h-4 like-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
+                                <span>Suport (<span class="like-count">12</span>)</span>
+                            </button>
+
+                            <div class="flex items-center gap-1">
+                                <button class="share-whatsapp-btn text-stone-400 hover:text-green-600 p-1.5 transition-colors cursor-pointer"
+                                        data-url="/propostes/#card-{{ prop_id }}" 
+                                        data-title="{{ proposta.titol }}" 
+                                        title="Comparteix per WhatsApp">
+                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                                </button>
+                                <button class="share-copy-btn text-stone-400 hover:text-mes-dark p-1.5 transition-colors cursor-pointer"
+                                        data-id="card-{{ prop_id }}" 
+                                        title="Copia l'enllaç">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </article>
                     {% endif %}
                 {% endfor %}
             </div>
             
         </div>
         {% endfor %}
-    </div>
+    </section>
+
+</main>
+
+
+<!-- =======================================================
+     BOTÓ FLOTANT CIVIC-TECH PER FER PROPOSTES (STICKY)
+     ======================================================= -->
+<div class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-40 flex flex-col items-end gap-3">
+    <button id="open-modal-btn" 
+            class="bg-mes-lime text-mes-dark px-6 py-4 md:px-8 md:py-4 rounded-2xl text-xs md:text-sm font-black uppercase tracking-widest shadow-2xl flex items-center gap-3 border-2 border-mes-dark hover:bg-mes-dark hover:text-white transition-all transform hover:-translate-y-1 cursor-pointer group">
+        <svg class="w-5 h-5 text-mes-dark group-hover:text-mes-lime transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+        </svg>
+        <span>Fes la teva proposta</span>
+    </button>
 </div>
 
-<button id="open-modal-btn" class="fixed bottom-6 right-6 md:bottom-10 md:right-10 bg-mes-lime text-mes-dark px-10 py-5 text-sm font-black uppercase tracking-widest shadow-2xl z-40 flex items-center gap-3 border-4 border-mes-dark/10 hover:bg-mes-dark hover:text-white transition-all transform hover:-translate-y-1 cursor-pointer group">
-    <svg class="w-6 h-6 text-mes-dark group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-    <span class="hidden md:inline">Fes la teva proposta</span>
-</button>
 
+<!-- =======================================================
+     MODAL DE PARTICIPACIÓ CIUTADANA / APORTACIONS
+     ======================================================= -->
 <div id="proposta-modal" class="fixed inset-0 z-[60] hidden opacity-0 transition-opacity duration-300">
     <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="modal-backdrop"></div>
     
     <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
-        <div class="bg-white w-full max-w-3xl shadow-2xl pointer-events-auto transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]" id="modal-content">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl pointer-events-auto transform scale-95 transition-transform duration-300 flex flex-col max-h-[92vh] overflow-hidden" id="modal-content">
             
-            <div class="bg-mes-dark p-8 md:p-10 flex justify-between items-center flex-shrink-0">
-                <h3 class="text-4xl font-black uppercase tracking-widest text-white">Què proposes?</h3>
-                <button id="close-modal-btn" class="text-stone-400 hover:text-mes-lime transition-colors">
-                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <div class="bg-mes-dark p-6 md:p-8 flex justify-between items-center text-white border-b-4 border-mes-lime flex-shrink-0">
+                <div>
+                    <span class="text-xs font-black uppercase tracking-widest text-mes-lime block mb-1">Participació 2027</span>
+                    <h3 class="text-2xl md:text-3xl font-black uppercase tracking-tight" id="modal-title-heading">Què proposes per Llucmajor?</h3>
+                </div>
+                <button id="close-modal-btn" class="text-stone-400 hover:text-mes-lime transition-colors p-2 cursor-pointer">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
 
-            <form action="https://formspree.io/f/meajnepl" method="POST" class="p-10 md:p-14 space-y-10 overflow-y-auto">
+            <form action="https://formspree.io/f/meajnepl" method="POST" class="p-6 md:p-10 space-y-6 overflow-y-auto text-left" id="civic-form">
                 
-                <p class="text-xl text-stone-600 mb-8 italic leading-relaxed text-left border-l-4 border-mes-lime pl-6">A MÉS per Llucmajor construïm el municipi escoltant. Escriu la teva idea i la valorarem per incorporar-la al nostre pla d'acció.</p>
+                <p class="text-sm md:text-base text-stone-600 italic border-l-4 border-mes-lime pl-4">
+                    A MÉS per Llucmajor construïm el municipi escoltant. La teva aportació serà valorada directament per l'equip de redacció del programa.
+                </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <input type="hidden" id="context-proposta" name="context_proposta" value="Proposta General">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label for="nom" class="block text-sm font-black uppercase tracking-widest text-stone-500 mb-3 text-left">Nom i Llinatges</label>
-                        <input type="text" id="nom" name="name" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-6 py-4 text-lg focus:outline-none focus:border-mes-lime focus:bg-white transition-colors" placeholder="Ex: Maria Font">
+                        <label for="nom" class="block text-xs font-black uppercase tracking-wider text-stone-600 mb-2">Nom i Llinatges</label>
+                        <input type="text" id="nom" name="name" required 
+                               class="w-full border-2 border-stone-200 rounded-xl bg-stone-50 px-4 py-3 text-sm focus:outline-none focus:border-mes-dark focus:bg-white transition-all" 
+                               placeholder="Ex: Maria Font">
                     </div>
                     <div>
-                        <label for="email" class="block text-sm font-black uppercase tracking-widest text-stone-500 mb-3 text-left">Correu electrònic</label>
-                        <input type="email" id="email" name="email" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-6 py-4 text-lg focus:outline-none focus:border-mes-lime focus:bg-white transition-colors" placeholder="Per poder-te respondre">
+                        <label for="email" class="block text-xs font-black uppercase tracking-wider text-stone-600 mb-2">Correu electrònic o Telèfon</label>
+                        <input type="text" id="email" name="contact" required 
+                               class="w-full border-2 border-stone-200 rounded-xl bg-stone-50 px-4 py-3 text-sm focus:outline-none focus:border-mes-dark focus:bg-white transition-all" 
+                               placeholder="Per mantenir-te informat">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="zona" class="block text-xs font-black uppercase tracking-wider text-stone-600 mb-2">Nucli o Barri</label>
+                        <select id="zona" name="zona" class="w-full border-2 border-stone-200 rounded-xl bg-stone-50 px-4 py-3 text-sm focus:outline-none focus:border-mes-dark focus:bg-white transition-all cursor-pointer">
+                            <option value="General">Tot el municipi</option>
+                            <option value="Llucmajor">Llucmajor Poble</option>
+                            <option value="s'Arenal">s'Arenal</option>
+                            <option value="Urbanitzacions">Urbanitzacions (Badies, Maioris...)</option>
+                            <option value="s'Estanyol">s'Estanyol i Son Bieló</option>
+                            <option value="Foravila">Foravila</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="ambit" class="block text-xs font-black uppercase tracking-wider text-stone-600 mb-2">Àmbit temàtic</label>
+                        <select id="ambit" name="ambit" class="w-full border-2 border-stone-200 rounded-xl bg-stone-50 px-4 py-3 text-sm focus:outline-none focus:border-mes-dark focus:bg-white transition-all cursor-pointer">
+                            <option value="Espai Públic i Urbanisme">Espai Públic i Urbanisme</option>
+                            <option value="Mobilitat i Transport">Mobilitat i Transport</option>
+                            <option value="Serveis Socials i Cures">Serveis Socials i Cures</option>
+                            <option value="Educació, Joventut i Esports">Educació, Joventut i Esports</option>
+                            <option value="Medi Ambient i Sostenibilitat">Medi Ambient i Sostenibilitat</option>
+                            <option value="Comerç Local i Economia">Comerç Local i Economia</option>
+                            <option value="Altres">Altres qüestions</option>
+                        </select>
                     </div>
                 </div>
 
                 <div>
-                    <label for="zona" class="block text-sm font-black uppercase tracking-widest text-stone-500 mb-3 text-left">De quin nucli és la proposta?</label>
-                    <select id="zona" name="zona" class="w-full border-b-2 border-stone-200 bg-stone-50 px-6 py-4 text-lg focus:outline-none focus:border-mes-lime focus:bg-white transition-colors appearance-none cursor-pointer">
-                        <option value="General">Tot el municipi</option>
-                        <option value="Llucmajor">Llucmajor Poble</option>
-                        <option value="s'Arenal">s'Arenal</option>
-                        <option value="Urbanitzacions">Urbanitzacions</option>
-                        <option value="s'Estanyol">s'Estanyol / Son Bieló</option>
-                        <option value="Foravila">Foravila</option>
-                    </select>
+                    <label for="missatge" class="block text-xs font-black uppercase tracking-wider text-stone-600 mb-2">La teva proposta o aportació</label>
+                    <textarea id="missatge" name="message" rows="4" required 
+                              class="w-full border-2 border-stone-200 rounded-xl bg-stone-50 px-4 py-3 text-sm focus:outline-none focus:border-mes-dark focus:bg-white transition-all resize-none leading-relaxed" 
+                              placeholder="Explica la teva idea, el problema detectat o com milloraries el projecte..."></textarea>
                 </div>
 
-                <div>
-                    <label for="missatge" class="block text-sm font-black uppercase tracking-widest text-stone-500 mb-3 text-left">La teva proposta</label>
-                    <textarea id="missatge" name="message" rows="6" required class="w-full border-b-2 border-stone-200 bg-stone-50 px-6 py-4 text-lg focus:outline-none focus:border-mes-lime focus:bg-white transition-colors resize-none leading-relaxed" placeholder="Explica'ns la teva idea per millorar Llucmajor..."></textarea>
-                </div>
-
-                <div class="pt-8 border-t border-stone-100 flex justify-end">
-                    <button type="submit" class="bg-mes-lime text-mes-dark border-2 border-mes-lime px-10 py-5 text-sm font-black uppercase tracking-widest shadow-md hover:bg-transparent hover:text-mes-dark transition-all cursor-pointer w-full md:w-auto text-center">
-                        Enviar Proposta
+                <div class="pt-4 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <span class="text-xs text-stone-400">Dades protegides. Ús exclusiu ciutadà.</span>
+                    <button type="submit" class="w-full sm:w-auto bg-mes-lime text-mes-dark border-2 border-mes-dark px-8 py-3.5 rounded-xl text-xs font-black uppercase tracking-widest shadow-md hover:bg-mes-dark hover:text-white transition-all cursor-pointer text-center">
+                        Enviar Aportació
                     </button>
                 </div>
             </form>
@@ -192,152 +615,361 @@ permalink: /propostes/
     </div>
 </div>
 
+<!-- =======================================================
+     MODAL DE CONFIRMACIÓ D'ÈXIT
+     ======================================================= -->
 <div id="success-modal" class="fixed inset-0 z-[70] hidden opacity-0 transition-opacity duration-300">
     <div class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
     <div class="absolute inset-0 flex items-center justify-center p-4">
-        <div class="bg-white p-12 md:p-16 max-w-xl w-full shadow-2xl text-center transform scale-95 transition-transform duration-300" id="success-content">
-            <div class="w-24 h-24 bg-mes-lime rounded-full flex items-center justify-center mx-auto mb-10 text-mes-dark shadow-inner">
-                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+        <div class="bg-white p-8 md:p-12 max-w-lg w-full rounded-2xl shadow-2xl text-center transform scale-95 transition-transform duration-300" id="success-content">
+            <div class="w-20 h-20 bg-mes-lime rounded-full flex items-center justify-center mx-auto mb-6 text-mes-dark shadow-inner">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"></path></svg>
             </div>
-            <h3 class="text-4xl md:text-5xl font-black uppercase text-mes-dark mb-5 tracking-tighter leading-none">Proposta enviada!</h3>
-            <p class="text-lg md:text-xl text-stone-600 mb-12 leading-relaxed italic">Gràcies per ajudar-nos a construir un Llucmajor millor. Hem rebut el teu missatge i el valorarem ben aviat.</p>
-            <button id="close-success-btn" class="bg-mes-dark text-mes-lime px-10 py-5 text-sm font-black uppercase tracking-widest hover:bg-black transition-colors w-full shadow-md cursor-pointer">D'acord</button>
+            <h3 class="text-3xl font-black uppercase text-mes-dark mb-3 tracking-tight">Proposta rebuda!</h3>
+            <p class="text-stone-600 mb-8 leading-relaxed text-sm md:text-base">
+                Gràcies per ajudar-nos a construir el futur de Llucmajor. Hem registrat la teva aportació correctament.
+            </p>
+            <button id="close-success-btn" class="bg-mes-dark text-mes-lime px-8 py-4 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-black transition-colors w-full shadow-md cursor-pointer">
+                Tornar a les propostes
+            </button>
         </div>
     </div>
 </div>
 
+<!-- =======================================================
+     LLÒGICA JAVASCRIPT: FILTRATGE, SLIDERS I CIVIC TECH
+     ======================================================= -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     
-    // --- 1. LÒGICA DELS FILTRES (ZONES I TEMES) ---
-    const zoneBtns = document.querySelectorAll('.filter-btn-zone');
-    const themeFilterContainer = document.getElementById('filters-theme');
+    // --- ESTAT GLOBAL ---
+    let currentZone = 'general';
+    let currentTheme = 'all';
+    let currentView = 'all';
+    let searchQuery = '';
+
     const proposalCards = document.querySelectorAll('.proposal-card');
     const themeBlocks = document.querySelectorAll('.theme-block');
-    const sectionDestacats = document.getElementById('section-destacats');
+    const sectionTransformadors = document.getElementById('section-transformadors');
+    const sectionMesures = document.getElementById('section-mesures');
+    const themeFilterContainer = document.getElementById('filters-theme');
+    const noResultsBox = document.getElementById('no-results-box');
+    const resultsCountText = document.getElementById('results-count-text');
+    const resetFiltersBtn = document.getElementById('reset-filters-btn');
+    const searchInput = document.getElementById('live-search-input');
+    const clearSearchBtn = document.getElementById('clear-search-btn');
 
-    function filterContent(zone, theme = 'all') {
-        
+    // --- 1. FUNCIÓ DE FILTRATGE COMBINAT ---
+    function applyAllFilters() {
+        let visibleTotal = 0;
+        let visibleTransformadors = 0;
+        let visibleMesures = 0;
+
+        const normalizedQuery = searchQuery.trim().toLowerCase();
+
+        proposalCards.forEach(card => {
+            const cardZone = card.getAttribute('data-zone') || 'general';
+            const cardTheme = card.getAttribute('data-theme') || '';
+            const cardType = card.getAttribute('data-type') || '';
+            const cardSearchData = (card.getAttribute('data-search-text') || '').toLowerCase();
+
+            const matchesZone = (currentZone === 'general' || cardZone === currentZone || cardZone === 'general');
+            const matchesTheme = (currentTheme === 'all' || cardTheme === currentTheme);
+            const matchesView = (currentView === 'all' || 
+                                (currentView === 'transformadors' && cardType === 'transformadors') || 
+                                (currentView === 'mesures' && cardType === 'mesures'));
+            const matchesSearch = (!normalizedQuery || cardSearchData.includes(normalizedQuery));
+
+            if (matchesZone && matchesTheme && matchesView && matchesSearch) {
+                card.style.display = 'flex';
+                visibleTotal++;
+                if (cardType === 'transformadors') visibleTransformadors++;
+                if (cardType === 'mesures') visibleMesures++;
+
+                if (currentZone !== 'general' && cardZone === 'general') {
+                    card.style.order = '50';
+                } else {
+                    card.style.order = '0';
+                }
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
         themeBlocks.forEach(block => {
             const cardsInBlock = block.querySelectorAll('.proposal-card');
             let visibleInBlock = 0;
-            cardsInBlock.forEach(card => {
-                const cardZone = card.getAttribute('data-zone');
-                
-                // El truc màgic: si filtrem per un nucli específic, afegim també les "general"
-                const matchesZone = (cardZone === zone || cardZone === 'general');
-                const matchesTheme = (theme === 'all' || card.getAttribute('data-theme') === theme);
-                
-                if (matchesZone && matchesTheme) {
-                    card.style.display = 'flex';
-                    // Si estem en un nucli específic i la proposta és general, l'enviem al final amb CSS order
-                    card.style.order = (zone !== 'general' && cardZone === 'general') ? '999' : '0';
-                    visibleInBlock++;
-                } else {
-                    card.style.display = 'none';
-                }
+            cardsInBlock.forEach(c => {
+                if (c.style.display !== 'none') visibleInBlock++;
             });
-            block.style.display = (visibleInBlock > 0) ? 'block' : 'none';
+            block.style.display = (visibleInBlock > 0 && currentView !== 'transformadors') ? 'block' : 'none';
         });
 
-        if (sectionDestacats && zone !== 'general') {
-            let visibleDestacats = 0;
-            sectionDestacats.querySelectorAll('.proposal-card').forEach(card => {
-                const cardZone = card.getAttribute('data-zone');
-                const matchesZone = (cardZone === zone || cardZone === 'general');
-                const matchesTheme = (theme === 'all' || card.getAttribute('data-theme') === theme);
-                
-                if (matchesZone && matchesTheme) {
-                    card.style.display = 'flex';
-                    card.style.order = (zone !== 'general' && cardZone === 'general') ? '999' : '0';
-                    visibleDestacats++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-            sectionDestacats.style.display = (visibleDestacats > 0) ? 'block' : 'none';
-        } else if (sectionDestacats) {
-            // Si estem a "Tot el municipi", amaguem la secció de destacats (ja que originalment era així per evitar duplicitats)
-            sectionDestacats.style.display = 'none';
+        if (sectionTransformadors) {
+            sectionTransformadors.style.display = (visibleTransformadors > 0 && currentView !== 'mesures') ? 'block' : 'none';
+        }
+        if (sectionMesures) {
+            sectionMesures.style.display = (visibleMesures > 0 && currentView !== 'transformadors') ? 'block' : 'none';
+        }
+
+        if (visibleTotal === 0) {
+            noResultsBox.classList.remove('hidden');
+        } else {
+            noResultsBox.classList.add('hidden');
+        }
+
+        resultsCountText.innerText = `Mostrant ${visibleTotal} proposta${visibleTotal === 1 ? '' : 's'}`;
+
+        if (currentZone !== 'general' || currentTheme !== 'all' || currentView !== 'all' || normalizedQuery !== '') {
+            resetFiltersBtn.classList.remove('hidden');
+        } else {
+            resetFiltersBtn.classList.add('hidden');
         }
     }
 
-    function updateThemeFilters(zone) {
+    // --- 2. GENERACIÓ DINÀMICA DE FILTRES TEMÀTICS ---
+    function updateThemeFilters() {
         themeFilterContainer.innerHTML = '';
-        const themesFound = new Set();
+        const themesFound = new Map();
+
         proposalCards.forEach(card => {
-            const cardZone = card.getAttribute('data-zone');
-            // Afegim als subfiltres els temes de la zona triada + els temes generals
-            if (cardZone === zone || cardZone === 'general') {
-                const t = card.getAttribute('data-theme');
-                if(t) themesFound.add(t);
+            const cardZone = card.getAttribute('data-zone') || 'general';
+            if (currentZone === 'general' || cardZone === currentZone || cardZone === 'general') {
+                const slug = card.getAttribute('data-theme');
+                if (slug) {
+                    const label = slug.replace(/-/g, ' ');
+                    themesFound.set(slug, label);
+                }
             }
         });
-        if (themesFound.size > 0) {
-            createThemeBtn('Tots els temes', 'all', true);
-            themesFound.forEach(t => {
-                const label = t.replace(/-/g, ' ');
-                createThemeBtn(label, t, false);
-            });
-        }
+
+        createThemePill('Tots els àmbits', 'all', currentTheme === 'all');
+
+        themesFound.forEach((label, slug) => {
+            createThemePill(label, slug, currentTheme === slug);
+        });
     }
 
-    function createThemeBtn(label, slug, active) {
+    function createThemePill(label, slug, active) {
         const btn = document.createElement('button');
-        btn.className = 'filter-btn-theme px-6 py-2.5 text-xs font-black uppercase tracking-widest border-2 transition-all cursor-pointer shadow-sm text-left ';
+        btn.className = 'filter-btn-theme px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider border-2 transition-all cursor-pointer shadow-sm capitalize ';
         if (active) {
             btn.classList.add('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
         } else {
-            btn.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200', 'hover:border-mes-lime', 'hover:text-mes-dark');
+            btn.classList.add('bg-white', 'text-stone-600', 'border-stone-200', 'hover:border-mes-lime', 'hover:text-mes-dark');
         }
         btn.innerText = label;
-        btn.setAttribute('data-theme-filter', slug);
         btn.onclick = () => {
+            currentTheme = slug;
             document.querySelectorAll('.filter-btn-theme').forEach(b => {
                 b.classList.remove('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
-                b.classList.add('bg-transparent', 'text-stone-500', 'border-stone-200', 'hover:border-mes-lime', 'hover:text-mes-dark');
+                b.classList.add('bg-white', 'text-stone-600', 'border-stone-200');
             });
-            btn.classList.remove('bg-transparent', 'text-stone-500', 'border-stone-200', 'hover:border-mes-lime', 'hover:text-mes-dark');
+            btn.classList.remove('bg-white', 'text-stone-600', 'border-stone-200');
             btn.classList.add('bg-mes-lime', 'text-mes-dark', 'border-mes-lime');
-            filterContent(window.currentZone, slug);
+            applyAllFilters();
         };
         themeFilterContainer.appendChild(btn);
     }
 
-    zoneBtns.forEach(btn => {
+    // --- 3. ESDEVENIMENTS DE ZONA ---
+    document.querySelectorAll('.filter-btn-zone').forEach(btn => {
         btn.addEventListener('click', () => {
-            zoneBtns.forEach(b => {
-                b.classList.remove('text-mes-dark', 'border-mes-dark');
+            document.querySelectorAll('.filter-btn-zone').forEach(b => {
+                b.classList.remove('text-mes-dark', 'border-mes-dark', 'active-zone');
                 b.classList.add('text-stone-400', 'border-transparent');
             });
             btn.classList.remove('text-stone-400', 'border-transparent');
-            btn.classList.add('text-mes-dark', 'border-mes-dark');
+            btn.classList.add('text-mes-dark', 'border-mes-dark', 'active-zone');
             
-            window.currentZone = btn.getAttribute('data-filter');
-            updateThemeFilters(window.currentZone);
-            filterContent(window.currentZone, 'all');
+            currentZone = btn.getAttribute('data-filter');
+            currentTheme = 'all';
+            updateThemeFilters();
+            applyAllFilters();
         });
     });
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const z = urlParams.get('zona') || 'general';
-    const startBtn = document.querySelector(`.filter-btn-zone[data-filter="${z}"]`);
-    if (startBtn) startBtn.click(); else document.querySelector('.filter-btn-zone[data-filter="general"]')?.click();
+    // --- 4. SELECTOR DE VISTES ---
+    document.querySelectorAll('.view-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.view-btn').forEach(b => {
+                b.classList.remove('active-tab');
+                b.classList.add('text-stone-600');
+            });
+            btn.classList.add('active-tab');
+            btn.classList.remove('text-stone-600');
+            currentView = btn.getAttribute('data-view');
+            applyAllFilters();
+        });
+    });
+
+    // --- 5. CERCA EN TEMPS REAL ---
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            if (searchQuery.length > 0) {
+                clearSearchBtn.classList.remove('hidden');
+            } else {
+                clearSearchBtn.classList.add('hidden');
+            }
+            applyAllFilters();
+        });
+
+        clearSearchBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            searchQuery = '';
+            clearSearchBtn.classList.add('hidden');
+            applyAllFilters();
+        });
+    }
+
+    window.resetAllFilters = function() {
+        currentZone = 'general';
+        currentTheme = 'all';
+        currentView = 'all';
+        searchQuery = '';
+        if (searchInput) searchInput.value = '';
+        if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
+
+        document.querySelectorAll('.filter-btn-zone').forEach(b => {
+            b.classList.remove('text-mes-dark', 'border-mes-dark', 'active-zone');
+            b.classList.add('text-stone-400', 'border-transparent');
+        });
+        const defaultZoneBtn = document.querySelector('.filter-btn-zone[data-filter="general"]');
+        if (defaultZoneBtn) defaultZoneBtn.classList.add('text-mes-dark', 'border-mes-dark', 'active-zone');
+
+        document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active-tab'));
+        const defaultViewBtn = document.querySelector('.view-btn[data-view="all"]');
+        if (defaultViewBtn) defaultViewBtn.classList.add('active-tab');
+
+        updateThemeFilters();
+        applyAllFilters();
+    };
+
+    if (resetFiltersBtn) resetFiltersBtn.addEventListener('click', resetAllFilters);
 
 
-    // --- 2. LÒGICA DELS MODALS I ENVIAMENT AJAX ---
+    // --- 6. SLIDER INTERACTIU ABANS / DESPRÉS (TOUCH & MOUSE) ---
+    document.querySelectorAll('.slider-container').forEach(container => {
+        const mask = container.querySelector('.slider-mask');
+        const handle = container.querySelector('.slider-handle');
+        let isDragging = false;
+
+        function setSliderPosition(x) {
+            const rect = container.getBoundingClientRect();
+            let offsetX = x - rect.left;
+            if (offsetX < 0) offsetX = 0;
+            if (offsetX > rect.width) offsetX = rect.width;
+            const percentage = (offsetX / rect.width) * 100;
+            
+            mask.style.width = percentage + '%';
+            handle.style.left = percentage + '%';
+        }
+
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            setSliderPosition(e.clientX);
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            setSliderPosition(e.clientX);
+        });
+
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        container.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            setSliderPosition(e.touches[0].clientX);
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            setSliderPosition(e.touches[0].clientX);
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => { isDragging = false; });
+    });
+
+
+    // --- 7. SISTEMA DE SUPORT CÍVIC AMB LOCALSTORAGE ---
+    const likedProposals = JSON.parse(localStorage.getItem('mes_llucmajor_likes') || '{}');
+
+    document.querySelectorAll('.like-btn').forEach(btn => {
+        const propId = btn.getAttribute('data-proposal-id');
+        const icon = btn.querySelector('.like-icon');
+        const countSpan = btn.querySelector('.like-count');
+
+        if (likedProposals[propId]) {
+            btn.classList.add('bg-mes-lime', 'border-mes-lime');
+            if (icon) icon.classList.add('text-mes-dark', 'fill-current');
+        }
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let count = parseInt(countSpan.innerText) || 0;
+
+            if (likedProposals[propId]) {
+                delete likedProposals[propId];
+                btn.classList.remove('bg-mes-lime', 'border-mes-lime');
+                if (icon) icon.classList.remove('text-mes-dark', 'fill-current');
+                countSpan.innerText = Math.max(0, count - 1);
+            } else {
+                likedProposals[propId] = true;
+                btn.classList.add('bg-mes-lime', 'border-mes-lime');
+                if (icon) icon.classList.add('text-mes-dark', 'fill-current');
+                countSpan.innerText = count + 1;
+            }
+            localStorage.setItem('mes_llucmajor_likes', JSON.stringify(likedProposals));
+        });
+    });
+
+
+    // --- 8. COMPARTICIÓ DIGITAL (WHATSAPP & COPY LINK) ---
+    document.querySelectorAll('.share-whatsapp-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const title = btn.getAttribute('data-title') || 'Proposta de futur';
+            const urlPath = btn.getAttribute('data-url');
+            const fullUrl = window.location.origin + urlPath;
+            const text = encodeURIComponent(`Mira aquesta proposta de MÉS per a Llucmajor 2027: "${title}" 👉 ${fullUrl}`);
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+        });
+    });
+
+    document.querySelectorAll('.share-copy-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const cardId = btn.getAttribute('data-id');
+            const fullUrl = window.location.origin + window.location.pathname + '#' + cardId;
+            navigator.clipboard.writeText(fullUrl).then(() => {
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+                setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+            });
+        });
+    });
+
+
+    // --- 9. MODALS I FORMULARI AJAX ---
     const openModalBtn = document.getElementById('open-modal-btn');
     const closeModalBtn = document.getElementById('close-modal-btn');
     const modal = document.getElementById('proposta-modal');
     const modalBackdrop = document.getElementById('modal-backdrop');
     const modalContent = document.getElementById('modal-content');
-    
+    const modalHeading = document.getElementById('modal-title-heading');
+    const contextInput = document.getElementById('context-proposta');
+
     const successModal = document.getElementById('success-modal');
     const successContent = document.getElementById('success-content');
     const closeSuccessBtn = document.getElementById('close-success-btn');
-    const form = document.querySelector('form[action^="https://formspree.io"]');
+    const form = document.getElementById('civic-form');
 
-    function openModal() {
+    function openCivicModal(contextTitle = 'Proposta General') {
+        if (contextInput) contextInput.value = contextTitle;
+        if (modalHeading) {
+            modalHeading.innerText = contextTitle === 'Proposta General' ? 'Què proposes per Llucmajor?' : 'Aportació al projecte';
+        }
         modal.classList.remove('hidden');
         setTimeout(() => {
             modal.classList.remove('opacity-0');
@@ -347,82 +979,92 @@ document.addEventListener("DOMContentLoaded", function() {
         document.body.style.overflow = 'hidden';
     }
 
-    function closeModal() {
+    function closeCivicModal() {
         modal.classList.add('opacity-0');
         modalContent.classList.remove('scale-100');
         modalContent.classList.add('scale-95');
         setTimeout(() => {
             modal.classList.add('hidden');
-            if (successModal.classList.contains('hidden')) {
-                document.body.style.overflow = '';
-            }
+            if (successModal.classList.contains('hidden')) document.body.style.overflow = '';
         }, 300);
     }
 
-    function openSuccessModal() {
-        successModal.classList.remove('hidden');
-        setTimeout(() => {
-            successModal.classList.remove('opacity-0');
-            successContent.classList.remove('scale-95');
-            successContent.classList.add('scale-100');
-        }, 10);
-        document.body.style.overflow = 'hidden';
-    }
+    if (openModalBtn) openModalBtn.addEventListener('click', () => openCivicModal());
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeCivicModal);
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeCivicModal);
 
-    function closeSuccessModal() {
-        successModal.classList.add('opacity-0');
-        successContent.classList.remove('scale-100');
-        successContent.classList.add('scale-95');
-        setTimeout(() => {
-            successModal.classList.add('hidden');
-            document.body.style.overflow = '';
-        }, 300);
-    }
-
-    if (openModalBtn) openModalBtn.addEventListener('click', openModal);
-    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
-    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
-    if (closeSuccessBtn) closeSuccessBtn.addEventListener('click', closeSuccessModal);
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            if (!successModal.classList.contains('hidden')) closeSuccessModal();
-            else if (!modal.classList.contains('hidden')) closeModal();
-        }
+    document.querySelectorAll('.opinar-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const propTitle = btn.getAttribute('data-proposal-title');
+            openCivicModal(propTitle);
+        });
     });
 
     if (form) {
-        form.addEventListener('submit', async function(event) {
-            event.preventDefault(); 
-            
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
             const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = "Enviant..."; 
+            const origText = submitBtn.innerText;
+            submitBtn.innerText = "Enviant...";
             submitBtn.disabled = true;
 
-            const data = new FormData(event.target);
-            
             try {
-                const response = await fetch(event.target.action, {
-                    method: form.method,
-                    body: data,
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
                     headers: { 'Accept': 'application/json' }
                 });
-                
                 if (response.ok) {
-                    form.reset(); 
-                    closeModal(); 
-                    openSuccessModal(); 
+                    form.reset();
+                    closeCivicModal();
+                    successModal.classList.remove('hidden');
+                    setTimeout(() => {
+                        successModal.classList.remove('opacity-0');
+                        successContent.classList.remove('scale-95');
+                        successContent.classList.add('scale-100');
+                    }, 10);
                 } else {
-                    alert("Hi ha hagut un problema en enviar la proposta. Torna-ho a provar.");
+                    alert("Hi ha hagut un error en enviar l'aportació. Si us plau, torna-ho a provar.");
                 }
-            } catch (error) {
-                alert("S'ha produït un error de connexió. Comprova la teva xarxa.");
+            } catch (err) {
+                alert("Error de connexió en enviar el formulari.");
             } finally {
-                submitBtn.innerText = originalText;
+                submitBtn.innerText = origText;
                 submitBtn.disabled = false;
             }
         });
     }
+
+    if (closeSuccessBtn) {
+        closeSuccessBtn.addEventListener('click', () => {
+            successModal.classList.add('opacity-0');
+            setTimeout(() => {
+                successModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        });
+    }
+
+
+    // --- 10. GESTIÓ D'URL HASH & DEEP LINKING ---
+    function handleInitialHash() {
+        const hash = window.location.hash;
+        if (hash) {
+            const targetCard = document.querySelector(hash);
+            if (targetCard) {
+                setTimeout(() => {
+                    targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    targetCard.classList.add('card-highlight');
+                    setTimeout(() => { targetCard.classList.remove('card-highlight'); }, 4000);
+                }, 400);
+            }
+        }
+    }
+
+    // Inicialització
+    updateThemeFilters();
+    applyAllFilters();
+    handleInitialHash();
 });
 </script>
