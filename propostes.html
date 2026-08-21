@@ -5,11 +5,12 @@ permalink: /propostes/
 ---
 
 <style>
-  /* Utilitats d'interacció per al component interactiu Abans/Després */
+  /* Interacció del Slider Abans/Després */
   .slider-container {
     position: relative;
     user-select: none;
     touch-action: pan-y;
+    overflow: hidden;
   }
   .slider-mask {
     position: absolute;
@@ -25,7 +26,7 @@ permalink: /propostes/
     bottom: 0;
     width: 4px;
     background-color: #d8f800; /* mes-lime */
-    box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    box-shadow: 0 0 14px rgba(0,0,0,0.6);
     cursor: ew-resize;
     transform: translateX(-50%);
   }
@@ -34,15 +35,15 @@ permalink: /propostes/
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     background-color: #1a1a1a;
     border: 3px solid #d8f800;
     border-radius: 9999px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.6);
   }
   .active-tab {
     background-color: #1a1a1a !important;
@@ -68,18 +69,19 @@ permalink: /propostes/
 </style>
 
 <!-- ==========================================
-     HERO SECTION AMB CERCA I ACCÉS TERRITORIAL
+     HERO SECTION
      ========================================== -->
 <header class="relative bg-mes-dark text-white overflow-hidden border-b-8 border-mes-lime">
+    <!-- Fons aeri amb degradat fosc -->
     <div class="absolute inset-0 z-0">
         <img src="{{ site.baseurl }}/imatges/Llucmajor_aeria.jpg" 
-             class="w-full h-full object-cover opacity-35 filter saturate-50" 
+             class="w-full h-full object-cover opacity-30 filter saturate-50" 
              alt="Vista aèria de Llucmajor" />
-        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-mes-dark/80 to-mes-dark"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-mes-dark/85 to-mes-dark"></div>
     </div>
 
-    <div class="relative z-10 w-full max-w-[1300px] mx-auto px-4 md:px-8 pt-16 pb-20 md:pt-24 md:pb-28 text-center flex flex-col items-center">
-        <!-- Badge de compromís -->
+    <div class="relative z-10 w-full max-w-[1300px] mx-auto px-4 md:px-8 pt-16 pb-16 md:pt-24 md:pb-24 text-center flex flex-col items-center">
+        <!-- Badge de compromís 2027 -->
         <div class="inline-flex items-center gap-2 bg-mes-lime/20 border border-mes-lime text-mes-lime px-4 py-1.5 rounded-full text-xs md:text-sm font-black uppercase tracking-widest mb-6">
             <span class="w-2.5 h-2.5 rounded-full bg-mes-lime animate-ping"></span>
             Pla de Govern 2027 · MÉS per Llucmajor
@@ -89,29 +91,11 @@ permalink: /propostes/
             El Llucmajor <br class="hidden sm:inline"/><span class="text-mes-lime">que farem créixer</span>
         </h1>
 
-        <p class="text-stone-300 text-base sm:text-lg md:text-2xl max-w-3xl leading-relaxed mb-10 font-normal">
+        <p class="text-stone-300 text-base sm:text-lg md:text-2xl max-w-3xl leading-relaxed font-normal">
             Projectes transformadors amb visió de futur i mesures concretes barri a barri per posar el nostre municipi on es mereix.
         </p>
 
-        <!-- Cercador Predictiu en Temps Real -->
-        <div class="w-full max-w-2xl relative shadow-2xl">
-            <div class="relative flex items-center bg-white rounded-xl overflow-hidden border-2 border-stone-200 focus-within:border-mes-lime transition-all">
-                <span class="pl-5 text-stone-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                </span>
-                <input type="text" 
-                       id="live-search-input" 
-                       placeholder="Cerca per carrer, barri, paraula clau (ex: escoleta, tramvia, parc...)" 
-                       class="w-full py-4 px-4 text-base md:text-lg text-mes-dark placeholder-stone-400 focus:outline-none font-medium">
-                <button id="clear-search-btn" class="hidden pr-4 text-stone-400 hover:text-mes-dark transition-colors" title="Netejar cerca">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-        </div>
-
-        <!-- Indicadors de Transparència -->
+        <!-- Indicadors Clau de Campanya -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-12 w-full max-w-4xl text-left border-t border-stone-800 pt-8">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-mes-lime font-black">1</div>
@@ -149,10 +133,10 @@ permalink: /propostes/
 
 
 <!-- ==========================================
-     PANEL DE CONTROL, VISTES I FILTRATGE
+     PANEL DE VISTES
      ========================================== -->
 <div class="bg-stone-100 border-b border-stone-300 sticky top-0 z-30 shadow-md">
-    <div class="max-w-[1400px] mx-auto px-4 md:px-10 py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div class="max-w-[1400px] mx-auto px-4 md:px-10 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         
         <!-- Selector de Vistes Principals -->
         <div class="flex items-center bg-white p-1 rounded-xl border border-stone-300 shadow-sm overflow-x-auto" id="view-mode-selector">
@@ -167,10 +151,10 @@ permalink: /propostes/
             </button>
         </div>
 
-        <!-- Recompte Dinàmic de Propostes -->
+        <!-- Recompte de Propostes -->
         <div class="flex items-center gap-2 text-stone-500 text-xs md:text-sm font-bold">
             <span class="w-2.5 h-2.5 rounded-full bg-mes-lime"></span>
-            <span id="results-count-text">Mostrant totes les propostes</span>
+            <span id="results-count-text">Mostrant propostes</span>
         </div>
     </div>
 </div>
@@ -181,11 +165,11 @@ permalink: /propostes/
 <main class="pt-12 pb-32 px-4 md:px-10 w-full max-w-[1400px] mx-auto">
 
     <!-- Filtres per Zona / Nucli Territorial -->
-    <div class="mb-12">
+    <div class="mb-10">
         <div class="flex items-center justify-between mb-4">
             <p class="text-xs font-black uppercase tracking-widest text-stone-400">1. Selecciona la zona del municipi</p>
             <button id="reset-filters-btn" class="text-xs font-bold text-stone-500 hover:text-mes-dark underline cursor-pointer hidden">
-                Restablir tots els filtres
+                Restablir filtres
             </button>
         </div>
         
@@ -211,7 +195,7 @@ permalink: /propostes/
         </div>
     </div>
 
-    <!-- Filtres Temàtics / Àmbits (Pills dinàmics) -->
+    <!-- Filtres Temàtics (Pills dinàmics) -->
     <div class="mb-16">
         <p class="text-xs font-black uppercase tracking-widest text-stone-400 mb-3">2. Filtra per àmbit temàtic</p>
         <div class="flex flex-wrap gap-2.5 min-h-[44px]" id="filters-theme"></div>
@@ -222,9 +206,9 @@ permalink: /propostes/
         <div class="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4 text-stone-400">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
         </div>
-        <h3 class="text-2xl font-black uppercase text-mes-dark mb-2">No hem trobat propostes amb aquests criteris</h3>
-        <p class="text-stone-600 mb-6 max-w-md mx-auto">Prova de canviar el text de cerca o seleccionar una altra zona del municipi.</p>
-        <button onclick="resetAllFilters()" class="bg-mes-lime text-mes-dark px-6 py-3 font-black uppercase text-xs tracking-widest shadow hover:bg-mes-dark hover:text-white transition-all">
+        <h3 class="text-2xl font-black uppercase text-mes-dark mb-2">No hem trobat propostes per aquesta selecció</h3>
+        <p class="text-stone-600 mb-6 max-w-md mx-auto">Selecciona una altra zona o canvia el tema per veure més projectes.</p>
+        <button onclick="resetAllFilters()" class="bg-mes-lime text-mes-dark px-6 py-3 font-black uppercase text-xs tracking-widest shadow hover:bg-mes-dark hover:text-white transition-all cursor-pointer">
             Mostra totes les propostes
         </button>
     </div>
@@ -233,7 +217,7 @@ permalink: /propostes/
     <!-- =======================================================
          BLOC A: PROJECTES TRANSFORMADORS AMB SIMULACIÓ IA
          ======================================================= -->
-    <section id="section-transformadors" class="mb-32">
+    <section id="section-transformadors" class="mb-28">
         
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-12 border-b-2 border-mes-dark pb-4">
             <div class="flex items-center gap-4">
@@ -242,12 +226,12 @@ permalink: /propostes/
                     Projectes de Futur <span class="text-stone-400 font-light text-2xl md:text-3xl">· Simulacions 2027</span>
                 </h2>
             </div>
-            <span class="text-xs font-black uppercase tracking-widest bg-stone-200 text-stone-700 px-3 py-1.5 rounded-full w-fit">
-                Impacte Urbanístic i Mobilitat
+            <span class="text-xs font-black uppercase tracking-widest bg-stone-200 text-stone-700 px-3.5 py-1.5 rounded-full w-fit">
+                Transformació Urbana i Paisatgística
             </span>
         </div>
 
-        <div class="flex flex-col gap-20" id="transformadors-container">
+        <div class="flex flex-col gap-16 md:gap-24" id="transformadors-container">
             {% for proposta in site.data.propostes %}
                 {% if proposta.tipus == "ia" or (proposta.imatge and proposta.imatge != "") %}
                 
@@ -258,76 +242,79 @@ permalink: /propostes/
                          id="card-{{ prop_id }}"
                          data-type="transformadors"
                          data-zone="{{ proposta.zona_id | default: 'general' }}" 
-                         data-theme="{{ proposta.tema | default: 'Urbanisme' | slugify }}"
-                         data-search-text="{{ proposta.titol | downcase }} {{ proposta.descripcio | downcase }} {{ proposta.zona_nom | downcase }} {{ proposta.objectiu | downcase }}">
+                         data-theme="{{ proposta.tema | default: 'Urbanisme' | slugify }}">
                     
-                    <!-- COMPONENT VISUAL: SLIDER ABANS / DESPRÉS (O RENDER IA) -->
-                    <div class="w-full lg:w-3/5 bg-stone-900 relative overflow-hidden flex flex-col justify-center min-h-[380px] md:min-h-[460px]">
+                    <!-- COMPONENT VISUAL IA: ENQUADRAMENT COMPLET SENSE RETALLS -->
+                    <div class="w-full lg:w-3/5 bg-stone-950 relative flex flex-col justify-between border-b lg:border-b-0 {% if modulo == 0 %}lg:border-l{% else %}lg:border-r{% endif %} border-stone-800">
                         
+                        <!-- Etiqueta de Nucli flotant -->
+                        <div class="absolute top-4 left-4 z-20 pointer-events-none">
+                            <span class="text-xs font-black uppercase tracking-widest text-mes-dark bg-mes-lime px-3.5 py-1.5 rounded shadow-md">
+                                {{ proposta.zona_nom | default: "Tot el municipi" }}
+                            </span>
+                        </div>
+
                         {% if proposta.imatge_abans and proposta.imatge_despres %}
-                        <!-- SLIDER INTERACTIU ABANS / DESPRÉS -->
-                        <div class="slider-container w-full h-full aspect-[16/10] relative group cursor-ew-resize" data-slider-id="{{ prop_id }}">
-                            <!-- Imatge Després (Proposta / Render IA) -->
+                        <!-- SLIDER INTERACTIU ABANS / DESPRÉS (IMATGES SENCERES) -->
+                        <div class="slider-container w-full h-[320px] sm:h-[400px] md:h-[480px] relative group cursor-ew-resize bg-stone-950 flex items-center justify-center p-2" data-slider-id="{{ prop_id }}">
+                            
+                            <!-- Imatge Després (Proposta IA) -->
                             <img src="{{ site.baseurl }}{{ proposta.imatge_despres }}" 
-                                 class="absolute inset-0 w-full h-full object-cover" 
+                                 class="w-full h-full object-contain select-none" 
                                  alt="{{ proposta.titol }} - Proposta 2027" />
                             
                             <!-- Màscara Abans (Estat Actual) -->
-                            <div class="slider-mask w-1/2 border-r-4 border-mes-lime">
+                            <div class="slider-mask w-1/2 border-r-4 border-mes-lime bg-stone-950">
                                 <img src="{{ site.baseurl }}{{ proposta.imatge_abans }}" 
-                                     class="absolute inset-0 w-full h-full object-cover max-w-none" 
-                                     style="width: 200%; max-width: 200%;" 
+                                     class="w-full h-full object-contain select-none" 
                                      alt="{{ proposta.titol }} - Estat Actual" />
                             </div>
 
-                            <!-- Línia lliscant i botó -->
+                            <!-- Línia lliscant central -->
                             <div class="slider-handle left-1/2">
                                 <div class="slider-button">
                                     <svg class="w-5 h-5 text-mes-lime" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path></svg>
                                 </div>
                             </div>
 
-                            <!-- Etiquetes flotants -->
-                            <div class="absolute top-4 left-4 pointer-events-none">
-                                <span class="bg-stone-900/85 backdrop-blur-md text-white text-[11px] font-black uppercase tracking-wider px-3 py-1.5 rounded-lg border border-white/20 shadow">
+                            <!-- Indicadors flotants Abans / Després -->
+                            <div class="absolute bottom-4 left-4 pointer-events-none z-10">
+                                <span class="bg-black/80 backdrop-blur-md text-white text-[10px] sm:text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded border border-white/20">
                                     Estat Actual
                                 </span>
                             </div>
-                            <div class="absolute top-4 right-4 pointer-events-none">
-                                <span class="bg-mes-lime text-mes-dark text-[11px] font-black uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-lg">
+                            <div class="absolute bottom-4 right-4 pointer-events-none z-10">
+                                <span class="bg-mes-lime text-mes-dark text-[10px] sm:text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded shadow">
                                     Visió 2027
                                 </span>
                             </div>
                         </div>
                         {% else %}
-                        <!-- RENDER INDIVIDUAL -->
-                        <div class="relative w-full h-full aspect-[16/10] overflow-hidden group">
+                        <!-- RENDER INDIVIDUAL COMPLET SENSE TALLS (OBJECT-CONTAIN AMB PADDING) -->
+                        <div class="relative w-full h-[320px] sm:h-[400px] md:h-[480px] bg-stone-950 flex items-center justify-center p-4 md:p-6 overflow-hidden">
                             <img src="{{ site.baseurl }}{{ proposta.imatge }}" 
-                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                                 class="max-w-full max-h-full object-contain transition-transform duration-700 hover:scale-[1.02]" 
                                  alt="{{ proposta.titol }}" />
                         </div>
                         {% endif %}
 
                         <!-- BADGE ÈTIC DE TRANSPARÈNCIA IA -->
-                        <div class="bg-stone-950 px-4 py-2.5 flex items-center justify-between text-[11px] text-stone-300 border-t border-stone-800">
+                        <div class="bg-stone-900 px-4 py-2.5 flex items-center justify-between text-[11px] text-stone-300 border-t border-stone-800 z-10">
                             <div class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-mes-lime"></span>
-                                <span class="font-medium text-stone-300">Simulació conceptual generada per IA basada en l'avantprojecte tècnic</span>
+                                <span class="w-2 h-2 rounded-full bg-mes-lime flex-shrink-0"></span>
+                                <span class="font-medium text-stone-300">Simulació conceptual generada per IA segons avantprojecte tècnic</span>
                             </div>
                             <span class="text-stone-500 font-bold uppercase tracking-wider text-[10px] hidden sm:inline">Visió Transformadora</span>
                         </div>
                     </div>
                     
-                    <!-- DETALL DEL PROJECTE I METADADES -->
+                    <!-- DETALL DEL PROJECTE I RETORN VEÏNAL -->
                     <div class="w-full lg:w-2/5 p-8 md:p-12 flex flex-col justify-between text-left bg-white">
                         <div>
-                            <!-- Capçalera -->
+                            <!-- Àmbit temàtic -->
                             <div class="flex items-center justify-between gap-3 mb-4">
-                                <span class="text-xs font-black uppercase tracking-widest text-mes-dark bg-mes-lime px-3.5 py-1.5 rounded-md shadow-sm">
-                                    {{ proposta.zona_nom | default: "Tot el municipi" }}
-                                </span>
                                 <span class="text-xs font-bold uppercase tracking-wider text-stone-500 bg-stone-100 px-3 py-1 rounded">
-                                    {{ proposta.tema | default: "Urbanisme" }}
+                                    {{ proposta.tema | default: "Urbanisme i Espai Públic" }}
                                 </span>
                             </div>
 
@@ -342,23 +329,23 @@ permalink: /propostes/
                             <!-- Taula d'Execució Viable -->
                             <div class="bg-stone-50 border border-stone-200 rounded-xl p-4 mb-6 space-y-3 text-sm">
                                 <div class="flex items-start gap-2">
-                                    <span class="font-black text-mes-dark uppercase tracking-wider text-xs min-w-[90px]">🎯 Objectiu:</span>
-                                    <span class="text-stone-700 font-medium">{{ proposta.objectiu | default: "Recuperació de l'espai veïnal i millora de la convivència urbana." }}</span>
+                                    <span class="font-black text-mes-dark uppercase tracking-wider text-xs min-w-[85px]">🎯 Objectiu:</span>
+                                    <span class="text-stone-700 font-medium">{{ proposta.objectiu | default: "Transformar l'espai públic per a la ciutadania i revitalitzar el barri." }}</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <span class="font-black text-mes-dark uppercase tracking-wider text-xs min-w-[90px]">⏱️ Termini:</span>
-                                    <span class="text-stone-700 font-medium">{{ proposta.fases | default: "Fase 1 (2027 - 2028)" }}</span>
+                                    <span class="font-black text-mes-dark uppercase tracking-wider text-xs min-w-[85px]">⏱️ Termini:</span>
+                                    <span class="text-stone-700 font-medium">{{ proposta.fases | default: "Pla d'Execució 2027 - 2028" }}</span>
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <span class="font-black text-mes-dark uppercase tracking-wider text-xs min-w-[90px]">🌳 Retorn:</span>
-                                    <span class="text-stone-700 font-medium">{{ proposta.impacte | default: "+ Confort climàtic i accessibilitat universal" }}</span>
+                                    <span class="font-black text-mes-dark uppercase tracking-wider text-xs min-w-[85px]">🌳 Impacte:</span>
+                                    <span class="text-stone-700 font-medium">{{ proposta.impacte | default: "Més zones verdes, ombra i accessibilitat per a tothom." }}</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- BARRA D'INTERACCIÓ CÍVICA -->
+                        <!-- BARRA D'INTERACCIÓ CÍVICA I XARXES -->
                         <div class="pt-6 border-t border-stone-200 flex flex-wrap items-center justify-between gap-4">
-                            <!-- Botó Suport -->
+                            <!-- Botó Suport / Like -->
                             <button class="like-btn flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-stone-300 hover:border-mes-dark text-mes-dark font-black text-xs uppercase tracking-wider transition-all cursor-pointer bg-white"
                                     data-proposal-id="{{ prop_id }}"
                                     title="Dona suport a aquest projecte">
@@ -367,7 +354,7 @@ permalink: /propostes/
                                 <span class="like-count bg-stone-100 px-2 py-0.5 rounded-full text-xs font-bold text-stone-800">24</span>
                             </button>
 
-                            <!-- Accions de compartir i opinar -->
+                            <!-- Botons de Participació i Compartició -->
                             <div class="flex items-center gap-2">
                                 <button class="opinar-btn bg-stone-100 hover:bg-stone-200 text-mes-dark p-2.5 rounded-xl transition-all cursor-pointer" 
                                         data-proposal-title="{{ proposta.titol }}" 
@@ -431,12 +418,13 @@ permalink: /propostes/
                              id="card-{{ prop_id }}"
                              data-type="mesures"
                              data-zone="{{ proposta.zona_id | default: 'general' }}" 
-                             data-theme="{{ grup_tema.name | default: 'general' | slugify }}"
-                             data-search-text="{{ proposta.titol | downcase }} {{ proposta.descripcio | downcase }} {{ proposta.problema | downcase }} {{ proposta.solucio | downcase }} {{ proposta.benefici | downcase }} {{ proposta.zona_nom | downcase }}">
+                             data-theme="{{ grup_tema.name | default: 'general' | slugify }}">
                         
+                        <!-- Barra superior d'accent en hover -->
                         <div class="absolute top-0 left-0 right-0 h-1.5 bg-transparent group-hover:bg-mes-lime transition-colors"></div>
 
                         <div>
+                            <!-- Capçalera de la mesura -->
                             <div class="flex items-center justify-between gap-2 mb-4">
                                 <span class="text-[11px] font-black uppercase tracking-wider bg-stone-100 text-stone-700 px-3 py-1 rounded-md">
                                     {{ proposta.zona_nom | default: "Tot el municipi" }}
@@ -646,7 +634,6 @@ document.addEventListener("DOMContentLoaded", function() {
     let currentZone = 'general';
     let currentTheme = 'all';
     let currentView = 'all';
-    let searchQuery = '';
 
     const proposalCards = document.querySelectorAll('.proposal-card');
     const themeBlocks = document.querySelectorAll('.theme-block');
@@ -656,8 +643,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const noResultsBox = document.getElementById('no-results-box');
     const resultsCountText = document.getElementById('results-count-text');
     const resetFiltersBtn = document.getElementById('reset-filters-btn');
-    const searchInput = document.getElementById('live-search-input');
-    const clearSearchBtn = document.getElementById('clear-search-btn');
 
     // --- 1. FUNCIÓ DE FILTRATGE COMBINAT ---
     function applyAllFilters() {
@@ -665,22 +650,18 @@ document.addEventListener("DOMContentLoaded", function() {
         let visibleTransformadors = 0;
         let visibleMesures = 0;
 
-        const normalizedQuery = searchQuery.trim().toLowerCase();
-
         proposalCards.forEach(card => {
             const cardZone = card.getAttribute('data-zone') || 'general';
             const cardTheme = card.getAttribute('data-theme') || '';
             const cardType = card.getAttribute('data-type') || '';
-            const cardSearchData = (card.getAttribute('data-search-text') || '').toLowerCase();
 
             const matchesZone = (currentZone === 'general' || cardZone === currentZone || cardZone === 'general');
             const matchesTheme = (currentTheme === 'all' || cardTheme === currentTheme);
             const matchesView = (currentView === 'all' || 
                                 (currentView === 'transformadors' && cardType === 'transformadors') || 
                                 (currentView === 'mesures' && cardType === 'mesures'));
-            const matchesSearch = (!normalizedQuery || cardSearchData.includes(normalizedQuery));
 
-            if (matchesZone && matchesTheme && matchesView && matchesSearch) {
+            if (matchesZone && matchesTheme && matchesView) {
                 card.style.display = 'flex';
                 visibleTotal++;
                 if (cardType === 'transformadors') visibleTransformadors++;
@@ -720,7 +701,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         resultsCountText.innerText = `Mostrant ${visibleTotal} proposta${visibleTotal === 1 ? '' : 's'}`;
 
-        if (currentZone !== 'general' || currentTheme !== 'all' || currentView !== 'all' || normalizedQuery !== '') {
+        if (currentZone !== 'general' || currentTheme !== 'all' || currentView !== 'all') {
             resetFiltersBtn.classList.remove('hidden');
         } else {
             resetFiltersBtn.classList.add('hidden');
@@ -772,7 +753,7 @@ document.addEventListener("DOMContentLoaded", function() {
         themeFilterContainer.appendChild(btn);
     }
 
-    // --- 3. ESDEVENIMENTS DE ZONA ---
+    // --- 3. ESDEVENIMENTS DE FILTRES DE ZONA ---
     document.querySelectorAll('.filter-btn-zone').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filter-btn-zone').forEach(b => {
@@ -803,33 +784,10 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // --- 5. CERCA EN TEMPS REAL ---
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            searchQuery = e.target.value;
-            if (searchQuery.length > 0) {
-                clearSearchBtn.classList.remove('hidden');
-            } else {
-                clearSearchBtn.classList.add('hidden');
-            }
-            applyAllFilters();
-        });
-
-        clearSearchBtn.addEventListener('click', () => {
-            searchInput.value = '';
-            searchQuery = '';
-            clearSearchBtn.classList.add('hidden');
-            applyAllFilters();
-        });
-    }
-
     window.resetAllFilters = function() {
         currentZone = 'general';
         currentTheme = 'all';
         currentView = 'all';
-        searchQuery = '';
-        if (searchInput) searchInput.value = '';
-        if (clearSearchBtn) clearSearchBtn.classList.add('hidden');
 
         document.querySelectorAll('.filter-btn-zone').forEach(b => {
             b.classList.remove('text-mes-dark', 'border-mes-dark', 'active-zone');
@@ -849,7 +807,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (resetFiltersBtn) resetFiltersBtn.addEventListener('click', resetAllFilters);
 
 
-    // --- 6. SLIDER INTERACTIU ABANS / DESPRÉS (TOUCH & MOUSE) ---
+    // --- 5. SLIDER INTERACTIU ABANS / DESPRÉS (TOUCH & MOUSE) ---
     document.querySelectorAll('.slider-container').forEach(container => {
         const mask = container.querySelector('.slider-mask');
         const handle = container.querySelector('.slider-handle');
@@ -892,7 +850,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    // --- 7. SISTEMA DE SUPORT CÍVIC AMB LOCALSTORAGE ---
+    // --- 6. SISTEMA DE SUPORT CÍVIC AMB LOCALSTORAGE ---
     const likedProposals = JSON.parse(localStorage.getItem('mes_llucmajor_likes') || '{}');
 
     document.querySelectorAll('.like-btn').forEach(btn => {
@@ -925,7 +883,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    // --- 8. COMPARTICIÓ DIGITAL (WHATSAPP & COPY LINK) ---
+    // --- 7. COMPARTICIÓ DIGITAL (WHATSAPP & COPY LINK) ---
     document.querySelectorAll('.share-whatsapp-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -951,7 +909,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    // --- 9. MODALS I FORMULARI AJAX ---
+    // --- 8. MODALS I FORMULARI AJAX ---
     const openModalBtn = document.getElementById('open-modal-btn');
     const closeModalBtn = document.getElementById('close-modal-btn');
     const modal = document.getElementById('proposta-modal');
@@ -1047,7 +1005,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-    // --- 10. GESTIÓ D'URL HASH & DEEP LINKING ---
+    // --- 9. GESTIÓ D'URL HASH & DEEP LINKING ---
     function handleInitialHash() {
         const hash = window.location.hash;
         if (hash) {
