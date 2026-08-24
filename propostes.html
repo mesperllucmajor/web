@@ -1001,7 +1001,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-    // --- 9. GESTIÓ D'URL HASH & DEEP LINKING ---
+   // --- 9. GESTIÓ D'URL HASH & DEEP LINKING ---
     function handleInitialHash() {
         const hash = window.location.hash;
         if (hash) {
@@ -1016,9 +1016,28 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // --- 10. LLEGIR LA ZONA DE LA URL DES DE L'INICI ---
+    function handleUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const zonaParam = urlParams.get('zona');
+        
+        if (zonaParam) {
+            // Busquem el botó que correspon a la zona de la URL
+            const targetBtn = document.querySelector(`.filter-btn-zone[data-filter="${zonaParam}"]`);
+            if (targetBtn) {
+                // Simulem un clic al botó. Això farà que s'apliquin els colors i es filtrin les targetes automàticament.
+                targetBtn.click(); 
+                return; // Sortim perquè el click ja s'encarrega de cridar els filtres
+            }
+        }
+        
+        // Si no hi ha paràmetre o està malament, carreguem per defecte ("Tot el municipi")
+        updateThemeFilters();
+        applyAllFilters();
+    }
+
     // Inicialització
-    updateThemeFilters();
-    applyAllFilters();
+    handleUrlParams();
     handleInitialHash();
 });
 </script>
