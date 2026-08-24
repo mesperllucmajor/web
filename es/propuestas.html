@@ -1016,9 +1016,28 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // --- 10. LEER LA ZONA DE LA URL DESDE EL INICIO ---
+    function handleUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const zonaParam = urlParams.get('zona');
+        
+        if (zonaParam) {
+            // Buscamos el botón que corresponde a la zona de la URL
+            const targetBtn = document.querySelector(`.filter-btn-zone[data-filter="${zonaParam}"]`);
+            if (targetBtn) {
+                // Simulamos un clic en el botón. Esto hará que se apliquen los colores y se filtren las tarjetas automáticamente.
+                targetBtn.click(); 
+                return; // Salimos porque el click ya se encarga de llamar a los filtros
+            }
+        }
+        
+        // Si no hay parámetro o está mal, cargamos por defecto ("Todo el municipio")
+        updateThemeFilters();
+        applyAllFilters();
+    }
+
     // Inicialización
-    updateThemeFilters();
-    applyAllFilters();
+    handleUrlParams();
     handleInitialHash();
 });
 </script>
