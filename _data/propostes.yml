@@ -9,6 +9,8 @@
 
 - titol: "Més arbres"
   descripcio: "Creació de refugis climàtics i corredors verds."
+  objectiu: "Millorar la qualitat de vida dels llucmajorers i llucmajoreres, creant espais de benestar"
+  impacte: "Un municipi més verd i la davallada de la temperatura del carrer."
   imatge: "/imatges/arbrat.png"
   zona_id: "llucmajor"
   zona_nom: "Llucmajor Poble"
@@ -16,6 +18,8 @@
 
 - titol: "Reforma de la plaça de Les Palmeres"
   descripcio: "Reforma integral de la plaça de Les Palmeres."
+  objectiu: "Transformació de la plaça, convertint-la en un millor espai de trobada dels veïnats i les veïnades"
+  impacte: "Millora de la convivència i l'espai per als infants."
   imatge: "/imatges/PlacaPalmeres.jpeg"
   zona_id: "urbanitzacions"
   zona_nom: "Urbanitzacions"
@@ -23,6 +27,8 @@
 
 - titol: "Reforma del vial de Ses Escoles"
   descripcio: "Reforma integral del carrer de Ses Escoles per integrar-lo amb la plaça Rufino Carpena."
+  objectiu: "Recuperació d'un espai desaprofitat. Creació d'un espai de trobada i convivència ciutadana"
+  impacte: "Millora de la convivència i l'espai per als infants"
   imatge: "/imatges/rufinocarpena.jpg"
   zona_id: "llucmajor"
   zona_nom: "Llucmajor Poble"
