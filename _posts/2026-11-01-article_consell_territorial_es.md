@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: post_es
 title: "La participació real a Llucmajor: el consell territorial"
 category: articulo
 categories: [es]
