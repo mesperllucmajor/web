@@ -1,12 +1,11 @@
 ---
 layout: post
-title: "MÉS per Llucmajor exigeix la signatura immediata del conveni per a la residència de gent gran"
+title: "MÉS per Llucmajor presenta al Govern un pla integral per resoldre el col·lapse del transport públic"
 category: noticia
-tags: [Gent gran]
+tags: [Mobilitat]
 image: "/imatges/MartaOriol.png"
-summary: "MÉS denuncia la inacció de l'equip de govern i exigeix signar el conveni de la residència, paralitzat des de fa dos mesos malgrat comptar amb l'autorització de l'Estat."
+summary: "Solucions basades en dades per a una mobilitat eficient, accessible i connectada a Llucmajor."
 ---
-
 
 
 MÉS per Mallorca ha presentat una proposició no de llei (PNL) al Parlament de les Illes Balears per reclamar la signatura immediata del conveni necessari per a la reforma i ampliació de la Residència de Persones Majors de Llucmajor. Aquesta iniciativa es produeix davant la inacció de l'equip de govern municipal, que fa dos mesos que té l'autorització de l'Estat per signar el document.
