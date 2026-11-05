@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "MÉS per Llucmajor presenta al Govern un pla integral per resoldre el col·lapse del transport públic"
+title: "MÉS per Llucmajor exigeix la signatura immediata del conveni per a la residència de gent gran"
 category: noticia
 tags: [Mobilitat]
 image: "/imatges/MartaOriol.png"
-summary: "Solucions basades en dades per a una mobilitat eficient, accessible i connectada a Llucmajor."
+summary: "MÉS denuncia la inacció de l'equip de govern i exigeix signar el conveni de la residència, paralitzat des de fa dos mesos malgrat comptar amb l'autorització de l'Estat."
 ---
 
 
