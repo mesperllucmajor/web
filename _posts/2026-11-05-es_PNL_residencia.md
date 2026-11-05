@@ -1,6 +1,6 @@
 ---
 layout: post_es
-title: "MÉS per Llucmajor exigeix la signatura immediata del conveni per a la residència de gent gran"
+title: "MÉS per Llucmajor exije la firma inmediata del convenio para la residència"
 category: noticia
 categories: [es]
 tags: [Personas mayores]
