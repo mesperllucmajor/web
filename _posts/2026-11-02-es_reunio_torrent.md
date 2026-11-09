@@ -2,6 +2,7 @@
 layout: post_es
 title: "Nos reunimos en s'Arenal con las asociaciones de vecinos para hablar sobre el Torrent dels Jueus"
 category: noticia
+categories: [es]
 tags: [Medio Ambient]
 image: "/imatges/reutorrent.jpg"
 summary: "El Arenal no puede esperar más. Tras reunirnos con la Agrupación de urbanizaciones Arenal y Llucmajor y la asociación Amics de s'Arenal, desde MÉS per Llucmajor hemos constatado una realidad inaceptable: el Torrent dels Jueus sufre un abandono crónico que pone en riesgo la seguridad de los vecinos."
