@@ -40,7 +40,7 @@ permalink: /es/actualidad/
         </div>
 
         {% assign posts_es = site.posts | where: "layout", "post_es" %}
-        {% assign postsByMonth = posts_ca | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
+        {% assign postsByMonth = posts_es | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
 
         <!-- ========================================== -->
         <!-- FILTROS DISCRETOS Y ELEGANTES              -->
