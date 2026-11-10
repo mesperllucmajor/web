@@ -39,7 +39,7 @@ permalink: /es/actualidad/
             <p class="text-stone-500 italic text-lg md:text-xl pl-6">Crónica de nuestro trabajo en la calle y en el Ayuntamiento: todas las mociones, denuncias y acciones para mejorar el municipio.</p>
         </div>
 
-        {% assign posts_ca = site.posts | where: "layout", "post" %}
+        {% assign posts_es = site.posts | where: "layout", "post_es" %}
         {% assign postsByMonth = posts_ca | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
 
         <!-- ========================================== -->
