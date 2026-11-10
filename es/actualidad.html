@@ -39,8 +39,11 @@ permalink: /es/actualidad/
             <p class="text-stone-500 italic text-lg md:text-xl pl-6">Crónica de nuestro trabajo en la calle y en el Ayuntamiento: todas las mociones, denuncias y acciones para mejorar el municipio.</p>
         </div>
 
-        <!-- AQUÍ ESTÁ EL CAMBIO CLAVE: filtramos por layout "post_es" -->
-        {% assign posts_es = site.posts | where: "layout", "post_es" %}
+        <!-- ========================================== -->
+        <!-- OBTENCIÓN DE POSTS EN CASTELLANO           -->
+        <!-- Filtramos los posts que tienen 'es' en sus categorías -->
+        <!-- ========================================== -->
+        {% assign posts_es = site.posts | where_exp: "post", "post.categories contains 'es'" %}
         {% assign postsByMonth = posts_es | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
 
         <!-- ========================================== -->
@@ -122,19 +125,20 @@ permalink: /es/actualidad/
                     
                     <div class="flex flex-col gap-6">
                         {% for post in monthGroup.items %}
-                            {% assign post_cat_raw = post.category | default: post.categories.first | default: 'Noticia' %}
+                            <!-- Extraer categoría principal (primero de "category:", si no de "categories:") -->
+                            {% assign post_cat_raw = post.category | default: post.categories.first | default: 'Noticia' | capitalize %}
                             
-                            <!-- Traducir categorías si es necesario -->
-                            {% if post_cat_raw == 'Notícia' %}{% assign post_cat_raw = 'Noticia' %}{% endif %}
-                            {% if post_cat_raw == 'Article' %}{% assign post_cat_raw = 'Artículo' %}{% endif %}
+                            <!-- Normalizar categoría al castellano -->
+                            {% if post_cat_raw == 'Notícia' or post_cat_raw == 'Noticia' %}{% assign post_cat_raw = 'Noticia' %}{% endif %}
+                            {% if post_cat_raw == 'Article' or post_cat_raw == 'Artículo' %}{% assign post_cat_raw = 'Artículo' %}{% endif %}
 
                             <!-- Generar clase base para el filtro -->
                             {% assign cat_clean = post_cat_raw | downcase | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'è', 'e' | replace: 'é', 'e' | replace: 'à', 'a' | replace: 'ï', 'i' | strip %}
                             
-                            <!-- Nueva Tarjeta en formato Lista -->
+                            <!-- Tarjeta en formato Lista -->
                             <a href="{{ site.baseurl }}{{ post.url }}" class="news-card group flex flex-col md:flex-row bg-white shadow-sm hover:shadow-lg transition-all duration-300 border border-stone-200 overflow-hidden text-left" data-category="{{ cat_clean }}">
                                 
-                                <!-- Imagen a la izquierda (1/4 o 1/3 del ancho) -->
+                                <!-- Imagen a la izquierda -->
                                 <div class="w-full md:w-1/3 lg:w-1/4 aspect-video relative overflow-hidden border-b md:border-b-0 md:border-r border-stone-200 flex-shrink-0 bg-stone-100">
                                     {% if post.image %}
                                         <img src="{{ site.baseurl }}{{ post.image }}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" alt="{{ post.title }}">
@@ -159,7 +163,7 @@ permalink: /es/actualidad/
                                     <!-- Titular -->
                                     <h3 class="text-2xl md:text-3xl font-black uppercase text-mes-dark group-hover:text-mes-lime transition-colors leading-tight mb-4 md:mb-0">{{ post.title }}</h3>
                                     
-                                    <!-- Leer más (flotante a la derecha en formato de escritorio) -->
+                                    <!-- Leer más -->
                                     <div class="mt-auto md:mt-0 pt-6 md:pt-0 border-t border-stone-100 md:border-none flex items-center justify-between md:absolute md:bottom-8 md:right-10 text-[10px] md:text-xs font-black uppercase tracking-widest text-stone-400 group-hover:text-mes-lime transition-all">
                                         <span class="md:mr-2">Leer más</span>
                                         <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
@@ -174,7 +178,7 @@ permalink: /es/actualidad/
     </div>
 </div>
 
-<!-- LÓGICA DE FILTROS INTACTA -->
+<!-- LÓGICA DE FILTROS -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const catBtns = document.querySelectorAll('.news-filter-btn');
