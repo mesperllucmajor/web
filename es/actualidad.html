@@ -1,6 +1,6 @@
 ---
 layout: default_es
-title: Actualidad y Opinión | MÉS per Llucmajor
+title: Acción Municipal | MÉS per Llucmajor
 permalink: /es/actualidad/
 ---
 
@@ -39,10 +39,8 @@ permalink: /es/actualidad/
             <p class="text-stone-500 italic text-lg md:text-xl pl-6">Crónica de nuestro trabajo en la calle y en el Ayuntamiento: todas las mociones, denuncias y acciones para mejorar el municipio.</p>
         </div>
 
-        <!-- OJO: Aquí seguimos utilizando posts_ca (o si tienes una colección _posts_es, cámbialo a site.posts_es) 
-             En este ejemplo asumimos que los posts están en site.posts -->
-        {% assign posts_es = site.posts | where: "layout", "post" %}
-        {% assign postsByMonth = posts_es | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
+        {% assign posts_ca = site.posts | where: "layout", "post" %}
+        {% assign postsByMonth = posts_ca | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
 
         <!-- ========================================== -->
         <!-- FILTROS DISCRETOS Y ELEGANTES              -->
@@ -125,11 +123,11 @@ permalink: /es/actualidad/
                         {% for post in monthGroup.items %}
                             {% assign post_cat_raw = post.category | default: post.categories.first | default: 'Noticia' %}
                             
-                            <!-- Traducir categorías si es necesario -->
+                            <!-- Traduir les categories al castellà per a la visualització -->
                             {% if post_cat_raw == 'Notícia' %}{% assign post_cat_raw = 'Noticia' %}{% endif %}
                             {% if post_cat_raw == 'Article' %}{% assign post_cat_raw = 'Artículo' %}{% endif %}
 
-                            <!-- Generar clase base para el filtro -->
+                            <!-- Atribut per al filtratge intern de Javascript (es manté com abans) -->
                             {% assign cat_clean = post_cat_raw | downcase | replace: 'í', 'i' | replace: 'ó', 'o' | replace: 'è', 'e' | replace: 'é', 'e' | replace: 'à', 'a' | replace: 'ï', 'i' | strip %}
                             
                             <!-- Nueva Tarjeta en formato Lista -->
