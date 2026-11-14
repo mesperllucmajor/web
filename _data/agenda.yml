@@ -1,11 +1,3 @@
-- titol: "Gala de l'esport"
-  dia: "13"
-  mes: "NOV"
-  hora: "19:00h"
-  lloc: "Pavelló poliesportiu de Llucmajor"
-  descripcio: ""
-  enllac: "" # Opcional, per si es retransmet
-
 - titol: "Ple de l'Ajuntament"
   dia: "25"
   mes: "NOV"

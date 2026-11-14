@@ -1,13 +1,4 @@
 
-
-- titol: "Gala de l'esport"
-  dia: "13"
-  mes: "NOV"
-  hora: "19:00h"
-  lloc: "Pabellón polideportivo"
-  descripcio: ""
-  enllac: "" # Opcional, per si es retransmet
-
 - titol: "Pleno del Ayuntamiento"
   dia: "25"
   mes: "NOV"
