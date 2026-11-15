@@ -3,7 +3,7 @@ layout: post
 title: "MÉS per Llucmajor proclama Oriol Gómez com a candidat a la batlia i activa el compte enrere cap a les eleccions de 2027"
 category: noticia
 tags: [Assemblea]
-image: "/imatges/Oriol_2026.png"
+image: "/imatges/Oriol_2026_.png"
 summary: "La formació ecosobiranista ha celebrat aquest dissabte la seva Assemblea General al celler de Ca s'Hereu amb una nodrida participació de militants i simpatitzants de tots els nuclis del municipi."
 ---
 
